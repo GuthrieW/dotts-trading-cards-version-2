@@ -2,7 +2,7 @@
 
 ## How to Contribute to this Project
 
-1. Contact `caltroit_red_flames#2462` via Discord with your GitHub username and ask to be added as a contributer.
+1. Contact `caltroit_red_flames#2462` via Discord with your GitHub username and ask to be added as a contributer. He will send you the development `.env` file.
 
 2. Clone the repository `git clone git@github.com:GuthrieW/dotts-trading-cards-version-2.git`.
 
