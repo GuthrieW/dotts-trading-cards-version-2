@@ -2,7 +2,7 @@
 
 ## How to Contribute to this Project
 
-1. Contact `caltroit_red_flames#2462` via discord with your github username and ask to be added as a contributer.
+1. Contact `caltroit_red_flames#2462` via Discord with your GitHub username and ask to be added as a contributer.
 
 2. Clone the repository `git clone git@github.com:GuthrieW/dotts-trading-cards-version-2.git`.
 
@@ -14,11 +14,13 @@
 
 6. Once your changes are finished and tested created a pull request. Send the link to your pull request to a code owner for review.
 
+7. Post your pull request as a comment in its corresponding issue.
+
 ## Development
 
 ### Dependencies
 
--   Before adding dependencies to the project please contact a code owner ([caltroit_red_flames](caltroit_red_flames#2462) or [KoltClassic](KoltClassic#8195)).
+-   Before adding dependencies to the project please contact a code owner via Discord (`caltroit_red_flames#2462` or `KoltClassic#8195`).
 
 ### Branches
 
@@ -26,7 +28,7 @@
 
 -   Branch names should correspond to a specific issue, i.e., [readme-updates](https://github.com/GuthrieW/dotts-trading-cards-version-2/issues/2).
 
--   Branches are required to be reviewed by a code owner ([caltroit_red_flames](caltroit_red_flames#2462) or [KoltClassic](KoltClassic#8195)).
+-   Branches are required to be reviewed by a code owner (`caltroit_red_flames#2462` or `KoltClassic#8195`).
 
 -   Direct pushes to the master branch **_are not permitted_**.
 
