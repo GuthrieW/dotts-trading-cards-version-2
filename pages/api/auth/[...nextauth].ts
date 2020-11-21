@@ -3,10 +3,6 @@ import Providers from 'next-auth/providers'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { Provider } from 'react'
 
-const index = (request: NextApiRequest, response: NextApiResponse) => {
-  return NextAuth(request, response, options)
-}
-
 const options = {
   providers: [
     Providers.Google({
@@ -15,7 +11,11 @@ const options = {
     }),
   ],
 
-  database: process.env.DATABASE_CONNECTION,
+  database: {
+    type: "mongodb",
+    useNewUrlParser: true,
+    url: process.env.DATABASE_CONNECTION
+  }
 }
 
-export default index
+export default (req, res) => NextAuth(req, res, options)
