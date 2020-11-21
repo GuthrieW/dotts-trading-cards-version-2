@@ -20,17 +20,17 @@
 
 ### Dependencies
 
--   Before adding dependencies to the project please contact a code owner via Discord (`caltroit_red_flames#2462` or `KoltClassic#8195`).
+- Before adding dependencies to the project please contact a code owner via Discord (`caltroit_red_flames#2462` or `KoltClassic#8195`).
 
 ### Branches
 
--   Branch names should not contain upper case characters, numerals, or spaces.
+- Branch names should not contain upper case characters, numerals, or spaces.
 
--   Branch names should correspond to a specific issue, i.e., [readme-updates](https://github.com/GuthrieW/dotts-trading-cards-version-2/issues/2).
+- Branch names should correspond to a specific issue, i.e., [readme-updates](https://github.com/GuthrieW/dotts-trading-cards-version-2/issues/2).
 
--   Branches are required to be reviewed by a code owner (`caltroit_red_flames#2462` or `KoltClassic#8195`).
+- Branches are required to be reviewed by a code owner (`caltroit_red_flames#2462` or `KoltClassic#8195`).
 
--   Direct pushes to the master branch **_are not permitted_**.
+- Direct pushes to the master branch **_are not permitted_**.
 
 ### Running the Server Locally
 
