@@ -12,10 +12,10 @@ const options = {
   ],
 
   database: {
-    type: "mongodb",
+    type: 'mongodb',
     useNewUrlParser: true,
-    url: process.env.DATABASE_CONNECTION
-  }
+    url: process.env.DATABASE_CONNECTION,
+  },
 }
 
 export default (req, res) => NextAuth(req, res, options)
