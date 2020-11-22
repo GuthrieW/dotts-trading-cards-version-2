@@ -1,7 +1,5 @@
 import NextAuth from 'next-auth'
 import Providers from 'next-auth/providers'
-import { NextApiRequest, NextApiResponse } from 'next'
-import { Provider } from 'react'
 
 const options = {
   providers: [
@@ -12,10 +10,10 @@ const options = {
   ],
 
   database: {
-    type: "mongodb",
+    type: 'mongodb',
     useNewUrlParser: true,
-    url: process.env.DATABASE_CONNECTION
-  }
+    url: process.env.DATABASE_CONNECTION,
+  },
 }
 
 export default (req, res) => NextAuth(req, res, options)
