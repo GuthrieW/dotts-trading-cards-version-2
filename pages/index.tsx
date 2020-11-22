@@ -1,18 +1,26 @@
-import Head from 'next/head';
-import styles from '../styles/Home.module.css';
+import React from 'react'
+import { log } from '../utils/logger/logger'
+import { signIn, signOut, useSession } from 'next-auth/client'
 
 const index = () => {
-	return (
-		<div>
-			<Head>
-				<title>Dotts Trading Cards API</title>
-				<link rel='icon' href='/favicon.ico' />
-			</Head>
-			<main>
-				<h1>DOtts Trading Cards API</h1>
-			</main>
-		</div>
-	);
-};
+  const [session, loading] = useSession()
 
-export default index;
+  return (
+    <>
+      {!session && (
+        <>
+          Not signed in <br />
+          <button onClick={signIn}>Sign in</button>
+        </>
+      )}
+      {session && (
+        <>
+          Signed in as {session.user.email} <br />
+          <button onClick={signOut}>Sign out</button>
+        </>
+      )}
+    </>
+  )
+}
+
+export default index

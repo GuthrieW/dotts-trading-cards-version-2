@@ -1,7 +1,11 @@
-import '../styles/globals.css';
+import { Provider } from 'next-auth/client'
 
-const MyApp = ({ Component, pageProps }) => {
-	return <Component {...pageProps} />;
-};
+const App = ({ Component, pageProps }) => {
+  return (
+    <Provider session={pageProps.session}>
+      <Component {...pageProps} />
+    </Provider>
+  )
+}
 
-export default MyApp;
+export default App
