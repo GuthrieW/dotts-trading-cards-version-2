@@ -3,7 +3,8 @@ import BottomNavigation from '@material-ui/core/BottomNavigation/BottomNavigatio
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction/BottomNavigationAction';
 import Head from 'next/head';
 import React, { useState } from 'react';
-
+import { log } from '../utils/logger/logger'
+import { signIn, signOut, useSession } from 'next-auth/client'
 import classes from '../styles/Home.module.css';
 import styles from '../styles/Home.module.css';
 import useStyles from './index.styles';
@@ -12,6 +13,7 @@ import DefaultLayout from '../layouts/DefaultLayout';
 
 const index = () => {
   const customClass = useStyles();
+  const [session, loading] = useSession()
 
   return (
     <>
@@ -26,10 +28,18 @@ const index = () => {
             content="minimum-scale=1, initial-scale=1, width=device-width"
           />
         </Head>
-        <div className={customClass.main}>
-          <h1>Dotts Trading Cards API</h1>
-          <p>hello world</p>
-        </div>
+        {!session && (
+          <>
+            Not signed in <br />
+            <button onClick={signIn}>Sign in</button>
+          </>
+        )}
+        {session && (
+          <>
+            Signed in as {session.user.email} <br />
+            <button onClick={signOut}>Sign out</button>
+          </>
+        )}
       </Container>
     </>
   );
