@@ -1,5 +1,4 @@
 import React from 'react'
-import { log } from '../utils/logger/logger'
 import { signIn, signOut, useSession } from 'next-auth/client'
 
 const index = () => {
