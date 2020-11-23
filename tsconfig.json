@@ -21,6 +21,6 @@
     "pages/index.tsx",
     "pages/api/schemas/Card.ts",
     "pages/api/schemas/User.js"
-  ],
+, "pages/api/database/database.js"  ],
   "exclude": ["node_modules"]
 }

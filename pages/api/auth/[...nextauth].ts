@@ -1,7 +1,6 @@
 import NextAuth from 'next-auth'
 import Providers from 'next-auth/providers'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { Provider } from 'react'
 
 const options = {
   providers: [
@@ -18,4 +17,8 @@ const options = {
   },
 }
 
-export default (req, res) => NextAuth(req, res, options)
+const index = (request: NextApiRequest, response: NextApiResponse) => {
+  NextAuth(request, response, options)
+}
+
+export default index
