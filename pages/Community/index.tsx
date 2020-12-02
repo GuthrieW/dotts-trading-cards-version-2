@@ -3,7 +3,7 @@ import { getLayout } from '../../layouts/DefaultLayout';
 
 function CommunityPage() {
   return (
-    <div>Community Page</div>
+    <h1>Community Page</h1>
   )
 };
 

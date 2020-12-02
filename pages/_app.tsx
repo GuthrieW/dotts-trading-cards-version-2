@@ -4,7 +4,8 @@ import React from 'react';
 import DefaultLayout from '../layouts/DefaultLayout';
 import '../styles/globals.css';
 
-const MyApp = ({ Component, pageProps }) => {
+
+const App = ({ Component, pageProps }) => {
 
   React.useEffect(() => {
     // Remove the server-side injected CSS.
