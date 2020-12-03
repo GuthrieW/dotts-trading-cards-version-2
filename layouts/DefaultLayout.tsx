@@ -9,8 +9,9 @@ import useStyles from '../pages/index.styles'
 import CommunityIcon from '../public/icons/CommunityIcon'
 import MyCardsIcon from '../public/icons/MyCardsIcon'
 import OpenPacksIcon from '../public/icons/OpenPacksIcon'
-import { signIn, signOut, useSession } from 'next-auth/client'
+import { signOut, useSession } from 'next-auth/client'
 import { BottomNavigationActionLink } from '../components/BottomNavigationActionLink'
+import SplashScreen from '../components/SplashScreen/SplashScreen'
 
 const darkTheme = createMuiTheme({
   palette: {
@@ -27,46 +28,41 @@ const DefaultLayout = ({ children }) => {
 
   return (
     <ThemeProvider theme={darkTheme}>
-      {!loading && !session && (
-        <>
-          Not signed in <br />
-          <button onClick={signIn}>Sign in</button>
-        </>
-      )}
+      {!loading && !session && <SplashScreen />}
       {session && (
         <>
           Signed in as {session.user.email} <br />
           <button onClick={signOut}>Sign out</button>
+          {children}
+          <BottomNavigation
+            value={value}
+            onChange={(event, newValue) => {
+              setValue(newValue)
+            }}
+            showLabels
+            className={customClass.footer}
+          >
+            <BottomNavigationAction
+              component={BottomNavigationActionLink}
+              href={'/MyCards'}
+              label="My Cards"
+              icon={<MyCardsIcon />}
+            />
+            <BottomNavigationAction
+              component={BottomNavigationActionLink}
+              href={'/OpenPacks'}
+              label="Open Packs"
+              icon={<OpenPacksIcon />}
+            />
+            <BottomNavigationAction
+              component={BottomNavigationActionLink}
+              href={'/Community'}
+              label="Community"
+              icon={<CommunityIcon />}
+            />
+          </BottomNavigation>
         </>
       )}
-      {children}
-      <BottomNavigation
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue)
-        }}
-        showLabels
-        className={customClass.footer}
-      >
-        <BottomNavigationAction
-          component={BottomNavigationActionLink}
-          href={'/MyCards'}
-          label="My Cards"
-          icon={<MyCardsIcon />}
-        />
-        <BottomNavigationAction
-          component={BottomNavigationActionLink}
-          href={'/OpenPacks'}
-          label="Open Packs"
-          icon={<OpenPacksIcon />}
-        />
-        <BottomNavigationAction
-          component={BottomNavigationActionLink}
-          href={'/Community'}
-          label="Community"
-          icon={<CommunityIcon />}
-        />
-      </BottomNavigation>
     </ThemeProvider>
   )
 }
