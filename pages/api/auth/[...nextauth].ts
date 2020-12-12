@@ -15,6 +15,13 @@ const options = {
     useNewUrlParser: true,
     url: process.env.DATABASE_CONNECTION,
   },
+
+  callbacks: {
+    session: async (session, user) => {
+      session.user.id = user.id
+      return Promise.resolve(session)
+    },
+  },
 }
 
 const index = (request: NextApiRequest, response: NextApiResponse) => {

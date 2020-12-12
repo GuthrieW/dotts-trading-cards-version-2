@@ -24,4 +24,6 @@ const App = ({ Component, pageProps }) => {
   )
 }
 
+App.getLayout = App
+
 export default App
