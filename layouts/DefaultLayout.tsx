@@ -12,6 +12,7 @@ import OpenPacksIcon from '../public/icons/OpenPacksIcon'
 import { signOut, useSession } from 'next-auth/client'
 import { BottomNavigationActionLink } from '../components/BottomNavigationActionLink'
 import SplashScreen from '../components/SplashScreen/SplashScreen'
+import { DOTTS_USER_ID_STORAGE } from '../utils/constants'
 
 const darkTheme = createMuiTheme({
   palette: {
@@ -25,6 +26,10 @@ const DefaultLayout = ({ children }) => {
   const [session, loading] = useSession()
 
   if (loading) return null
+
+  if (session) {
+    localStorage.setItem(DOTTS_USER_ID_STORAGE, session.user.id)
+  }
 
   return (
     <ThemeProvider theme={darkTheme}>
