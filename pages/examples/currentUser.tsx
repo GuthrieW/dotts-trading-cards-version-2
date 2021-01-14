@@ -6,7 +6,7 @@ import axios from 'axios'
 function useCollection(userId) {
   return useQuery('collection', async () => {
     const { data } = await axios.get(
-      `http://localhost:3000/api/v1/user/currentUser/${userId}`
+      `http://localhost:3000/api/v1/currentUser/${userId}`
     )
     return data
   })
