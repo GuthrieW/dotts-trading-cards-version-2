@@ -51,15 +51,6 @@ const useStyles = makeStyles((theme) => ({
   collectionContainer: {
     marginTop: 16,
   },
-  tabsContainer: {
-    // position: 'relative',
-  },
-  tabsAll: {
-    // position: 'absolute',
-  },
-  rarityTabs: {
-    maxWidth: '100%',
-  },
 }))
 
 export default useStyles
