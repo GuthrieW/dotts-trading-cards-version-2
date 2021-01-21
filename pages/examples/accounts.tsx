@@ -1,10 +1,11 @@
 import React from 'react'
 import { useQuery } from 'react-query'
 import axios from 'axios'
+import { API_URL } from '../../utils/constants'
 
 function useAccounts() {
   return useQuery('accounts', async () => {
-    const { data } = await axios.get('http://localhost:3000/api/v1/user/')
+    const { data } = await axios.get(`${API_URL}/api/v1/user/`)
     return data
   })
 }
