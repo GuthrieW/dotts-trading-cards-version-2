@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { connect, disconnect } from './../../database/database'
+import { connect, disconnect } from '../../../database/database'
 
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
   const { userId } = request.query
