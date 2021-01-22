@@ -1,6 +1,6 @@
 import { Grid, Box, Dialog, DialogContent, DialogTitle } from "@material-ui/core";
 import React from "react";
-import useStyles from "../pages/MyCards/MyCards.styles";
+import useStyles from "./PlayerCard.styles";
 
 const PlayerCard = ({ card, currentCard, handleOpenCard, handleCloseCard, open }) => {
   const classes = useStyles();

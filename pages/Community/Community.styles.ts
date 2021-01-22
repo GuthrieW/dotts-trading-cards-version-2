@@ -1,10 +1,11 @@
 import { makeStyles } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '100%',
+  },
   container: {
-    display: 'flex',
-    flex: '1 1 auto',
-    flexDirection: 'column',
+    maxHeight: 440,
   },
 }))
 
