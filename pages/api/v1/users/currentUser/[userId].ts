@@ -3,14 +3,18 @@ import { ObjectId } from 'mongodb'
 import { connect } from '../../../database/database'
 
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
-  const { userId } = request.query
   const { database } = await connect()
+  const { userId } = request.query
 
-  const result = await database
-    .collection('accounts')
-    .findOne({ userId: new ObjectId(userId.toString()) })
+  const providerAccountId = await database.collection('accounts').findOne({
+    userId: userId,
+  })
 
-  response.status(200).send(result)
+  const account = await database.collection('dottsAccounts').findOne({
+    providerAccountId: providerAccountId,
+  })
+
+  response.status(200).send(account)
 }
 
 export default index

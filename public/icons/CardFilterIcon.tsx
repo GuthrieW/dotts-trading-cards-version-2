@@ -5,20 +5,20 @@ const useStyles = makeStyles({
   imageIcon: {
     display: 'flex',
     height: 'inherit',
-    width: 'inherit'
+    width: 'inherit',
   },
   iconRoot: {
-    textAlign: 'center'
-  }
-});
-
+    textAlign: 'center',
+  },
+})
 
 const CardFilterIcon = ({ iconImage }) => {
-  const classes = useStyles();
+  const classes = useStyles()
   return (
     <Icon classes={{ root: classes.iconRoot }}>
       <img className={classes.imageIcon} src={iconImage} />
-    </Icon>)
-};
+    </Icon>
+  )
+}
 
 export default CardFilterIcon

@@ -1,5 +1,5 @@
 import React from 'react'
-import CollectionView from '../../components/CollectionView/CollectionView';
+import CollectionView from '../../components/CollectionView/CollectionView'
 
 function MyCardsPage() {
   return <CollectionView />

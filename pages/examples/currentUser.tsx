@@ -1,19 +1,24 @@
 import React from 'react'
 import { useQuery } from 'react-query'
-import { DOTTS_USER_ID_STORAGE } from '../../utils/constants'
+import { DOTTS_USER_ID_STORAGE, API_URL } from '../../utils/constants'
 import axios from 'axios'
 
-function useCollection(userId) {
+function useCurrentUserAccount(userId) {
   return useQuery('collection', async () => {
-    const { data } = await axios.get(
-      `http://localhost:3000/api/v1/currentUser/${userId}`
-    )
+    const { data } = await axios({
+      method: 'post',
+      url: `${API_URL}/api/v1/users/singleUser`,
+      data: {
+        userId: userId,
+      },
+    })
+
     return data
   })
 }
 
 const index = () => {
-  const { status, data, error, isFetching } = useCollection(
+  const { status, data, error, isFetching } = useCurrentUserAccount(
     localStorage.getItem(DOTTS_USER_ID_STORAGE)
   )
 
