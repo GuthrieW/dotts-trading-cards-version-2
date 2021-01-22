@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { ObjectId } from 'mongodb'
-import { connect } from '../../database/database'
+import { connect } from '../../../database/database'
 
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
   const { userId } = request.query
