@@ -18,6 +18,18 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
     .find({ _id: { $in: objectIds } })
     .toArray()
 
+  const groupdData = _.groupBy(cardIds)
+
+  _.forEach(groupdData, (group) => {
+    if (group.length > 1) {
+      const cardToAdd = _.find(result, (card) => {
+        return card._id == group[0]
+      })
+
+      _.times(group.length - 1, result.push(cardToAdd))
+    }
+  })
+
   response.status(200).send(result)
 }
 
