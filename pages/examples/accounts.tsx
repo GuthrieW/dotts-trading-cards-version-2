@@ -15,8 +15,21 @@ function useAccounts() {
   })
 }
 
+function useCards() {
+  return useQuery('cards', async () => {
+    const { data } = await axios({
+      method: 'post',
+      url: `${API_URL}/api/v1/users/allUsers`,
+      data: {},
+    })
+
+    return data
+  })
+}
+
 const accounts = () => {
   const { status, data, error, isFetching } = useAccounts()
+  const cards = useCards()
 
   return (
     <>

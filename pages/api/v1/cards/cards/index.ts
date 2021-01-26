@@ -12,8 +12,9 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
   })
 
   const result = await database
-    .collection('cards')
+    .collection('dotts_cards')
     .find({ _id: { $in: cardObjectIds } })
+    .toArray()
 
   response.status(200).send(result)
 }

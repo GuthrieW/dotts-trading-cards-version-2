@@ -10,7 +10,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
     userId: userId,
   })
 
-  const account = await database.collection('dottsAccounts').findOne({
+  const account = await database.collection('dotts_accounts').findOne({
     providerAccountId: providerAccountId,
   })
 

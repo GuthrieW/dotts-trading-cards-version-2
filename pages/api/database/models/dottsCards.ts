@@ -1,4 +1,4 @@
-export interface cards {
+export interface dottsCards {
   playerName: String // player_name
   playerTeam: String // player_team
   rarity: String // rarity
