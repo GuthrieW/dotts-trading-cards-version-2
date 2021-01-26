@@ -75,21 +75,28 @@ const CollectionView = (props) => {
       imageUrl: '/images/silver-icon.svg',
       isEnabled: false,
     },
-    { rarity: 'Star', imageUrl: '/images/gold-icon.svg', isEnabled: false },
-    { rarity: 'All-Pro', imageUrl: '/images/ruby-icon.svg', isEnabled: false },
+    {
+      rarity: 'Star',
+      imageUrl: '/images/gold-icon.svg',
+      isEnabled: false,
+    },
+    {
+      rarity: 'All-Pro',
+      imageUrl: '/images/ruby-icon.svg',
+      isEnabled: false,
+    },
     {
       rarity: 'Legend',
       imageUrl: '/images/sapphire-icon.svg',
       isEnabled: false,
     },
-    {
-      rarity: 'Specialty',
-      imageUrl: '/images/diamond-icon.svg',
-      isEnabled: false,
-    },
+    // {
+    //   rarity: 'Specialty',
+    //   imageUrl: '/images/diamond-icon.svg',
+    //   isEnabled: false,
+    // },
   ])
 
-  const ARRAY_OF_RARITIES = ['Backup', 'Starter', 'Star', 'All-Pro', 'Legend']
   const enabledChips = sortOrder.filter((option) => option.isEnabled === true)
 
   const handleChipClick = (rarityFilter, index) => {
@@ -111,80 +118,64 @@ const CollectionView = (props) => {
     setSearchTerm(event.target.value)
   }
 
-  const getFilterResults = (searchTerm, enabledChips) => {
-    const enabledChipRarities = enabledChips.map((option) => option.rarity)
-    const includesSpecialtyCards = enabledChipRarities.includes('Specialty')
-    const onlySpecialtyCards =
-      enabledChips.length === 1 && enabledChips[0].rarity === 'Specialty'
-
-    if (!searchTerm && enabledChips.length === 0) {
-      return collectionCards
+  const getEnabledChipNames = (enabledChips) => {
+    let enabledChipNames = []
+    for (const enabledChip of enabledChips) {
+      enabledChipNames.push(enabledChip.rarity)
     }
 
-    if (!searchTerm && enabledChips) {
-      if (onlySpecialtyCards) {
-        return filterBySpecialty(false)
-      }
-      if (includesSpecialtyCards) {
-        return collectionCards.filter(
-          (card) =>
-            enabledChipRarities.includes(card.rarity) ||
-            !ARRAY_OF_RARITIES.includes(card.rarity)
-        )
-      } else {
-        return collectionCards.filter((card) =>
-          enabledChipRarities.includes(card.rarity)
-        )
-      }
-    }
-
-    if (searchTerm && !enabledChips) {
-      return collectionCards.filter(
-        (cards) =>
-          cards.playerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          cards.playerTeam.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    }
-
-    if (searchTerm && enabledChips) {
-      if (onlySpecialtyCards) {
-        return filterBySpecialty(true)
-      }
-      if (includesSpecialtyCards) {
-        return collectionCards.filter(
-          (card) =>
-            (card.playerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-              card.playerTeam
-                .toLowerCase()
-                .includes(searchTerm.toLowerCase())) &&
-            (enabledChipRarities.includes(card.rarity) ||
-              !ARRAY_OF_RARITIES.includes(card.rarity))
-        )
-      }
-      return collectionCards.filter(
-        (card) =>
-          (card.playerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            card.playerTeam.toLowerCase().includes(searchTerm.toLowerCase())) &&
-          enabledChipRarities.includes(card.rarity)
-      )
-    }
+    return enabledChipNames
   }
 
-  const filterBySpecialty = (hasSearchTerm) => {
-    if (!hasSearchTerm) {
-      return collectionCards.filter(
-        (card) => !ARRAY_OF_RARITIES.includes(card.rarity)
-      )
+  const getCardsWithSelectedRarities = (cards, selectedRarities) => {
+    let cardsWithSelectedRarity = []
+    for (const card of cards) {
+      if (selectedRarities.includes(card.rarity)) {
+        cardsWithSelectedRarity.push(card)
+      }
     }
 
-    if (hasSearchTerm) {
-      return collectionCards.filter(
-        (card) =>
-          (card.playerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            card.playerTeam.toLowerCase().includes(searchTerm.toLowerCase())) &&
-          !ARRAY_OF_RARITIES.includes(card.rarity)
-      )
+    return cardsWithSelectedRarity
+  }
+
+  const getCardsWithMatchingTerms = (cards, searchTerm) => {
+    let cardsWithMatchingTerms = []
+    for (const card of cards) {
+      if (
+        card.playerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        card.playerTeam.toLowerCase().includes(searchTerm.toLowerCase())
+      ) {
+        cardsWithMatchingTerms.push(card)
+      }
     }
+
+    return cardsWithMatchingTerms
+  }
+
+  const getFilterResults = (searchTerm, enabledChips) => {
+    const chipsEnabled = enabledChips.length != 0
+    const searchTermEnabled = searchTerm != ''
+    const enabledChipNames = getEnabledChipNames(enabledChips)
+
+    let cardsToShow = []
+    if (chipsEnabled && searchTermEnabled) {
+      cardsToShow = getCardsWithSelectedRarities(
+        collectionCards,
+        enabledChipNames
+      )
+      cardsToShow = getCardsWithMatchingTerms(cardsToShow, searchTerm)
+    } else if (chipsEnabled) {
+      cardsToShow = getCardsWithSelectedRarities(
+        collectionCards,
+        enabledChipNames
+      )
+    } else if (searchTermEnabled) {
+      cardsToShow = getCardsWithMatchingTerms(collectionCards, searchTerm)
+    } else {
+      cardsToShow = collectionCards
+    }
+
+    return cardsToShow
   }
 
   return (
@@ -222,13 +213,12 @@ const CollectionView = (props) => {
           setSearchTerm(newInputValue)
         }}
       />
-      <div></div>
 
       <Grid className={classes.collectionContainer} container spacing={1}>
-        {getFilterResults(searchTerm, enabledChips).map((card) => {
+        {getFilterResults(searchTerm, enabledChips).map((card, index) => {
           return (
             <PlayerCard
-              key={card.rarity + card.playerName}
+              key={`${card.rarity}-${card.playerName}-${index}`}
               card={card}
               currentCard={currentCard}
               handleOpenCard={handleClickOpen}
