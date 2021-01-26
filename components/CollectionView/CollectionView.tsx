@@ -14,81 +14,6 @@ import { API_URL } from '../../utils/constants'
 import PlayerCard from '../PlayerCard/PlayerCard'
 import useStyles from './CollectionView.styles'
 
-/*
-* 
-function useCollectionCards() {
-  return useQuery('collectionCards', async () => {
-    const { data } = await axios({
-      method: 'post',
-      url: `${API_URL}/api/v1/users/singleUser`,
-      data: {
-        userId: userId
-      }
-    })
-
-    return data
-  })
-}
-*/
-
-// const mockCards = [
-//   {
-//     playerName: 'Darrel Williams',
-//     playerTeam: 'Baltimore Hawks',
-//     rarity: 'Star',
-//     imageUrl: 'https://i.imgur.com/pQCWko3.png',
-//   },
-//   {
-//     playerName: 'Quinten Sinclair',
-//     playerTeam: 'Baltimore Hawks',
-//     rarity: 'Star',
-//     imageUrl: 'https://i.imgur.com/7WjIvzj.png',
-//   },
-//   {
-//     playerName: 'Tony Gabagool',
-//     playerTeam: 'Colorado Yeti',
-//     rarity: 'Star',
-//     imageUrl: 'https://i.imgur.com/rNwmXqB.jpg',
-//   },
-//   {
-//     playerName: 'Ben Stackinpaper',
-//     playerTeam: 'Baltimore Hawks',
-//     rarity: 'Starter',
-//     imageUrl: 'https://i.imgur.com/OSSrZkw.png',
-//   },
-//   {
-//     playerName: 'Bruce Buckley',
-//     playerTeam: 'Arizona Outlaws',
-//     rarity: 'Starter',
-//     imageUrl: 'https://i.ibb.co/RD4D42N/Bruce-Buckley.png',
-//   },
-//   {
-//     playerName: 'Sardine Bean',
-//     playerTeam: 'Baltimore Hawks',
-//     rarity: 'Backup',
-//     imageUrl: 'https://i.imgur.com/ilx8JNQ.png',
-//   },
-//   {
-//     playerName: 'Pete Parker',
-//     playerTeam: 'Colorado Yeti',
-//     rarity: 'All-Pro',
-//     imageUrl: 'https://i.imgur.com/NySSiLQ.jpg',
-//   },
-//   {
-//     playerName: 'Forrest Gump',
-//     playerTeam: 'New Orleans Second Line',
-//     rarity: 'Legend',
-//     imageUrl: 'https://i.imgur.com/kUbBRFS.png',
-//   },
-//   {
-//     playerName: 'Ian Bavitz',
-//     playerTeam: 'Orange County Otters',
-//     rarity: 'Hall of Fame',
-//     imageUrl:
-//       'https://media.discordapp.net/attachments/721761354846961716/736011625747841084/bavitz.png?width=441&height=618',
-//   },
-// ]
-
 const CollectionView = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [open, setOpen] = React.useState(false)
@@ -112,7 +37,6 @@ const CollectionView = () => {
       })
 
       setCollectionCards(userCards.data)
-      console.log(userCards.data)
     }
 
     fetchData()
