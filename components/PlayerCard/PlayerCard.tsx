@@ -16,7 +16,6 @@ const PlayerCard = ({
   open,
 }) => {
   const classes = useStyles()
-  console.log(card)
   return (
     <Grid key={card.playerName} item xs={6} md={4} lg={3}>
       <Box onClick={() => handleOpenCard(card)}>

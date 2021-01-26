@@ -14,24 +14,20 @@ import { API_URL } from '../../utils/constants'
 import PlayerCard from '../PlayerCard/PlayerCard'
 import useStyles from './CollectionView.styles'
 
-const CollectionView = () => {
+const CollectionView = (props) => {
   const [searchTerm, setSearchTerm] = useState('')
   const [open, setOpen] = React.useState(false)
   const [currentCard, setCurrentCard] = useState(null)
   const [collectionCards, setCollectionCards] = useState([])
 
-  // TODO - need to add a way to pass someone else's userId to this.
-  // On the community page we get all of the user's providerAccountId's which would allow us to
-  // get a user, but it needs to be passed in here as a prop so we can replace the userId being
-  // passed in the API call in the useEffect
   useEffect(() => {
     const fetchData = async () => {
+      const apiCallOptions = getUserApiCallOptions()
+
       const user = await axios({
         method: 'post',
-        url: `${API_URL}/api/v1/users/singleUser`,
-        data: {
-          userId: localStorage.getItem('dottsUserId'),
-        },
+        url: apiCallOptions.url,
+        data: apiCallOptions.data,
       })
 
       const userCards = await axios({
@@ -45,6 +41,24 @@ const CollectionView = () => {
 
     fetchData()
   }, [])
+
+  const getUserApiCallOptions = () => {
+    const apiCallOptions =
+      props.providerAccountId != null
+        ? {
+            url: `${API_URL}/api/v1/users/singleUser/providerAccountId`,
+            data: {
+              providerAccountId: props.providerAccountId,
+            },
+          }
+        : {
+            url: `${API_URL}/api/v1/users/singleUser/dottsUserId`,
+            data: {
+              userId: localStorage.getItem('dottsUserId'),
+            },
+          }
+    return apiCallOptions
+  }
 
   const theme = useTheme()
   const mdUp = useMediaQuery(theme.breakpoints.up('md'))
@@ -212,7 +226,6 @@ const CollectionView = () => {
 
       <Grid className={classes.collectionContainer} container spacing={1}>
         {getFilterResults(searchTerm, enabledChips).map((card) => {
-          console.log(card)
           return (
             <PlayerCard
               key={card.rarity + card.playerName}

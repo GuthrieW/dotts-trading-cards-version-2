@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { ObjectId } from 'mongodb'
-import { connect } from '../../../database/database'
+import { connect } from '../../../../database/database'
 
 // TODO - Change this to take in a providerAccountId
 const index = async (request: NextApiRequest, response: NextApiResponse) => {

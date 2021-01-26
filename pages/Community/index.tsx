@@ -9,11 +9,10 @@ import {
   TablePagination,
 } from '@material-ui/core'
 import axios from 'axios'
-import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
-import { useQuery } from 'react-query'
 import useStyles from './Community.styles'
 import { API_URL } from '../../utils/constants'
+import Router from 'next/router'
 
 const columns = [
   { id: 'isflUsername', label: 'Name', minWidth: 170 },
@@ -38,6 +37,13 @@ function CommunityPage() {
     fetchData()
   }, [])
 
+  const handleOnClick = (isflUsername, providerAccountId) => {
+    Router.push({
+      pathname: `/Community/${isflUsername}`,
+      query: { providerAccountId: providerAccountId },
+    })
+  }
+
   return (
     <>
       <h1>Community Page</h1>
@@ -57,7 +63,7 @@ function CommunityPage() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {communityAccounts.map((row) => {
+              {communityAccounts.map((row, index) => {
                 if (row.isflUsername === '') {
                   return
                 }
@@ -66,26 +72,27 @@ function CommunityPage() {
                     hover
                     role="checkbox"
                     tabIndex={-1}
-                    key={row.isflUsername}
+                    key={`${row.isflUsername}-${index}`}
                   >
-                    {columns.map((column) => {
-                      if (column.id === 'ownedCards') {
-                        const value = row[column.id].length
+                    {columns.map((column, index) => {
+                      const value =
+                        column.id === 'ownedCards'
+                          ? row[column.id].length
+                          : row[column.id]
 
-                        return (
-                          <Link href={`/Community/${row.isflUsername}`}>
-                            <TableCell key={column.id}>{value}</TableCell>
-                          </Link>
-                        )
-                      } else {
-                        const value = row[column.id]
-
-                        return (
-                          <Link href={`/Community/${row.isflUsername}`}>
-                            <TableCell key={column.id}>{value}</TableCell>
-                          </Link>
-                        )
-                      }
+                      return (
+                        <TableCell
+                          onClick={() =>
+                            handleOnClick(
+                              row.isflUsername,
+                              row.providerAccountId
+                            )
+                          }
+                          key={`${column.id}-${index}`}
+                        >
+                          {value}
+                        </TableCell>
+                      )
                     })}
                   </TableRow>
                 )
