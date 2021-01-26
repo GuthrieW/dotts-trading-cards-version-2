@@ -20,6 +20,10 @@ const CollectionView = () => {
   const [currentCard, setCurrentCard] = useState(null)
   const [collectionCards, setCollectionCards] = useState([])
 
+  // TODO - need to add a way to pass someone else's userId to this.
+  // On the community page we get all of the user's providerAccountId's which would allow us to
+  // get a user, but it needs to be passed in here as a prop so we can replace the userId being
+  // passed in the API call in the useEffect
   useEffect(() => {
     const fetchData = async () => {
       const user = await axios({
