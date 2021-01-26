@@ -32,10 +32,10 @@ const DefaultLayout = ({ children }) => {
   const [session, loading] = useSession()
 
   const updateValue = (val) => {
-    setValue(val);
+    setValue(val)
   }
-  const theme = useTheme();
-  const lgUp = useMediaQuery(theme.breakpoints.up("lg"));
+  const theme = useTheme()
+  const lgUp = useMediaQuery(theme.breakpoints.up('lg'))
 
   if (loading) return null
 
@@ -57,16 +57,20 @@ const DefaultLayout = ({ children }) => {
                 </Typography>
               </Toolbar>
             </AppBar>
-            {lgUp &&
-              <SidebarNav value={value} updateTabValue={updateValue} sessionValue={session} />
-            }
+            {lgUp && (
+              <SidebarNav
+                value={value}
+                updateTabValue={updateValue}
+                sessionValue={session}
+              />
+            )}
             <main className={classes.content}>
               <div className={classes.toolbar} />
               {children}
             </main>
-            {!lgUp &&
+            {!lgUp && (
               <>
-                < BottomNavigation
+                <BottomNavigation
                   value={value}
                   onChange={(event, newValue) => {
                     setValue(newValue)
@@ -94,12 +98,11 @@ const DefaultLayout = ({ children }) => {
                   />
                 </BottomNavigation>
               </>
-            }
+            )}
           </div>
         </>
-      )
-      }
-    </ThemeProvider >
+      )}
+    </ThemeProvider>
   )
 }
 

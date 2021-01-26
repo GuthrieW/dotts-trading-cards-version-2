@@ -5,7 +5,12 @@ import { API_URL } from '../../utils/constants'
 
 function useAccounts() {
   return useQuery('accounts', async () => {
-    const { data } = await axios.get(`${API_URL}/api/v1/user/`)
+    const { data } = await axios({
+      method: 'post',
+      url: `${API_URL}/api/v1/users/allUsers`,
+      data: {},
+    })
+
     return data
   })
 }

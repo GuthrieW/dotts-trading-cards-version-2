@@ -1,13 +1,14 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { ObjectId } from 'mongodb'
-import { connect } from '../../database/database'
+import { connect } from '../../../database/database'
 import _ from 'lodash'
 
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
-  const { cardIds } = request.query
   const { database } = await connect()
+  const { cardIds } = request.query
+
   const cardObjectIds = _.forEach(cardIds, (cardId) => {
-    return new ObjectId(cardId)
+    return new ObjectId(cardId.toString())
   })
 
   const result = await database
