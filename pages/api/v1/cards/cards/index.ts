@@ -5,15 +5,17 @@ import _ from 'lodash'
 
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
   const { database } = await connect()
-  const { cardIds } = request.query
+  const { cardIds } = request.body
 
-  const cardObjectIds = _.forEach(cardIds, (cardId) => {
-    return new ObjectId(cardId.toString())
+  let objectIds = []
+
+  _.forEach(cardIds, (cardId) => {
+    objectIds.push(new ObjectId(cardId))
   })
 
   const result = await database
     .collection('dotts_cards')
-    .find({ _id: { $in: cardObjectIds } })
+    .find({ _id: { $in: objectIds } })
     .toArray()
 
   response.status(200).send(result)

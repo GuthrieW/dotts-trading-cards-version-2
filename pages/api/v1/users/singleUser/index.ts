@@ -4,14 +4,14 @@ import { connect } from '../../../database/database'
 
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
   const { database } = await connect()
-  const { userId } = request.query
+  const { userId } = request.body
 
-  const providerAccountId = await database.collection('accounts').findOne({
-    userId: userId,
+  const providerAccount = await database.collection('accounts').findOne({
+    userId: new ObjectId(userId),
   })
 
   const account = await database.collection('dotts_accounts').findOne({
-    providerAccountId: providerAccountId,
+    providerAccountId: providerAccount.providerAccountId,
   })
 
   response.status(200).send(account)

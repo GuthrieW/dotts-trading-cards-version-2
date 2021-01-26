@@ -16,10 +16,11 @@ const PlayerCard = ({
   open,
 }) => {
   const classes = useStyles()
+  console.log(card)
   return (
-    <Grid key={card.player_name} item xs={6} md={4} lg={3}>
+    <Grid key={card.playerName} item xs={6} md={4} lg={3}>
       <Box onClick={() => handleOpenCard(card)}>
-        <img className={classes.cardContainer} src={card.image_url} />
+        <img className={classes.cardContainer} src={card.imageUrl} />
       </Box>
       <Dialog
         open={open}
@@ -29,15 +30,12 @@ const PlayerCard = ({
       >
         <DialogContent>
           {currentCard && (
-            <img
-              className={classes.cardContainer}
-              src={currentCard.image_url}
-            />
+            <img className={classes.cardContainer} src={currentCard.imageUrl} />
           )}
         </DialogContent>
         {currentCard && (
           <DialogTitle id="alert-dialog-title">
-            {currentCard.player_name} - {currentCard.rarity}
+            {currentCard.playerName} - {currentCard.rarity}
           </DialogTitle>
         )}
       </Dialog>

@@ -8,7 +8,9 @@ import {
   useTheme,
 } from '@material-ui/core'
 import { Autocomplete } from '@material-ui/lab'
-import React, { useState } from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import { API_URL } from '../../utils/constants'
 import PlayerCard from '../PlayerCard/PlayerCard'
 import useStyles from './CollectionView.styles'
 
@@ -29,68 +31,92 @@ function useCollectionCards() {
 }
 */
 
-const mockCards = [
-  {
-    player_name: 'Darrel Williams',
-    player_team: 'Baltimore Hawks',
-    rarity: 'Star',
-    image_url: 'https://i.imgur.com/pQCWko3.png',
-  },
-  {
-    player_name: 'Quinten Sinclair',
-    player_team: 'Baltimore Hawks',
-    rarity: 'Star',
-    image_url: 'https://i.imgur.com/7WjIvzj.png',
-  },
-  {
-    player_name: 'Tony Gabagool',
-    player_team: 'Colorado Yeti',
-    rarity: 'Star',
-    image_url: 'https://i.imgur.com/rNwmXqB.jpg',
-  },
-  {
-    player_name: 'Ben Stackinpaper',
-    player_team: 'Baltimore Hawks',
-    rarity: 'Starter',
-    image_url: 'https://i.imgur.com/OSSrZkw.png',
-  },
-  {
-    player_name: 'Bruce Buckley',
-    player_team: 'Arizona Outlaws',
-    rarity: 'Starter',
-    image_url: 'https://i.ibb.co/RD4D42N/Bruce-Buckley.png',
-  },
-  {
-    player_name: 'Sardine Bean',
-    player_team: 'Baltimore Hawks',
-    rarity: 'Backup',
-    image_url: 'https://i.imgur.com/ilx8JNQ.png',
-  },
-  {
-    player_name: 'Pete Parker',
-    player_team: 'Colorado Yeti',
-    rarity: 'All-Pro',
-    image_url: 'https://i.imgur.com/NySSiLQ.jpg',
-  },
-  {
-    player_name: 'Forrest Gump',
-    player_team: 'New Orleans Second Line',
-    rarity: 'Legend',
-    image_url: 'https://i.imgur.com/kUbBRFS.png',
-  },
-  {
-    player_name: 'Ian Bavitz',
-    player_team: 'Orange County Otters',
-    rarity: 'Hall of Fame',
-    image_url:
-      'https://media.discordapp.net/attachments/721761354846961716/736011625747841084/bavitz.png?width=441&height=618',
-  },
-]
+// const mockCards = [
+//   {
+//     playerName: 'Darrel Williams',
+//     playerTeam: 'Baltimore Hawks',
+//     rarity: 'Star',
+//     imageUrl: 'https://i.imgur.com/pQCWko3.png',
+//   },
+//   {
+//     playerName: 'Quinten Sinclair',
+//     playerTeam: 'Baltimore Hawks',
+//     rarity: 'Star',
+//     imageUrl: 'https://i.imgur.com/7WjIvzj.png',
+//   },
+//   {
+//     playerName: 'Tony Gabagool',
+//     playerTeam: 'Colorado Yeti',
+//     rarity: 'Star',
+//     imageUrl: 'https://i.imgur.com/rNwmXqB.jpg',
+//   },
+//   {
+//     playerName: 'Ben Stackinpaper',
+//     playerTeam: 'Baltimore Hawks',
+//     rarity: 'Starter',
+//     imageUrl: 'https://i.imgur.com/OSSrZkw.png',
+//   },
+//   {
+//     playerName: 'Bruce Buckley',
+//     playerTeam: 'Arizona Outlaws',
+//     rarity: 'Starter',
+//     imageUrl: 'https://i.ibb.co/RD4D42N/Bruce-Buckley.png',
+//   },
+//   {
+//     playerName: 'Sardine Bean',
+//     playerTeam: 'Baltimore Hawks',
+//     rarity: 'Backup',
+//     imageUrl: 'https://i.imgur.com/ilx8JNQ.png',
+//   },
+//   {
+//     playerName: 'Pete Parker',
+//     playerTeam: 'Colorado Yeti',
+//     rarity: 'All-Pro',
+//     imageUrl: 'https://i.imgur.com/NySSiLQ.jpg',
+//   },
+//   {
+//     playerName: 'Forrest Gump',
+//     playerTeam: 'New Orleans Second Line',
+//     rarity: 'Legend',
+//     imageUrl: 'https://i.imgur.com/kUbBRFS.png',
+//   },
+//   {
+//     playerName: 'Ian Bavitz',
+//     playerTeam: 'Orange County Otters',
+//     rarity: 'Hall of Fame',
+//     imageUrl:
+//       'https://media.discordapp.net/attachments/721761354846961716/736011625747841084/bavitz.png?width=441&height=618',
+//   },
+// ]
 
 const CollectionView = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [open, setOpen] = React.useState(false)
   const [currentCard, setCurrentCard] = useState(null)
+  const [collectionCards, setCollectionCards] = useState([])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const user = await axios({
+        method: 'post',
+        url: `${API_URL}/api/v1/users/singleUser`,
+        data: {
+          userId: localStorage.getItem('dottsUserId'),
+        },
+      })
+
+      const userCards = await axios({
+        method: 'post',
+        url: `${API_URL}/api/v1/cards/cards`,
+        data: { cardIds: user.data.ownedCards },
+      })
+
+      setCollectionCards(userCards.data)
+      console.log(userCards.data)
+    }
+
+    fetchData()
+  }, [])
 
   const theme = useTheme()
   const mdUp = useMediaQuery(theme.breakpoints.up('md'))
@@ -99,24 +125,24 @@ const CollectionView = () => {
   const [sortOrder, setSortOrder] = React.useState([
     {
       rarity: 'Backup',
-      image_url: '/images/bronze-icon.svg',
+      imageUrl: '/images/bronze-icon.svg',
       isEnabled: false,
     },
     {
       rarity: 'Starter',
-      image_url: '/images/silver-icon.svg',
+      imageUrl: '/images/silver-icon.svg',
       isEnabled: false,
     },
-    { rarity: 'Star', image_url: '/images/gold-icon.svg', isEnabled: false },
-    { rarity: 'All-Pro', image_url: '/images/ruby-icon.svg', isEnabled: false },
+    { rarity: 'Star', imageUrl: '/images/gold-icon.svg', isEnabled: false },
+    { rarity: 'All-Pro', imageUrl: '/images/ruby-icon.svg', isEnabled: false },
     {
       rarity: 'Legend',
-      image_url: '/images/sapphire-icon.svg',
+      imageUrl: '/images/sapphire-icon.svg',
       isEnabled: false,
     },
     {
       rarity: 'Specialty',
-      image_url: '/images/diamond-icon.svg',
+      imageUrl: '/images/diamond-icon.svg',
       isEnabled: false,
     },
   ])
@@ -150,7 +176,7 @@ const CollectionView = () => {
       enabledChips.length === 1 && enabledChips[0].rarity === 'Specialty'
 
     if (!searchTerm && enabledChips.length === 0) {
-      return mockCards
+      return collectionCards
     }
 
     if (!searchTerm && enabledChips) {
@@ -158,23 +184,23 @@ const CollectionView = () => {
         return filterBySpecialty(false)
       }
       if (includesSpecialtyCards) {
-        return mockCards.filter(
+        return collectionCards.filter(
           (card) =>
             enabledChipRarities.includes(card.rarity) ||
             !ARRAY_OF_RARITIES.includes(card.rarity)
         )
       } else {
-        return mockCards.filter((card) =>
+        return collectionCards.filter((card) =>
           enabledChipRarities.includes(card.rarity)
         )
       }
     }
 
     if (searchTerm && !enabledChips) {
-      return mockCards.filter(
+      return collectionCards.filter(
         (cards) =>
-          cards.player_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          cards.player_team.toLowerCase().includes(searchTerm.toLowerCase())
+          cards.playerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          cards.playerTeam.toLowerCase().includes(searchTerm.toLowerCase())
       )
     }
 
@@ -183,24 +209,20 @@ const CollectionView = () => {
         return filterBySpecialty(true)
       }
       if (includesSpecialtyCards) {
-        return mockCards.filter(
+        return collectionCards.filter(
           (card) =>
-            (card.player_name
-              .toLowerCase()
-              .includes(searchTerm.toLowerCase()) ||
-              card.player_team
+            (card.playerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+              card.playerTeam
                 .toLowerCase()
                 .includes(searchTerm.toLowerCase())) &&
             (enabledChipRarities.includes(card.rarity) ||
               !ARRAY_OF_RARITIES.includes(card.rarity))
         )
       }
-      return mockCards.filter(
+      return collectionCards.filter(
         (card) =>
-          (card.player_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            card.player_team
-              .toLowerCase()
-              .includes(searchTerm.toLowerCase())) &&
+          (card.playerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            card.playerTeam.toLowerCase().includes(searchTerm.toLowerCase())) &&
           enabledChipRarities.includes(card.rarity)
       )
     }
@@ -208,18 +230,16 @@ const CollectionView = () => {
 
   const filterBySpecialty = (hasSearchTerm) => {
     if (!hasSearchTerm) {
-      return mockCards.filter(
+      return collectionCards.filter(
         (card) => !ARRAY_OF_RARITIES.includes(card.rarity)
       )
     }
 
     if (hasSearchTerm) {
-      return mockCards.filter(
+      return collectionCards.filter(
         (card) =>
-          (card.player_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            card.player_team
-              .toLowerCase()
-              .includes(searchTerm.toLowerCase())) &&
+          (card.playerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            card.playerTeam.toLowerCase().includes(searchTerm.toLowerCase())) &&
           !ARRAY_OF_RARITIES.includes(card.rarity)
       )
     }
@@ -241,7 +261,7 @@ const CollectionView = () => {
               className={classes.rarityChip}
               variant={rarityFilter.isEnabled ? 'default' : 'outlined'}
               label={rarityFilter.rarity}
-              avatar={<Avatar src={rarityFilter.image_url} />}
+              avatar={<Avatar src={rarityFilter.imageUrl} />}
               onClick={() => handleChipClick(rarityFilter, index)}
             />
           )
@@ -249,10 +269,10 @@ const CollectionView = () => {
       </Box>
       <Autocomplete
         id="grouped-demo"
-        options={mockCards}
+        options={collectionCards}
         className={classes.search}
         groupBy={(option) => option.rarity}
-        getOptionLabel={(option) => option.player_name}
+        getOptionLabel={(option) => option.playerName}
         renderInput={(params) => (
           <TextField {...params} label="Enter player name" variant="outlined" />
         )}
@@ -264,9 +284,10 @@ const CollectionView = () => {
 
       <Grid className={classes.collectionContainer} container spacing={1}>
         {getFilterResults(searchTerm, enabledChips).map((card) => {
+          console.log(card)
           return (
             <PlayerCard
-              key={card.rarity + card.player_name}
+              key={card.rarity + card.playerName}
               card={card}
               currentCard={currentCard}
               handleOpenCard={handleClickOpen}
