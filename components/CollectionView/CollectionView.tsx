@@ -156,23 +156,14 @@ const CollectionView = (props) => {
     const chipsEnabled = enabledChips.length != 0
     const searchTermEnabled = searchTerm != ''
     const enabledChipNames = getEnabledChipNames(enabledChips)
+    let cardsToShow = collectionCards
 
-    let cardsToShow = []
-    if (chipsEnabled && searchTermEnabled) {
-      cardsToShow = getCardsWithSelectedRarities(
-        collectionCards,
-        enabledChipNames
-      )
+    if (chipsEnabled) {
+      cardsToShow = getCardsWithSelectedRarities(cardsToShow, enabledChipNames)
+    }
+
+    if (searchTermEnabled) {
       cardsToShow = getCardsWithMatchingTerms(cardsToShow, searchTerm)
-    } else if (chipsEnabled) {
-      cardsToShow = getCardsWithSelectedRarities(
-        collectionCards,
-        enabledChipNames
-      )
-    } else if (searchTermEnabled) {
-      cardsToShow = getCardsWithMatchingTerms(collectionCards, searchTerm)
-    } else {
-      cardsToShow = collectionCards
     }
 
     return cardsToShow
