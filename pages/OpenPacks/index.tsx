@@ -83,6 +83,7 @@ function OpenPacksPage() {
                   actionIcon={
                     <IconButton aria-label={`info about ${name}`}>
                       <Badge
+                        max={999}
                         color="secondary"
                         badgeContent={getNumberOfPacks(type)}
                       >
