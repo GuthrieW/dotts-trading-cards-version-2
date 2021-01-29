@@ -71,7 +71,6 @@ function OpenPacksPage() {
           const { type, name, imageUrl } = pack
           return (
             <GridListTile className={classes.cardContainer} key={name}>
-              {/* <Link href={`/OpenPacks/PackViewer/${type}`}> */}
               <div className={classes.linkContainer}>
                 <img
                   onClick={() => handleOnClick(type)}
