@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
 import List from '@material-ui/core/List'
@@ -8,12 +8,9 @@ import ListItemText from '@material-ui/core/ListItemText'
 import MyCardsIcon from '../public/icons/MyCardsIcon'
 import OpenPacksIcon from '../public/icons/OpenPacksIcon'
 import CommunityIcon from '../public/icons/CommunityIcon'
-import AdminIcon from '../public/icons/AdminIcon'
 import { Box, MenuItem } from '@material-ui/core'
 import { signOut } from 'next-auth/client'
 import Link from 'next/link'
-import { API_URL } from '../utils/constants'
-import axios from 'axios'
 
 const drawerWidth = 240
 
@@ -38,28 +35,6 @@ const useStyles = makeStyles((theme) => ({
 
 function PermanentDrawerLeft({ value, updateTabValue, sessionValue }) {
   const classes = useStyles()
-  const [seeAdminPage, setSeeAdminPage] = useState(false)
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const user = await axios({
-        method: 'post',
-        url: `${API_URL}/api/v1/users/singleUser/dottsUserId`,
-        data: {
-          userId: localStorage.getItem('dottsUserId'),
-        },
-      })
-
-      setSeeAdminPage(
-        user.data.isAdmin ||
-          user.data.isProcessor ||
-          user.data.isSubmitter ||
-          user.data.isPackIssuer
-      )
-    }
-
-    fetchData()
-  }, [])
 
   return (
     <>
@@ -117,20 +92,6 @@ function PermanentDrawerLeft({ value, updateTabValue, sessionValue }) {
               <ListItemText primary={'Community'} />
             </MenuItem>
           </Link>
-          {seeAdminPage && (
-            <Link href="/Admin">
-              <MenuItem
-                onClick={() => updateTabValue(3)}
-                selected={value === 3}
-                button
-              >
-                <ListItemIcon>
-                  <AdminIcon />
-                </ListItemIcon>
-                <ListItemText primary={'Admin'} />
-              </MenuItem>
-            </Link>
-          )}
         </List>
       </Drawer>
     </>
