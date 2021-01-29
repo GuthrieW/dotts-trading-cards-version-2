@@ -83,6 +83,9 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
       {
         $push: { ownedCards: { $each: pulledCardIds } },
         $inc: { ownedRegularPacks: -1 },
+        $set: {
+          newestCards: pulledCardIds,
+        },
       },
       {
         returnOriginal: false,

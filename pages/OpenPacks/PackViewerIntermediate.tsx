@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
+import Router, { useRouter } from 'next/router'
 import axios from 'axios'
 import { API_URL } from '../../utils/constants'
-import PackViewer from './PackViewer/[pack_type]'
 
-const PackViewerIntermediate = () => {
-  const router = useRouter()
-  const { packType } = router.query
+const PackViewerIntermediate = (props) => {
+  const { packType } = props
+  // const router = useRouter()
+  // const { packType } = router.query
 
   const [openedCards, setOpenedCards] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log('packType', packType)
       const user = await axios({
         method: 'post',
         url: `${API_URL}/api/v1/users/singleUser/dottsUserId`,
@@ -21,7 +20,6 @@ const PackViewerIntermediate = () => {
           userId: localStorage.getItem('dottsUserId'),
         },
       })
-      console.log('user', user)
 
       let packOpenUrl
       if (packType === 'regular') {
@@ -50,6 +48,12 @@ const PackViewerIntermediate = () => {
     fetchData()
   }, [])
 
+  const redirectToPackViewer = () => {
+    Router.push({
+      pathname: `/OpenPacks/PackViewer/PackViewer`,
+    })
+  }
+
   return (
     <>
       {isLoading && <h1>Loading...</h1>}
@@ -59,9 +63,7 @@ const PackViewerIntermediate = () => {
           caltroit_red_flames via discord.
         </h1>
       )}
-      {!isLoading && openedCards.length > 0 && (
-        <PackViewer cards={openedCards} />
-      )}
+      {!isLoading && openedCards.length > 0 && redirectToPackViewer()}
     </>
   )
 }

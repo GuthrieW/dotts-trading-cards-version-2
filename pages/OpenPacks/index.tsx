@@ -14,12 +14,15 @@ import { PACK_TYPES } from '../../utils/packs'
 import { API_URL } from '../../utils/constants'
 import axios from 'axios'
 import Router from 'next/router'
+import PackViewerIntermediate from './PackViewerIntermediate'
 
 function OpenPacksPage() {
   const theme = useTheme()
   const smUp = useMediaQuery(theme.breakpoints.up('sm'))
   const classes = useStyles()
   const [currentUser, setCurrentUser] = useState(null)
+  const [isRedirect, setIsRedirect] = useState(false)
+  const [packType, setPackType] = useState(null)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,16 +53,14 @@ function OpenPacksPage() {
   }
 
   const handleOnClick = async (packType) => {
-    Router.push({
-      pathname: `/OpenPacks/PackViewerIntermediate/`,
-      query: {
-        packType: packType,
-      },
-    })
+    setPackType(packType)
+    setIsRedirect(true)
+    return
   }
 
   return (
     <>
+      {isRedirect && <PackViewerIntermediate packType={packType} />}
       <h1>Open Packs</h1>
       <GridList
         className={classes.packsGrid}

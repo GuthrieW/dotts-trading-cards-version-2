@@ -1,11 +1,28 @@
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AnimatedPackViewer from './AnimatedPackViewer'
 import useStyles from './PackViewer.styles'
+import axios from 'axios'
 import StaticPackViewer from './StaticPackViewer'
+import { API_URL } from '../../../utils/constants'
 
-const PackViewer = (props) => {
-  const { cards } = props
+const PackViewer = () => {
+  const [cards, setCards] = useState([])
+  useEffect(() => {
+    const fetchData = async () => {
+      const user = await axios({
+        method: 'post',
+        url: `${API_URL}/api/v1/users/newestCards`,
+        data: {
+          userId: localStorage.getItem('dottsUserId'),
+        },
+      })
+
+      setCards(user.data.newestCards)
+    }
+
+    fetchData()
+  }, [])
 
   const [viewStyle, setViewStyle] = useState('animated')
   const classes = useStyles()
