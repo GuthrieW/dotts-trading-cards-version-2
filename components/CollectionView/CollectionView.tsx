@@ -197,6 +197,7 @@ const CollectionView = (props) => {
         className={classes.search}
         groupBy={(option) => option.rarity}
         getOptionLabel={(option) => option.playerName}
+        clearOnBlur={false}
         renderInput={(params) => (
           <TextField {...params} label="Enter player name" variant="outlined" />
         )}
