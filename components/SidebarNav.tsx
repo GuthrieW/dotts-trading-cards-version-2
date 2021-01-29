@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
 import List from '@material-ui/core/List'
@@ -12,6 +12,8 @@ import AdminIcon from '../public/icons/AdminIcon'
 import { Box, MenuItem } from '@material-ui/core'
 import { signOut } from 'next-auth/client'
 import Link from 'next/link'
+import { API_URL } from '../utils/constants'
+import axios from 'axios'
 
 const drawerWidth = 240
 
@@ -34,12 +36,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function PermanentDrawerLeft({
-  value,
-  updateTabValue,
-  sessionValue,
-}) {
+function PermanentDrawerLeft({ value, updateTabValue, sessionValue }) {
   const classes = useStyles()
+  const [seeAdminPage, setSeeAdminPage] = useState(false)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const user = await axios({
+        method: 'post',
+        url: `${API_URL}/api/v1/users/singleUser/dottsUserId`,
+        data: {
+          userId: localStorage.getItem('dottsUserId'),
+        },
+      })
+
+      setSeeAdminPage(
+        user.data.isAdmin ||
+          user.data.isProcessor ||
+          user.data.isSubmitter ||
+          user.data.isPackIssuer
+      )
+    }
+
+    fetchData()
+  }, [])
 
   return (
     <>
@@ -97,20 +117,24 @@ export default function PermanentDrawerLeft({
               <ListItemText primary={'Community'} />
             </MenuItem>
           </Link>
-          <Link href="/Admin">
-            <MenuItem
-              onClick={() => updateTabValue(3)}
-              selected={value === 3}
-              button
-            >
-              <ListItemIcon>
-                <AdminIcon />
-              </ListItemIcon>
-              <ListItemText primary={'Admin'} />
-            </MenuItem>
-          </Link>
+          {seeAdminPage && (
+            <Link href="/Admin">
+              <MenuItem
+                onClick={() => updateTabValue(3)}
+                selected={value === 3}
+                button
+              >
+                <ListItemIcon>
+                  <AdminIcon />
+                </ListItemIcon>
+                <ListItemText primary={'Admin'} />
+              </MenuItem>
+            </Link>
+          )}
         </List>
       </Drawer>
     </>
   )
 }
+
+export default PermanentDrawerLeft
