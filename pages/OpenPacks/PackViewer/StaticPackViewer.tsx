@@ -21,7 +21,7 @@ const StaticPackViewer = ({ cards }) => {
       {cards.map((card, index) => {
         return (
           <GridListTile key={index} className={classes.cardContainer}>
-            <img className={classes.cardImage} src={card.image_url} />
+            <img className={classes.cardImage} src={card.imageUrl} />
           </GridListTile>
         )
       })}

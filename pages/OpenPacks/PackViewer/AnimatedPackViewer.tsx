@@ -77,7 +77,7 @@ const AnimatedPackViewer = ({ cards }) => {
               {...bind(i)}
               style={{
                 transform: interpolate([rot, scale], trans),
-                backgroundImage: `url(${cards[i].image_url})`,
+                backgroundImage: `url(${cards[i].imageUrl})`,
               }}
             />
           </animated.div>

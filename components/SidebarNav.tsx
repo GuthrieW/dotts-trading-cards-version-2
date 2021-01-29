@@ -9,7 +9,7 @@ import MyCardsIcon from '../public/icons/MyCardsIcon'
 import OpenPacksIcon from '../public/icons/OpenPacksIcon'
 import CommunityIcon from '../public/icons/CommunityIcon'
 import { Box, MenuItem } from '@material-ui/core'
-import { signOut, useSession } from 'next-auth/client'
+import { signOut } from 'next-auth/client'
 import Link from 'next/link'
 
 const drawerWidth = 240
