@@ -8,7 +8,6 @@ import ListItemText from '@material-ui/core/ListItemText'
 import MyCardsIcon from '../public/icons/MyCardsIcon'
 import OpenPacksIcon from '../public/icons/OpenPacksIcon'
 import CommunityIcon from '../public/icons/CommunityIcon'
-import AdminIcon from '../public/icons/AdminIcon'
 import { Box, MenuItem } from '@material-ui/core'
 import { signOut } from 'next-auth/client'
 import Link from 'next/link'
@@ -34,11 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function PermanentDrawerLeft({
-  value,
-  updateTabValue,
-  sessionValue,
-}) {
+function PermanentDrawerLeft({ value, updateTabValue, sessionValue }) {
   const classes = useStyles()
 
   return (
@@ -97,20 +92,10 @@ export default function PermanentDrawerLeft({
               <ListItemText primary={'Community'} />
             </MenuItem>
           </Link>
-          <Link href="/Admin">
-            <MenuItem
-              onClick={() => updateTabValue(3)}
-              selected={value === 3}
-              button
-            >
-              <ListItemIcon>
-                <AdminIcon />
-              </ListItemIcon>
-              <ListItemText primary={'Admin'} />
-            </MenuItem>
-          </Link>
         </List>
       </Drawer>
     </>
   )
 }
+
+export default PermanentDrawerLeft

@@ -9,7 +9,7 @@ const index = () => {
     <>
       <Container className={classes.container}>
         <Head>
-          <title>Dotts Trading Cards API</title>
+          <title>Dotts Trading Cards</title>
           <link rel="icon" href="/favicon.ico" />
           <link
             rel="stylesheet"
