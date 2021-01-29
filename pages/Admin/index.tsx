@@ -21,7 +21,6 @@ function AdminPage() {
           userId: localStorage.getItem('dottsUserId'),
         },
       })
-      console.log(user)
 
       setCurrentUser(user.data)
       setIsAdmin(user.data.isAdmin)
