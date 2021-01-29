@@ -90,11 +90,41 @@ const CollectionView = (props) => {
       imageUrl: '/images/sapphire-icon.svg',
       isEnabled: false,
     },
-    // {
-    //   rarity: 'Specialty',
-    //   imageUrl: '/images/diamond-icon.svg',
-    //   isEnabled: false,
-    // },
+    {
+      rarity: 'Award',
+      imageUrl: '/images/diamond-icon.svg',
+      isEnabled: false,
+    },
+    {
+      rarity: 'Hall of Fame',
+      imageUrl: '/images/diamond-icon.svg',
+      isEnabled: false,
+    },
+    {
+      rarity: 'Ultimus Champion',
+      imageUrl: '/images/diamond-icon.svg',
+      isEnabled: false,
+    },
+    {
+      rarity: 'Holograph Expansion',
+      imageUrl: '/images/diamond-icon.svg',
+      isEnabled: false,
+    },
+    {
+      rarity: 'Autograph Rookie',
+      imageUrl: '/images/diamond-icon.svg',
+      isEnabled: false,
+    },
+    {
+      rarity: 'Fantasy Kings',
+      imageUrl: '/images/diamond-icon.svg',
+      isEnabled: false,
+    },
+    {
+      rarity: 'Captain',
+      imageUrl: '/images/diamond-icon.svg',
+      isEnabled: false,
+    },
   ])
 
   const enabledChips = sortOrder.filter((option) => option.isEnabled === true)
