@@ -14,7 +14,6 @@ import useStyles from '../pages/index.styles'
 import CommunityIcon from '../public/icons/CommunityIcon'
 import MyCardsIcon from '../public/icons/MyCardsIcon'
 import OpenPacksIcon from '../public/icons/OpenPacksIcon'
-import AdminIcon from '../public/icons/AdminIcon'
 import { signOut, useSession } from 'next-auth/client'
 import { BottomNavigationActionLink } from '../components/BottomNavigationActionLink'
 import SplashScreen from '../components/SplashScreen/SplashScreen'
@@ -96,12 +95,6 @@ const DefaultLayout = ({ children }) => {
                     href={'/Community'}
                     label="Community"
                     icon={<CommunityIcon />}
-                  />
-                  <BottomNavigationAction
-                    component={BottomNavigationActionLink}
-                    href={'/Admin'}
-                    label="Admin"
-                    icon={<AdminIcon />}
                   />
                 </BottomNavigation>
               </>
