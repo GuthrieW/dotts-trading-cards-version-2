@@ -1,4 +1,4 @@
-export interface dottsTrade {
+export interface dottsTrades {
   offeringUserId: String
   offeredUserCardIds: [String]
   receivingUserId: String
