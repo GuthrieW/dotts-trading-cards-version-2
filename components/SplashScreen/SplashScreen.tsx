@@ -1,10 +1,16 @@
 import { Box, ButtonGroup, Button, Link } from '@material-ui/core'
 import React from 'react'
 import useStyles from './SplashScreen.styles'
-import { signIn } from 'next-auth/client'
+import Router from 'next/router'
 
 const SplashScreen = () => {
   const classes = useStyles()
+
+  const handleOnClick = () => {
+    Router.push({
+      pathname: '/Authentication/LogIn',
+    })
+  }
 
   return (
     <div className={classes.splashScreenWrapper}>
@@ -26,7 +32,7 @@ const SplashScreen = () => {
                 variant="contained"
                 color="primary"
                 fullWidth
-                onClick={signIn}
+                onClick={handleOnClick}
               >
                 Log In
               </Button>

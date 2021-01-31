@@ -15,6 +15,7 @@ const index = () => {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState('')
+  const [link, setLink] = useState('')
   const [canSubmit, setCanSubmit] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -34,7 +35,9 @@ const index = () => {
 
   const updateCanSubmit = () => {
     const passwordExists = password.trim().length > 0
-    if (passwordExists) {
+    const confirmPasswordExists = confirmPassword.trim().length > 0
+
+    if (passwordExists && confirmPasswordExists) {
       const passwordStrength = CheckPasswordStrength(password).value
       if (passwordStrength === 'Strong') {
         if (password === confirmPassword) {
@@ -44,11 +47,13 @@ const index = () => {
           setError('Your password and confirm password do not match')
           setCanSubmit(false)
         }
+      } else {
         setError('Password not strong enough')
         setCanSubmit(false)
       }
+    } else {
+      setCanSubmit(false)
     }
-    setCanSubmit(false)
   }
 
   const handleKeyPress = (event: React.KeyboardEvent) => {
@@ -70,6 +75,7 @@ const index = () => {
       })
 
       if (result.data.error) {
+        setLink(result.data.link)
         setError(result.data.error)
       } else if (result.data.success) {
         Router.push({
@@ -112,6 +118,14 @@ const index = () => {
         <Alert severity="error">
           <AlertTitle>Error</AlertTitle>
           {error}
+          {link && (
+            <a
+              href={link}
+              style={{ textDecoration: 'underline', color: 'blue' }}
+            >
+              {link}
+            </a>
+          )}
         </Alert>
       )}
       <Button

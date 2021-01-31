@@ -13,6 +13,7 @@ import React, { useEffect, useState } from 'react'
 import { API_URL } from '../../utils/constants'
 import PlayerCard from '../PlayerCard/PlayerCard'
 import useStyles from './CollectionView.styles'
+import { DOTTS_ACCESS_TOKEN } from '../../utils/constants'
 
 const CollectionView = (props) => {
   const [searchTerm, setSearchTerm] = useState('')
@@ -25,12 +26,18 @@ const CollectionView = (props) => {
       const apiCallOptions = getUserApiCallOptions()
 
       const user = await axios({
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
+        },
         method: 'post',
         url: apiCallOptions.url,
         data: apiCallOptions.data,
       })
 
       const userCards = await axios({
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
+        },
         method: 'post',
         url: `${API_URL}/api/v1/cards/cards`,
         data: { cardIds: user.data.ownedCards },

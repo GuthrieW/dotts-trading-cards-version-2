@@ -49,7 +49,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
     html: `<img src="https://media.discordapp.net/attachments/719409500292907029/720056809951461416/Dotts-Logo-red-black.png" width="400" height="280" />
     <p>Hey ${account.isflUsername},</p>
     <p>We received a request to change your password on Dotts Trading Cards</p>
-    <p>Click <a href="${passwordResetLink}">here</a> to change your password. This link is valid for three hours.
+    <p>Click <a href="${passwordResetLink}">here</a> to change your password. This link is valid for exactly one day.
     <p>If you did not request a password change you can ignore this message and continue to use your current password.</p>
     <p>Thanks,</p>
     <p>from your friends at Dotts Trading Cards</p>`,

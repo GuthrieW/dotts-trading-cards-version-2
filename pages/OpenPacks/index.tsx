@@ -15,6 +15,7 @@ import { API_URL } from '../../utils/constants'
 import axios from 'axios'
 import Router from 'next/router'
 import PackViewerIntermediate from './PackViewerIntermediate'
+import { DOTTS_ACCESS_TOKEN } from '../../utils/constants'
 
 function OpenPacksPage() {
   const theme = useTheme()
@@ -27,6 +28,9 @@ function OpenPacksPage() {
   useEffect(() => {
     const fetchData = async () => {
       const user = await axios({
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
+        },
         method: 'post',
         url: `${API_URL}/api/v1/users/singleUser/dottsUserId`,
         data: {
