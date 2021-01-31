@@ -41,10 +41,10 @@ function CommunityPage() {
     fetchData()
   }, [])
 
-  const handleOnClick = (isflUsername, providerAccountId) => {
+  const handleOnClick = (isflUsername, email) => {
     Router.push({
       pathname: `/Community/${isflUsername}`,
-      query: { providerAccountId: providerAccountId },
+      query: { email: email },
     })
   }
 
@@ -87,10 +87,7 @@ function CommunityPage() {
                       return (
                         <TableCell
                           onClick={() =>
-                            handleOnClick(
-                              row.isflUsername,
-                              row.providerAccountId
-                            )
+                            handleOnClick(row.isflUsername, row.email)
                           }
                           key={`${column.id}-${index}`}
                         >

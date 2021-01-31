@@ -21,7 +21,7 @@ const PackViewerIntermediate = (props) => {
         method: 'post',
         url: `${API_URL}/api/v1/users/singleUser/dottsUserId`,
         data: {
-          userId: localStorage.getItem('dottsUserId'),
+          accessToken: localStorage.getItem('dottsUserId'),
         },
       })
 

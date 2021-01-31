@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
+import { connect } from '../../../database/database'
 import JsonWebToken from 'jsonwebtoken'
 import { getAccessTokenFromHeader } from '../../common'
 
@@ -9,12 +10,18 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
     return
   }
 
+  const { database } = await connect()
+
   try {
     const email = JsonWebToken.verify(accessToken, process.env.WEBTOKEN_SECRET)
-    response.status(200).json({ email: email })
+    const account = await database.collection('dotts_accounts').findOne({
+      email: email,
+    })
+    response.status(200).json({ account: account })
   } catch (error) {
-    response.status(200).json({ error: 'Invalid JSON Web Token' })
+    response.status(200).json({ error: error })
   }
+
   return
 }
 

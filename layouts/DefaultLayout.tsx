@@ -18,10 +18,10 @@ import OpenPacksIcon from '../public/icons/OpenPacksIcon'
 // import { signOut, useSession } from 'next-auth/client'
 import { BottomNavigationActionLink } from '../components/BottomNavigationActionLink'
 import SplashScreen from '../components/SplashScreen/SplashScreen'
-import ForgotPassword from '../pages/Authentication/ForgotPassword'
-import LogIn from '../pages/Authentication/LogIn'
-import PasswordReset from '../pages/Authentication/PasswordReset'
-import SignUp from '../pages/Authentication/SignUp'
+import ForgotPassword from '../components/Authentication/ForgotPassword'
+import LogIn from '../components/Authentication/LogIn'
+import PasswordReset from '../components/Authentication/PasswordReset'
+import SignUp from '../components/Authentication/SignUp'
 import SidebarNav from '../components/SidebarNav'
 import axios from 'axios'
 import { API_URL, DOTTS_ACCESS_TOKEN } from '../utils/constants'
@@ -35,29 +35,11 @@ const darkTheme = createMuiTheme({
 
 const DefaultLayout = ({ children }) => {
   const classes = useStyles()
+  const pathname = useRouter().pathname
   const [value, setValue] = useState(0)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
-  const [isSplashScreen, setIsSplashScreen] = useState(false)
-  const [isLogInScreen, setIsLoginScreen] = useState(false)
-  const [isSignUpScreen, setIsSignUpScreen] = useState(false)
-  const [isPasswordResetScreen, setIsPasswordResetScreen] = useState(false)
-  const [isForgotPassword, setIsForgotPasswordScreen] = useState(false)
-
-  const pathname = useRouter().pathname
-
-  console.log(pathname)
-  if (pathname === '/') {
-    setIsSplashScreen(true)
-  } else if (pathname === '/Authentication/LogIn') {
-    setIsLoginScreen(true)
-  } else if (pathname === '/Authentication/SignUp') {
-    setIsSignUpScreen(true)
-  } else if (pathname === '/Authentication/PasswordReset') {
-    setIsPasswordResetScreen(true)
-  } else if (pathname === '/Authentication/ForgotPassword') {
-    setIsForgotPasswordScreen(true)
-  }
+  const [innerComponent, setInnerComponent] = useState(null)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -69,10 +51,25 @@ const DefaultLayout = ({ children }) => {
         url: `${API_URL}/api/v1/authorization/checkAuthorization`,
         data: {},
       })
+
       if (result.data.error) {
+        setIsLoggedIn(false)
       } else {
         setIsLoggedIn(true)
       }
+
+      if (pathname === '/Authorization/LogIn') {
+        setInnerComponent(<LogIn />)
+      } else if (pathname === '/Authorization/SignUp') {
+        setInnerComponent(<SignUp />)
+      } else if (pathname === '/Authorization/ForgotPassword') {
+        setInnerComponent(<ForgotPassword />)
+      } else if (pathname === '/Authorization/PasswordReset') {
+        setInnerComponent(<PasswordReset />)
+      } else {
+        setInnerComponent(null)
+      }
+
       setIsLoading(false)
     }
 
@@ -93,29 +90,18 @@ const DefaultLayout = ({ children }) => {
 
   return (
     <ThemeProvider theme={darkTheme}>
-      {!isLoggedIn && isSplashScreen && <SplashScreen />}
-      {!isLoggedIn && isLogInScreen && <LogIn />}
-      {!isLoggedIn && isSignUpScreen && <SignUp />}
-      {!isLoggedIn && isPasswordResetScreen && <PasswordReset />}
-      {!isLoggedIn && isForgotPassword && <ForgotPassword />}
+      {!isLoggedIn && <SplashScreen>{innerComponent}</SplashScreen>}
       {isLoggedIn && (
         <>
           <div className={classes.root}>
             <AppBar position="fixed" className={classes.appBar}>
               <Toolbar>
                 <Typography variant="h6" noWrap>
-                  {/* {session.user.email} */}
                   <Button onClick={handleSignOut}>Sign out</Button>
                 </Typography>
               </Toolbar>
             </AppBar>
-            {lgUp && (
-              <SidebarNav
-                value={value}
-                updateTabValue={updateValue}
-                // sessionValue={session}
-              />
-            )}
+            {lgUp && <SidebarNav value={value} updateTabValue={updateValue} />}
             <main className={classes.content}>
               <div className={classes.toolbar} />
               {children}

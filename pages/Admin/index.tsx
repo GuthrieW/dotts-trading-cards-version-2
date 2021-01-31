@@ -20,10 +20,8 @@ function AdminPage() {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
         method: 'post',
-        url: `${API_URL}/api/v1/users/singleUser/dottsUserId`,
-        data: {
-          userId: localStorage.getItem('dottsUserId'),
-        },
+        url: `${API_URL}/api/v1/users/currentUser/`,
+        data: {},
       })
 
       setCurrentUser(user.data)

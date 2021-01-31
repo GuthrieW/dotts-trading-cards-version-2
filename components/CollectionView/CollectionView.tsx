@@ -51,18 +51,16 @@ const CollectionView = (props) => {
 
   const getUserApiCallOptions = () => {
     const apiCallOptions =
-      props.providerAccountId != null
+      props.email != null
         ? {
-            url: `${API_URL}/api/v1/users/singleUser/providerAccountId`,
+            url: `${API_URL}/api/v1/users/singleUser/`,
             data: {
-              providerAccountId: props.providerAccountId,
+              email: props.email,
             },
           }
         : {
-            url: `${API_URL}/api/v1/users/singleUser/dottsUserId`,
-            data: {
-              userId: localStorage.getItem('dottsUserId'),
-            },
+            url: `${API_URL}/api/v1/users/singleUser/currentUser`,
+            data: {},
           }
     return apiCallOptions
   }
