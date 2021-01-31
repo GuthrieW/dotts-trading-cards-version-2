@@ -1,7 +1,7 @@
 import { Box, ButtonGroup, Button, Link } from '@material-ui/core'
 import React from 'react'
 import useStyles from './SplashScreen.styles'
-import { signIn } from 'next-auth/client'
+import SplashLayout from '../../layouts/SplashLayout'
 
 const SplashScreen = () => {
   const classes = useStyles()
@@ -22,14 +22,11 @@ const SplashScreen = () => {
             aria-label="small outlined button group"
           >
             <Box m={2}>
-              <Button
-                variant="contained"
-                color="primary"
-                fullWidth
-                onClick={signIn}
-              >
-                Log In
-              </Button>
+              <Link href="/Authentication/LogIn">
+                <Button variant="contained" color="primary" fullWidth>
+                  Log In
+                </Button>
+              </Link>
             </Box>
             <Box m={2}>
               <Link href="https://forums.sim-football.com/showthread.php?tid=25272">
@@ -53,5 +50,7 @@ const SplashScreen = () => {
     </div>
   )
 }
+
+SplashScreen.layout = () => <SplashLayout children={<SplashScreen />} />
 
 export default SplashScreen

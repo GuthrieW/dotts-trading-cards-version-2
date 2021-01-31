@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { connect } from '../../../database/database'
+import JsonWebToken from 'jsonwebtoken'
 import { getAccessTokenFromHeader } from '../../common'
 
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
@@ -9,14 +9,13 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
     return
   }
 
-  const { database } = await connect()
-
-  const accounts = await database
-    .collection('dotts_accounts')
-    .find({})
-    .toArray()
-
-  response.status(200).send(accounts)
+  try {
+    const email = JsonWebToken.verify(accessToken, process.env.WEBTOKEN_SECRET)
+    response.status(200).json({ email: email })
+  } catch (error) {
+    response.status(200).json({ error: 'Invalid JSON Web Token' })
+  }
+  return
 }
 
 export default index

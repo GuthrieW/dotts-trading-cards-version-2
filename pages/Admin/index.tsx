@@ -4,6 +4,7 @@ import axios from 'axios'
 import ProcessorView from './ProcessorView'
 import SubmitterView from './SubmitterView'
 import PackIssuerView from './PackIssuerView'
+import { DOTTS_ACCESS_TOKEN } from '../../utils/constants'
 
 function AdminPage() {
   const [currentUser, setCurrentUser] = useState(null)
@@ -15,11 +16,12 @@ function AdminPage() {
   useEffect(() => {
     const fetchData = async () => {
       const user = await axios({
-        method: 'post',
-        url: `${API_URL}/api/v1/users/singleUser/dottsUserId`,
-        data: {
-          userId: localStorage.getItem('dottsUserId'),
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
+        method: 'post',
+        url: `${API_URL}/api/v1/users/currentUser/`,
+        data: {},
       })
 
       setCurrentUser(user.data)

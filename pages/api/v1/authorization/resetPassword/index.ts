@@ -1,0 +1,72 @@
+import { NextApiRequest, NextApiResponse } from 'next'
+import { connect } from '../../../database/database'
+import bcrypt from 'bcrypt'
+import { UI_URL } from '../../../../../utils/constants'
+
+const index = async (request: NextApiRequest, response: NextApiResponse) => {
+  const { database } = await connect()
+  const { resetToken, password } = request.body
+
+  const databaseResetToken = await database
+    .collection('dotts_reset_tokens')
+    .findOneAndUpdate(
+      {
+        resetToken: resetToken,
+      },
+      {
+        $set: {
+          used: true,
+        },
+      },
+      {
+        returnOriginal: false,
+      }
+    )
+
+  if (databaseResetToken == null) {
+    response.status(200).json({
+      error: `The link you are trying to use is invalid. Please get at new one here - `,
+      link: `${UI_URL}/Authentication/ForgotPassword`,
+    })
+  }
+
+  if (
+    Date.parse(databaseResetToken.value.expirationDate) <
+    Date.parse(new Date().toString())
+  )
+    if (databaseResetToken.value.expirationDate > new Date()) {
+      response.status(200).json({
+        error: `The link you are trying to use has expired. Please get at new one here - `,
+        link: `${UI_URL}/Authentication/ForgotPassword`,
+      })
+    }
+
+  if (databaseResetToken.value.used) {
+    response.status(200).json({
+      error: `The link you are trying to use has already been used once. Please get at new one here - `,
+      link: `${UI_URL}/Authentication/ForgotPassword`,
+    })
+  }
+
+  const salt = await bcrypt.genSalt(10)
+  const hashedPassword = await bcrypt.hash(password, salt)
+  const updatedAccount = await database
+    .collection('dotts_accounts')
+    .findOneAndUpdate(
+      {
+        email: databaseResetToken.value.email,
+      },
+      {
+        $set: {
+          password: hashedPassword,
+        },
+      },
+      {
+        returnOriginal: false,
+      }
+    )
+
+  response.status(200).json({ success: 'success' })
+}
+
+export default index

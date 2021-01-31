@@ -1,15 +1,21 @@
-import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import Drawer from '@material-ui/core/Drawer'
-import List from '@material-ui/core/List'
-import Divider from '@material-ui/core/Divider'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
+import React, { useState, useEffect } from 'react'
+import {
+  Drawer,
+  List,
+  Divider,
+  ListItemIcon,
+  ListItemText,
+  Box,
+  MenuItem,
+  makeStyles,
+  Button,
+} from '@material-ui/core'
 import MyCardsIcon from '../public/icons/MyCardsIcon'
 import OpenPacksIcon from '../public/icons/OpenPacksIcon'
 import CommunityIcon from '../public/icons/CommunityIcon'
-import { Box, MenuItem } from '@material-ui/core'
-import { signOut } from 'next-auth/client'
+import { DOTTS_ACCESS_TOKEN } from '../utils/constants'
+import { API_URL } from '../utils/constants'
+import axios from 'axios'
 import Link from 'next/link'
 
 const drawerWidth = 240
@@ -33,7 +39,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-function PermanentDrawerLeft({ value, updateTabValue, sessionValue }) {
+const signOut = () => {
+  localStorage.removeItem(DOTTS_ACCESS_TOKEN)
+}
+
+function PermanentDrawerLeft({ value, updateTabValue }) {
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios({
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
+        },
+        method: 'post',
+        url: `${API_URL}/api/v1/authorization/checkAuthorization`,
+        data: {},
+      })
+      if (result.data.error) {
+      } else {
+        setIsLoggedIn(true)
+      }
+    }
+
+    fetchData()
+  }, [])
+
   const classes = useStyles()
 
   return (
@@ -48,10 +79,10 @@ function PermanentDrawerLeft({ value, updateTabValue, sessionValue }) {
       >
         <img className={classes.toolbar} src="/images/Dotts-Logo-White.png" />
         <Divider />
-        {sessionValue && (
+
+        {isLoggedIn && (
           <Box p={2}>
-            Signed in as {sessionValue.user.email} <br />
-            <button onClick={signOut}>Sign out</button>
+            <Button onClick={signOut}>Sign out</Button>
           </Box>
         )}
         <Divider />

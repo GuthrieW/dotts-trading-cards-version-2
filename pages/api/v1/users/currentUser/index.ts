@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { connect } from '../../../database/database'
+import JsonWebToken from 'jsonwebtoken'
 import { getAccessTokenFromHeader } from '../../common'
 
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
@@ -11,12 +12,17 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
 
   const { database } = await connect()
 
-  const accounts = await database
-    .collection('dotts_accounts')
-    .find({})
-    .toArray()
+  try {
+    const email = JsonWebToken.verify(accessToken, process.env.WEBTOKEN_SECRET)
+    const account = await database.collection('dotts_accounts').findOne({
+      email: email,
+    })
+    response.status(200).json({ account: account })
+  } catch (error) {
+    response.status(200).json({ error: error })
+  }
 
-  response.status(200).send(accounts)
+  return
 }
 
 export default index

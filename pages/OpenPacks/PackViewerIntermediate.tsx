@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Router, { useRouter } from 'next/router'
 import axios from 'axios'
 import { API_URL } from '../../utils/constants'
+import { DOTTS_ACCESS_TOKEN } from '../../utils/constants'
 
 const PackViewerIntermediate = (props) => {
   const { packType } = props
@@ -14,11 +15,12 @@ const PackViewerIntermediate = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       const user = await axios({
-        method: 'post',
-        url: `${API_URL}/api/v1/users/singleUser/dottsUserId`,
-        data: {
-          userId: localStorage.getItem('dottsUserId'),
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
+        method: 'post',
+        url: `${API_URL}/api/v1/users/currentUser`,
+        data: {},
       })
 
       let packOpenUrl
@@ -30,16 +32,14 @@ const PackViewerIntermediate = (props) => {
         packOpenUrl = ''
       }
 
-      console.log('packOpenUrl', packOpenUrl)
-
       const openedPack = await axios({
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
+        },
         method: 'post',
         url: packOpenUrl,
-        data: {
-          providerAccountId: user.data.providerAccountId,
-        },
+        data: {},
       })
-      console.log('openedPack', openedPack)
 
       setOpenedCards(openedPack.data.pulledCards)
       setIsLoading(false)

@@ -4,8 +4,8 @@ import { useRouter } from 'next/router'
 
 const CommunityMemberPage = () => {
   const router = useRouter()
-  const { user, providerAccountId } = router.query
-  return <CollectionView providerAccountId={providerAccountId} />
+  const { user, email } = router.query
+  return <CollectionView email={email} />
 }
 
 export default CommunityMemberPage

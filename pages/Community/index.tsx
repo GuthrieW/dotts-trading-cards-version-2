@@ -13,6 +13,7 @@ import React, { useEffect, useState } from 'react'
 import useStyles from './Community.styles'
 import { API_URL } from '../../utils/constants'
 import Router from 'next/router'
+import { DOTTS_ACCESS_TOKEN } from '../../utils/constants'
 
 const columns = [
   { id: 'isflUsername', label: 'Name', minWidth: 170 },
@@ -26,21 +27,26 @@ function CommunityPage() {
   useEffect(() => {
     const fetchData = async () => {
       const accounts = await axios({
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
+        },
         method: 'post',
         url: `${API_URL}/api/v1/users/allUsers`,
         data: {},
       })
-
-      setCommunityAccounts(accounts.data)
+      if (accounts.data.error) {
+      } else {
+        setCommunityAccounts(accounts.data)
+      }
     }
 
     fetchData()
   }, [])
 
-  const handleOnClick = (isflUsername, providerAccountId) => {
+  const handleOnClick = (isflUsername, email) => {
     Router.push({
       pathname: `/Community/${isflUsername}`,
-      query: { providerAccountId: providerAccountId },
+      query: { email: email },
     })
   }
 
@@ -83,10 +89,7 @@ function CommunityPage() {
                       return (
                         <TableCell
                           onClick={() =>
-                            handleOnClick(
-                              row.isflUsername,
-                              row.providerAccountId
-                            )
+                            handleOnClick(row.isflUsername, row.email)
                           }
                           key={`${column.id}-${index}`}
                         >
