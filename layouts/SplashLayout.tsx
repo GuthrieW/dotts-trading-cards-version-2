@@ -6,7 +6,6 @@
 import React from 'react'
 
 const SplashLayout = ({ children }) => {
-  console.log('children', children)
   return <div>{children}</div>
 }
 

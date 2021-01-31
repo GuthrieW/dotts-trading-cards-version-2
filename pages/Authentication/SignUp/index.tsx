@@ -112,8 +112,6 @@ const SignUpPage = () => {
       } else {
         setError('Unknown Server Error')
       }
-
-      console.log(result)
     }
     setIsSubmitting(false)
   }

@@ -33,8 +33,6 @@ const darkTheme = createMuiTheme({
 })
 
 const DefaultLayout = ({ children }) => {
-  console.log('DefaultLayout')
-
   const classes = useStyles()
   const pathname = useRouter().pathname
   const [value, setValue] = useState(0)

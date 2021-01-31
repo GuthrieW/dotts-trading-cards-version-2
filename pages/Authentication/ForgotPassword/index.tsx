@@ -22,10 +22,8 @@ const ForgotPasswordPage = () => {
 
   const updateCanSubmit = () => {
     const emailExists = email.trim().length > 0
-    console.log(emailExists)
     if (emailExists) {
       const emailValidity = EmailValidator.validate(email)
-      console.log(emailValidity)
       if (emailValidity) {
         setError('')
         setCanSubmit(true)

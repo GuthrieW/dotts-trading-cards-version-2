@@ -13,8 +13,6 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
       isflUsername: isflUsername,
     })
 
-  console.log('checkAccountUsername', checkAccountUsername)
-
   if (checkAccountUsername != null) {
     response
       .status(200)
@@ -27,8 +25,6 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
     .findOne({
       email: email,
     })
-
-  console.log('checkAccountEmail', checkAccountEmail)
 
   if (checkAccountEmail != null) {
     response

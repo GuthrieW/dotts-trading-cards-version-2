@@ -7,8 +7,6 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
   const { database } = await connect()
   const { resetToken, password } = request.body
 
-  console.log(request.body)
-
   const databaseResetToken = await database
     .collection('dotts_reset_tokens')
     .findOneAndUpdate(
@@ -25,7 +23,6 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
       }
     )
 
-  console.log(databaseResetToken)
   if (databaseResetToken == null) {
     response.status(200).json({
       error: `The link you are trying to use is invalid. Please get at new one here - `,
@@ -69,7 +66,6 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
       }
     )
 
-  console.log(updatedAccount)
   response.status(200).json({ success: 'success' })
 }
 
