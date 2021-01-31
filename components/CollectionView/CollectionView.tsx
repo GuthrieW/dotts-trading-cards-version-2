@@ -59,7 +59,7 @@ const CollectionView = (props) => {
             },
           }
         : {
-            url: `${API_URL}/api/v1/users/singleUser/currentUser`,
+            url: `${API_URL}/api/v1/users/currentUser`,
             data: {},
           }
     return apiCallOptions

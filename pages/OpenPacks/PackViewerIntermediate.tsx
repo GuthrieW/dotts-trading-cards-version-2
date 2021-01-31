@@ -19,10 +19,8 @@ const PackViewerIntermediate = (props) => {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
         method: 'post',
-        url: `${API_URL}/api/v1/users/singleUser/dottsUserId`,
-        data: {
-          accessToken: localStorage.getItem('dottsUserId'),
-        },
+        url: `${API_URL}/api/v1/users/currentUser`,
+        data: {},
       })
 
       let packOpenUrl
@@ -40,9 +38,7 @@ const PackViewerIntermediate = (props) => {
         },
         method: 'post',
         url: packOpenUrl,
-        data: {
-          providerAccountId: user.data.providerAccountId,
-        },
+        data: {},
       })
 
       setOpenedCards(openedPack.data.pulledCards)

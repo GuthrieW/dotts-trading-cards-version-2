@@ -17,9 +17,7 @@ const PackViewer = () => {
         },
         method: 'post',
         url: `${API_URL}/api/v1/users/newestCards`,
-        data: {
-          userId: localStorage.getItem('dottsUserId'),
-        },
+        data: {},
       })
 
       setCards(user.data.newestCards)
