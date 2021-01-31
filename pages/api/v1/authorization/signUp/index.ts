@@ -45,6 +45,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
     isflUsername: isflUsername,
     password: hashedPassword,
     ownedCards: [],
+    newestcards: [],
     ownedRegularPacks: 0,
     ownedUltimusPacks: 0,
     isAdmin: false,
