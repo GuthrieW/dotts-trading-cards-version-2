@@ -3,7 +3,7 @@ export interface dottsTrades {
   offeredUserCardIds: [String]
   receivingUserId: String
   receivingUserCardIds: [String]
-  tradeStatus: 'pending' | 'accepted' | 'rejected'
+  tradeStatus: String // 'pending' | 'accepted' | 'rejected'
   tradeOfferDate: Date
   tradeResolvedDate: Date
 }

@@ -1,6 +1,7 @@
 export interface dottsAccounts {
-  providerAccountId: String
+  email: String
   isflUsername: String
+  password: String
   ownedCards: [String]
   ownedRegularPacks: Number
   ownedUltimusPacks: Number

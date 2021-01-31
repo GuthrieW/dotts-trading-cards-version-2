@@ -30,8 +30,6 @@ const PackViewerIntermediate = (props) => {
         packOpenUrl = ''
       }
 
-      console.log('packOpenUrl', packOpenUrl)
-
       const openedPack = await axios({
         method: 'post',
         url: packOpenUrl,
@@ -39,7 +37,6 @@ const PackViewerIntermediate = (props) => {
           providerAccountId: user.data.providerAccountId,
         },
       })
-      console.log('openedPack', openedPack)
 
       setOpenedCards(openedPack.data.pulledCards)
       setIsLoading(false)
