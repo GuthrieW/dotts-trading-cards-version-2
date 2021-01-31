@@ -15,13 +15,12 @@ import useStyles from '../pages/index.styles'
 import CommunityIcon from '../public/icons/CommunityIcon'
 import MyCardsIcon from '../public/icons/MyCardsIcon'
 import OpenPacksIcon from '../public/icons/OpenPacksIcon'
-// import { signOut, useSession } from 'next-auth/client'
 import { BottomNavigationActionLink } from '../components/BottomNavigationActionLink'
 import SplashScreen from '../components/SplashScreen/SplashScreen'
-import ForgotPassword from '../components/Authentication/ForgotPassword'
-import LogIn from '../components/Authentication/LogIn'
-import PasswordReset from '../components/Authentication/PasswordReset'
-import SignUp from '../components/Authentication/SignUp'
+import ForgotPassword from '../pages/Authentication/ForgotPassword'
+import LogIn from '../pages/Authentication/LogIn'
+import PasswordReset from '../pages/Authentication/PasswordReset'
+import SignUp from '../pages/Authentication/SignUp'
 import SidebarNav from '../components/SidebarNav'
 import axios from 'axios'
 import { API_URL, DOTTS_ACCESS_TOKEN } from '../utils/constants'
@@ -34,6 +33,8 @@ const darkTheme = createMuiTheme({
 })
 
 const DefaultLayout = ({ children }) => {
+  console.log('DefaultLayout')
+
   const classes = useStyles()
   const pathname = useRouter().pathname
   const [value, setValue] = useState(0)
@@ -90,7 +91,7 @@ const DefaultLayout = ({ children }) => {
 
   return (
     <ThemeProvider theme={darkTheme}>
-      {!isLoggedIn && <SplashScreen>{innerComponent}</SplashScreen>}
+      {!isLoggedIn && <SplashScreen />}
       {isLoggedIn && (
         <>
           <div className={classes.root}>

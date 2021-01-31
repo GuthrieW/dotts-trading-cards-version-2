@@ -6,8 +6,9 @@ import { TextField, Button } from '@material-ui/core'
 import React, { useState } from 'react'
 import { API_URL } from '../../../utils/constants'
 import useStyles from './PasswordReset.styles'
+import SplashLayout from '../../../layouts/SplashLayout'
 
-const index = () => {
+const PasswordResetPage = () => {
   const router = useRouter()
   const { resetToken } = router.query
 
@@ -142,4 +143,8 @@ const index = () => {
   )
 }
 
-export default index
+PasswordResetPage.layout = () => (
+  <SplashLayout children={<PasswordResetPage />} />
+)
+
+export default PasswordResetPage

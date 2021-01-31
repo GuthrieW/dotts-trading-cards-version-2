@@ -13,7 +13,7 @@ const App = ({ Component, pageProps }) => {
   }, [])
 
   const getLayout =
-    Component.getLayout || ((page) => <DefaultLayout children={page} />)
+    Component.layout || ((page) => <DefaultLayout children={page} />)
 
   return getLayout(
     <>

@@ -7,8 +7,9 @@ import axios from 'axios'
 import { API_URL } from '../../../utils/constants'
 import Router from 'next/router'
 import { Alert, AlertTitle } from '@material-ui/lab'
+import SplashLayout from '../../../layouts/SplashLayout'
 
-const index = () => {
+const SignUpPage = () => {
   const classes = useStyles()
   const [email, setEmail] = useState('')
   const [isflUsername, setIsflUsername] = useState('')
@@ -186,5 +187,6 @@ const index = () => {
     </>
   )
 }
+SignUpPage.layout = () => <SplashLayout children={<SignUpPage />} />
 
-export default index
+export default SignUpPage

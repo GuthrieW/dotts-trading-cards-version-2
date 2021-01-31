@@ -1,12 +1,13 @@
-import { TextField, Button } from '@material-ui/core'
+import { TextField, Button, Link } from '@material-ui/core'
 import React, { useState } from 'react'
 import axios from 'axios'
 import { API_URL } from '../../../utils/constants'
 import { Alert, AlertTitle } from '@material-ui/lab'
 import Router from 'next/router'
 import { DOTTS_ACCESS_TOKEN } from '../../../utils/constants'
+import SplashLayout from '../../../layouts/SplashLayout'
 
-const index = () => {
+const LogInPage = () => {
   // const classes = useStyles()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -67,18 +68,6 @@ const index = () => {
     setIsSubmitting(false)
   }
 
-  const handleCreateAccount = () => {
-    Router.push({
-      pathname: `/Authentication/SignUp/`,
-    })
-  }
-
-  const handleForgotPassword = () => {
-    Router.push({
-      pathname: `/Authentication/ForgotPassword/`,
-    })
-  }
-
   return (
     <>
       <TextField
@@ -111,37 +100,43 @@ const index = () => {
           {error}
         </Alert>
       )}
-      <Button
-        // className={classes.loginButton}
-        variant="contained"
-        size="large"
-        color="primary"
-        onClick={handleSubmit}
-        disabled={!canSubmit || isSubmitting}
-      >
-        Log In
-      </Button>
-      <Button
-        // className={classes.signUpButton}
-        size="large"
-        color="primary"
-        onClick={handleForgotPassword}
-        disabled={isSubmitting}
-      >
-        Forgot Password
-      </Button>
-      <Button
-        // className={classes.signUpButton}
-        variant="contained"
-        size="large"
-        color="primary"
-        onClick={handleCreateAccount}
-        disabled={isSubmitting}
-      >
-        Create New Account
-      </Button>
+      <Link href="/Authentication/SignUp/">
+        <Button
+          // className={classes.loginButton}
+          variant="contained"
+          size="large"
+          color="primary"
+          onClick={handleSubmit}
+          disabled={!canSubmit || isSubmitting}
+        >
+          Log In
+        </Button>
+      </Link>
+      <Link href="/Authentication/ForgotPassword/">
+        <Button
+          // className={classes.signUpButton}
+          size="large"
+          color="primary"
+          disabled={isSubmitting}
+        >
+          Forgot Password
+        </Button>
+      </Link>
+      <Link href="/Authentication/SignUp/">
+        <Button
+          // className={classes.signUpButton}
+          variant="contained"
+          size="large"
+          color="primary"
+          disabled={isSubmitting}
+        >
+          Create New Account
+        </Button>
+      </Link>
     </>
   )
 }
 
-export default index
+LogInPage.layout = () => <SplashLayout children={<LogInPage />} />
+
+export default LogInPage

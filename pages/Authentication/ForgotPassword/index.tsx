@@ -5,8 +5,9 @@ import axios from 'axios'
 import Router from 'next/router'
 import EmailValidator from 'email-validator'
 import { Alert, AlertTitle } from '@material-ui/lab'
+import SplashLayout from '../../../layouts/SplashLayout'
 
-const index = () => {
+const ForgotPasswordPage = () => {
   const [email, setEmail] = useState('')
   const [error, setError] = useState('')
   const [canSubmit, setCanSubmit] = useState(false)
@@ -104,4 +105,8 @@ const index = () => {
   )
 }
 
-export default index
+ForgotPasswordPage.layout = () => (
+  <SplashLayout children={<ForgotPasswordPage />} />
+)
+
+export default ForgotPasswordPage
