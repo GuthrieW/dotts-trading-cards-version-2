@@ -43,6 +43,7 @@ const ForgotPasswordPage = () => {
   }
 
   const handleSubmit = async () => {
+    event.preventDefault()
     if (canSubmit) {
       setIsSubmitting(true)
       const result = await axios({

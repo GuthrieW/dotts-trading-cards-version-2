@@ -17,6 +17,7 @@ import { DOTTS_ACCESS_TOKEN } from '../utils/constants'
 import { API_URL } from '../utils/constants'
 import axios from 'axios'
 import Link from 'next/link'
+import Router from 'next/router'
 
 const drawerWidth = 240
 
@@ -41,6 +42,9 @@ const useStyles = makeStyles((theme) => ({
 
 const signOut = () => {
   localStorage.removeItem(DOTTS_ACCESS_TOKEN)
+  Router.push({
+    pathname: `/Authentication/LogIn`,
+  })
 }
 
 function PermanentDrawerLeft({ value, updateTabValue }) {

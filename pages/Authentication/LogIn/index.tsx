@@ -43,7 +43,9 @@ const LogInPage = () => {
   }
 
   const handleSubmit = async () => {
+    event.preventDefault()
     if (canSubmit) {
+      console.log('submitting')
       setIsSubmitting(true)
       const result = await axios({
         method: 'post',
@@ -53,6 +55,8 @@ const LogInPage = () => {
           password: password,
         },
       })
+
+      console.log('result', result)
 
       if (result.data.error) {
         setError(result.data.error)
@@ -95,7 +99,7 @@ const LogInPage = () => {
         disabled={isSubmitting}
       />
       {error && (
-        <Alert>
+        <Alert severity="error">
           <AlertTitle>Error</AlertTitle>
           {error}
         </Alert>

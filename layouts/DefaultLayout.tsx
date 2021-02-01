@@ -25,6 +25,8 @@ import SidebarNav from '../components/SidebarNav'
 import axios from 'axios'
 import { API_URL, DOTTS_ACCESS_TOKEN } from '../utils/constants'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
+import Router from 'next/router'
 
 const darkTheme = createMuiTheme({
   palette: {
@@ -77,6 +79,9 @@ const DefaultLayout = ({ children }) => {
 
   const handleSignOut = () => {
     localStorage.removeItem(DOTTS_ACCESS_TOKEN)
+    Router.push({
+      pathname: `/Authentication/LogIn`,
+    })
   }
 
   const updateValue = (val) => {
