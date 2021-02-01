@@ -14,11 +14,15 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
   })
 
   const hashedPassword = account.password
-  bcrypt.compare(password, hashedPassword, (error, result) => {
-    if (error) {
+
+  bcrypt.compare(password, hashedPassword, async (error, result) => {
+    if (error != null) {
       response.status(200).json({ error: 'Internal Server Error' })
     } else if (result) {
-      const accessToken = JsonWebToken.sign(email, process.env.WEBTOKEN_SECRET)
+      const accessToken = await JsonWebToken.sign(
+        email,
+        process.env.WEBTOKEN_SECRET
+      )
       response.status(200).json({ accessToken: accessToken })
     } else {
       response
