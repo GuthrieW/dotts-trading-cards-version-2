@@ -24,6 +24,9 @@ function HomePage() {
         data: {},
       })
 
+      if (user.data.error) {
+      }
+
       setCurrentUser(user.data.account)
       setIsAdmin(user.data.account.isAdmin)
       setIsProcessor(user.data.account.isProcessor)
@@ -39,7 +42,7 @@ function HomePage() {
       <h1>Home Page</h1>
       {!currentUser && <h1>Loading...</h1>}
       <Box m={2}>
-        {currentUser && (isAdmin || isPackIssuer || isSubmitter) && (
+        {currentUser && (
           <InfoCard title="Edit Profile" href="/Dashboard/ProfileEditor" />
         )}
       </Box>
@@ -62,12 +65,12 @@ function HomePage() {
         )}
       </Box>
       <Box m={2}>
-        {currentUser && (isAdmin || isPackIssuer || isSubmitter) && (
+        {currentUser && (isAdmin || isSubmitter || isProcessor) && (
           <InfoCard title="Edit Cards" href="/Dashboard/CardEditor" />
         )}
       </Box>
       <Box m={2}>
-        {currentUser && (isAdmin || isPackIssuer || isSubmitter) && (
+        {currentUser && (isAdmin || isPackIssuer) && (
           <InfoCard title="Edit Users" href="/Dashboard/UserEditor" />
         )}
       </Box>

@@ -32,6 +32,9 @@ const PackViewerIntermediate = (props) => {
         data: {},
       })
 
+      if (openedPack.data.error) {
+      }
+
       setOpenedCards(openedPack.data.pulledCards)
       setIsLoading(false)
     }

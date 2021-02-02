@@ -36,6 +36,9 @@ function OpenPacksPage() {
         data: {},
       })
 
+      if (user.data.error) {
+      }
+
       setCurrentUser(user.data.account)
       setIsLoading(false)
     }

@@ -34,6 +34,9 @@ const CollectionView = (props) => {
         data: apiCallOptions.data,
       })
 
+      if (user.data.error) {
+      }
+
       const userCards = await axios({
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
@@ -42,6 +45,9 @@ const CollectionView = (props) => {
         url: `${API_URL}/api/v1/cards/cards`,
         data: { cardIds: user.data.ownedCards },
       })
+
+      if (userCards.data.error) {
+      }
 
       setCollectionCards(userCards.data)
     }

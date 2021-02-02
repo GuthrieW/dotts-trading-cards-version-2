@@ -20,6 +20,9 @@ const PackViewer = () => {
         data: {},
       })
 
+      if (user.data.error) {
+      }
+
       setCards(user.data.newestCards)
     }
 
