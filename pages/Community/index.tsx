@@ -34,6 +34,7 @@ function CommunityPage() {
         url: `${API_URL}/api/v1/users/allUsers`,
         data: {},
       })
+
       if (accounts.data.error) {
       } else {
         setCommunityAccounts(accounts.data)

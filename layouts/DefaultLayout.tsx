@@ -17,10 +17,6 @@ import MyCardsIcon from '../public/icons/MyCardsIcon'
 import OpenPacksIcon from '../public/icons/OpenPacksIcon'
 import { BottomNavigationActionLink } from '../components/BottomNavigationActionLink'
 import SplashScreen from '../components/SplashScreen/SplashScreen'
-import ForgotPassword from '../pages/Authentication/ForgotPassword'
-import LogIn from '../pages/Authentication/LogIn'
-import PasswordReset from '../pages/Authentication/PasswordReset'
-import SignUp from '../pages/Authentication/SignUp'
 import SidebarNav from '../components/SidebarNav'
 import axios from 'axios'
 import { API_URL, DOTTS_ACCESS_TOKEN } from '../utils/constants'
@@ -36,11 +32,9 @@ const darkTheme = createMuiTheme({
 
 const DefaultLayout = ({ children }) => {
   const classes = useStyles()
-  const pathname = useRouter().pathname
   const [value, setValue] = useState(0)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
-  const [innerComponent, setInnerComponent] = useState(null)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,18 +51,6 @@ const DefaultLayout = ({ children }) => {
         setIsLoggedIn(false)
       } else {
         setIsLoggedIn(true)
-      }
-
-      if (pathname === '/Authorization/LogIn') {
-        setInnerComponent(<LogIn />)
-      } else if (pathname === '/Authorization/SignUp') {
-        setInnerComponent(<SignUp />)
-      } else if (pathname === '/Authorization/ForgotPassword') {
-        setInnerComponent(<ForgotPassword />)
-      } else if (pathname === '/Authorization/PasswordReset') {
-        setInnerComponent(<PasswordReset />)
-      } else {
-        setInnerComponent(null)
       }
 
       setIsLoading(false)
@@ -102,9 +84,12 @@ const DefaultLayout = ({ children }) => {
               <Toolbar>
                 <Link href="/">
                   <div className={classes.headerLogoContainer}>
-                    {!lgUp &&
-                      <img className={classes.headerLogo} src="/images/Dotts-Logo-White.png" />
-                    }
+                    {!lgUp && (
+                      <img
+                        className={classes.headerLogo}
+                        src="/images/Dotts-Logo-White.png"
+                      />
+                    )}
                   </div>
                 </Link>
                 <Typography variant="h6" noWrap>

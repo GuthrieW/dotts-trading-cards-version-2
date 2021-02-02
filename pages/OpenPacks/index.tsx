@@ -13,7 +13,6 @@ import useStyles from './OpenPacks.styles'
 import { PACK_TYPES } from '../../utils/packs'
 import { API_URL } from '../../utils/constants'
 import axios from 'axios'
-import Router from 'next/router'
 import PackViewerIntermediate from './PackViewerIntermediate'
 import { DOTTS_ACCESS_TOKEN } from '../../utils/constants'
 
@@ -24,6 +23,7 @@ function OpenPacksPage() {
   const [currentUser, setCurrentUser] = useState(null)
   const [isRedirect, setIsRedirect] = useState(false)
   const [packType, setPackType] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,7 +36,8 @@ function OpenPacksPage() {
         data: {},
       })
 
-      setCurrentUser(user.data)
+      setCurrentUser(user.data.account)
+      setIsLoading(false)
     }
 
     fetchData()
@@ -62,6 +63,7 @@ function OpenPacksPage() {
 
   return (
     <>
+      {isLoading && <h1>Loading...</h1>}
       {isRedirect && <PackViewerIntermediate packType={packType} />}
       <h1>Open Packs</h1>
       <GridList

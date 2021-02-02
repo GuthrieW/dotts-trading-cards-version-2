@@ -49,26 +49,22 @@ const signOut = () => {
 }
 
 function PermanentDrawerLeft({ value, updateTabValue }) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const result = await axios({
+  //       headers: {
+  //         Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
+  //       },
+  //       method: 'post',
+  //       url: `${API_URL}/api/v1/authorization/checkAuthorization`,
+  //       data: {},
+  //     })
+  //     if (result.data.error) {
+  //     }
+  //   }
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios({
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
-        },
-        method: 'post',
-        url: `${API_URL}/api/v1/authorization/checkAuthorization`,
-        data: {},
-      })
-      if (result.data.error) {
-      } else {
-        setIsLoggedIn(true)
-      }
-    }
-
-    fetchData()
-  }, [])
+  //   fetchData()
+  // }, [])
 
   const classes = useStyles()
 
@@ -83,7 +79,10 @@ function PermanentDrawerLeft({ value, updateTabValue }) {
         anchor="left"
       >
         <Link href="/">
-          <img className={classes.sidebarLogo} src="/images/Dotts-Logo-White.png" />
+          <img
+            className={classes.sidebarLogo}
+            src="/images/Dotts-Logo-White.png"
+          />
         </Link>
         <Divider />
         <List>

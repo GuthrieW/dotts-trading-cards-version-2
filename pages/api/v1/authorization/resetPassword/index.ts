@@ -9,43 +9,36 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
 
   const databaseResetToken = await database
     .collection('dotts_reset_tokens')
-    .findOneAndUpdate(
-      {
-        resetToken: resetToken,
-      },
-      {
-        $set: {
-          used: true,
-        },
-      },
-      {
-        returnOriginal: false,
-      }
-    )
+    .findOne({
+      resetToken: resetToken,
+    })
 
   if (databaseResetToken == null) {
     response.status(200).json({
       error: `The link you are trying to use is invalid. Please get at new one here - `,
       link: `${UI_URL}/Authentication/ForgotPassword`,
     })
+    return
   }
 
   if (
-    Date.parse(databaseResetToken.value.expirationDate) <
+    Date.parse(databaseResetToken.expirationDate) <
     Date.parse(new Date().toString())
   )
-    if (databaseResetToken.value.expirationDate > new Date()) {
+    if (databaseResetToken.expirationDate > new Date()) {
       response.status(200).json({
         error: `The link you are trying to use has expired. Please get at new one here - `,
         link: `${UI_URL}/Authentication/ForgotPassword`,
       })
+      return
     }
 
-  if (databaseResetToken.value.used) {
+  if (databaseResetToken.used) {
     response.status(200).json({
       error: `The link you are trying to use has already been used once. Please get at new one here - `,
       link: `${UI_URL}/Authentication/ForgotPassword`,
     })
+    return
   }
 
   const salt = await bcrypt.genSalt(10)
@@ -54,11 +47,26 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
     .collection('dotts_accounts')
     .findOneAndUpdate(
       {
-        email: databaseResetToken.value.email,
+        email: databaseResetToken.email,
       },
       {
         $set: {
           password: hashedPassword,
+        },
+      },
+      {
+        returnOriginal: false,
+      }
+    )
+  const updatedDatabaseResetToken = await database
+    .collection('dotts_reset_tokens')
+    .findOneAndUpdate(
+      {
+        resetToken: resetToken,
+      },
+      {
+        $set: {
+          used: true,
         },
       },
       {

@@ -15,8 +15,6 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
   const hashedPassword = account.password
 
   bcrypt.compare(password, hashedPassword, async (error, result) => {
-    console.log(error)
-    console.log(result)
     if (error != null) {
       response.status(200).json({ error: 'Internal Server Error' })
       return
@@ -25,7 +23,6 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
         email,
         process.env.WEBTOKEN_SECRET
       )
-      console.log(accessToken)
       response.status(200).json({ accessToken: accessToken })
       return
     } else {

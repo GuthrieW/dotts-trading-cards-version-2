@@ -45,7 +45,6 @@ const LogInPage = () => {
   const handleSubmit = async () => {
     event.preventDefault()
     if (canSubmit) {
-      console.log('submitting')
       setIsSubmitting(true)
       const result = await axios({
         method: 'post',
@@ -56,20 +55,18 @@ const LogInPage = () => {
         },
       })
 
-      console.log('result', result)
-
       if (result.data.error) {
         setError(result.data.error)
       } else if (result.data.accessToken) {
         localStorage.setItem(DOTTS_ACCESS_TOKEN, result.data.accessToken)
         Router.push({
-          pathname: `/MyCards/`,
+          pathname: `/`,
         })
       } else {
         setError('Unknown Server Error')
       }
+      setIsSubmitting(false)
     }
-    setIsSubmitting(false)
   }
 
   return (

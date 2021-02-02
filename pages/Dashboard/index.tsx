@@ -24,8 +24,7 @@ function HomePage() {
         data: {},
       })
 
-      console.log({ user })
-      setCurrentUser(user.data)
+      setCurrentUser(user.data.account)
       setIsAdmin(user.data.account.isAdmin)
       setIsProcessor(user.data.account.isProcessor)
       setIsSubmitter(user.data.account.isSubmitter)
@@ -38,16 +37,29 @@ function HomePage() {
   return (
     <Container>
       <h1>Home Page</h1>
-
       {!currentUser && <h1>Loading...</h1>}
       <Box m={2}>
-        {currentUser && (isAdmin || isProcessor) && <InfoCard title="Process Cards" href="/Admin/Processor" />}
+        {currentUser && (isAdmin || isProcessor) && (
+          <InfoCard title="Process Cards" href="/Dashboard/Processor" />
+        )}
       </Box>
       <Box m={2}>
-        {currentUser && (isAdmin || isSubmitter) && <InfoCard title="Submit Cards for Review" href="/Admin/Submitter" />}
+        {currentUser && (isAdmin || isSubmitter) && (
+          <InfoCard
+            title="Submit Cards for Review"
+            href="/Dashboard/Submitter"
+          />
+        )}
       </Box>
       <Box m={2}>
-        {currentUser && (isAdmin || isPackIssuer) && <InfoCard title="Issue Packs" href="/Admin/PackIssuer" />}
+        {currentUser && (isAdmin || isPackIssuer) && (
+          <InfoCard title="Issue Packs" href="/Dashboard/PackIssuer" />
+        )}
+      </Box>
+      <Box m={2}>
+        {currentUser && (isAdmin || isPackIssuer || isSubmitter) && (
+          <InfoCard title="Edit Cards" href="/Dashboard/CardEditor" />
+        )}
       </Box>
     </Container>
   )
