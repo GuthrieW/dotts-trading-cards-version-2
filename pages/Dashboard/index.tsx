@@ -39,6 +39,11 @@ function HomePage() {
       <h1>Home Page</h1>
       {!currentUser && <h1>Loading...</h1>}
       <Box m={2}>
+        {currentUser && (isAdmin || isPackIssuer || isSubmitter) && (
+          <InfoCard title="Edit Profile" href="/Dashboard/ProfileEditor" />
+        )}
+      </Box>
+      <Box m={2}>
         {currentUser && (isAdmin || isProcessor) && (
           <InfoCard title="Process Cards" href="/Dashboard/Processor" />
         )}
@@ -59,6 +64,11 @@ function HomePage() {
       <Box m={2}>
         {currentUser && (isAdmin || isPackIssuer || isSubmitter) && (
           <InfoCard title="Edit Cards" href="/Dashboard/CardEditor" />
+        )}
+      </Box>
+      <Box m={2}>
+        {currentUser && (isAdmin || isPackIssuer || isSubmitter) && (
+          <InfoCard title="Edit Users" href="/Dashboard/UserEditor" />
         )}
       </Box>
     </Container>
