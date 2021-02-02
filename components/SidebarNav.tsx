@@ -49,23 +49,6 @@ const signOut = () => {
 }
 
 function PermanentDrawerLeft({ value, updateTabValue }) {
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const result = await axios({
-  //       headers: {
-  //         Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
-  //       },
-  //       method: 'post',
-  //       url: `${API_URL}/api/v1/authorization/checkAuthorization`,
-  //       data: {},
-  //     })
-  //     if (result.data.error) {
-  //     }
-  //   }
-
-  //   fetchData()
-  // }, [])
-
   const classes = useStyles()
 
   return (
