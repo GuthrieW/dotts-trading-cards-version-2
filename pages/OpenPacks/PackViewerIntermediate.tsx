@@ -14,15 +14,6 @@ const PackViewerIntermediate = (props) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const user = await axios({
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
-        },
-        method: 'post',
-        url: `${API_URL}/api/v1/users/currentUser`,
-        data: {},
-      })
-
       let packOpenUrl
       if (packType === 'regular') {
         packOpenUrl = `${API_URL}/api/v1/packs/open/regular`

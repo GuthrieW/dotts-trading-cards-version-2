@@ -18,6 +18,14 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '100%',
     maxHeight: 64,
   },
+  headerLogoContainer: {
+    display: 'flex',
+    flexGrow: 1,
+    justifyContent: 'center',
+  },
+  headerLogo: {
+    maxHeight: 64,
+  },
   drawer: {
     width: 100,
     [theme.breakpoints.up('lg')]: {

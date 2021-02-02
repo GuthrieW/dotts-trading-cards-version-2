@@ -17,6 +17,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
     const account = await database.collection('dotts_accounts').findOne({
       email: email,
     })
+
     response.status(200).json({ account: account })
   } catch (error) {
     response.status(200).json({ error: error })

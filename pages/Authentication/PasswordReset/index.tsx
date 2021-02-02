@@ -86,8 +86,8 @@ const PasswordResetPage = () => {
       } else {
         setError('Unknown Server Error')
       }
+      setIsSubmitting(false)
     }
-    setIsSubmitting(false)
   }
 
   return (

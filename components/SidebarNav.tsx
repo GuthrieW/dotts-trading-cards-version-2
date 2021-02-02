@@ -33,7 +33,8 @@ const useStyles = makeStyles((theme) => ({
     width: drawerWidth,
   },
   // necessary for content to be below app bar
-  toolbar: {
+  sidebarLogo: {
+    cursor: 'pointer',
     width: 100,
     alignSelf: 'center',
     ...theme.mixins.toolbar,
@@ -48,27 +49,6 @@ const signOut = () => {
 }
 
 function PermanentDrawerLeft({ value, updateTabValue }) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios({
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
-        },
-        method: 'post',
-        url: `${API_URL}/api/v1/authorization/checkAuthorization`,
-        data: {},
-      })
-      if (result.data.error) {
-      } else {
-        setIsLoggedIn(true)
-      }
-    }
-
-    fetchData()
-  }, [])
-
   const classes = useStyles()
 
   return (
@@ -81,20 +61,18 @@ function PermanentDrawerLeft({ value, updateTabValue }) {
         }}
         anchor="left"
       >
-        <img className={classes.toolbar} src="/images/Dotts-Logo-White.png" />
-        <Divider />
-
-        {isLoggedIn && (
-          <Box p={2}>
-            <Button onClick={signOut}>Sign out</Button>
-          </Box>
-        )}
+        <Link href="/">
+          <img
+            className={classes.sidebarLogo}
+            src="/images/Dotts-Logo-White.png"
+          />
+        </Link>
         <Divider />
         <List>
           <Link href="/MyCards">
             <MenuItem
-              onClick={() => updateTabValue(0)}
-              selected={value === 0}
+              onClick={() => updateTabValue(1)}
+              selected={value === 1}
               button
             >
               <ListItemIcon>
@@ -105,8 +83,8 @@ function PermanentDrawerLeft({ value, updateTabValue }) {
           </Link>
           <Link href="/OpenPacks">
             <MenuItem
-              onClick={() => updateTabValue(1)}
-              selected={value === 1}
+              onClick={() => updateTabValue(2)}
+              selected={value === 2}
               button
             >
               <ListItemIcon>
@@ -117,8 +95,8 @@ function PermanentDrawerLeft({ value, updateTabValue }) {
           </Link>
           <Link href="/Community">
             <MenuItem
-              onClick={() => updateTabValue(2)}
-              selected={value === 2}
+              onClick={() => updateTabValue(3)}
+              selected={value === 3}
               button
             >
               <ListItemIcon>
