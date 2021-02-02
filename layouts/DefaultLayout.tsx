@@ -100,6 +100,13 @@ const DefaultLayout = ({ children }) => {
           <div className={classes.root}>
             <AppBar position="fixed" className={classes.appBar}>
               <Toolbar>
+                <Link href="/">
+                  <div className={classes.headerLogoContainer}>
+                    {!lgUp &&
+                      <img className={classes.headerLogo} src="/images/Dotts-Logo-White.png" />
+                    }
+                  </div>
+                </Link>
                 <Typography variant="h6" noWrap>
                   <Button onClick={handleSignOut}>Sign out</Button>
                 </Typography>

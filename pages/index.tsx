@@ -3,6 +3,7 @@ import Head from 'next/head'
 import React from 'react'
 import classes from '../styles/Home.module.css'
 import DefaultLayout from '../layouts/DefaultLayout'
+import HomePage from './Dashboard'
 
 const index = () => {
   return (
@@ -24,6 +25,7 @@ const index = () => {
             content="minimum-scale=1, initial-scale=1, width=device-width"
           />
         </Head>
+        <HomePage />
       </Container>
     </>
   )

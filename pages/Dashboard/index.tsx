@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { API_URL } from '../../utils/constants'
 import axios from 'axios'
-import ProcessorView from './ProcessorView'
-import SubmitterView from './SubmitterView'
-import PackIssuerView from './PackIssuerView'
-import { DOTTS_ACCESS_TOKEN } from '../../utils/constants'
 
-function AdminPage() {
+import { DOTTS_ACCESS_TOKEN } from '../../utils/constants'
+import InfoCard from '../../components/InfoCard/InfoCard'
+import { Box, Container } from '@material-ui/core'
+
+function HomePage() {
   const [currentUser, setCurrentUser] = useState(null)
   const [isAdmin, setIsAdmin] = useState(false)
   const [isProcessor, setIsProcessor] = useState(false)
@@ -24,26 +24,33 @@ function AdminPage() {
         data: {},
       })
 
+      console.log({ user })
       setCurrentUser(user.data)
-      setIsAdmin(user.data.isAdmin)
-      setIsProcessor(user.data.isProcessor)
-      setIsSubmitter(user.data.isSubmitter)
-      setIsPackIssuer(user.data.isPackIssuer)
+      setIsAdmin(user.data.account.isAdmin)
+      setIsProcessor(user.data.account.isProcessor)
+      setIsSubmitter(user.data.account.isSubmitter)
+      setIsPackIssuer(user.data.account.isPackIssuer)
     }
 
     fetchData()
   }, [])
 
   return (
-    <>
-      <h1>Admin Page</h1>
+    <Container>
+      <h1>Home Page</h1>
 
       {!currentUser && <h1>Loading...</h1>}
-      {currentUser && (isAdmin || isProcessor) && <ProcessorView />}
-      {currentUser && (isAdmin || isSubmitter) && <SubmitterView />}
-      {currentUser && (isAdmin || isPackIssuer) && <PackIssuerView />}
-    </>
+      <Box m={2}>
+        {currentUser && (isAdmin || isProcessor) && <InfoCard title="Process Cards" href="/Admin/Processor" />}
+      </Box>
+      <Box m={2}>
+        {currentUser && (isAdmin || isSubmitter) && <InfoCard title="Submit Cards for Review" href="/Admin/Submitter" />}
+      </Box>
+      <Box m={2}>
+        {currentUser && (isAdmin || isPackIssuer) && <InfoCard title="Issue Packs" href="/Admin/PackIssuer" />}
+      </Box>
+    </Container>
   )
 }
 
-export default AdminPage
+export default HomePage
