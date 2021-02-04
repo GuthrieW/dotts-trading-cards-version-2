@@ -1,7 +1,19 @@
-import { Typography, Grid, TextField, FormControlLabel, Checkbox, FormControl, InputLabel, MenuItem, Select, Button, Box } from '@material-ui/core';
+import {
+  Typography,
+  Grid,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Button,
+  Box,
+} from '@material-ui/core'
 import React, { useState } from 'react'
 import { RARITIES, TEAMS } from '../../../utils/constants'
-import useStyles from './Submitter.styles';
+import useStyles from './Submitter.styles'
 /**
  * The page requires the ability to submit one or more cards with fields for
  *
@@ -13,26 +25,24 @@ import useStyles from './Submitter.styles';
  */
 
 const SubmitterPage = () => {
-  const classes = useStyles();
+  const classes = useStyles()
 
-  const [playerName, setPlayerName] = useState('');
-  const [currentTeam, setCurrentTeam] = useState('');
-  const [cardRarity, setCardRarity] = useState('');
-  const [cardImage, setCardImage] = useState('');
+  const [playerName, setPlayerName] = useState('')
+  const [currentTeam, setCurrentTeam] = useState('')
+  const [cardRarity, setCardRarity] = useState('')
+  const [cardImage, setCardImage] = useState('')
 
   const handleRarityChange = (event) => {
     setCardRarity(event.target.value)
   }
   const handleTeamChange = (event) => {
     setCurrentTeam(event.target.value)
-  };
+  }
 
   return (
     <>
       <Box p={2}>
-        <h1>
-          Submit Cards
-      </h1>
+        <h1>Submit Cards</h1>
       </Box>
       <Grid container spacing={0} alignItems={'flex-start'}>
         <Grid container item xs={12} md={6}>
@@ -44,7 +54,9 @@ const SubmitterPage = () => {
                 id="playerName"
                 name="playerName"
                 fullWidth
-                onChange={e => { setPlayerName(e.target.value) }}
+                onChange={(e) => {
+                  setPlayerName(e.target.value)
+                }}
               />
             </Box>
           </Grid>
@@ -59,8 +71,14 @@ const SubmitterPage = () => {
                 fullWidth
               >
                 {TEAMS.map((team) => {
-                  return <MenuItem key={team.CITY_NAME} value={`${team.CITY_NAME} ${team.TEAM_NAME}`}>{team.CITY_NAME} {team.TEAM_NAME}</MenuItem>
-
+                  return (
+                    <MenuItem
+                      key={team.CITY_NAME}
+                      value={`${team.CITY_NAME} ${team.TEAM_NAME}`}
+                    >
+                      {team.CITY_NAME} {team.TEAM_NAME}
+                    </MenuItem>
+                  )
                 })}
               </Select>
             </Box>
@@ -76,8 +94,11 @@ const SubmitterPage = () => {
                 fullWidth
               >
                 {RARITIES.map((rarity) => {
-                  return <MenuItem key={rarity} value='rarity'>{rarity}</MenuItem>
-
+                  return (
+                    <MenuItem key={rarity} value="rarity">
+                      {rarity}
+                    </MenuItem>
+                  )
                 })}
               </Select>
             </Box>
@@ -90,7 +111,9 @@ const SubmitterPage = () => {
                 id="cardImage"
                 name="cardImage"
                 fullWidth
-                onBlur={e => { setCardImage(e.target.value) }}
+                onBlur={(e) => {
+                  setCardImage(e.target.value)
+                }}
               />
             </Box>
           </Grid>
