@@ -35,7 +35,7 @@ const AnimatedPackViewer = ({ cards }) => {
       direction: [xDir],
       velocity,
     }) => {
-      const trigger = velocity > 0.2 // If you flick hard enough it should trigger the card to fly out
+      const trigger = velocity > 0.00001 // If you flick hard enough it should trigger the card to fly out
       const dir = xDir < 0 ? -1 : 1 // Direction should either point left or right
       if (!down && trigger) gone.add(index) // If button/finger's up and trigger velocity is reached, we flag the card ready to fly out
       // @ts-ignore
