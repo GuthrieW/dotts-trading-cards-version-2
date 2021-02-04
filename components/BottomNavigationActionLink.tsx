@@ -9,8 +9,7 @@ import Link from 'next/link'
 export type BottomNavigationActionLinkProps = Omit<
   BottomNavigationActionProps,
   'href' | 'classes'
-> &
-  Pick<LinkProps, 'href' | 'as' | 'prefetch'>
+>
 
 export const BottomNavigationActionLink = React.forwardRef<
   BottomNavigationActionLinkProps,
