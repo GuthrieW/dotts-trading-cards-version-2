@@ -6,6 +6,7 @@ export interface dottsAccounts {
   newestCards: [String]
   ownedRegularPacks: Number
   ownedUltimusPacks: Number
+  isSubscribed: Boolean
   isAdmin: Boolean
   isProcessor: Boolean
   isPackIssuer: Boolean

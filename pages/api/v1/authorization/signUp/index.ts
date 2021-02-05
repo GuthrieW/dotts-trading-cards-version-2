@@ -48,6 +48,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
     isProcessor: false,
     isPackIssuer: false,
     isSubmitter: false,
+    isSubscribed: false,
   })
 
   response.status(201).json({

@@ -35,9 +35,10 @@ const AnimatedPackViewer = ({ cards }) => {
       direction: [xDir],
       velocity,
     }) => {
-      const trigger = velocity > 0.2 // If you flick hard enough it should trigger the card to fly out
+      const trigger = velocity > 0.00001 // If you flick hard enough it should trigger the card to fly out
       const dir = xDir < 0 ? -1 : 1 // Direction should either point left or right
       if (!down && trigger) gone.add(index) // If button/finger's up and trigger velocity is reached, we flag the card ready to fly out
+      // @ts-ignore
       set((i) => {
         if (index !== i) return // We're only interested in changing spring-data for the current spring
         const isGone = gone.has(index)
@@ -53,6 +54,7 @@ const AnimatedPackViewer = ({ cards }) => {
         }
       })
       if (!down && gone.size === cards.length)
+        // @ts-ignore
         setTimeout(() => gone.clear() || set((i) => to(i)), 600)
     }
   )

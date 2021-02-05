@@ -37,13 +37,17 @@ const CollectionView = (props) => {
       if (user.data.error) {
       }
 
+      let cardIds = props.email
+        ? user.data.ownedCards
+        : user.data.account.ownedCards
+
       const userCards = await axios({
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
         method: 'post',
         url: `${API_URL}/api/v1/cards/cards`,
-        data: { cardIds: user.data.ownedCards },
+        data: { cardIds: cardIds },
       })
 
       if (userCards.data.error) {
