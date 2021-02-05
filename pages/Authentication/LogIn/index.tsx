@@ -73,7 +73,6 @@ const LogInPage = () => {
     <>
       <h1>Log In</h1>
       <TextField
-        // className={classes.emailField}
         fullWidth
         id="email"
         type="email"
