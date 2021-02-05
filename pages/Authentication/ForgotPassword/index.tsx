@@ -74,7 +74,6 @@ const ForgotPasswordPage = () => {
         You will be sent an email with a clickable link to reset your password.
       </Typography>
       <TextField
-        // className={classes.emailField}
         fullWidth
         id="email"
         type="email"
@@ -92,7 +91,6 @@ const ForgotPasswordPage = () => {
         </Alert>
       )}
       <Button
-        // className={classes.loginButton}
         variant="contained"
         size="large"
         color="primary"

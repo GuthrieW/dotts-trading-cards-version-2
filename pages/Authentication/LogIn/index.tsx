@@ -84,7 +84,6 @@ const LogInPage = () => {
         disabled={isSubmitting}
       />
       <TextField
-        // className={classes.passwordField}
         fullWidth
         id="password"
         type="password"
@@ -103,7 +102,6 @@ const LogInPage = () => {
       )}
       <Link href="/Authentication/SignUp/">
         <Button
-          // className={classes.loginButton}
           variant="contained"
           size="large"
           color="primary"
@@ -114,18 +112,12 @@ const LogInPage = () => {
         </Button>
       </Link>
       <Link href="/Authentication/ForgotPassword/">
-        <Button
-          // className={classes.signUpButton}
-          size="large"
-          color="primary"
-          disabled={isSubmitting}
-        >
+        <Button size="large" color="primary" disabled={isSubmitting}>
           Forgot Password
         </Button>
       </Link>
       <Link href="/Authentication/SignUp/">
         <Button
-          // className={classes.signUpButton}
           variant="contained"
           size="large"
           color="primary"
