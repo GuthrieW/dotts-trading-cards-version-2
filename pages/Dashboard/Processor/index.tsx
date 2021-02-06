@@ -40,7 +40,6 @@ const ProcessorPage = () => {
         url: `${API_URL}/api/v1/cards/unapprovedCards`,
         data: [],
       })
-      console.log(fetchedCards)
 
       setUnapprovedCards(fetchedCards.data)
     }
@@ -89,7 +88,6 @@ const ProcessorPage = () => {
       data: { selectedCardIds: selected },
     })
 
-    console.log('approvedCards', approvedCards)
     if (approvedCards.data.error) {
     } else {
       Router.reload()

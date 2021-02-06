@@ -34,15 +34,12 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
     }
 
     const { selectedCardIds } = request.body
-    console.log('selectedCardIds', selectedCardIds)
 
     let cardIds = []
 
     _.forEach(selectedCardIds, (cardId) => {
       cardIds.push(new ObjectId(cardId))
     })
-
-    console.log({ cardIds })
 
     const updatedCards = await database.collection('dotts_cards').updateMany(
       {
@@ -53,8 +50,6 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
       }
     )
     client.close()
-
-    console.log(updatedCards.modifiedCount)
 
     response.status(200).json({ updatedCards: updatedCards })
   } catch (error) {
