@@ -12,11 +12,6 @@ import React, { useEffect, useState } from 'react'
 import { API_URL, DOTTS_ACCESS_TOKEN } from '../../../utils/constants'
 import Router from 'next/router'
 
-/**
- * This page is for two purposes. If you are an admin you can use this page to change anything about
- * the user, but if you are a card submitter this page is for updating their isSubscribed variable.
- */
-
 const emptyUser = {
   isflUsername: '',
   email: '',
@@ -103,7 +98,6 @@ const UserEditorPage = () => {
     })
 
     if (result.data.error) {
-      console.log('in here')
     } else {
       Router.reload()
     }
