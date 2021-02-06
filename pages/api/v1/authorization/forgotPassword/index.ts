@@ -5,7 +5,7 @@ import CryptoRandomString from 'crypto-random-string'
 import { UI_URL } from '../../../../../utils/constants'
 
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
-  const { database } = await connect()
+  const { database, client } = await connect()
   const { email } = request.body
 
   const account = await database.collection('dotts_accounts').findOne({
@@ -33,6 +33,8 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
       email: email,
       used: false,
     })
+
+  client.close()
 
   const transporter = NodeMailer.createTransport({
     service: 'gmail',

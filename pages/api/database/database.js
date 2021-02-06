@@ -1,11 +1,10 @@
 import { MongoClient } from 'mongodb'
 
-const client = new MongoClient(process.env.DATABASE_CONNECTION, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-
 export async function connect() {
+  const client = new MongoClient(process.env.DATABASE_CONNECTION, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   if (!client.isConnected()) {
     await client.connect()
   }

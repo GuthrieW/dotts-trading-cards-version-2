@@ -2,12 +2,9 @@ import React from 'react'
 import {
   AppBar,
   Toolbar,
-  Typography,
-  Button,
   Card,
   CardContent,
   createMuiTheme,
-  useTheme,
   ThemeProvider,
   Box,
 } from '@material-ui/core'
@@ -22,7 +19,6 @@ const darkTheme = createMuiTheme({
 
 const SplashLayout = ({ children }) => {
   const classes = useStyles()
-  const theme = useTheme()
 
   return (
     <ThemeProvider theme={darkTheme}>

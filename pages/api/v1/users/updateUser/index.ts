@@ -3,28 +3,24 @@ import { connect } from '../../../database/database'
 import JsonWebToken from 'jsonwebtoken'
 import { getAccessTokenFromHeader } from '../../common'
 
-/**
- *
- * This endpoint is not finished
- *
- */
-
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
-  const { newAccountInformation } = request.body
   const accessToken = getAccessTokenFromHeader(request)
   if (accessToken == null) {
     response.status(200).json({ error: 'User not authenticated' })
     return
   }
 
-  const { database } = await connect()
+  const { database, client } = await connect()
 
   try {
-    const email = JsonWebToken.verify(accessToken, process.env.WEBTOKEN_SECRET)
+    const currentUserEmail = JsonWebToken.verify(
+      accessToken,
+      process.env.WEBTOKEN_SECRET
+    )
     const accountThatCalledApi = await database
       .collection('dotts_accounts')
       .findOne({
-        email: email,
+        email: currentUserEmail,
       })
 
     if (!accountThatCalledApi.isAdmin && !accountThatCalledApi.isPackIssuer) {
@@ -34,14 +30,36 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
       return
     }
 
+    const {
+      oldIsflUsername,
+      email,
+      isflUsername,
+      isSubscribed,
+      isAdmin,
+      isPackIssuer,
+      isProcessor,
+      isSubmitter,
+    } = request.body
+
     const updatedAccount = await database
       .collection('dotts_accounts')
       .findOneAndUpdate(
         {
-          email: email,
+          isflUsername: oldIsflUsername,
         },
-        { $set: {} }
+        {
+          $set: {
+            email: email,
+            isflUsername: isflUsername,
+            isSubscribed: isSubscribed,
+            isAdmin: isAdmin,
+            isPackIssuer: isPackIssuer,
+            isProcessor: isProcessor,
+            isSubmitter: isSubmitter,
+          },
+        }
       )
+    client.close()
 
     response.status(200).json({ account: updatedAccount })
   } catch (error) {

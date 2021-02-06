@@ -16,7 +16,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
 
   try {
     const email = JsonWebToken.verify(accessToken, process.env.WEBTOKEN_SECRET)
-    const { database } = await connect()
+    const { database, client } = await connect()
     const account = await database.collection('dotts_accounts').findOne({
       email: email,
     })
@@ -101,6 +101,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
           returnOriginal: false,
         }
       )
+    client.close()
 
     response.status(200).json({ pulledCards: pulledCards })
   } catch (error) {

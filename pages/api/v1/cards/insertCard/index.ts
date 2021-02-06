@@ -13,7 +13,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
     return
   }
 
-  const { database } = await connect()
+  const { database, client } = await connect()
 
   try {
     const email = JsonWebToken.verify(accessToken, process.env.WEBTOKEN_SECRET)
@@ -40,6 +40,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
       approved: false,
       currentRotation: false,
     })
+    client.close()
 
     response.status(200).json({ insertedCard: insertedCard })
   } catch (error) {

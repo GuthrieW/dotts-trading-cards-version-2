@@ -9,12 +9,13 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
     return
   }
 
-  const { database } = await connect()
+  const { database, client } = await connect()
 
   const accounts = await database
     .collection('dotts_accounts')
     .find({})
     .toArray()
+  client.close()
 
   response.status(200).send(accounts)
 }
