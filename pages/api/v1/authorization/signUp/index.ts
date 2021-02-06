@@ -4,7 +4,7 @@ import _ from 'lodash'
 import bcrypt from 'bcrypt'
 
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
-  const { database } = await connect()
+  const { database, client } = await connect()
   const { email, isflUsername, password } = request.body
 
   const checkAccountUsername = await database
@@ -48,7 +48,9 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
     isProcessor: false,
     isPackIssuer: false,
     isSubmitter: false,
+    isSubscribed: false,
   })
+  client.close()
 
   response.status(201).json({
     success: 'success',

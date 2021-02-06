@@ -1,4 +1,4 @@
-import { TextField, Button } from '@material-ui/core'
+import { TextField, Button, Typography } from '@material-ui/core'
 import React, { useState } from 'react'
 import EmailValidator from 'email-validator'
 import CheckPasswordStrength from 'check-password-strength'
@@ -119,6 +119,7 @@ const SignUpPage = () => {
 
   return (
     <>
+      <h1>Sign Up</h1>
       <TextField
         className={classes.usernameField}
         fullWidth
