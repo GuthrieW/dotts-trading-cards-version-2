@@ -6,8 +6,6 @@ import JsonWebToken from 'jsonwebtoken'
 import { getAccessTokenFromHeader } from '../../common'
 
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
-  const { cardId } = request.body
-
   const accessToken = getAccessTokenFromHeader(request)
   if (accessToken == null) {
     response.status(200).json({ error: 'User not authenticated' })
@@ -35,17 +33,30 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
       return
     }
 
-    const updatedCard = await database
-      .collection('dotts_cards')
-      .findOneAndUpdate(
-        {
-          _id: new ObjectId(cardId),
-        },
-        { $set: { approved: true } }
-      )
+    const { selectedCardIds } = request.body
+    console.log('selectedCardIds', selectedCardIds)
+
+    let cardIds = []
+
+    _.forEach(selectedCardIds, (cardId) => {
+      cardIds.push(new ObjectId(cardId))
+    })
+
+    console.log({ cardIds })
+
+    const updatedCards = await database.collection('dotts_cards').updateMany(
+      {
+        _id: { $in: cardIds },
+      },
+      {
+        $set: { approved: true },
+      }
+    )
     client.close()
 
-    response.status(200).json({ updatedCard: updatedCard })
+    console.log(updatedCards.modifiedCount)
+
+    response.status(200).json({ updatedCards: updatedCards })
   } catch (error) {
     response.status(200).json({ error: error })
   }
