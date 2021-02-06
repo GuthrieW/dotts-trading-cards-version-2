@@ -76,7 +76,7 @@ const LogInPage = () => {
         fullWidth
         id="email"
         type="email"
-        label="email"
+        label="Email"
         margin="normal"
         onChange={handleEmailChange}
         onBlur={updateCanSubmit}
@@ -87,7 +87,7 @@ const LogInPage = () => {
         fullWidth
         id="password"
         type="password"
-        label="password"
+        label="Password"
         margin="normal"
         onChange={handlePasswordChange}
         onBlur={updateCanSubmit}

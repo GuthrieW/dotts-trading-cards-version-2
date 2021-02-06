@@ -77,7 +77,7 @@ const ForgotPasswordPage = () => {
         fullWidth
         id="email"
         type="email"
-        label="email"
+        label="Email"
         margin="normal"
         onChange={handleEmailChange}
         onBlur={updateCanSubmit}
