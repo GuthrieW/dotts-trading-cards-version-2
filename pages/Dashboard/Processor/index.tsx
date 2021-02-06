@@ -169,7 +169,7 @@ const ProcessorPage = () => {
                     <TableCell>
                       <>
                         <Button onClick={() => handleClick(card.imageUrl)}>
-                          View image
+                          View card
                         </Button>
                       </>
                     </TableCell>
