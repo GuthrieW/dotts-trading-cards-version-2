@@ -5,7 +5,13 @@ import JsonWebToken from 'jsonwebtoken'
 import { getAccessTokenFromHeader } from '../../common'
 
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
-  const { newCard } = request.body
+  const {
+    playerName,
+    currentTeam,
+    rarity,
+    imageUrl,
+    submissionUsername,
+  } = request.body
 
   const accessToken = getAccessTokenFromHeader(request)
   if (accessToken == null) {
@@ -31,15 +37,17 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
     }
 
     const insertedCard = await database.collection('dotts_cards').insertOne({
-      playerName: newCard.playerName,
-      playerTeam: newCard.playerTeam,
-      rarity: newCard.rarity,
-      imageUrl: newCard.imageUrl,
-      submissionUsername: newCard.submissionUsername,
+      playerName: playerName,
+      playerTeam: currentTeam,
+      rarity: rarity,
+      imageUrl: imageUrl,
+      submissionUsername: submissionUsername,
       submissionDate: new Date().toISOString(),
       approved: false,
       currentRotation: false,
     })
+
+    console.log(insertedCard)
     client.close()
 
     response.status(200).json({ insertedCard: insertedCard })

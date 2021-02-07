@@ -7,7 +7,6 @@ import {
   Button,
   Dialog,
   DialogContent,
-  makeStyles,
   Checkbox,
   Fab,
 } from '@material-ui/core'
