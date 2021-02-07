@@ -5,12 +5,13 @@ import bcrypt from 'bcrypt'
 import JsonWebToken from 'jsonwebtoken'
 
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
-  const { database } = await connect()
+  const { database, client } = await connect()
   const { email, password } = request.body
 
   const account = await database.collection('dotts_accounts').findOne({
     email: email,
   })
+  client.close()
 
   const hashedPassword = account.password
 

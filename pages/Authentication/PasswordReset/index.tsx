@@ -92,6 +92,7 @@ const PasswordResetPage = () => {
 
   return (
     <>
+      <h1>Reset Password</h1>
       <TextField
         className={classes.passwordField}
         fullWidth

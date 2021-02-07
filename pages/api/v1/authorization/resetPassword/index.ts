@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt'
 import { UI_URL } from '../../../../../utils/constants'
 
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
-  const { database } = await connect()
+  const { database, client } = await connect()
   const { resetToken, password } = request.body
 
   const databaseResetToken = await database
@@ -73,6 +73,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
         returnOriginal: false,
       }
     )
+  client.close()
 
   response.status(200).json({ success: 'success' })
 }

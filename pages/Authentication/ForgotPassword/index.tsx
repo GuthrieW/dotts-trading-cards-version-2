@@ -1,4 +1,4 @@
-import { TextField, Button } from '@material-ui/core'
+import { TextField, Button, Typography } from '@material-ui/core'
 import React, { useState } from 'react'
 import { API_URL } from '../../../utils/constants'
 import axios from 'axios'
@@ -69,15 +69,15 @@ const ForgotPasswordPage = () => {
 
   return (
     <>
-      <p>
+      <h1>Forgot Password</h1>
+      <Typography color="textPrimary">
         You will be sent an email with a clickable link to reset your password.
-      </p>
+      </Typography>
       <TextField
-        // className={classes.emailField}
         fullWidth
         id="email"
         type="email"
-        label="email"
+        label="Email"
         margin="normal"
         onChange={handleEmailChange}
         onBlur={updateCanSubmit}
@@ -91,14 +91,13 @@ const ForgotPasswordPage = () => {
         </Alert>
       )}
       <Button
-        // className={classes.loginButton}
         variant="contained"
         size="large"
         color="primary"
         onClick={handleSubmit}
         disabled={!canSubmit || isSubmitting}
       >
-        Reset My Password
+        Send Email
       </Button>
     </>
   )

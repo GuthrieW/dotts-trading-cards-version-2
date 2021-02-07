@@ -5,11 +5,18 @@ import _ from 'lodash'
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
   const { database, client } = await connect()
 
-  const result = await database.collection('dotts_cards').find({}).toArray()
+  try {
+    const unapprovedCard = await database.collection('dotts_cards').findOne({
+      approved: false,
+    })
+    client.close()
 
-  client.close()
+    response.status(200).json({ unapprovedCard: unapprovedCard })
+  } catch (error) {
+    response.status(200).json({ error: error })
+  }
 
-  response.status(200).send(result)
+  return
 }
 
 export default index
