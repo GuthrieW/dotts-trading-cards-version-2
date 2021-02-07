@@ -130,14 +130,25 @@ const UserEditorPage = () => {
             setOpen(false)
           }}
           onChange={(event, value) => {
-            setChosenUser(value)
-            setAccountIsflUsername(value.isflUsername)
-            setAccountEmail(value.email)
-            setAccountIsSubscribed(value.isSubscribed)
-            setAccountIsAdmin(value.isAdmin)
-            setAccountIsPackIssuer(value.isPackIssuer)
-            setAccountIsProcessor(value.isProcessor)
-            setAccountIsSubmitter(value.isSubmitter)
+            if (value) {
+              setChosenUser(value)
+              setAccountIsflUsername(value.isflUsername)
+              setAccountEmail(value.email)
+              setAccountIsSubscribed(value.isSubscribed)
+              setAccountIsAdmin(value.isAdmin)
+              setAccountIsPackIssuer(value.isPackIssuer)
+              setAccountIsProcessor(value.isProcessor)
+              setAccountIsSubmitter(value.isSubmitter)
+            } else {
+              setChosenUser(emptyUser)
+              setAccountIsflUsername(emptyUser.isflUsername)
+              setAccountEmail(emptyUser.email)
+              setAccountIsSubscribed(emptyUser.isSubscribed)
+              setAccountIsAdmin(emptyUser.isAdmin)
+              setAccountIsPackIssuer(emptyUser.isPackIssuer)
+              setAccountIsProcessor(emptyUser.isProcessor)
+              setAccountIsSubmitter(emptyUser.isSubmitter)
+            }
           }}
           getOptionSelected={(option: any, value: any) =>
             option.isflUsername === value.isflUsername

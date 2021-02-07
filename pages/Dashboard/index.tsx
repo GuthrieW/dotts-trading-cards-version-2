@@ -34,11 +34,6 @@ function HomePage() {
       <h1>Home Page</h1>
       {!currentUser && <h1>Loading...</h1>}
       <Box m={2}>
-        {currentUser && (
-          <InfoCard title="Edit Profile" href="/Dashboard/ProfileEditor" />
-        )}
-      </Box>
-      <Box m={2}>
         {currentUser && (currentUser.isAdmin || currentUser.isProcessor) && (
           <InfoCard title="Process Cards" href="/Dashboard/Processor" />
         )}

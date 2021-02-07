@@ -1,19 +1,19 @@
 import {
-  Typography,
   Grid,
   TextField,
-  FormControlLabel,
-  Checkbox,
-  FormControl,
   InputLabel,
   MenuItem,
   Select,
   Button,
   Box,
 } from '@material-ui/core'
-import React, { useState } from 'react'
 import { RARITIES, TEAMS } from '../../../utils/constants'
 import useStyles from './Submitter.styles'
+import axios from 'axios'
+import React, { useState, useEffect } from 'react'
+import { API_URL, DOTTS_ACCESS_TOKEN } from '../../../utils/constants'
+import Router from 'next/router'
+
 /**
  * The page requires the ability to submit one or more cards with fields for
  *
@@ -27,16 +27,59 @@ import useStyles from './Submitter.styles'
 const SubmitterPage = () => {
   const classes = useStyles()
 
+  const [currentUser, setCurrentUser] = useState(null)
   const [playerName, setPlayerName] = useState('')
   const [currentTeam, setCurrentTeam] = useState('')
   const [cardRarity, setCardRarity] = useState('')
   const [cardImage, setCardImage] = useState('')
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const user = await axios({
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
+        },
+        method: 'post',
+        url: `${API_URL}/api/v1/users/currentUser/`,
+        data: {},
+      })
+
+      if (user.data.error) {
+      }
+
+      setCurrentUser(user.data.account)
+    }
+
+    fetchData()
+  }, [])
 
   const handleRarityChange = (event) => {
     setCardRarity(event.target.value)
   }
   const handleTeamChange = (event) => {
     setCurrentTeam(event.target.value)
+  }
+
+  const handleSubmit = async () => {
+    const approvedCards = await axios({
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
+      },
+      method: 'post',
+      url: `${API_URL}/api/v1/cards/insertCard`,
+      data: {
+        playerName: playerName,
+        currentTeam: currentTeam,
+        rarity: cardRarity,
+        imageUrl: cardImage,
+        submissionUsername: currentUser.isflUsername,
+      },
+    })
+
+    if (approvedCards.data.error) {
+    } else {
+      Router.reload()
+    }
   }
 
   return (
@@ -95,8 +138,8 @@ const SubmitterPage = () => {
               >
                 {RARITIES.map((rarity) => {
                   return (
-                    <MenuItem key={rarity} value="rarity">
-                      {rarity}
+                    <MenuItem key={rarity.label} value={rarity.value}>
+                      {rarity.value}
                     </MenuItem>
                   )
                 })}
@@ -117,6 +160,26 @@ const SubmitterPage = () => {
               />
             </Box>
           </Grid>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: 'inherit',
+            }}
+          >
+            <Button
+              disabled={
+                !playerName || !currentTeam || !cardRarity || !cardImage
+              }
+              style={{ verticalAlign: 'center', width: '60%' }}
+              variant="contained"
+              color="primary"
+              onClick={handleSubmit}
+            >
+              Submit Card
+            </Button>
+          </div>
         </Grid>
         <Grid container item xs={12} md={6}>
           {cardImage && <img className={classes.cardImage} src={cardImage} />}

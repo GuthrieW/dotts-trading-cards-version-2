@@ -20,18 +20,54 @@ export const DOTTS_USER_ID_STORAGE = 'dottsUserId'
 export const DOTTS_ACCESS_TOKEN = 'dottsAccessToken'
 
 export const RARITIES = [
-  BACKUP,
-  STARTER,
-  STAR,
-  ALL_PRO,
-  LEGEND,
-  AWARD,
-  HALL_OF_FAME,
-  ULTIMUS_CHAMPION,
-  HOLOGRAPH_EXPANSION,
-  AUTOGRAPH_ROOKIE,
-  FANTASY_KINGS,
-  CAPTAIN,
+  {
+    label: 'BACKUP',
+    value: 'Backup',
+  },
+  {
+    label: 'STARTER',
+    value: 'Starter',
+  },
+  {
+    label: 'STAR',
+    value: 'Star',
+  },
+  {
+    label: 'ALL_PRO',
+    value: 'All-Pro',
+  },
+  {
+    label: 'LEGEND',
+    value: 'Legend',
+  },
+  {
+    label: 'AWARD',
+    value: 'Award',
+  },
+  {
+    label: 'HALL_OF_FAME',
+    value: 'Hall of Fame',
+  },
+  {
+    label: 'ULTIMUS_CHAMPION',
+    value: 'Ultimus Champion',
+  },
+  {
+    label: 'HOLOGRAPH_EXPANSION',
+    value: 'Holograph Expansion',
+  },
+  {
+    label: 'AUTOGRAPH_ROOKIE',
+    value: 'Autograph Rookie',
+  },
+  {
+    label: 'FANTASY_KINGS',
+    value: 'Fantasy Kings',
+  },
+  {
+    label: 'CAPTAIN',
+    value: 'Captain',
+  },
 ]
 
 export const TEAMS = [

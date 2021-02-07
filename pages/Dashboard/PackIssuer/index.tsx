@@ -1,10 +1,25 @@
-import { AppBar, Tabs, Tab, List, ListItem, ListItemText, Button, Checkbox, Table, TableBody, TableCell, TableHead, TableRow, TextField } from '@material-ui/core';
-import { TabPanel } from '@material-ui/lab';
-import axios from 'axios';
+import {
+  AppBar,
+  Tabs,
+  Tab,
+  List,
+  ListItem,
+  ListItemText,
+  Button,
+  Checkbox,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  TextField,
+} from '@material-ui/core'
+import { TabPanel } from '@material-ui/lab'
+import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import ActionButton from '../../../components/ActionButton/ActionButton';
-import { API_URL, DOTTS_ACCESS_TOKEN } from '../../../utils/constants';
-import UnsubscribedUsers from './UnsubscribedUsers';
+import ActionButton from '../../../components/ActionButton/ActionButton'
+import { API_URL, DOTTS_ACCESS_TOKEN } from '../../../utils/constants'
+import UnsubscribedUsers from './UnsubscribedUsers'
 
 /**
  * This needs a search bar for searching for a user and updating the number of packs a user has.
@@ -14,11 +29,10 @@ import UnsubscribedUsers from './UnsubscribedUsers';
  */
 
 const SubscribedUsers = () => {
-  const [subscribedUsers, setSubscribedUsers] = useState([]);
+  const [subscribedUsers, setSubscribedUsers] = useState([])
 
   useEffect(() => {
     const fetchSubscribedUsers = async () => {
-
       const fetchedUsers = await axios({
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
@@ -40,18 +54,19 @@ const SubscribedUsers = () => {
       <>
         <List>
           {subscribedUsers.map((user) => {
-            return (<ListItem key={user._id}>
-              <ListItemText>{user.isflUsername}</ListItemText>
-            </ListItem>)
-          }
-          )}
+            return (
+              <ListItem key={user._id}>
+                <ListItemText>{user.isflUsername}</ListItemText>
+              </ListItem>
+            )
+          })}
         </List>
         <ActionButton label="Issue Packs" />
       </>
     )
-  };
+  }
 
-  return <div>Loading...</div>;
+  return <div>Loading...</div>
 }
 
 // const UnsubscribedUsers = () => {
@@ -158,20 +173,28 @@ const SubscribedUsers = () => {
 // }
 
 const PackIssuerPage = () => {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(0)
   const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-  return (<div>
-    <AppBar position="static" color="transparent">
-      <Tabs value={value} onChange={handleChange} color="secondary" variant="fullWidth" centered>
-        <Tab label="Subscribers" value={0} />
-        <Tab label="Non-subscribers" value={1} />
-      </Tabs>
-    </AppBar>
-    {value === 0 && <SubscribedUsers />}
-    {value === 1 && <UnsubscribedUsers />}
-  </div>)
+    setValue(newValue)
+  }
+  return (
+    <div>
+      <AppBar position="static" color="transparent">
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          color="secondary"
+          variant="fullWidth"
+          centered
+        >
+          <Tab label="Subscribers" value={0} />
+          <Tab label="Non-subscribers" value={1} />
+        </Tabs>
+      </AppBar>
+      {value === 0 && <SubscribedUsers />}
+      {value === 1 && <UnsubscribedUsers />}
+    </div>
+  )
 }
 
 export default PackIssuerPage

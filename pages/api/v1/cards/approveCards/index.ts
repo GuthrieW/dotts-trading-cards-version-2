@@ -1,18 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next'
+import { ObjectId } from 'mongodb'
 import { connect } from '../../../database/database'
 import _ from 'lodash'
 import JsonWebToken from 'jsonwebtoken'
 import { getAccessTokenFromHeader } from '../../common'
 
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
-  const {
-    playerName,
-    currentTeam,
-    rarity,
-    imageUrl,
-    submissionUsername,
-  } = request.body
-
   const accessToken = getAccessTokenFromHeader(request)
   if (accessToken == null) {
     response.status(200).json({ error: 'User not authenticated' })
@@ -29,28 +22,36 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
         email: email,
       })
 
-    if (!accountThatCalledApi.isAdmin && !accountThatCalledApi.isSubmitter) {
+    if (
+      !accountThatCalledApi.isAdmin &&
+      !accountThatCalledApi.isSubmitter &&
+      !accountThatCalledApi.isProcessor
+    ) {
       response
         .status(200)
         .json({ error: 'User not permitted to update other accounts' })
       return
     }
 
-    const insertedCard = await database.collection('dotts_cards').insertOne({
-      playerName: playerName,
-      playerTeam: currentTeam,
-      rarity: rarity,
-      imageUrl: imageUrl,
-      submissionUsername: submissionUsername,
-      submissionDate: new Date().toISOString(),
-      approved: false,
-      currentRotation: false,
+    const { selectedCardIds } = request.body
+
+    let cardIds = []
+
+    _.forEach(selectedCardIds, (cardId) => {
+      cardIds.push(new ObjectId(cardId))
     })
 
-    console.log(insertedCard)
+    const updatedCards = await database.collection('dotts_cards').updateMany(
+      {
+        _id: { $in: cardIds },
+      },
+      {
+        $set: { approved: true },
+      }
+    )
     client.close()
 
-    response.status(200).json({ insertedCard: insertedCard })
+    response.status(200).json({ updatedCards: updatedCards })
   } catch (error) {
     response.status(200).json({ error: error })
   }
