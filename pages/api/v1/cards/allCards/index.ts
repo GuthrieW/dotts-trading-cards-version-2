@@ -7,6 +7,8 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
 
   const result = await database.collection('dotts_cards').find({}).toArray()
 
+  client.close()
+
   response.status(200).send(result)
 }
 
