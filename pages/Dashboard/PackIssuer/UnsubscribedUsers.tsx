@@ -239,11 +239,11 @@ export default function TransferList() {
       {rightChecked.length > 0 && (
         <ActionButton
           onClick={() => handleOnClick(Packs.Type.Regular)}
-          label="Issue Regular Packs"
+          label={`Issue ${checked.length} Regular Pack(s)`}
         />
         // <ActionButton
         //   onClick={() => handleOnClick(Packs.Type.Ultimus)}
-        //   label="Issue Ultimus Packs"
+        //   label={`Issue ${checked.length} Ultimus Pack(s)`}
         // />
       )}
     </Grid>
