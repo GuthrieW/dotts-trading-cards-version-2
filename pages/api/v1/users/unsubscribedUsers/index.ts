@@ -13,7 +13,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
 
   const accounts = await database
     .collection('dotts_accounts')
-    .find({})
+    .find({ isSubscribed: false })
     .toArray()
   client.close()
 

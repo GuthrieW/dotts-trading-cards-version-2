@@ -20,7 +20,6 @@ import SplashScreen from '../components/SplashScreen/SplashScreen'
 import SidebarNav from '../components/SidebarNav'
 import axios from 'axios'
 import { API_URL, DOTTS_ACCESS_TOKEN } from '../utils/constants'
-import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Router from 'next/router'
 

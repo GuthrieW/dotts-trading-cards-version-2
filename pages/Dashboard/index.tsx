@@ -8,10 +8,6 @@ import { Box, Container } from '@material-ui/core'
 
 function HomePage() {
   const [currentUser, setCurrentUser] = useState(null)
-  const [isAdmin, setIsAdmin] = useState(false)
-  const [isProcessor, setIsProcessor] = useState(false)
-  const [isSubmitter, setIsSubmitter] = useState(false)
-  const [isPackIssuer, setIsPackIssuer] = useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,10 +24,6 @@ function HomePage() {
       }
 
       setCurrentUser(user.data.account)
-      setIsAdmin(user.data.account.isAdmin)
-      setIsProcessor(user.data.account.isProcessor)
-      setIsSubmitter(user.data.account.isSubmitter)
-      setIsPackIssuer(user.data.account.isPackIssuer)
     }
 
     fetchData()
@@ -42,17 +34,12 @@ function HomePage() {
       <h1>Home Page</h1>
       {!currentUser && <h1>Loading...</h1>}
       <Box m={2}>
-        {currentUser && (
-          <InfoCard title="Edit Profile" href="/Dashboard/ProfileEditor" />
-        )}
-      </Box>
-      <Box m={2}>
-        {currentUser && (isAdmin || isProcessor) && (
+        {currentUser && (currentUser.isAdmin || currentUser.isProcessor) && (
           <InfoCard title="Process Cards" href="/Dashboard/Processor" />
         )}
       </Box>
       <Box m={2}>
-        {currentUser && (isAdmin || isSubmitter) && (
+        {currentUser && (currentUser.isAdmin || currentUser.isSubmitter) && (
           <InfoCard
             title="Submit Cards for Review"
             href="/Dashboard/Submitter"
@@ -60,17 +47,20 @@ function HomePage() {
         )}
       </Box>
       <Box m={2}>
-        {currentUser && (isAdmin || isPackIssuer) && (
+        {currentUser && (currentUser.isAdmin || currentUser.isPackIssuer) && (
           <InfoCard title="Issue Packs" href="/Dashboard/PackIssuer" />
         )}
       </Box>
       <Box m={2}>
-        {currentUser && (isAdmin || isSubmitter || isProcessor) && (
-          <InfoCard title="Edit Cards" href="/Dashboard/CardEditor" />
-        )}
+        {currentUser &&
+          (currentUser.isAdmin ||
+            currentUser.isSubmitter ||
+            currentUser.isProcessor) && (
+            <InfoCard title="Edit Cards" href="/Dashboard/CardEditor" />
+          )}
       </Box>
       <Box m={2}>
-        {currentUser && (isAdmin || isPackIssuer) && (
+        {currentUser && (currentUser.isAdmin || currentUser.isPackIssuer) && (
           <InfoCard title="Edit Users" href="/Dashboard/UserEditor" />
         )}
       </Box>

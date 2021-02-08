@@ -11,7 +11,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
     return
   }
 
-  const { database } = await connect()
+  const { database, client } = await connect()
   const { cardIds } = request.body
 
   let objectIds = []
@@ -24,6 +24,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
     .collection('dotts_cards')
     .find({ _id: { $in: objectIds } })
     .toArray()
+  client.close()
 
   const groupdData = _.groupBy(cardIds)
 

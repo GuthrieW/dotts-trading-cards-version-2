@@ -1,17 +1,19 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { connect } from '../../../database/database'
+import _ from 'lodash'
+import { ObjectId } from 'mongodb'
 
-// TODO - Change this to take in a providerAccountId
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
   const { database, client } = await connect()
-  const { email } = request.body
+  const { cardId } = request.body
 
-  const account = await database.collection('dotts_accounts').findOne({
-    email: email,
-  })
+  const result = await database
+    .collection('dotts_cards')
+    .findOneAndDelete({ _id: new ObjectId(cardId) })
+
   client.close()
 
-  response.status(200).send(account)
+  response.status(200).send(result)
 }
 
 export default index
