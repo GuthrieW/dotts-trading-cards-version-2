@@ -1,3 +1,10 @@
+export const Packs = {
+  Type: {
+    Regular: 'regular',
+    Ultimus: 'ultimus',
+  },
+}
+
 export const PACK_TYPES = [
   {
     type: 'regular',

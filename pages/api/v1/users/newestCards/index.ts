@@ -33,6 +33,18 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
       .toArray()
     client.close()
 
+    const groupedData = _.groupBy(account.newestCards)
+
+    _.forEach(groupedData, (group) => {
+      if (group.length > 1) {
+        const cardToAdd = _.find(result, (card) => {
+          return card._id == group[0]
+        })
+
+        _.times(group.length - 1, result.push(cardToAdd))
+      }
+    })
+
     response.status(200).json({ newestCards: result })
   } catch (error) {
     response.status(200).json({ error: error, newestCards: [] })

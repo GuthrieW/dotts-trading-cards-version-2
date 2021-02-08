@@ -6,11 +6,13 @@ import {
   ListItem,
   ListItemText,
 } from '@material-ui/core'
-import { TabPanel } from '@material-ui/lab'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import ActionButton from '../../../components/ActionButton/ActionButton'
 import { API_URL, DOTTS_ACCESS_TOKEN } from '../../../utils/constants'
+import UnsubscribedUsers from './UnsubscribedUsers'
+import Router from 'next/router'
+import { Packs } from '../../../utils/packs'
 
 /**
  * This needs a search bar for searching for a user and updating the number of packs a user has.
@@ -19,33 +21,8 @@ import { API_URL, DOTTS_ACCESS_TOKEN } from '../../../utils/constants'
  * that when clicked will add one pack to each of those users.
  */
 
-const SubscribedUsers = ({ users }) => {
-  if (users && users.length > 0) {
-    return (
-      <>
-        <List>
-          {users.map((user) => {
-            return (
-              <ListItem>
-                <ListItemText>{user.isflUsername}</ListItemText>
-              </ListItem>
-            )
-          })}
-        </List>
-        <ActionButton label="Issue Packs" />
-      </>
-    )
-  }
-
-  return <div>Loading...</div>
-}
-
-const PackIssuerPage = () => {
-  const [value, setValue] = useState(0)
+const SubscribedUsers = () => {
   const [subscribedUsers, setSubscribedUsers] = useState([])
-  const handleChange = (event, newValue) => {
-    setValue(newValue)
-  }
 
   useEffect(() => {
     const fetchSubscribedUsers = async () => {
@@ -57,6 +34,7 @@ const PackIssuerPage = () => {
         url: `${API_URL}/api/v1/users/subscribedUsers`,
         data: [],
       })
+      console.log(fetchedUsers)
 
       setSubscribedUsers(fetchedUsers.data)
     }
@@ -64,6 +42,57 @@ const PackIssuerPage = () => {
     fetchSubscribedUsers()
   }, [])
 
+  const handleOnClick = async (packType) => {
+    const result = await axios({
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
+      },
+      method: 'post',
+      url: `${API_URL}/api/v1/users/addPackToSubscribedUsers`,
+      data: {
+        packType: packType,
+      },
+    })
+
+    if (result.data.error) {
+      console.log(result.data.error)
+    } else {
+      Router.reload()
+    }
+  }
+
+  if (subscribedUsers && subscribedUsers.length > 0) {
+    return (
+      <>
+        <List>
+          {subscribedUsers.map((user) => {
+            return (
+              <ListItem key={user._id}>
+                <ListItemText>{user.isflUsername}</ListItemText>
+              </ListItem>
+            )
+          })}
+        </List>
+        {/* <ActionButton
+          onClick={() => handleOnClick(Packs.Type.Regular)}
+          label="Issue Regular Packs"
+        /> */}
+        <ActionButton
+          onClick={() => handleOnClick(Packs.Type.Ultimus)}
+          label="Issue Ultimus Packs"
+        />
+      </>
+    )
+  }
+
+  return <div>Loading...</div>
+}
+
+const PackIssuerPage = () => {
+  const [value, setValue] = useState(0)
+  const handleChange = (event, newValue) => {
+    setValue(newValue)
+  }
   return (
     <div>
       <AppBar position="static" color="transparent">
@@ -78,8 +107,8 @@ const PackIssuerPage = () => {
           <Tab label="Non-subscribers" value={1} />
         </Tabs>
       </AppBar>
-      {value === 0 && <SubscribedUsers users={subscribedUsers} />}
-      {value === 1 && <div>non-subscriber view</div>}
+      {value === 0 && <SubscribedUsers />}
+      {value === 1 && <UnsubscribedUsers />}
     </div>
   )
 }
