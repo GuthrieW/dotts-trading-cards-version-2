@@ -19,3 +19,5 @@ export const PACK_TYPES = [
       'https://cdn.discordapp.com/attachments/719410556578299954/776782018352119818/uw_pack.png',
   },
 ]
+
+export const test = []
