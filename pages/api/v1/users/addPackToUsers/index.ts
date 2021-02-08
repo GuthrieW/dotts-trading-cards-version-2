@@ -1,10 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { connect } from '../../../database/database'
+import { ObjectId } from 'mongodb'
 import JsonWebToken from 'jsonwebtoken'
+import _ from 'lodash'
 import { getAccessTokenFromHeader } from '../../common'
 
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
-  const { packType } = request.body
+  const { packType, selectedUsers } = request.body
   const accessToken = getAccessTokenFromHeader(request)
   if (accessToken == null) {
     response.status(200).json({ error: 'User not authenticated' })
@@ -42,9 +44,19 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
       return
     }
 
+    console.log('selectedUsers', selectedUsers)
+
+    let objectIds = []
+    _.forEach(selectedUsers, (userId) => {
+      console.log(userId._id)
+      objectIds.push(new ObjectId(userId._id))
+    })
+
+    console.log('userIds', objectIds)
+
     const result = await database.collection('dotts_accounts').updateMany(
       {
-        isSubscribed: true,
+        _id: { $in: objectIds },
       },
       {
         $inc: incrementQuery,
@@ -52,12 +64,12 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
     )
     client.close()
 
+    console.log(result)
+
     response.status(200).json({ result: result })
   } catch (error) {
     response.status(200).json({ error: error })
   }
-
-  return
 }
 
 export default index

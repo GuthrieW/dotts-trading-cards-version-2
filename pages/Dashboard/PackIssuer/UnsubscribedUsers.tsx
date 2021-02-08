@@ -1,18 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import List from '@material-ui/core/List';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import Checkbox from '@material-ui/core/Checkbox';
-import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
-import axios from 'axios';
-import { DOTTS_ACCESS_TOKEN, API_URL } from '../../../utils/constants';
-import ActionButton from '../../../components/ActionButton/ActionButton';
+import React, { useEffect, useState } from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import {
+  Grid,
+  List,
+  Card,
+  CardHeader,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  Checkbox,
+  Button,
+  Divider,
+} from '@material-ui/core'
+import axios from 'axios'
+import { DOTTS_ACCESS_TOKEN, API_URL } from '../../../utils/constants'
+import ActionButton from '../../../components/ActionButton/ActionButton'
+import { Packs } from '../../../utils/packs'
+import Router from 'next/router'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,10 +24,10 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 0,
     marginRight: 0,
     marginBottom: 100,
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down('md')]: {
       display: 'flex',
-      flexDirection: 'column'
-    }
+      flexDirection: 'column',
+    },
   },
   cardHeader: {
     padding: theme.spacing(1, 2),
@@ -40,26 +44,26 @@ const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(0.5, 0),
   },
-}));
+}))
 
 function not(a, b) {
-  return a.filter((value) => b.indexOf(value) === -1);
+  return a.filter((value) => b.indexOf(value) === -1)
 }
 
 function intersection(a, b) {
-  return a.filter((value) => b.indexOf(value) !== -1);
+  return a.filter((value) => b.indexOf(value) !== -1)
 }
 
 function union(a, b) {
-  return [...a, ...not(b, a)];
+  return [...a, ...not(b, a)]
 }
 
 export default function TransferList() {
-  const classes = useStyles();
-  const [checked, setChecked] = React.useState([]);
-  const [left, setLeft] = React.useState([]);
-  const [right, setRight] = React.useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const classes = useStyles()
+  const [checked, setChecked] = React.useState([])
+  const [left, setLeft] = React.useState([])
+  const [right, setRight] = React.useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const fetchSubscribedUsers = async () => {
@@ -72,51 +76,74 @@ export default function TransferList() {
         data: [],
       })
 
-      setLeft(fetchedUsers.data.sort((a, b) => (a.isflUsername > b.isflUsername) ? 1 : -1))
-      setIsLoading(false);
+      setLeft(
+        fetchedUsers.data.sort((a, b) =>
+          a.isflUsername > b.isflUsername ? 1 : -1
+        )
+      )
+      setIsLoading(false)
     }
 
     fetchSubscribedUsers()
   }, [])
 
-
-  const leftChecked = intersection(checked, left);
-  const rightChecked = intersection(checked, right);
+  const leftChecked = intersection(checked, left)
+  const rightChecked = intersection(checked, right)
 
   const handleToggle = (value) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
+    const currentIndex = checked.indexOf(value)
+    const newChecked = [...checked]
 
     if (currentIndex === -1) {
-      newChecked.push(value);
+      newChecked.push(value)
     } else {
-      newChecked.splice(currentIndex, 1);
+      newChecked.splice(currentIndex, 1)
     }
 
-    setChecked(newChecked);
-  };
+    setChecked(newChecked)
+  }
 
-  const numberOfChecked = (items) => intersection(checked, items).length;
+  const numberOfChecked = (items) => intersection(checked, items).length
 
   const handleToggleAll = (items) => () => {
     if (numberOfChecked(items) === items.length) {
-      setChecked(not(checked, items));
+      setChecked(not(checked, items))
     } else {
-      setChecked(union(checked, items));
+      setChecked(union(checked, items))
     }
-  };
+  }
 
   const handleCheckedRight = () => {
-    setRight(right.concat(leftChecked));
-    setLeft(not(left, leftChecked));
-    setChecked(not(checked, leftChecked));
-  };
+    setRight(right.concat(leftChecked))
+    setLeft(not(left, leftChecked))
+    setChecked(not(checked, leftChecked))
+  }
 
   const handleCheckedLeft = () => {
-    setLeft(left.concat(rightChecked));
-    setRight(not(right, rightChecked));
-    setChecked(not(checked, rightChecked));
-  };
+    setLeft(left.concat(rightChecked))
+    setRight(not(right, rightChecked))
+    setChecked(not(checked, rightChecked))
+  }
+
+  const handleOnClick = async (packType) => {
+    const result = await axios({
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
+      },
+      method: 'post',
+      url: `${API_URL}/api/v1/users/addPackToUsers`,
+      data: {
+        packType: packType,
+        selectedUsers: checked,
+      },
+    })
+
+    if (result.data.error) {
+      console.log(result.data.error)
+    } else {
+      Router.reload()
+    }
+  }
 
   const customList = (title, items) => (
     <Card>
@@ -125,8 +152,13 @@ export default function TransferList() {
         avatar={
           <Checkbox
             onClick={handleToggleAll(items)}
-            checked={numberOfChecked(items) === items.length && items.length !== 0}
-            indeterminate={numberOfChecked(items) !== items.length && numberOfChecked(items) !== 0}
+            checked={
+              numberOfChecked(items) === items.length && items.length !== 0
+            }
+            indeterminate={
+              numberOfChecked(items) !== items.length &&
+              numberOfChecked(items) !== 0
+            }
             disabled={items.length === 0}
             inputProps={{ 'aria-label': 'all items selected' }}
           />
@@ -137,10 +169,15 @@ export default function TransferList() {
       <Divider />
       <List className={classes.list} dense component="div" role="list">
         {items.map((value) => {
-          const labelId = `transfer-list-all-item-${value}-label`;
+          const labelId = `transfer-list-all-item-${value}-label`
 
           return (
-            <ListItem key={value._id} role="listitem" button onClick={handleToggle(value)}>
+            <ListItem
+              key={value._id}
+              role="listitem"
+              button
+              onClick={handleToggle(value)}
+            >
               <ListItemIcon>
                 <Checkbox
                   checked={checked.indexOf(value) !== -1}
@@ -149,19 +186,27 @@ export default function TransferList() {
                   inputProps={{ 'aria-labelledby': labelId }}
                 />
               </ListItemIcon>
-              <ListItemText id={value.isflUsername} primary={`${value.isflUsername}`} />
+              <ListItemText
+                id={value.isflUsername}
+                primary={`${value.isflUsername}`}
+              />
             </ListItem>
-          );
+          )
         })}
         <ListItem />
       </List>
     </Card>
-  );
+  )
 
   return (
-    <Grid container justify="center" alignItems="center" className={classes.root}>
+    <Grid
+      container
+      justify="center"
+      alignItems="center"
+      className={classes.root}
+    >
       {isLoading && <h1>Loading...</h1>}
-      {!isLoading &&
+      {!isLoading && (
         <>
           <Grid item>{customList('Choices', left)}</Grid>
           <Grid item className={classes.middleButtons}>
@@ -175,7 +220,7 @@ export default function TransferList() {
                 aria-label="move selected right"
               >
                 &gt;
-          </Button>
+              </Button>
               <Button
                 variant="outlined"
                 size="small"
@@ -185,15 +230,22 @@ export default function TransferList() {
                 aria-label="move selected left"
               >
                 &lt;
-          </Button>
+              </Button>
             </Grid>
           </Grid>
           <Grid item>{customList('Chosen', right)}</Grid>
         </>
-      }
-      {
-        rightChecked.length > 0 && <ActionButton label={`Issue ${rightChecked.length} packs`} />
-      }
+      )}
+      {rightChecked.length > 0 && (
+        <ActionButton
+          onClick={() => handleOnClick(Packs.Type.Regular)}
+          label="Issue Regular Packs"
+        />
+        // <ActionButton
+        //   onClick={() => handleOnClick(Packs.Type.Ultimus)}
+        //   label="Issue Ultimus Packs"
+        // />
+      )}
     </Grid>
-  );
+  )
 }

@@ -5,21 +5,14 @@ import {
   List,
   ListItem,
   ListItemText,
-  Button,
-  Checkbox,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  TextField,
 } from '@material-ui/core'
-import { TabPanel } from '@material-ui/lab'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import ActionButton from '../../../components/ActionButton/ActionButton'
 import { API_URL, DOTTS_ACCESS_TOKEN } from '../../../utils/constants'
 import UnsubscribedUsers from './UnsubscribedUsers'
+import Router from 'next/router'
+import { Packs } from '../../../utils/packs'
 
 /**
  * This needs a search bar for searching for a user and updating the number of packs a user has.
@@ -49,6 +42,25 @@ const SubscribedUsers = () => {
     fetchSubscribedUsers()
   }, [])
 
+  const handleOnClick = async (packType) => {
+    const result = await axios({
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
+      },
+      method: 'post',
+      url: `${API_URL}/api/v1/users/addPackToSubscribedUsers`,
+      data: {
+        packType: packType,
+      },
+    })
+
+    if (result.data.error) {
+      console.log(result.data.error)
+    } else {
+      Router.reload()
+    }
+  }
+
   if (subscribedUsers && subscribedUsers.length > 0) {
     return (
       <>
@@ -61,116 +73,20 @@ const SubscribedUsers = () => {
             )
           })}
         </List>
-        <ActionButton label="Issue Packs" />
+        {/* <ActionButton
+          onClick={() => handleOnClick(Packs.Type.Regular)}
+          label="Issue Regular Packs"
+        /> */}
+        <ActionButton
+          onClick={() => handleOnClick(Packs.Type.Ultimus)}
+          label="Issue Ultimus Packs"
+        />
       </>
     )
   }
 
   return <div>Loading...</div>
 }
-
-// const UnsubscribedUsers = () => {
-//   const [unsubscribedUsers, setUnsubscribedUsers] = useState([]);
-//   const [selected, setSelected] = React.useState([]);
-//   const [userFilter, setUserFilter] = useState('');
-
-//   useEffect(() => {
-//     const fetchSubscribedUsers = async () => {
-
-//       const fetchedUsers = await axios({
-//         headers: {
-//           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
-//         },
-//         method: 'post',
-//         url: `${API_URL}/api/v1/users/unsubscribedUsers`,
-//         data: [],
-//       })
-//       console.log(fetchedUsers)
-
-//       setUnsubscribedUsers(fetchedUsers.data)
-//     }
-
-//     fetchSubscribedUsers()
-//   }, [])
-
-//   const handleRowClick = (event, name) => {
-//     console.log(name)
-//     const selectedIndex = selected.indexOf(name);
-//     let newSelected = [];
-
-//     if (selectedIndex === -1) {
-//       newSelected = newSelected.concat(selected, name);
-//     } else if (selectedIndex === 0) {
-//       newSelected = newSelected.concat(selected.slice(1));
-//     } else if (selectedIndex === selected.length - 1) {
-//       newSelected = newSelected.concat(selected.slice(0, -1));
-//     } else if (selectedIndex > 0) {
-//       newSelected = newSelected.concat(
-//         selected.slice(0, selectedIndex),
-//         selected.slice(selectedIndex + 1),
-//       );
-//     }
-
-//     setSelected(newSelected);
-//   };
-
-//   const isSelected = (name) => selected.indexOf(name) !== -1;
-
-//   const handleSearch = (e) => {
-//     setUserFilter(e.target.value);
-
-//   }
-//   if (unsubscribedUsers && unsubscribedUsers.length > 0) {
-//     return (
-//       <>
-//         <TextField id="outlined-basic" label="Enter ISFL username" variant="outlined" onBlur={handleSearch} />
-//         <Table>
-//           <TableHead>
-//             <TableRow>
-//               <TableCell width="50%">Name</TableCell>
-//               <TableCell width="50%">Issue Pack?</TableCell>
-//             </TableRow>
-//           </TableHead>
-//           <TableBody>
-//             {unsubscribedUsers
-//               .filter((user) => {
-//                 if (userFilter) {
-//                   return user.isflUsername.startsWith(userFilter)
-//                 }
-
-//                 return true;
-//               })
-//               .map(user => {
-//                 const isItemSelected = isSelected(user._id);
-
-//                 return (
-//                   <TableRow
-//                     hover
-//                     role="checkbox"
-//                     aria-checked={isItemSelected}
-//                     tabIndex={-1}
-//                     key={user._id}
-//                     selected={isItemSelected}
-//                   >
-//                     <TableCell width="60%">{user.isflUsername}</TableCell>
-//                     <TableCell padding="checkbox" align="right" onClick={(event) => handleRowClick(event, user._id)}
-//                     >
-//                       <Checkbox
-//                         checked={isItemSelected}
-//                       />
-//                     </TableCell>
-//                   </TableRow>
-//                 )
-//               })}
-//           </TableBody>
-//         </Table>
-//         <ActionButton label={`Issue ${selected.length} Packs`} />
-//       </>
-//     )
-//   };
-
-//   return <div>Loading...</div>;
-// }
 
 const PackIssuerPage = () => {
   const [value, setValue] = useState(0)
