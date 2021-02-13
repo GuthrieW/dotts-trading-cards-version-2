@@ -92,25 +92,27 @@ function OpenPacksPage() {
             <GridListTile className={classes.cardContainer} key={name}>
               <div className={classes.linkContainer}>
                 <img
-                  onClick={() => handleOnClick(type)}
                   className={classes.packImage}
                   src={imageUrl}
+                  onClick={() => handleOnClick(type)}
                 />
-                <GridListTileBar
-                  title={`Open ${name}`}
-                  actionIcon={
-                    <IconButton aria-label={`info about ${name}`}>
-                      <Badge
-                        max={999}
-                        color="secondary"
-                        badgeContent={getNumberOfPacks(type)}
-                        showZero={true}
-                      >
-                        <OpenPacksIcon />
-                      </Badge>
-                    </IconButton>
-                  }
-                />
+                <div onClick={() => handleOnClick(type)}>
+                  <GridListTileBar
+                    title={`Open ${name}`}
+                    actionIcon={
+                      <IconButton aria-label={`info about ${name}`}>
+                        <Badge
+                          max={999}
+                          color="secondary"
+                          badgeContent={getNumberOfPacks(type)}
+                          showZero={true}
+                        >
+                          <OpenPacksIcon />
+                        </Badge>
+                      </IconButton>
+                    }
+                  />
+                </div>
               </div>
             </GridListTile>
           )

@@ -179,6 +179,7 @@ const UserEditorPage = () => {
         <FormGroup>
           <TextField
             disabled={!currentUser.isAdmin}
+            type={currentUser.isAdmin ? 'text' : 'password'}
             label="Email"
             value={accountEmail}
             onChange={(event) => {
