@@ -39,6 +39,8 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
       isPackIssuer,
       isProcessor,
       isSubmitter,
+      ownedRegularPacks,
+      ownedUltimusPacks,
     } = request.body
 
     const updatedAccount = await database
@@ -56,6 +58,8 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
             isPackIssuer: isPackIssuer,
             isProcessor: isProcessor,
             isSubmitter: isSubmitter,
+            ownedRegularPacks: ownedRegularPacks,
+            ownedUltimusPacks: ownedUltimusPacks,
           },
         }
       )

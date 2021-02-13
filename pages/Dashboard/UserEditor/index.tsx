@@ -20,6 +20,8 @@ const emptyUser = {
   isPackIssuer: false,
   isProcessor: false,
   isSubmitter: false,
+  ownedRegularPacks: 0,
+  ownedUltimusPacks: 0,
 }
 
 const UserEditorPage = () => {
@@ -29,13 +31,29 @@ const UserEditorPage = () => {
   const [currentUser, setCurrentUser] = useState(null)
   const [chosenUser, setChosenUser] = useState(emptyUser)
 
-  const [accountIsflUsername, setAccountIsflUsername] = useState('')
-  const [accountEmail, setAccountEmail] = useState('')
-  const [accountIsSubscribed, setAccountIsSubscribed] = useState(false)
-  const [accountIsAdmin, setAccountIsAdmin] = useState(false)
-  const [accountIsPackIssuer, setAccountIsPackIssuer] = useState(false)
-  const [accountIsProcessor, setAccountIsProcessor] = useState(false)
-  const [accountIsSubmitter, setAccountIsSubmitter] = useState(false)
+  const [accountIsflUsername, setAccountIsflUsername] = useState(
+    emptyUser.isflUsername
+  )
+  const [accountEmail, setAccountEmail] = useState(emptyUser.email)
+  const [accountIsSubscribed, setAccountIsSubscribed] = useState(
+    emptyUser.isSubscribed
+  )
+  const [accountIsAdmin, setAccountIsAdmin] = useState(emptyUser.isAdmin)
+  const [accountIsPackIssuer, setAccountIsPackIssuer] = useState(
+    emptyUser.isPackIssuer
+  )
+  const [accountIsProcessor, setAccountIsProcessor] = useState(
+    emptyUser.isProcessor
+  )
+  const [accountIsSubmitter, setAccountIsSubmitter] = useState(
+    emptyUser.isSubmitter
+  )
+  const [accountOwnedRegularPacks, setAccountOwnedRegularPacks] = useState(
+    emptyUser.ownedRegularPacks
+  )
+  const [accountOwnedUltimusPacks, setAccountOwnedUltimusPacks] = useState(
+    emptyUser.ownedUltimusPacks
+  )
 
   useEffect(() => {
     const fetchData = async () => {
@@ -101,6 +119,8 @@ const UserEditorPage = () => {
         isPackIssuer: accountIsPackIssuer,
         isProcessor: accountIsProcessor,
         isSubmitter: accountIsSubmitter,
+        ownedRegularPacks: accountOwnedRegularPacks,
+        ownedUltimusPacks: accountOwnedUltimusPacks,
       },
     })
 
@@ -150,6 +170,8 @@ const UserEditorPage = () => {
               setAccountIsPackIssuer(value.isPackIssuer)
               setAccountIsProcessor(value.isProcessor)
               setAccountIsSubmitter(value.isSubmitter)
+              setAccountOwnedRegularPacks(value.ownedRegularPacks)
+              setAccountOwnedUltimusPacks(value.ownedUltimusPacks)
             } else {
               setChosenUser(emptyUser)
               setAccountIsflUsername(emptyUser.isflUsername)
@@ -159,6 +181,8 @@ const UserEditorPage = () => {
               setAccountIsPackIssuer(emptyUser.isPackIssuer)
               setAccountIsProcessor(emptyUser.isProcessor)
               setAccountIsSubmitter(emptyUser.isSubmitter)
+              setAccountOwnedRegularPacks(emptyUser.ownedRegularPacks)
+              setAccountOwnedUltimusPacks(emptyUser.ownedUltimusPacks)
             }
           }}
           getOptionSelected={(option: any, value: any) =>
@@ -279,6 +303,24 @@ const UserEditorPage = () => {
                 color="primary"
               />
             }
+          />
+          <TextField
+            disabled={!currentUser.isAdmin && !currentUser.isPackIssuer}
+            type={'number'}
+            label="Owned Regular Packs"
+            value={accountOwnedRegularPacks}
+            onChange={(event) => {
+              setAccountOwnedRegularPacks(Number(event.target.value))
+            }}
+          />
+          <TextField
+            disabled={!currentUser.isAdmin && !currentUser.isPackIssuer}
+            type={'number'}
+            label="Owned Ultimus Packs"
+            value={accountOwnedUltimusPacks}
+            onChange={(event) => {
+              setAccountOwnedUltimusPacks(Number(event.target.value))
+            }}
           />
           <div
             style={{

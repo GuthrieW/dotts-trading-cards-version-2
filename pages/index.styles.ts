@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   footer: {
+    marginTop: '5px',
     width: '100%',
     position: 'fixed',
     bottom: 0,
