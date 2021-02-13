@@ -20,7 +20,7 @@ const CollectionView = (props) => {
   const [open, setOpen] = React.useState(false)
   const [currentCard, setCurrentCard] = useState(null)
   const [collectionCards, setCollectionCards] = useState([])
-  const [filteredCards, setFilteredCards] = useState([]);
+  const [filteredCards, setFilteredCards] = useState([])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,7 +38,7 @@ const CollectionView = (props) => {
       if (user.data.error) {
       }
 
-      let cardIds = props.email
+      let cardIds = props.isflUsername
         ? user.data.ownedCards
         : user.data.account.ownedCards
 
@@ -61,18 +61,21 @@ const CollectionView = (props) => {
   }, [])
 
   const getUserApiCallOptions = () => {
+    console.log('props', props)
     const apiCallOptions =
-      props.email != null
+      props.isflUsername != null
         ? {
-          url: `${API_URL}/api/v1/users/singleUser/`,
-          data: {
-            email: props.email,
-          },
-        }
+            url: `${API_URL}/api/v1/users/singleUser/`,
+            data: {
+              isflUsername: props.isflUsername,
+            },
+          }
         : {
-          url: `${API_URL}/api/v1/users/currentUser`,
-          data: {},
-        }
+            url: `${API_URL}/api/v1/users/currentUser`,
+            data: {},
+          }
+
+    console.log('apiCallOptions', apiCallOptions)
     return apiCallOptions
   }
 
@@ -207,7 +210,10 @@ const CollectionView = (props) => {
       let cardsToShow = collectionCards
 
       if (chipsEnabled) {
-        cardsToShow = getCardsWithSelectedRarities(cardsToShow, enabledChipNames)
+        cardsToShow = getCardsWithSelectedRarities(
+          cardsToShow,
+          enabledChipNames
+        )
       }
 
       if (searchTermEnabled) {
@@ -218,19 +224,19 @@ const CollectionView = (props) => {
       return cardsToShow
     }
 
-    getFilterResults(searchTerm, enabledChips);
+    getFilterResults(searchTerm, enabledChips)
   }, [searchTerm, sortOrder, collectionCards])
 
-
-  const [pageNumber, setPageNumber] = useState(1);
+  const [pageNumber, setPageNumber] = useState(1)
   const handlePageChange = (event, value) => {
-    setPageNumber(value);
+    setPageNumber(value)
   }
-  const numberOfItemsForPage = 12;
+  const numberOfItemsForPage = 12
 
   return (
     <div className={classes.container}>
-      <h1>Card Collection</h1>
+      {props.isflUsername && <h1>{`${props.isflUsername}'s Collection`}</h1>}
+      {!props.isflUsername && <h1>My Collection</h1>}
       <Box
         className={classes.chipList}
         component="div"
@@ -266,21 +272,31 @@ const CollectionView = (props) => {
       />
 
       <Grid className={classes.collectionContainer} container>
-        {filteredCards.length > 0 && filteredCards.slice(((pageNumber - 1) * (numberOfItemsForPage)), ((pageNumber) * (numberOfItemsForPage))).map((card, index) => {
-          return (
-            <PlayerCard
-              className={classes.cardContainer}
-              key={`${card.rarity}-${card.playerName}-${index}`}
-              card={card}
-              currentCard={currentCard}
-              handleOpenCard={handleClickOpen}
-              handleCloseCard={handleClose}
-              open={open}
-            />
-          )
-        })}
+        {filteredCards.length > 0 &&
+          filteredCards
+            .slice(
+              (pageNumber - 1) * numberOfItemsForPage,
+              pageNumber * numberOfItemsForPage
+            )
+            .map((card, index) => {
+              return (
+                <PlayerCard
+                  className={classes.cardContainer}
+                  key={`${card.rarity}-${card.playerName}-${index}`}
+                  card={card}
+                  currentCard={currentCard}
+                  handleOpenCard={handleClickOpen}
+                  handleCloseCard={handleClose}
+                  open={open}
+                />
+              )
+            })}
       </Grid>
-      <Pagination count={Math.ceil(filteredCards.length / numberOfItemsForPage)} onChange={handlePageChange} page={pageNumber} />
+      <Pagination
+        count={Math.ceil(filteredCards.length / numberOfItemsForPage)}
+        onChange={handlePageChange}
+        page={pageNumber}
+      />
     </div>
   )
 }
