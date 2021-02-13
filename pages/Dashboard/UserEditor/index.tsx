@@ -53,6 +53,13 @@ const UserEditorPage = () => {
 
       setCurrentUser(user.data.account)
 
+      const account = user.data.account
+      if (!account.isAdmin && !account.isPackIssuer) {
+        Router.push({
+          pathname: '/OpenPacks',
+        })
+      }
+
       const allUsers = await axios({
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
@@ -104,7 +111,11 @@ const UserEditorPage = () => {
   }
 
   if (!chosenUser || isLoading) {
-    return <h1>Loading...</h1>
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <CircularProgress />
+      </div>
+    )
   }
 
   return (

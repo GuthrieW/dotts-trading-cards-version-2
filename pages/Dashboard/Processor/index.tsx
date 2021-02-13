@@ -24,6 +24,7 @@ import Router from 'next/router'
 const ProcessorPage = () => {
   const classes = useStyles()
 
+  const [isLoading, setIsLoading] = useState(true)
   const [unapprovedCards, setUnapprovedCards] = useState([])
   const [open, setOpen] = useState(false)
   const [currentCard, setCurrentCard] = useState('')
@@ -31,6 +32,25 @@ const ProcessorPage = () => {
 
   useEffect(() => {
     const fetchUnapprovedCards = async () => {
+      const user = await axios({
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
+        },
+        method: 'post',
+        url: `${API_URL}/api/v1/users/currentUser/`,
+        data: {},
+      })
+
+      if (user.data.error) {
+      }
+
+      const account = user.data.account
+      if (!account.isAdmin && !account.isProcessor) {
+        Router.push({
+          pathname: '/OpenPacks',
+        })
+      }
+
       const fetchedCards = await axios({
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
@@ -41,6 +61,7 @@ const ProcessorPage = () => {
       })
 
       setUnapprovedCards(fetchedCards.data)
+      setIsLoading(false)
     }
 
     fetchUnapprovedCards()
@@ -110,6 +131,14 @@ const ProcessorPage = () => {
       )
       Router.reload()
     }
+  }
+
+  if (isLoading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <CircularProgress />
+      </div>
+    )
   }
 
   return (

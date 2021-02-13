@@ -6,6 +6,7 @@ import {
   Select,
   Button,
   Box,
+  CircularProgress,
 } from '@material-ui/core'
 import { RARITIES, TEAMS } from '../../../utils/constants'
 import useStyles from './Submitter.styles'
@@ -32,6 +33,7 @@ const SubmitterPage = () => {
   const [currentTeam, setCurrentTeam] = useState('')
   const [cardRarity, setCardRarity] = useState('')
   const [cardImage, setCardImage] = useState('')
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,6 +50,15 @@ const SubmitterPage = () => {
       }
 
       setCurrentUser(user.data.account)
+
+      const account = user.data.account
+      if (!account.isAdmin && !account.isSubmitter) {
+        Router.push({
+          pathname: '/OpenPacks',
+        })
+      }
+
+      setIsLoading(false)
     }
 
     fetchData()
@@ -80,6 +91,14 @@ const SubmitterPage = () => {
     } else {
       Router.reload()
     }
+  }
+
+  if (isLoading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <CircularProgress />
+      </div>
+    )
   }
 
   return (

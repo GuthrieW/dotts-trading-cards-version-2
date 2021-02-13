@@ -23,9 +23,29 @@ import { Packs } from '../../../utils/packs'
 
 const SubscribedUsers = () => {
   const [subscribedUsers, setSubscribedUsers] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const fetchSubscribedUsers = async () => {
+      const user = await axios({
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
+        },
+        method: 'post',
+        url: `${API_URL}/api/v1/users/currentUser/`,
+        data: {},
+      })
+
+      if (user.data.error) {
+      }
+
+      const account = user.data.account
+      if (!account.isAdmin && !account.isPackIssuer) {
+        Router.push({
+          pathname: '/OpenPacks',
+        })
+      }
+
       const fetchedUsers = await axios({
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
@@ -34,9 +54,9 @@ const SubscribedUsers = () => {
         url: `${API_URL}/api/v1/users/subscribedUsers`,
         data: [],
       })
-      console.log(fetchedUsers)
 
       setSubscribedUsers(fetchedUsers.data)
+      setIsLoading(false)
     }
 
     fetchSubscribedUsers()
@@ -61,7 +81,15 @@ const SubscribedUsers = () => {
     }
   }
 
-  if (subscribedUsers && subscribedUsers.length > 0) {
+  if (!subscribedUsers || isLoading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <CircularProgress />
+      </div>
+    )
+  }
+
+  if (subscribedUsers) {
     return (
       <>
         <List>
@@ -73,19 +101,17 @@ const SubscribedUsers = () => {
             )
           })}
         </List>
-        {/* <ActionButton
+        <ActionButton
           onClick={() => handleOnClick(Packs.Type.Regular)}
           label="Issue Regular Packs"
-        /> */}
-        <ActionButton
+        />
+        {/* <ActionButton
           onClick={() => handleOnClick(Packs.Type.Ultimus)}
           label="Issue Ultimus Packs"
-        />
+        /> */}
       </>
     )
   }
-
-  return <div>Loading...</div>
 }
 
 const PackIssuerPage = () => {
@@ -93,6 +119,7 @@ const PackIssuerPage = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue)
   }
+
   return (
     <div>
       <AppBar position="static" color="transparent">
