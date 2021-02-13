@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { API_URL } from '../../utils/constants'
 import axios from 'axios'
-
 import { DOTTS_ACCESS_TOKEN } from '../../utils/constants'
 import InfoCard from '../../components/InfoCard/InfoCard'
 import { Box, Container } from '@material-ui/core'
+import Router from 'next/router'
 
 function HomePage() {
   const [currentUser, setCurrentUser] = useState(null)
@@ -24,6 +24,16 @@ function HomePage() {
       }
 
       setCurrentUser(user.data.account)
+      if (
+        !user.data.account.isAdmin &&
+        !user.data.account.isProcessor &&
+        !user.data.account.isSubmitter &&
+        !user.data.account.isPackIssuer
+      ) {
+        Router.push({
+          pathname: '/OpenPacks',
+        })
+      }
     }
 
     fetchData()
