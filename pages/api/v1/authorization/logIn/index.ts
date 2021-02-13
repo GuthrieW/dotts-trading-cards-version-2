@@ -11,6 +11,12 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
   const account = await database.collection('dotts_accounts').findOne({
     email: email,
   })
+
+  if (!account) {
+    response.status(200).json({ error: 'No user exists with that email.' })
+    return
+  }
+
   client.close()
 
   const hashedPassword = account.password
