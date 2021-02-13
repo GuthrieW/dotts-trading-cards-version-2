@@ -5,6 +5,15 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flex: '1 1 auto',
     flexDirection: 'column',
+    paddingLeft: 12,
+    paddingRight: 12,
+    [theme.breakpoints.down('md')]: {
+      marginBottom: 70,
+    },
+    [theme.breakpoints.up('lg')]: {
+      paddingLeft: 30,
+      maxWidth: 1100,
+    },
   },
   chipList: {
     paddingBottom: 10,
@@ -15,6 +24,8 @@ const useStyles = makeStyles((theme) => ({
   cardContainer: {
     maxWidth: '100%',
     maxHeight: '100%',
+    margin: 0,
+    padding: 10,
   },
   search: {
     marginTop: 8,
@@ -49,6 +60,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   collectionContainer: {
+    margin: 0,
     marginTop: 16,
   },
 }))

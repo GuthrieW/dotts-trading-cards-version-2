@@ -10,6 +10,7 @@ import useStyles from './PlayerCard.styles'
 
 const PlayerCard = ({
   card,
+  className,
   currentCard,
   handleOpenCard,
   handleCloseCard,
@@ -17,7 +18,7 @@ const PlayerCard = ({
 }) => {
   const classes = useStyles()
   return (
-    <Grid key={card.playerName} item xs={6} md={4} lg={3}>
+    <Grid key={card.playerName} item xs={6} md={4} lg={3} className={className}>
       <Box onClick={() => handleOpenCard(card)}>
         <img className={classes.cardContainer} src={card.imageUrl} />
       </Box>

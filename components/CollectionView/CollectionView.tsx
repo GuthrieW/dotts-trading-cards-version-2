@@ -7,7 +7,7 @@ import {
   useMediaQuery,
   useTheme,
 } from '@material-ui/core'
-import { Autocomplete } from '@material-ui/lab'
+import { Autocomplete, Pagination } from '@material-ui/lab'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { API_URL } from '../../utils/constants'
@@ -20,6 +20,7 @@ const CollectionView = (props) => {
   const [open, setOpen] = React.useState(false)
   const [currentCard, setCurrentCard] = useState(null)
   const [collectionCards, setCollectionCards] = useState([])
+  const [filteredCards, setFilteredCards] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,15 +64,15 @@ const CollectionView = (props) => {
     const apiCallOptions =
       props.email != null
         ? {
-            url: `${API_URL}/api/v1/users/singleUser/`,
-            data: {
-              email: props.email,
-            },
-          }
+          url: `${API_URL}/api/v1/users/singleUser/`,
+          data: {
+            email: props.email,
+          },
+        }
         : {
-            url: `${API_URL}/api/v1/users/currentUser`,
-            data: {},
-          }
+          url: `${API_URL}/api/v1/users/currentUser`,
+          data: {},
+        }
     return apiCallOptions
   }
 
@@ -145,6 +146,7 @@ const CollectionView = (props) => {
   const enabledChips = sortOrder.filter((option) => option.isEnabled === true)
 
   const handleChipClick = (rarityFilter, index) => {
+    setPageNumber(1)
     const rarityFilterCopy = [...sortOrder]
     rarityFilterCopy[index].isEnabled = !rarityFilter.isEnabled
     setSortOrder(rarityFilterCopy)
@@ -197,22 +199,34 @@ const CollectionView = (props) => {
     return cardsWithMatchingTerms
   }
 
-  const getFilterResults = (searchTerm, enabledChips) => {
-    const chipsEnabled = enabledChips.length != 0
-    const searchTermEnabled = searchTerm != ''
-    const enabledChipNames = getEnabledChipNames(enabledChips)
-    let cardsToShow = collectionCards
+  useEffect(() => {
+    const getFilterResults = (searchTerm, enabledChips) => {
+      const chipsEnabled = enabledChips.length != 0
+      const searchTermEnabled = searchTerm != ''
+      const enabledChipNames = getEnabledChipNames(enabledChips)
+      let cardsToShow = collectionCards
 
-    if (chipsEnabled) {
-      cardsToShow = getCardsWithSelectedRarities(cardsToShow, enabledChipNames)
+      if (chipsEnabled) {
+        cardsToShow = getCardsWithSelectedRarities(cardsToShow, enabledChipNames)
+      }
+
+      if (searchTermEnabled) {
+        cardsToShow = getCardsWithMatchingTerms(cardsToShow, searchTerm)
+      }
+
+      setFilteredCards(cardsToShow)
+      return cardsToShow
     }
 
-    if (searchTermEnabled) {
-      cardsToShow = getCardsWithMatchingTerms(cardsToShow, searchTerm)
-    }
+    getFilterResults(searchTerm, enabledChips);
+  }, [searchTerm, sortOrder, collectionCards])
 
-    return cardsToShow
+
+  const [pageNumber, setPageNumber] = useState(1);
+  const handlePageChange = (event, value) => {
+    setPageNumber(value);
   }
+  const numberOfItemsForPage = 12;
 
   return (
     <div className={classes.container}>
@@ -251,10 +265,11 @@ const CollectionView = (props) => {
         }}
       />
 
-      <Grid className={classes.collectionContainer} container spacing={1}>
-        {getFilterResults(searchTerm, enabledChips).map((card, index) => {
+      <Grid className={classes.collectionContainer} container>
+        {filteredCards.length > 0 && filteredCards.slice(((pageNumber - 1) * (numberOfItemsForPage)), ((pageNumber) * (numberOfItemsForPage))).map((card, index) => {
           return (
             <PlayerCard
+              className={classes.cardContainer}
               key={`${card.rarity}-${card.playerName}-${index}`}
               card={card}
               currentCard={currentCard}
@@ -265,6 +280,7 @@ const CollectionView = (props) => {
           )
         })}
       </Grid>
+      <Pagination count={Math.ceil(filteredCards.length / numberOfItemsForPage)} onChange={handlePageChange} page={pageNumber} />
     </div>
   )
 }
