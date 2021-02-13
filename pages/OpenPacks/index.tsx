@@ -24,7 +24,10 @@ function OpenPacksPage() {
   const [isRedirect, setIsRedirect] = useState(false)
   const [packType, setPackType] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
-  const [availablePacksForUser, setAvailablePacksForUser] = useState({ regular: 0, ultimus: 0 });
+  const [availablePacksForUser, setAvailablePacksForUser] = useState({
+    regular: 0,
+    ultimus: 0,
+  })
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,7 +46,7 @@ function OpenPacksPage() {
       setCurrentUser(user.data.account)
       setAvailablePacksForUser({
         regular: user.data.account.ownedRegularPacks,
-        ultimus: user.data.account.ownedUltimusPacks
+        ultimus: user.data.account.ownedUltimusPacks,
       })
       setIsLoading(false)
     }
@@ -81,36 +84,35 @@ function OpenPacksPage() {
         cols={smUp ? 2 : 1}
       >
         {Object.entries(availablePacksForUser).map((packType) => {
-          const packName = packType[0];
-          const packNumber = packType[1];
+          const packName = packType[0]
+          const packNumber = packType[1]
           const packInfo = PACK_TYPES.find((pack) => pack.type === packName)
-          const { type, name, imageUrl } = packInfo;
-          return (
-            packNumber > 0 ?
-              <GridListTile className={classes.cardContainer} key={name} onClick={() => handleOnClick(type)}>
-                <div className={classes.linkContainer}>
-                  <img
-                    className={classes.packImage}
-                    src={imageUrl}
-                  />
-                  <GridListTileBar
-                    title={`Open ${name}`}
-                    actionIcon={
-                      <IconButton aria-label={`info about ${name}`}>
-                        <Badge
-                          max={999}
-                          color="secondary"
-                          badgeContent={getNumberOfPacks(type)}
-                        >
-                          <OpenPacksIcon />
-                        </Badge>
-                      </IconButton>
-                    }
-                  />
-                </div>
-              </GridListTile>
-              : null
-          )
+          const { type, name, imageUrl } = packInfo
+          return packNumber > 0 ? (
+            <GridListTile
+              className={classes.cardContainer}
+              key={name}
+              onClick={() => handleOnClick(type)}
+            >
+              <div className={classes.linkContainer}>
+                <img className={classes.packImage} src={imageUrl} />
+                <GridListTileBar
+                  title={`Open ${name}`}
+                  actionIcon={
+                    <IconButton aria-label={`info about ${name}`}>
+                      <Badge
+                        max={999}
+                        color="secondary"
+                        badgeContent={getNumberOfPacks(type)}
+                      >
+                        <OpenPacksIcon />
+                      </Badge>
+                    </IconButton>
+                  }
+                />
+              </div>
+            </GridListTile>
+          ) : null
         })}
       </GridList>
     </>
