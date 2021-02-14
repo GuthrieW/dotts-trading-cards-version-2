@@ -34,7 +34,6 @@ const SubscribedUsers = () => {
         url: `${API_URL}/api/v1/users/subscribedUsers`,
         data: [],
       })
-      console.log(fetchedUsers)
 
       setSubscribedUsers(fetchedUsers.data)
     }

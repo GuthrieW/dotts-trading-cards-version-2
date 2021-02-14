@@ -6,8 +6,6 @@ import JsonWebToken from 'jsonwebtoken'
 import { getAccessTokenFromHeader } from '../../common'
 
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
-  const { newCardInformation } = request.body
-
   const accessToken = getAccessTokenFromHeader(request)
   if (accessToken == null) {
     response.status(200).json({ error: 'User not authenticated' })
@@ -27,18 +25,41 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
     if (!accountThatCalledApi.isAdmin && !accountThatCalledApi.isPackIssuer) {
       response
         .status(200)
-        .json({ error: 'User not permitted to update other accounts' })
+        .json({ error: 'User not permitted to update cards.' })
       return
     }
+
+    const {
+      cardId,
+      playerName,
+      playerTeam,
+      cardRarity,
+      imageUrl,
+      approved,
+      currentRotation,
+    } = request.body
 
     const updatedCard = await database
       .collection('dotts_cards')
       .findOneAndUpdate(
         {
-          _id: new ObjectId(newCardInformation.cardId),
+          _id: new ObjectId(cardId),
         },
-        { $set: {} }
+        {
+          $set: {
+            playerName: playerName,
+            playerTeam: playerTeam,
+            rarity: cardRarity,
+            imageUrl: imageUrl,
+            approved: approved,
+            currentRotation: currentRotation,
+          },
+        },
+        {
+          returnOriginal: false,
+        }
       )
+
     client.close()
 
     response.status(200).json({ updatedCard: updatedCard })

@@ -1,116 +1,240 @@
 import React, { useEffect, useState } from 'react'
-import MUIDataTable from "mui-datatables";
-import axios from 'axios';
-import { DOTTS_ACCESS_TOKEN, API_URL } from '../../../utils/constants';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, TextField } from '@material-ui/core';
+import MUIDataTable from 'mui-datatables'
+import axios from 'axios'
+import { DOTTS_ACCESS_TOKEN, API_URL } from '../../../utils/constants'
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  FormControlLabel,
+  TextField,
+  Select,
+  MenuItem,
+  InputLabel,
+  Switch,
+} from '@material-ui/core'
+import { RARITIES, TEAMS } from '../../../utils/constants'
 
-const CardFormDialog = ({ rowData, open, setOpen }) => {
-  console.log('card form')
-  console.log(rowData)
+const CARD_ID_INDEX = 0
+const PLAYER_NAME_INDEX = 1
+const PLAYER_TEAM_INDEX = 2
+const CARD_RARITY_INDEX = 3
+const IMAGE_URL_INDEX = 4
+const APPROVED_INDEX = 5
+const CURRENT_ROTATION_INDEX = 6
+
+const CardFormDialog = ({ updateFunction, rowData, open, setOpen }) => {
+  const [playerName, setPlayerName] = useState(
+    rowData && rowData[PLAYER_NAME_INDEX]
+  )
+  const [playerTeam, setPlayerTeam] = useState(
+    rowData && rowData[PLAYER_TEAM_INDEX]
+  )
+  const [cardRarity, setCardRarity] = useState(
+    rowData && rowData[CARD_RARITY_INDEX]
+  )
+  const [imageUrl, setImageUrl] = useState(rowData && rowData[IMAGE_URL_INDEX])
+  const [approved, setApproved] = useState(
+    rowData && Boolean(rowData[APPROVED_INDEX] == 'true')
+  )
+  const [currentRotation, setCurrentRotation] = useState(
+    rowData && Boolean(rowData[CURRENT_ROTATION_INDEX] == 'true')
+  )
+
   const handleClickOpen = () => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
 
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
+
+  const handleUpdate = async () => {
+    const data = {
+      cardId: rowData[CARD_ID_INDEX],
+      playerName: playerName,
+      playerTeam: playerTeam,
+      cardRarity: cardRarity,
+      imageUrl: imageUrl,
+      approved: approved,
+      currentRotation: currentRotation,
+    }
+
+    await axios({
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
+      },
+      method: 'post',
+      url: `${API_URL}/api/v1/cards/updateCard`,
+      data: {
+        cardId: rowData[CARD_ID_INDEX],
+        playerName: playerName,
+        playerTeam: playerTeam,
+        cardRarity: cardRarity,
+        imageUrl: imageUrl,
+        approved: approved,
+        currentRotation: currentRotation,
+      },
+    })
+
+    updateFunction()
+    setOpen(false)
+  }
+
+  useEffect(() => {
+    setPlayerName(rowData && rowData[PLAYER_NAME_INDEX])
+    setPlayerTeam(rowData && rowData[PLAYER_TEAM_INDEX])
+    setCardRarity(rowData && rowData[CARD_RARITY_INDEX])
+    setImageUrl(rowData && rowData[IMAGE_URL_INDEX])
+    setApproved(rowData && Boolean(rowData[APPROVED_INDEX] == 'true'))
+    setCurrentRotation(
+      rowData && Boolean(rowData[CURRENT_ROTATION_INDEX] == 'true')
+    )
+  }, [open])
 
   return (
-    <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="form-dialog-title"
+    >
       <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
       <DialogContent>
         <TextField
           id="name"
           label="Player Name"
           fullWidth
-          defaultValue={rowData && rowData[0]}
+          onChange={(event) => {
+            setPlayerName(event.target.value)
+          }}
+          value={playerName}
         />
-        <TextField
-          id="name"
+        <InputLabel id="playerTeam">Player Team</InputLabel>
+        <Select
+          id="playerTeam"
           label="Player Team"
           fullWidth
-          defaultValue={rowData && rowData[1]}
-        />
-        <TextField
-          id="name"
+          onChange={(event) => {
+            setPlayerTeam(event.target.value)
+          }}
+          value={playerTeam}
+        >
+          {TEAMS.map((team) => {
+            return (
+              <MenuItem
+                key={team.CITY_NAME}
+                value={`${team.CITY_NAME} ${team.TEAM_NAME}`}
+              >
+                {team.CITY_NAME} {team.TEAM_NAME}
+              </MenuItem>
+            )
+          })}
+        </Select>
+        <InputLabel id="playerTeam">Rarity</InputLabel>
+        <Select
+          id="cardRarity"
           label="Rarity"
           fullWidth
-          defaultValue={rowData && rowData[2]}
-        />
+          onChange={(event) => {
+            setCardRarity(event.target.value)
+          }}
+          value={cardRarity}
+        >
+          {RARITIES.map((rarity) => {
+            return (
+              <MenuItem key={rarity.label} value={rarity.value}>
+                {rarity.value}
+              </MenuItem>
+            )
+          })}
+        </Select>
         <TextField
-          id="name"
+          id="imageUrl"
           label="Image URL"
           fullWidth
-          defaultValue={rowData && rowData[3]}
+          onChange={(event) => {
+            setImageUrl(event.target.value)
+          }}
+          value={imageUrl}
         />
-        <TextField
-          id="name"
+        <FormControlLabel
+          labelPlacement="start"
           label="Approved"
-          fullWidth
-          defaultValue={rowData && rowData[4]}
+          control={
+            <Switch
+              checked={approved}
+              onChange={() => {
+                setApproved(!approved)
+              }}
+              name="approved"
+              color="primary"
+            />
+          }
         />
-        <TextField
-          id="name"
+        <FormControlLabel
+          labelPlacement="start"
           label="Current Rotation"
-          fullWidth
-          defaultValue={rowData && rowData[5]}
+          control={
+            <Switch
+              checked={currentRotation}
+              onChange={() => {
+                setCurrentRotation(!currentRotation)
+              }}
+              name="currentRotation"
+              color="primary"
+            />
+          }
+        />
+        <img
+          width="100%"
+          style={{
+            marginTop: '2px',
+          }}
+          src={imageUrl}
         />
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="primary">
           Cancel
-          </Button>
-        <Button onClick={handleClose} color="primary">
+        </Button>
+        <Button onClick={handleUpdate} color="primary">
           Update
-          </Button>
+        </Button>
       </DialogActions>
     </Dialog>
-  );
+  )
 }
 
-/**
- * This requires the ability to search for cards based on name, rarity, team, approved, and currentRotation.
- * Once a card is found we need to be able to edit name, team, rarity, imageUrl, approved and currentRotation.
- *
- * playerName: String
- * playerTeam: String - Can only be one of the current ISFL teams, made an array in utils\constants.ts
- * rarity: String - Can only be one of the current rarities, made an array in utils\constants.ts
- * imageUrl: String
- * approved: boolean
- * currentRotation: boolean
- */
-
-
 const CardEditorPage = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [cards, setCards] = useState([]);
-  const [open, setOpen] = React.useState(false);
-  const [currentRow, setCurrentRow] = useState();
+  const [isLoading, setIsLoading] = useState(true)
+  const [cards, setCards] = useState([])
+  const [open, setOpen] = React.useState(false)
+  const [currentRow, setCurrentRow] = useState()
 
   const columns = [
-    "player_name",
-    "player_team",
-    "rarity",
-    "image_url",
+    '_id',
+    'playerName',
+    'playerTeam',
+    'rarity',
+    'imageUrl',
     {
-      name: "approved",
+      name: 'approved',
       options: {
         filter: false,
-        customBodyRender: (value, tableMeta, updateValue) => (
-          value.toString()
-        )
-      }
+        customBodyRender: (value, tableMeta, updateValue) => value.toString(),
+      },
     },
     {
-      name: "current_rotation",
+      name: 'currentRotation',
       options: {
         filter: false,
-        customBodyRender: (value, tableMeta, updateValue) => (
-          value.toString()
-        )
-      }
-    }
-  ];
+        customBodyRender: (value, tableMeta, updateValue) => value.toString(),
+      },
+    },
+  ]
 
   const options = {
     filterType: 'dropdown',
@@ -118,27 +242,26 @@ const CardEditorPage = () => {
     print: false,
     selectableRows: 'none',
     onRowClick: (rowData) => {
-      setOpen(true);
-      setCurrentRow(rowData);
-    }
-  };
+      setOpen(true)
+      setCurrentRow(rowData)
+    },
+  }
+
+  const fetchCards = async () => {
+    const fetchedCards = await axios({
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
+      },
+      method: 'post',
+      url: `${API_URL}/api/v1/cards/allCards`,
+      data: [],
+    })
+
+    setCards(fetchedCards.data)
+    setIsLoading(false)
+  }
 
   useEffect(() => {
-    const fetchCards = async () => {
-      const fetchedCards = await axios({
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
-        },
-        method: 'post',
-        url: `${API_URL}/api/v1/cards/allCards`,
-        data: [],
-      })
-
-      console.log(fetchedCards)
-      setCards(fetchedCards.data)
-      setIsLoading(false);
-    }
-
     fetchCards()
   }, [])
 
@@ -146,14 +269,22 @@ const CardEditorPage = () => {
     <>
       <h1>Card Editor Page</h1>
       {isLoading && <div>Loading</div>}
-      {!isLoading && <>
-        <CardFormDialog rowData={currentRow} open={open} setOpen={setOpen} />
-        <MUIDataTable
-          title={"Cards"}
-          data={cards}
-          columns={columns}
-          options={options}
-        /></>}
+      {!isLoading && (
+        <>
+          <CardFormDialog
+            updateFunction={fetchCards}
+            rowData={currentRow}
+            open={open}
+            setOpen={setOpen}
+          />
+          <MUIDataTable
+            title={'Cards'}
+            data={cards}
+            columns={columns}
+            options={options}
+          />
+        </>
+      )}
     </>
   )
 }
