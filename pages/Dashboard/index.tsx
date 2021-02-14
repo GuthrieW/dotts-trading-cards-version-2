@@ -3,11 +3,18 @@ import { API_URL } from '../../utils/constants'
 import axios from 'axios'
 import { DOTTS_ACCESS_TOKEN } from '../../utils/constants'
 import InfoCard from '../../components/InfoCard/InfoCard'
-import { Box, Container } from '@material-ui/core'
+import { Box, Container, makeStyles } from '@material-ui/core'
 import Router from 'next/router'
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    marginBottom: 70
+  }
+}));
 
 function HomePage() {
   const [currentUser, setCurrentUser] = useState(null)
+  const classes = useStyles();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,7 +47,7 @@ function HomePage() {
   }, [])
 
   return (
-    <Container>
+    <Container className={classes.root}>
       <h1>Home Page</h1>
       {!currentUser && <h1>Loading...</h1>}
       <Box m={2}>
@@ -73,6 +80,15 @@ function HomePage() {
         {currentUser && (currentUser.isAdmin || currentUser.isPackIssuer) && (
           <InfoCard title="Edit Users" href="/Dashboard/UserEditor" />
         )}
+      </Box>
+      <Box m={2}>
+        <InfoCard title="How to Purchase" body="Start here!" href="https://forums.sim-football.com/showthread.php?tid=25272" />
+      </Box>
+      <Box m={2}>
+        <InfoCard title="Buy Packs" body="Build your collection with a new pack of cards! Find the Daily Pack Purchase thread." href="https://forums.sim-football.com/forumdisplay.php?fid=366" />
+      </Box>
+      <Box m={2}>
+        <InfoCard title="Subscribe" body="Sign up for automatic pack purchases!" href="https://forums.sim-football.com/showthread.php?tid=25283" />
       </Box>
     </Container>
   )

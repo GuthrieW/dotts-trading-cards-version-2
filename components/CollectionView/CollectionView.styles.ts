@@ -11,8 +11,9 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: 70,
     },
     [theme.breakpoints.up('lg')]: {
+      position: 'absolute',
+      maxWidth: '80%',
       paddingLeft: 30,
-      maxWidth: 1100,
     },
   },
   chipList: {

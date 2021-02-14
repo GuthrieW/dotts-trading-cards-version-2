@@ -4,6 +4,9 @@ const drawerWidth = 240
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    [theme.breakpoints.down('lg')]: {
+      marginBottom: 50,
+    },
     [theme.breakpoints.up('lg')]: {
       display: 'flex',
     },
