@@ -8,13 +8,13 @@ import Router from 'next/router'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginBottom: 70
-  }
-}));
+    marginBottom: 70,
+  },
+}))
 
 function HomePage() {
   const [currentUser, setCurrentUser] = useState(null)
-  const classes = useStyles();
+  const classes = useStyles()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,16 +31,6 @@ function HomePage() {
       }
 
       setCurrentUser(user.data.account)
-      if (
-        !user.data.account.isAdmin &&
-        !user.data.account.isProcessor &&
-        !user.data.account.isSubmitter &&
-        !user.data.account.isPackIssuer
-      ) {
-        Router.push({
-          pathname: '/OpenPacks',
-        })
-      }
     }
 
     fetchData()
@@ -82,13 +72,25 @@ function HomePage() {
         )}
       </Box>
       <Box m={2}>
-        <InfoCard title="How to Purchase" body="Start here!" href="https://forums.sim-football.com/showthread.php?tid=25272" />
+        <InfoCard
+          title="How to Purchase"
+          body="Start here!"
+          href="https://forums.sim-football.com/showthread.php?tid=25272"
+        />
       </Box>
       <Box m={2}>
-        <InfoCard title="Buy Packs" body="Build your collection with a new pack of cards! Find the Daily Pack Purchase thread." href="https://forums.sim-football.com/forumdisplay.php?fid=366" />
+        <InfoCard
+          title="Buy Packs"
+          body="Build your collection with a new pack of cards! Find the Daily Pack Purchase thread."
+          href="https://forums.sim-football.com/forumdisplay.php?fid=366"
+        />
       </Box>
       <Box m={2}>
-        <InfoCard title="Subscribe" body="Sign up for automatic pack purchases!" href="https://forums.sim-football.com/showthread.php?tid=25283" />
+        <InfoCard
+          title="Subscribe"
+          body="Sign up for automatic pack purchases!"
+          href="https://forums.sim-football.com/showthread.php?tid=25283"
+        />
       </Box>
     </Container>
   )
