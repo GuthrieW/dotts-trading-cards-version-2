@@ -34,7 +34,11 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
     let pulledCards = []
 
     for (let i = 0; i < 6; i++) {
-      cardChances.push(Math.floor(Math.random() * 10000) + 1)
+      if (i == 0) {
+        cardChances.push(Math.random() * (10000 - 5918) + 5918)
+      } else {
+        cardChances.push(Math.floor(Math.random() * 10000) + 1)
+      }
     }
 
     let cardRarity
