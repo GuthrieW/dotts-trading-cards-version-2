@@ -47,7 +47,6 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
       currentRotation: false,
     })
 
-    console.log(insertedCard)
     client.close()
 
     response.status(200).json({ insertedCard: insertedCard })

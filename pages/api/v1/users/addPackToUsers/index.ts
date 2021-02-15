@@ -44,15 +44,10 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
       return
     }
 
-    console.log('selectedUsers', selectedUsers)
-
     let objectIds = []
     _.forEach(selectedUsers, (userId) => {
-      console.log(userId._id)
       objectIds.push(new ObjectId(userId._id))
     })
-
-    console.log('userIds', objectIds)
 
     const result = await database.collection('dotts_accounts').updateMany(
       {
@@ -63,8 +58,6 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
       }
     )
     client.close()
-
-    console.log(result)
 
     response.status(200).json({ result: result })
   } catch (error) {
