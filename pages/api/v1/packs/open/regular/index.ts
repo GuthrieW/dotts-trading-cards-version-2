@@ -4,6 +4,21 @@ import { ObjectId } from 'mongodb'
 import _ from 'lodash'
 import { getAccessTokenFromHeader } from '../../../common'
 import JsonWebToken from 'jsonwebtoken'
+import {
+  BACKUP,
+  STARTER,
+  STAR,
+  ALL_PRO,
+  LEGEND,
+  AWARD,
+  HALL_OF_FAME,
+  ULTIMUS_CHAMPION,
+  HOLOGRAPH_EXPANSION,
+  AUTOGRAPH_ROOKIE,
+  FANTASY_KINGS,
+  CAPTAIN,
+  TEAM_LOGO,
+} from '../../../../../../utils/constants'
 
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
   const accessToken = getAccessTokenFromHeader(request)
@@ -43,31 +58,31 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
     let cardRarity
     for (const chance of cardChances) {
       if (chance > 0 && chance <= 3922) {
-        cardRarity = 'Backup'
+        cardRarity = BACKUP
       } else if (chance > 3922 && chance <= 6184) {
-        cardRarity = 'Starter'
+        cardRarity = STARTER
       } else if (chance > 6184 && chance <= 7824) {
-        cardRarity = 'Star'
+        cardRarity = STAR
       } else if (chance > 7824 && chance <= 8937) {
-        cardRarity = 'All-Pro'
+        cardRarity = ALL_PRO
       } else if (chance > 8937 && chance <= 9117) {
-        cardRarity = 'Legend'
+        cardRarity = LEGEND
       } else if (chance > 9117 && chance <= 9270) {
-        cardRarity = 'Award'
+        cardRarity = AWARD
       } else if (chance > 9270 && chance <= 9289) {
-        cardRarity = 'Hall of Fame'
+        cardRarity = HALL_OF_FAME
       } else if (chance > 9289 && chance <= 9422) {
-        cardRarity = 'Ultimus Champion'
+        cardRarity = ULTIMUS_CHAMPION
       } else if (chance > 9422 && chance <= 9530) {
-        cardRarity = 'Holograph Expansion'
+        cardRarity = HOLOGRAPH_EXPANSION
       } else if (chance > 9530 && chance <= 9660) {
-        cardRarity = 'Autograph Rookie'
+        cardRarity = AUTOGRAPH_ROOKIE
       } else if (chance > 9660 && chance <= 9720) {
-        cardRarity = 'Fantasy Kings'
+        cardRarity = FANTASY_KINGS
       } else if (chance > 9720 && chance <= 10000) {
-        cardRarity = 'Captain'
+        cardRarity = CAPTAIN
       } else {
-        cardRarity = 'Backup'
+        cardRarity = BACKUP
       }
 
       const pulledCard = await database
