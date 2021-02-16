@@ -150,4 +150,9 @@ export const TEAMS = [
     TEAM_NAME: 'Wraiths',
     ABBREVIATION: 'YKW',
   },
+  {
+    CITY_NAME: 'Team',
+    TEAM_NAME: 'Logo',
+    ABBREVIATION: 'TML',
+  },
 ]
