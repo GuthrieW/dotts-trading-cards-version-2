@@ -100,17 +100,15 @@ const LogInPage = () => {
           {error}
         </Alert>
       )}
-      <Link href="/Authentication/SignUp/">
-        <Button
-          variant="contained"
-          size="large"
-          color="primary"
-          onClick={handleSubmit}
-          disabled={!canSubmit || isSubmitting}
-        >
-          Log In
-        </Button>
-      </Link>
+      <Button
+        variant="contained"
+        size="large"
+        color="primary"
+        onClick={handleSubmit}
+        disabled={!canSubmit || isSubmitting}
+      >
+        Log In
+      </Button>
       <Link href="/Authentication/ForgotPassword/">
         <Button size="large" color="primary" disabled={isSubmitting}>
           Forgot Password
