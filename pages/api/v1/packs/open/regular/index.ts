@@ -48,11 +48,18 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
     let pulledCards = []
 
     for (let i = 0; i < 6; i++) {
-      if (i == 5) {
-        cardChances.push(Math.random() * (10000 - 5918) + 5918)
-      } else {
-        cardChances.push(Math.floor(Math.random() * 10000) + 1)
+      cardChances.push(Math.floor(Math.random() * 10000) + 1)
+    }
+
+    let addGold = true
+    for (let i = 0; i < 6; i++) {
+      if (cardChances[i] > 5918) {
+        addGold = false
       }
+    }
+
+    if (addGold) {
+      cardChances[0] = 5919
     }
 
     let cardRarity
