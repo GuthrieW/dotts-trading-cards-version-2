@@ -33,7 +33,7 @@ const SubscribedUsers = () => {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
         method: 'post',
-        url: `${API_URL}/api/v1/users/currentUser/`,
+        url: `${API_URL}/api/v1/users/currentUser`,
         data: {},
       })
 
