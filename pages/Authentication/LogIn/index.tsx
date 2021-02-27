@@ -105,6 +105,7 @@ const LogInPage = () => {
         color="primary"
         onClick={handleSubmit}
         disabled={isSubmitting}
+        type="submit"
       >
         Log In
       </Button>
