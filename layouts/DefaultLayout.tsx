@@ -19,7 +19,7 @@ import { BottomNavigationActionLink } from '../components/BottomNavigationAction
 import SplashScreen from '../components/SplashScreen/SplashScreen'
 import SidebarNav from '../components/SidebarNav'
 import axios from 'axios'
-import { API_URL, DOTTS_ACCESS_TOKEN } from '../utils/constants'
+import { window.location.href, DOTTS_ACCESS_TOKEN } from '../utils/constants'
 import Link from 'next/link'
 import Router from 'next/router'
 
@@ -42,7 +42,7 @@ const DefaultLayout = ({ children }) => {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
         method: 'post',
-        url: `${API_URL}/api/v1/authorization/checkAuthorization`,
+        url: `${window.location.href}/api/v1/authorization/checkAuthorization`,
         data: {},
       })
 

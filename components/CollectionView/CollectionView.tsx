@@ -10,7 +10,7 @@ import {
 import { Autocomplete, Pagination } from '@material-ui/lab'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { API_URL } from '../../utils/constants'
+
 import PlayerCard from '../PlayerCard/PlayerCard'
 import useStyles from './CollectionView.styles'
 import { DOTTS_ACCESS_TOKEN } from '../../utils/constants'
@@ -47,7 +47,7 @@ const CollectionView = (props) => {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
         method: 'post',
-        url: `${API_URL}/api/v1/cards/cards`,
+        url: `${window.location.href}/api/v1/cards/cards`,
         data: { cardIds: cardIds },
       })
 
@@ -65,13 +65,13 @@ const CollectionView = (props) => {
     const apiCallOptions =
       props.isflUsername != null
         ? {
-            url: `${API_URL}/api/v1/users/singleUser/`,
+            url: `${window.location.href}/api/v1/users/singleUser/`,
             data: {
               isflUsername: props.isflUsername,
             },
           }
         : {
-            url: `${API_URL}/api/v1/users/currentUser`,
+            url: `${window.location.href}/api/v1/users/currentUser`,
             data: {},
           }
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { API_URL } from '../../utils/constants'
+
 import axios from 'axios'
 import { DOTTS_ACCESS_TOKEN } from '../../utils/constants'
 import InfoCard from '../../components/InfoCard/InfoCard'
@@ -23,7 +23,7 @@ function HomePage() {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
         method: 'post',
-        url: `${API_URL}/api/v1/users/currentUser/`,
+        url: `${window.location.href}/api/v1/users/currentUser/`,
         data: {},
       })
 

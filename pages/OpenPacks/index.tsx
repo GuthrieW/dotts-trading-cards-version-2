@@ -11,7 +11,7 @@ import React, { useEffect, useState } from 'react'
 import OpenPacksIcon from '../../public/icons/OpenPacksIcon'
 import useStyles from './OpenPacks.styles'
 import { PACK_TYPES } from '../../utils/packs'
-import { API_URL } from '../../utils/constants'
+
 import axios from 'axios'
 import PackViewerIntermediate from './PackViewerIntermediate'
 import { DOTTS_ACCESS_TOKEN } from '../../utils/constants'
@@ -32,7 +32,7 @@ function OpenPacksPage() {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
         method: 'post',
-        url: `${API_URL}/api/v1/users/currentUser/`,
+        url: `${window.location.href}/api/v1/users/currentUser/`,
         data: {},
       })
 

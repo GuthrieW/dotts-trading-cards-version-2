@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Router, { useRouter } from 'next/router'
 import axios from 'axios'
-import { API_URL } from '../../utils/constants'
+
 import { DOTTS_ACCESS_TOKEN } from '../../utils/constants'
 
 const PackViewerIntermediate = (props) => {
@@ -16,9 +16,9 @@ const PackViewerIntermediate = (props) => {
     const fetchData = async () => {
       let packOpenUrl
       if (packType === 'regular') {
-        packOpenUrl = `${API_URL}/api/v1/packs/open/regular`
+        packOpenUrl = `${window.location.href}/api/v1/packs/open/regular`
       } else if (packType === 'ultimus') {
-        packOpenUrl = `${API_URL}/api/v1/packs/open/ultimus`
+        packOpenUrl = `${window.location.href}/api/v1/packs/open/ultimus`
       } else {
         packOpenUrl = ''
       }

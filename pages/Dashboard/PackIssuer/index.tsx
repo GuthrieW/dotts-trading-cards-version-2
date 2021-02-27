@@ -10,7 +10,7 @@ import {
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import ActionButton from '../../../components/ActionButton/ActionButton'
-import { API_URL, DOTTS_ACCESS_TOKEN } from '../../../utils/constants'
+import { window.location.href, DOTTS_ACCESS_TOKEN } from '../../../utils/constants'
 import UnsubscribedUsers from './UnsubscribedUsers'
 import Router from 'next/router'
 import { Packs } from '../../../utils/packs'
@@ -33,7 +33,7 @@ const SubscribedUsers = () => {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
         method: 'post',
-        url: `${API_URL}/api/v1/users/currentUser/`,
+        url: `${window.location.href}/api/v1/users/currentUser/`,
         data: {},
       })
 
@@ -52,7 +52,7 @@ const SubscribedUsers = () => {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
         method: 'post',
-        url: `${API_URL}/api/v1/users/subscribedUsers`,
+        url: `${window.location.href}/api/v1/users/subscribedUsers`,
         data: [],
       })
 
@@ -69,7 +69,7 @@ const SubscribedUsers = () => {
         Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
       },
       method: 'post',
-      url: `${API_URL}/api/v1/users/addPackToSubscribedUsers`,
+      url: `${window.location.href}/api/v1/users/addPackToSubscribedUsers`,
       data: {
         packType: packType,
       },

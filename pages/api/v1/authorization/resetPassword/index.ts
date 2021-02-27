@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { connect } from '../../../database/database'
 import bcrypt from 'bcrypt'
-import { UI_URL } from '../../../../../utils/constants'
 
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
   const { database, client } = await connect()
@@ -16,7 +15,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
   if (databaseResetToken == null) {
     response.status(200).json({
       error: `The link you are trying to use is invalid. Please get at new one here - `,
-      link: `${UI_URL}/Authentication/ForgotPassword`,
+      link: `${window.location.href}/Authentication/ForgotPassword`,
     })
     return
   }
@@ -28,7 +27,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
     if (databaseResetToken.expirationDate > new Date()) {
       response.status(200).json({
         error: `The link you are trying to use has expired. Please get at new one here - `,
-        link: `${UI_URL}/Authentication/ForgotPassword`,
+        link: `${window.location.href}/Authentication/ForgotPassword`,
       })
       return
     }
@@ -36,7 +35,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
   if (databaseResetToken.used) {
     response.status(200).json({
       error: `The link you are trying to use has already been used once. Please get at new one here - `,
-      link: `${UI_URL}/Authentication/ForgotPassword`,
+      link: `${window.location.href}/Authentication/ForgotPassword`,
     })
     return
   }

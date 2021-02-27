@@ -4,7 +4,6 @@ import EmailValidator from 'email-validator'
 import CheckPasswordStrength from 'check-password-strength'
 import useStyles from './SignUp.styles'
 import axios from 'axios'
-import { API_URL } from '../../../utils/constants'
 import Router from 'next/router'
 import { Alert, AlertTitle } from '@material-ui/lab'
 import SplashLayout from '../../../layouts/SplashLayout'
@@ -96,7 +95,7 @@ const SignUpPage = () => {
       setIsSubmitting(true)
       const result = await axios({
         method: 'post',
-        url: `${API_URL}/api/v1/authorization/signUp`,
+        url: `${window.location.href}/api/v1/authorization/signUp`,
         data: {
           email: email,
           isflUsername: isflUsername,

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import MUIDataTable from 'mui-datatables'
 import axios from 'axios'
-import { DOTTS_ACCESS_TOKEN, API_URL } from '../../../utils/constants'
+import { DOTTS_ACCESS_TOKEN, window.location.href } from '../../../utils/constants'
 import {
   Button,
   Dialog,
@@ -68,7 +68,7 @@ const CardFormDialog = ({ updateFunction, rowData, open, setOpen }) => {
         Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
       },
       method: 'post',
-      url: `${API_URL}/api/v1/cards/updateCard`,
+      url: `${window.location.href}/api/v1/cards/updateCard`,
       data: {
         cardId: rowData[CARD_ID_INDEX],
         playerName: playerName,
@@ -253,7 +253,7 @@ const CardEditorPage = () => {
         Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
       },
       method: 'post',
-      url: `${API_URL}/api/v1/cards/allCards`,
+      url: `${window.location.href}/api/v1/cards/allCards`,
       data: [],
     })
 

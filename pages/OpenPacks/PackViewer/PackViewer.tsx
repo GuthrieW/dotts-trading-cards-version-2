@@ -4,7 +4,6 @@ import AnimatedPackViewer from './AnimatedPackViewer'
 import useStyles from './PackViewer.styles'
 import axios from 'axios'
 import StaticPackViewer from './StaticPackViewer'
-import { API_URL } from '../../../utils/constants'
 import { DOTTS_ACCESS_TOKEN } from '../../../utils/constants'
 
 const PackViewer = () => {
@@ -16,7 +15,7 @@ const PackViewer = () => {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
         method: 'post',
-        url: `${API_URL}/api/v1/users/newestCards`,
+        url: `${window.location.href}/api/v1/users/newestCards`,
         data: {},
       })
 

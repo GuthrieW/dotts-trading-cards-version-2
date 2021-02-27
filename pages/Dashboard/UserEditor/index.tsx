@@ -9,7 +9,7 @@ import {
 import { Autocomplete } from '@material-ui/lab'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { API_URL, DOTTS_ACCESS_TOKEN } from '../../../utils/constants'
+import { window.location.href, DOTTS_ACCESS_TOKEN } from '../../../utils/constants'
 import Router from 'next/router'
 
 const emptyUser = {
@@ -62,7 +62,7 @@ const UserEditorPage = () => {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
         method: 'post',
-        url: `${API_URL}/api/v1/users/currentUser/`,
+        url: `${window.location.href}/api/v1/users/currentUser/`,
         data: {},
       })
 
@@ -83,7 +83,7 @@ const UserEditorPage = () => {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
         method: 'post',
-        url: `${API_URL}/api/v1/users/allUsers`,
+        url: `${window.location.href}/api/v1/users/allUsers`,
         data: {},
       })
 
@@ -109,7 +109,7 @@ const UserEditorPage = () => {
         Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
       },
       method: 'post',
-      url: `${API_URL}/api/v1/users/updateUser`,
+      url: `${window.location.href}/api/v1/users/updateUser`,
       data: {
         oldIsflUsername: chosenUser.isflUsername,
         email: accountEmail,

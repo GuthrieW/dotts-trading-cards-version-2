@@ -13,7 +13,7 @@ import {
   Divider,
 } from '@material-ui/core'
 import axios from 'axios'
-import { DOTTS_ACCESS_TOKEN, API_URL } from '../../../utils/constants'
+import { DOTTS_ACCESS_TOKEN, window.location.href } from '../../../utils/constants'
 import ActionButton from '../../../components/ActionButton/ActionButton'
 import { Packs } from '../../../utils/packs'
 import Router from 'next/router'
@@ -72,7 +72,7 @@ export default function TransferList() {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
         method: 'post',
-        url: `${API_URL}/api/v1/users/unsubscribedUsers`,
+        url: `${window.location.href}/api/v1/users/unsubscribedUsers`,
         data: [],
       })
 
@@ -131,7 +131,7 @@ export default function TransferList() {
         Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
       },
       method: 'post',
-      url: `${API_URL}/api/v1/users/addPackToUsers`,
+      url: `${window.location.href}/api/v1/users/addPackToUsers`,
       data: {
         packType: packType,
         selectedUsers: checked,

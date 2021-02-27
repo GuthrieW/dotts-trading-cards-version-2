@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 export const API_URL =
   process.env.NODE_ENV === 'production'
     ? 'https://dottstradingcards.com'
@@ -7,6 +8,8 @@ export const UI_URL =
     ? 'https://dottstradingcards.com'
     : 'http://localhost:3000'
 
+=======
+>>>>>>> Stashed changes
 export const BACKUP = 'Backup'
 export const STARTER = 'Starter'
 export const STAR = 'Star'

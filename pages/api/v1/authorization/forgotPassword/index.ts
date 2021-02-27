@@ -2,7 +2,6 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { connect } from '../../../database/database'
 import NodeMailer from 'nodemailer'
 import CryptoRandomString from 'crypto-random-string'
-import { UI_URL } from '../../../../../utils/constants'
 
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
   const { database, client } = await connect()
@@ -21,7 +20,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
     length: 64,
     type: 'url-safe',
   })
-  const passwordResetLink = `${UI_URL}/Authentication/PasswordReset?resetToken=${generatedRandomString}`
+  const passwordResetLink = `${window.location.href}/Authentication/PasswordReset?resetToken=${generatedRandomString}`
   let expirationDate = new Date()
   expirationDate.setDate(expirationDate.getDate() + 1)
 

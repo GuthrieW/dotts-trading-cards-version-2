@@ -4,7 +4,6 @@ import Router, { useRouter } from 'next/router'
 import axios from 'axios'
 import { TextField, Button } from '@material-ui/core'
 import React, { useState } from 'react'
-import { API_URL } from '../../../utils/constants'
 import useStyles from './PasswordReset.styles'
 import SplashLayout from '../../../layouts/SplashLayout'
 
@@ -69,7 +68,7 @@ const PasswordResetPage = () => {
       setIsSubmitting(true)
       const result = await axios({
         method: 'post',
-        url: `${API_URL}/api/v1/authorization/resetPassword`,
+        url: `${window.location.href}/api/v1/authorization/resetPassword`,
         data: {
           resetToken: resetToken,
           password: password,
