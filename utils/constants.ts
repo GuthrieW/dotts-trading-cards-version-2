@@ -156,5 +156,3 @@ export const TEAMS = [
     ABBREVIATION: 'TML',
   },
 ]
-
-const TEST = 'TEST'
