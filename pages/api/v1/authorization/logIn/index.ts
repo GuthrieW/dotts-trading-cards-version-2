@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { connect } from '../../../database/database'
 import _ from 'lodash'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 import JsonWebToken from 'jsonwebtoken'
 
 const index = async (request: NextApiRequest, response: NextApiResponse) => {

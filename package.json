@@ -19,7 +19,7 @@
     "@material-ui/lab": "^4.0.0-alpha.57",
     "@material-ui/styles": "^4.11.2",
     "axios": "^0.21.1",
-    "bcrypt": "^5.0.0",
+    "bcryptjs": "^2.4.3",
     "check-password-strength": "^1.0.15",
     "crypto-random-string": "^3.3.0",
     "email-validator": "^2.0.4",

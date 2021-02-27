@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { connect } from '../../../database/database'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
   const { database, client } = await connect()
