@@ -68,7 +68,7 @@ const CardFormDialog = ({ updateFunction, rowData, open, setOpen }) => {
         Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
       },
       method: 'post',
-      url: `${window.location.host}/api/v1/cards/updateCard`,
+      url: `/api/v1/cards/updateCard`,
       data: {
         cardId: rowData[CARD_ID_INDEX],
         playerName: playerName,
@@ -253,7 +253,7 @@ const CardEditorPage = () => {
         Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
       },
       method: 'post',
-      url: `${window.location.host}/api/v1/cards/allCards`,
+      url: `/api/v1/cards/allCards`,
       data: [],
     })
 

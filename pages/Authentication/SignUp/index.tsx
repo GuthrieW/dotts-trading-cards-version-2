@@ -95,7 +95,7 @@ const SignUpPage = () => {
       setIsSubmitting(true)
       const result = await axios({
         method: 'post',
-        url: `${window.location.host}/api/v1/authorization/signUp`,
+        url: `/api/v1/authorization/signUp`,
         data: {
           email: email,
           isflUsername: isflUsername,

@@ -33,7 +33,7 @@ const SubscribedUsers = () => {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
         method: 'post',
-        url: `${window.location.host}/api/v1/users/currentUser/`,
+        url: `/api/v1/users/currentUser/`,
         data: {},
       })
 
@@ -52,7 +52,7 @@ const SubscribedUsers = () => {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
         method: 'post',
-        url: `${window.location.host}/api/v1/users/subscribedUsers`,
+        url: `/api/v1/users/subscribedUsers`,
         data: [],
       })
 
@@ -69,7 +69,7 @@ const SubscribedUsers = () => {
         Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
       },
       method: 'post',
-      url: `${window.location.host}/api/v1/users/addPackToSubscribedUsers`,
+      url: `/api/v1/users/addPackToSubscribedUsers`,
       data: {
         packType: packType,
       },

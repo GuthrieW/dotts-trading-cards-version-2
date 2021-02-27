@@ -47,7 +47,7 @@ const LogInPage = () => {
       setIsSubmitting(true)
       const result = await axios({
         method: 'post',
-        url: `${window.location.host}/api/v1/authorization/logIn`,
+        url: `/api/v1/authorization/logIn`,
         data: {
           email: email,
           password: password,

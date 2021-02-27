@@ -15,7 +15,7 @@ const PackViewer = () => {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
         method: 'post',
-        url: `${window.location.host}/api/v1/users/newestCards`,
+        url: `/api/v1/users/newestCards`,
         data: {},
       })
 

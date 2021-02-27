@@ -20,7 +20,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
     length: 64,
     type: 'url-safe',
   })
-  const passwordResetLink = `${window.location.host}/Authentication/PasswordReset?resetToken=${generatedRandomString}`
+  const passwordResetLink = `/Authentication/PasswordReset?resetToken=${generatedRandomString}`
   let expirationDate = new Date()
   expirationDate.setDate(expirationDate.getDate() + 1)
 

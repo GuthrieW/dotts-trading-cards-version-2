@@ -47,7 +47,7 @@ const ForgotPasswordPage = () => {
       setIsSubmitting(true)
       const result = await axios({
         method: 'post',
-        url: `${window.location.host}/api/v1/authorization/forgotPassword`,
+        url: `/api/v1/authorization/forgotPassword`,
         data: {
           email: email,
         },
