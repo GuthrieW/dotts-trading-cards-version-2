@@ -38,7 +38,7 @@ const ProcessorPage = () => {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
         method: 'post',
-        url: `/api/v1/users/currentUser/`,
+        url: `/api/v1/users/currentUser`,
         data: {},
       })
 
