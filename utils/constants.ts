@@ -1,10 +1,10 @@
 export const API_URL =
   process.env.NODE_ENV === 'production'
-    ? 'https://dottstradingcards.com'
+    ? window.location.href
     : 'http://localhost:3000'
 export const UI_URL =
   process.env.NODE_ENV === 'production'
-    ? 'https://dottstradingcards.com'
+    ? window.location.href
     : 'http://localhost:3000'
 
 export const BACKUP = 'Backup'
