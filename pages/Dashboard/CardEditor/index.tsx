@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import MUIDataTable from 'mui-datatables'
 import axios from 'axios'
-import { DOTTS_ACCESS_TOKEN, window.location.href } from '../../../utils/constants'
+import { DOTTS_ACCESS_TOKEN } from '../../../utils/constants'
 import {
   Button,
   Dialog,

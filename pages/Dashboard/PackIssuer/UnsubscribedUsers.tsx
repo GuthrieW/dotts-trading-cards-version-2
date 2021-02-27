@@ -13,7 +13,7 @@ import {
   Divider,
 } from '@material-ui/core'
 import axios from 'axios'
-import { DOTTS_ACCESS_TOKEN, window.location.href } from '../../../utils/constants'
+import { DOTTS_ACCESS_TOKEN } from '../../../utils/constants'
 import ActionButton from '../../../components/ActionButton/ActionButton'
 import { Packs } from '../../../utils/packs'
 import Router from 'next/router'

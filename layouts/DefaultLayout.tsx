@@ -19,7 +19,7 @@ import { BottomNavigationActionLink } from '../components/BottomNavigationAction
 import SplashScreen from '../components/SplashScreen/SplashScreen'
 import SidebarNav from '../components/SidebarNav'
 import axios from 'axios'
-import { window.location.href, DOTTS_ACCESS_TOKEN } from '../utils/constants'
+import { DOTTS_ACCESS_TOKEN } from '../utils/constants'
 import Link from 'next/link'
 import Router from 'next/router'
 

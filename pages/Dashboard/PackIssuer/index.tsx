@@ -10,7 +10,7 @@ import {
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import ActionButton from '../../../components/ActionButton/ActionButton'
-import { window.location.href, DOTTS_ACCESS_TOKEN } from '../../../utils/constants'
+import { DOTTS_ACCESS_TOKEN } from '../../../utils/constants'
 import UnsubscribedUsers from './UnsubscribedUsers'
 import Router from 'next/router'
 import { Packs } from '../../../utils/packs'

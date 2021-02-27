@@ -9,7 +9,7 @@ import {
 import { Autocomplete } from '@material-ui/lab'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { window.location.href, DOTTS_ACCESS_TOKEN } from '../../../utils/constants'
+import { DOTTS_ACCESS_TOKEN } from '../../../utils/constants'
 import Router from 'next/router'
 
 const emptyUser = {

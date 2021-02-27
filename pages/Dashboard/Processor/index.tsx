@@ -13,7 +13,7 @@ import {
 } from '@material-ui/core'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { window.location.href, DOTTS_ACCESS_TOKEN } from '../../../utils/constants'
+import { DOTTS_ACCESS_TOKEN } from '../../../utils/constants'
 import useStyles from './Processor.styles'
 import Router from 'next/router'
 

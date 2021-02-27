@@ -12,7 +12,7 @@ import { RARITIES, TEAMS } from '../../../utils/constants'
 import useStyles from './Submitter.styles'
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
-import { window.location.href, DOTTS_ACCESS_TOKEN } from '../../../utils/constants'
+import { DOTTS_ACCESS_TOKEN } from '../../../utils/constants'
 import Router from 'next/router'
 
 /**
