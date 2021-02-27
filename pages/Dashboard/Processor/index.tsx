@@ -38,7 +38,7 @@ const ProcessorPage = () => {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
         method: 'post',
-        url: `${window.location.href}/api/v1/users/currentUser/`,
+        url: `${window.location.host}/api/v1/users/currentUser/`,
         data: {},
       })
 
@@ -57,7 +57,7 @@ const ProcessorPage = () => {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
         method: 'post',
-        url: `${window.location.href}/api/v1/cards/unapprovedCards`,
+        url: `${window.location.host}/api/v1/cards/unapprovedCards`,
         data: [],
       })
 
@@ -105,7 +105,7 @@ const ProcessorPage = () => {
         Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
       },
       method: 'post',
-      url: `${window.location.href}/api/v1/cards/approveCards`,
+      url: `${window.location.host}/api/v1/cards/approveCards`,
       data: { selectedCardIds: selected },
     })
 
@@ -121,7 +121,7 @@ const ProcessorPage = () => {
         Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
       },
       method: 'post',
-      url: `${window.location.href}/api/v1/cards/deleteCard`,
+      url: `${window.location.host}/api/v1/cards/deleteCard`,
       data: { cardId: cardIdToDelete },
     })
 

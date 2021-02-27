@@ -62,7 +62,7 @@ const UserEditorPage = () => {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
         method: 'post',
-        url: `${window.location.href}/api/v1/users/currentUser/`,
+        url: `${window.location.host}/api/v1/users/currentUser/`,
         data: {},
       })
 
@@ -83,7 +83,7 @@ const UserEditorPage = () => {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
         method: 'post',
-        url: `${window.location.href}/api/v1/users/allUsers`,
+        url: `${window.location.host}/api/v1/users/allUsers`,
         data: {},
       })
 
@@ -109,7 +109,7 @@ const UserEditorPage = () => {
         Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
       },
       method: 'post',
-      url: `${window.location.href}/api/v1/users/updateUser`,
+      url: `${window.location.host}/api/v1/users/updateUser`,
       data: {
         oldIsflUsername: chosenUser.isflUsername,
         email: accountEmail,

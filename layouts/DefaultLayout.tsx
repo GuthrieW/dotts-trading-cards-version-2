@@ -42,7 +42,7 @@ const DefaultLayout = ({ children }) => {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
         method: 'post',
-        url: `${window.location.href}/api/v1/authorization/checkAuthorization`,
+        url: `${window.location.host}/api/v1/authorization/checkAuthorization`,
         data: {},
       })
 

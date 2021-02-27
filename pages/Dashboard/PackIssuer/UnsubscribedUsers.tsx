@@ -72,7 +72,7 @@ export default function TransferList() {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
         method: 'post',
-        url: `${window.location.href}/api/v1/users/unsubscribedUsers`,
+        url: `${window.location.host}/api/v1/users/unsubscribedUsers`,
         data: [],
       })
 
@@ -131,7 +131,7 @@ export default function TransferList() {
         Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
       },
       method: 'post',
-      url: `${window.location.href}/api/v1/users/addPackToUsers`,
+      url: `${window.location.host}/api/v1/users/addPackToUsers`,
       data: {
         packType: packType,
         selectedUsers: checked,

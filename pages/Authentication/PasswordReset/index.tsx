@@ -68,7 +68,7 @@ const PasswordResetPage = () => {
       setIsSubmitting(true)
       const result = await axios({
         method: 'post',
-        url: `${window.location.href}/api/v1/authorization/resetPassword`,
+        url: `${window.location.host}/api/v1/authorization/resetPassword`,
         data: {
           resetToken: resetToken,
           password: password,

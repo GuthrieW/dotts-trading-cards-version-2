@@ -16,9 +16,9 @@ const PackViewerIntermediate = (props) => {
     const fetchData = async () => {
       let packOpenUrl
       if (packType === 'regular') {
-        packOpenUrl = `${window.location.href}/api/v1/packs/open/regular`
+        packOpenUrl = `${window.location.host}/api/v1/packs/open/regular`
       } else if (packType === 'ultimus') {
-        packOpenUrl = `${window.location.href}/api/v1/packs/open/ultimus`
+        packOpenUrl = `${window.location.host}/api/v1/packs/open/ultimus`
       } else {
         packOpenUrl = ''
       }
