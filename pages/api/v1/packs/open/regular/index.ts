@@ -19,6 +19,7 @@ import {
   CAPTAIN,
   TEAM_LOGO,
 } from '../../../../../../utils/constants'
+import { REGULAR_CHANCES } from '../constants'
 
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
   const accessToken = getAccessTokenFromHeader(request)
@@ -61,29 +62,188 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
 
     let cardRarity
     for (const chance of cardChances) {
-      if (chance > 0 && chance <= 3922) {
+      if (chance > 0 && chance <= REGULAR_CHANCES.BACKUP) {
         cardRarity = BACKUP
-      } else if (chance > 3922 && chance <= 6184) {
+      } else if (
+        chance > REGULAR_CHANCES.BACKUP &&
+        chance <= REGULAR_CHANCES.BACKUP + REGULAR_CHANCES.STARTER
+      ) {
         cardRarity = STARTER
-      } else if (chance > 6184 && chance <= 7824) {
+      } else if (
+        chance > REGULAR_CHANCES.BACKUP + REGULAR_CHANCES.STARTER &&
+        chance <=
+          REGULAR_CHANCES.BACKUP +
+            REGULAR_CHANCES.STARTER +
+            REGULAR_CHANCES.STAR
+      ) {
         cardRarity = STAR
-      } else if (chance > 7824 && chance <= 8937) {
+      } else if (
+        chance >
+          REGULAR_CHANCES.BACKUP +
+            REGULAR_CHANCES.STARTER +
+            REGULAR_CHANCES.STAR &&
+        chance <=
+          REGULAR_CHANCES.BACKUP +
+            REGULAR_CHANCES.STARTER +
+            REGULAR_CHANCES.STAR +
+            REGULAR_CHANCES.ALL_PRO
+      ) {
         cardRarity = ALL_PRO
-      } else if (chance > 8937 && chance <= 9117) {
+      } else if (
+        chance >
+          REGULAR_CHANCES.BACKUP +
+            REGULAR_CHANCES.STARTER +
+            REGULAR_CHANCES.STAR +
+            REGULAR_CHANCES.ALL_PRO &&
+        chance <=
+          REGULAR_CHANCES.BACKUP +
+            REGULAR_CHANCES.STARTER +
+            REGULAR_CHANCES.STAR +
+            REGULAR_CHANCES.ALL_PRO +
+            REGULAR_CHANCES.LEGEND
+      ) {
         cardRarity = LEGEND
-      } else if (chance > 9117 && chance <= 9270) {
+      } else if (
+        chance >
+          REGULAR_CHANCES.BACKUP +
+            REGULAR_CHANCES.STARTER +
+            REGULAR_CHANCES.STAR +
+            REGULAR_CHANCES.ALL_PRO +
+            REGULAR_CHANCES.LEGEND &&
+        chance <=
+          REGULAR_CHANCES.BACKUP +
+            REGULAR_CHANCES.STARTER +
+            REGULAR_CHANCES.STAR +
+            REGULAR_CHANCES.ALL_PRO +
+            REGULAR_CHANCES.LEGEND +
+            REGULAR_CHANCES.AWARD
+      ) {
         cardRarity = AWARD
-      } else if (chance > 9270 && chance <= 9289) {
+      } else if (
+        chance >
+          REGULAR_CHANCES.BACKUP +
+            REGULAR_CHANCES.STARTER +
+            REGULAR_CHANCES.STAR +
+            REGULAR_CHANCES.ALL_PRO +
+            REGULAR_CHANCES.LEGEND +
+            REGULAR_CHANCES.AWARD &&
+        chance <=
+          REGULAR_CHANCES.BACKUP +
+            REGULAR_CHANCES.STARTER +
+            REGULAR_CHANCES.STAR +
+            REGULAR_CHANCES.ALL_PRO +
+            REGULAR_CHANCES.LEGEND +
+            REGULAR_CHANCES.AWARD +
+            REGULAR_CHANCES.HALL_OF_FAME
+      ) {
         cardRarity = HALL_OF_FAME
-      } else if (chance > 9289 && chance <= 9422) {
+      } else if (
+        chance >
+          REGULAR_CHANCES.BACKUP +
+            REGULAR_CHANCES.STARTER +
+            REGULAR_CHANCES.STAR +
+            REGULAR_CHANCES.ALL_PRO +
+            REGULAR_CHANCES.LEGEND +
+            REGULAR_CHANCES.AWARD +
+            REGULAR_CHANCES.HALL_OF_FAME &&
+        chance <=
+          REGULAR_CHANCES.BACKUP +
+            REGULAR_CHANCES.STARTER +
+            REGULAR_CHANCES.STAR +
+            REGULAR_CHANCES.ALL_PRO +
+            REGULAR_CHANCES.LEGEND +
+            REGULAR_CHANCES.AWARD +
+            REGULAR_CHANCES.HALL_OF_FAME +
+            REGULAR_CHANCES.ULTIMUS_CHAMPION
+      ) {
         cardRarity = ULTIMUS_CHAMPION
-      } else if (chance > 9422 && chance <= 9530) {
+      } else if (
+        chance >
+          REGULAR_CHANCES.BACKUP +
+            REGULAR_CHANCES.STARTER +
+            REGULAR_CHANCES.STAR +
+            REGULAR_CHANCES.ALL_PRO +
+            REGULAR_CHANCES.LEGEND +
+            REGULAR_CHANCES.AWARD +
+            REGULAR_CHANCES.HALL_OF_FAME +
+            REGULAR_CHANCES.ULTIMUS_CHAMPION &&
+        chance <=
+          REGULAR_CHANCES.BACKUP +
+            REGULAR_CHANCES.STARTER +
+            REGULAR_CHANCES.STAR +
+            REGULAR_CHANCES.ALL_PRO +
+            REGULAR_CHANCES.LEGEND +
+            REGULAR_CHANCES.AWARD +
+            REGULAR_CHANCES.HALL_OF_FAME +
+            REGULAR_CHANCES.ULTIMUS_CHAMPION +
+            REGULAR_CHANCES.HOLOGRAPH_EXPANSION
+      ) {
         cardRarity = HOLOGRAPH_EXPANSION
-      } else if (chance > 9530 && chance <= 9660) {
+      } else if (
+        chance >
+          REGULAR_CHANCES.BACKUP +
+            REGULAR_CHANCES.STARTER +
+            REGULAR_CHANCES.STAR +
+            REGULAR_CHANCES.ALL_PRO +
+            REGULAR_CHANCES.LEGEND +
+            REGULAR_CHANCES.AWARD +
+            REGULAR_CHANCES.HALL_OF_FAME +
+            REGULAR_CHANCES.ULTIMUS_CHAMPION +
+            REGULAR_CHANCES.HOLOGRAPH_EXPANSION &&
+        chance <=
+          REGULAR_CHANCES.BACKUP +
+            REGULAR_CHANCES.STARTER +
+            REGULAR_CHANCES.STAR +
+            REGULAR_CHANCES.ALL_PRO +
+            REGULAR_CHANCES.LEGEND +
+            REGULAR_CHANCES.AWARD +
+            REGULAR_CHANCES.HALL_OF_FAME +
+            REGULAR_CHANCES.ULTIMUS_CHAMPION +
+            REGULAR_CHANCES.HOLOGRAPH_EXPANSION +
+            REGULAR_CHANCES.AUTOGRAPH_ROOKIE
+      ) {
         cardRarity = AUTOGRAPH_ROOKIE
-      } else if (chance > 9660 && chance <= 9720) {
+      } else if (
+        chance >
+          REGULAR_CHANCES.BACKUP +
+            REGULAR_CHANCES.STARTER +
+            REGULAR_CHANCES.STAR +
+            REGULAR_CHANCES.ALL_PRO +
+            REGULAR_CHANCES.LEGEND +
+            REGULAR_CHANCES.AWARD +
+            REGULAR_CHANCES.HALL_OF_FAME +
+            REGULAR_CHANCES.ULTIMUS_CHAMPION +
+            REGULAR_CHANCES.HOLOGRAPH_EXPANSION +
+            REGULAR_CHANCES.AUTOGRAPH_ROOKIE &&
+        chance <=
+          REGULAR_CHANCES.BACKUP +
+            REGULAR_CHANCES.STARTER +
+            REGULAR_CHANCES.STAR +
+            REGULAR_CHANCES.ALL_PRO +
+            REGULAR_CHANCES.LEGEND +
+            REGULAR_CHANCES.AWARD +
+            REGULAR_CHANCES.HALL_OF_FAME +
+            REGULAR_CHANCES.ULTIMUS_CHAMPION +
+            REGULAR_CHANCES.HOLOGRAPH_EXPANSION +
+            REGULAR_CHANCES.AUTOGRAPH_ROOKIE +
+            REGULAR_CHANCES.FANTASY_KINGS
+      ) {
         cardRarity = FANTASY_KINGS
-      } else if (chance > 9720 && chance <= 10000) {
+      } else if (
+        chance >
+          REGULAR_CHANCES.BACKUP +
+            REGULAR_CHANCES.STARTER +
+            REGULAR_CHANCES.STAR +
+            REGULAR_CHANCES.ALL_PRO +
+            REGULAR_CHANCES.LEGEND +
+            REGULAR_CHANCES.AWARD +
+            REGULAR_CHANCES.HALL_OF_FAME +
+            REGULAR_CHANCES.ULTIMUS_CHAMPION +
+            REGULAR_CHANCES.HOLOGRAPH_EXPANSION +
+            REGULAR_CHANCES.AUTOGRAPH_ROOKIE +
+            REGULAR_CHANCES.FANTASY_KINGS &&
+        chance <= 10000
+      ) {
         cardRarity = CAPTAIN
       } else {
         cardRarity = BACKUP
