@@ -10,7 +10,6 @@ import {
 import { Autocomplete, Pagination } from '@material-ui/lab'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-
 import PlayerCard from '../PlayerCard/PlayerCard'
 import useStyles from './CollectionView.styles'
 import { DOTTS_ACCESS_TOKEN } from '../../utils/constants'
@@ -141,6 +140,11 @@ const CollectionView = (props) => {
     },
     {
       rarity: 'Captain',
+      imageUrl: '/images/diamond-icon.svg',
+      isEnabled: false,
+    },
+    {
+      rarity: 'Unique',
       imageUrl: '/images/diamond-icon.svg',
       isEnabled: false,
     },

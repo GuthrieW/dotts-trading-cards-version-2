@@ -11,6 +11,7 @@ export const AUTOGRAPH_ROOKIE = 'Autograph Rookie'
 export const FANTASY_KINGS = 'Fantasy Kings'
 export const CAPTAIN = 'Captain'
 export const TEAM_LOGO = 'Team Logo'
+export const UNIQUE = 'Unique'
 
 export const DOTTS_USER_ID_STORAGE = 'dottsUserId'
 export const DOTTS_ACCESS_TOKEN = 'dottsAccessToken'
@@ -67,6 +68,10 @@ export const RARITIES = [
   {
     label: 'TEAM_LOGO',
     value: 'Team Logo',
+  },
+  {
+    label: 'UNIQUE',
+    value: 'Unique',
   },
 ]
 
