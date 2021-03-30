@@ -12,6 +12,8 @@ export const FANTASY_KINGS = 'Fantasy Kings'
 export const CAPTAIN = 'Captain'
 export const TEAM_LOGO = 'Team Logo'
 export const UNIQUE = 'Unique'
+export const ANNIVERSARY_FIRST_TEAM = 'Anniversary First Team'
+export const ANNIVERSARY_SECOND_TEAM = 'Anniversary Second Team'
 
 export const DOTTS_USER_ID_STORAGE = 'dottsUserId'
 export const DOTTS_ACCESS_TOKEN = 'dottsAccessToken'
@@ -64,6 +66,14 @@ export const RARITIES = [
   {
     label: 'CAPTAIN',
     value: 'Captain',
+  },
+  {
+    label: 'ANNIVERSARY_FIRST_TEAM',
+    value: 'Anniversary First Team',
+  },
+  {
+    label: 'ANNIVERSARY_SECOND_TEAM',
+    value: 'Anniversary Second Team',
   },
   {
     label: 'TEAM_LOGO',
@@ -152,5 +162,3 @@ export const TEAMS = [
     ABBREVIATION: 'TML',
   },
 ]
-
-const TEST = 'test'
