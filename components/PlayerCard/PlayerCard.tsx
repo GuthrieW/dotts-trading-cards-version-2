@@ -20,7 +20,13 @@ const PlayerCard = ({
   return (
     <Grid key={card.playerName} item xs={6} md={4} lg={3} className={className}>
       <Box onClick={() => handleOpenCard(card)}>
-        <img className={classes.cardContainer} src={card.imageUrl} />
+        {/* <img className={classes.cardContainer} src={card.imageUrl} /> */}
+        <img
+          className={classes.cardContainer}
+          src={
+            'https://media.discordapp.net/attachments/721761354846961716/736475852229050388/maximus3.png?width=423&height=592'
+          }
+        />
       </Box>
       <Dialog
         open={open}
@@ -30,7 +36,13 @@ const PlayerCard = ({
       >
         <DialogContent>
           {currentCard && (
-            <img className={classes.cardContainer} src={currentCard.imageUrl} />
+            // <img className={classes.cardContainer} src={currentCard.imageUrl} /> https://media.discordapp.net/attachments/721761354846961716/736475852229050388/maximus3.png?width=423&height=592
+            <img
+              className={classes.cardContainer}
+              src={
+                'https://media.discordapp.net/attachments/721761354846961716/736475852229050388/maximus3.png?width=423&height=592'
+              }
+            />
           )}
         </DialogContent>
         {currentCard && (
