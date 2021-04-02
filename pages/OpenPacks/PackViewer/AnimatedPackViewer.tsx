@@ -79,8 +79,7 @@ const AnimatedPackViewer = ({ cards }) => {
               {...bind(i)}
               style={{
                 transform: interpolate([rot, scale], trans),
-                // backgroundImage: `url(${cards[i].imageUrl})`, https://media.discordapp.net/attachments/721761354846961716/736475852229050388/maximus3.png?width=423&height=592
-                backgroundImage: `url(https://media.discordapp.net/attachments/721761354846961716/736475852229050388/maximus3.png?width=423&height=592)`,
+                backgroundImage: `url(${cards[i].imageUrl})`,
               }}
             />
           </animated.div>
