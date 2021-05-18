@@ -237,14 +237,14 @@ export default function TransferList() {
         </>
       )}
       {rightChecked.length > 0 && (
-        // <ActionButton
-        //   onClick={() => handleOnClick(Packs.Type.Regular)}
-        //   label={`Issue ${checked.length} Regular Pack(s)`}
-        // />
         <ActionButton
-          onClick={() => handleOnClick(Packs.Type.Ultimus)}
-          label={`Issue ${checked.length} Ultimus Pack(s)`}
+          onClick={() => handleOnClick(Packs.Type.Regular)}
+          label={`Issue ${checked.length} Regular Pack(s)`}
         />
+        // <ActionButton
+        //   onClick={() => handleOnClick(Packs.Type.Ultimus)}
+        //   label={`Issue ${checked.length} Ultimus Pack(s)`}
+        // />
       )}
     </Grid>
   )
