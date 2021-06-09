@@ -12,7 +12,7 @@ export const FANTASY_KINGS = 'Fantasy Kings'
 export const CAPTAIN = 'Captain'
 export const TEAM_LOGO = 'Team Logo'
 export const UNIQUE = 'Unique'
-export const CHARITY = 'CHARITY'
+export const CHARITY = 'Charity'
 export const ANNIVERSARY_FIRST_TEAM = 'Anniversary First Team'
 export const ANNIVERSARY_SECOND_TEAM = 'Anniversary Second Team'
 
