@@ -11,7 +11,6 @@ import {
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import useStyles from './Community.styles'
-
 import Router from 'next/router'
 import { DOTTS_ACCESS_TOKEN } from '../../utils/constants'
 

@@ -148,6 +148,11 @@ const CollectionView = (props) => {
       imageUrl: '/images/diamond-icon.svg',
       isEnabled: false,
     },
+    {
+      rarity: 'Charity',
+      imageUrl: '/images/diamond-icon.svg',
+      isEnabled: false,
+    },
   ])
 
   const enabledChips = sortOrder.filter((option) => option.isEnabled === true)
