@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react'
-
 import axios from 'axios'
 import { DOTTS_ACCESS_TOKEN } from '../../utils/constants'
 import InfoCard from '../../components/InfoCard/InfoCard'
 import { Box, Container, makeStyles } from '@material-ui/core'
-import Router from 'next/router'
 
 const useStyles = makeStyles((theme) => ({
   root: {
