@@ -17,7 +17,6 @@ import {
   AUTOGRAPH_ROOKIE,
   FANTASY_KINGS,
   CAPTAIN,
-  TEAM_LOGO,
 } from '../../../../../../utils/constants'
 import { ULTIMUS_CHANCES } from '../constants'
 
