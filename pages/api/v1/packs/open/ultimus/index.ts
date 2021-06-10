@@ -17,6 +17,7 @@ import {
   AUTOGRAPH_ROOKIE,
   FANTASY_KINGS,
   CAPTAIN,
+  CHARITY,
 } from '../../../../../../utils/constants'
 import { ULTIMUS_CHANCES } from '../constants'
 
@@ -175,30 +176,6 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
             ULTIMUS_CHANCES.AWARD +
             ULTIMUS_CHANCES.HALL_OF_FAME +
             ULTIMUS_CHANCES.ULTIMUS_CHAMPION +
-            ULTIMUS_CHANCES.HOLOGRAPH_EXPANSION
-      ) {
-        cardRarity = HOLOGRAPH_EXPANSION
-      } else if (
-        chance >
-          ULTIMUS_CHANCES.BACKUP +
-            ULTIMUS_CHANCES.STARTER +
-            ULTIMUS_CHANCES.STAR +
-            ULTIMUS_CHANCES.ALL_PRO +
-            ULTIMUS_CHANCES.LEGEND +
-            ULTIMUS_CHANCES.AWARD +
-            ULTIMUS_CHANCES.HALL_OF_FAME +
-            ULTIMUS_CHANCES.ULTIMUS_CHAMPION +
-            ULTIMUS_CHANCES.HOLOGRAPH_EXPANSION &&
-        chance <=
-          ULTIMUS_CHANCES.BACKUP +
-            ULTIMUS_CHANCES.STARTER +
-            ULTIMUS_CHANCES.STAR +
-            ULTIMUS_CHANCES.ALL_PRO +
-            ULTIMUS_CHANCES.LEGEND +
-            ULTIMUS_CHANCES.AWARD +
-            ULTIMUS_CHANCES.HALL_OF_FAME +
-            ULTIMUS_CHANCES.ULTIMUS_CHAMPION +
-            ULTIMUS_CHANCES.HOLOGRAPH_EXPANSION +
             ULTIMUS_CHANCES.AUTOGRAPH_ROOKIE
       ) {
         cardRarity = AUTOGRAPH_ROOKIE
@@ -212,7 +189,6 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
             ULTIMUS_CHANCES.AWARD +
             ULTIMUS_CHANCES.HALL_OF_FAME +
             ULTIMUS_CHANCES.ULTIMUS_CHAMPION +
-            ULTIMUS_CHANCES.HOLOGRAPH_EXPANSION +
             ULTIMUS_CHANCES.AUTOGRAPH_ROOKIE &&
         chance <=
           ULTIMUS_CHANCES.BACKUP +
@@ -223,11 +199,10 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
             ULTIMUS_CHANCES.AWARD +
             ULTIMUS_CHANCES.HALL_OF_FAME +
             ULTIMUS_CHANCES.ULTIMUS_CHAMPION +
-            ULTIMUS_CHANCES.HOLOGRAPH_EXPANSION +
             ULTIMUS_CHANCES.AUTOGRAPH_ROOKIE +
-            ULTIMUS_CHANCES.FANTASY_KINGS
+            ULTIMUS_CHANCES.CHARITY
       ) {
-        cardRarity = FANTASY_KINGS
+        cardRarity = CHARITY
       } else if (
         chance >
           ULTIMUS_CHANCES.BACKUP +
@@ -238,10 +213,20 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
             ULTIMUS_CHANCES.AWARD +
             ULTIMUS_CHANCES.HALL_OF_FAME +
             ULTIMUS_CHANCES.ULTIMUS_CHAMPION +
-            ULTIMUS_CHANCES.HOLOGRAPH_EXPANSION +
             ULTIMUS_CHANCES.AUTOGRAPH_ROOKIE +
-            ULTIMUS_CHANCES.FANTASY_KINGS &&
-        chance <= 10000
+            ULTIMUS_CHANCES.CHARITY &&
+        chance <=
+          ULTIMUS_CHANCES.BACKUP +
+            ULTIMUS_CHANCES.STARTER +
+            ULTIMUS_CHANCES.STAR +
+            ULTIMUS_CHANCES.ALL_PRO +
+            ULTIMUS_CHANCES.LEGEND +
+            ULTIMUS_CHANCES.AWARD +
+            ULTIMUS_CHANCES.HALL_OF_FAME +
+            ULTIMUS_CHANCES.ULTIMUS_CHAMPION +
+            ULTIMUS_CHANCES.AUTOGRAPH_ROOKIE +
+            ULTIMUS_CHANCES.CHARITY +
+            ULTIMUS_CHANCES.CAPTAIN
       ) {
         cardRarity = CAPTAIN
       } else {
