@@ -102,14 +102,14 @@ const SubscribedUsers = () => {
             )
           })}
         </List>
-        {/* <ActionButton
+        <ActionButton
           onClick={() => handleOnClick(Packs.Type.Regular)}
           label="Issue Regular Packs"
-        /> */}
-        <ActionButton
+        />
+        {/* <ActionButton
           onClick={() => handleOnClick(Packs.Type.Ultimus)}
           label="Issue Ultimus Packs"
-        />
+        /> */}
       </>
     )
   }
