@@ -22,6 +22,7 @@ import axios from 'axios'
 import { DOTTS_ACCESS_TOKEN } from '../utils/constants'
 import Link from 'next/link'
 import Router from 'next/router'
+import TradingIcon from '../public/icons/TradingIcon'
 
 const darkTheme = createMuiTheme({
   palette: {
@@ -29,12 +30,14 @@ const darkTheme = createMuiTheme({
   },
 })
 
+export const UserContext = React.createContext(null);
+
 const DefaultLayout = ({ children }) => {
   const classes = useStyles()
   const [value, setValue] = useState(0)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
-
+  const [userEmail, setUserEmail] = useState('');
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios({
@@ -49,6 +52,8 @@ const DefaultLayout = ({ children }) => {
       if (result.data.error) {
         setIsLoggedIn(false)
       } else {
+        console.log('user', result.data)
+        setUserEmail(result.data.email)
         setIsLoggedIn(true)
       }
 
@@ -74,6 +79,7 @@ const DefaultLayout = ({ children }) => {
   if (isLoading) return null
 
   return (
+    <UserContext.Provider value={userEmail}>
     <ThemeProvider theme={darkTheme}>
       {!isLoggedIn && <SplashScreen />}
       {isLoggedIn && (
@@ -129,6 +135,12 @@ const DefaultLayout = ({ children }) => {
                     label="Community"
                     icon={<CommunityIcon />}
                   />
+                  <BottomNavigationAction
+                    component={BottomNavigationActionLink}
+                    href={'/Trading'}
+                    label="Trading"
+                    icon={<TradingIcon />}
+                  />
                 </BottomNavigation>
               </>
             )}
@@ -136,6 +148,7 @@ const DefaultLayout = ({ children }) => {
         </>
       )}
     </ThemeProvider>
+    </UserContext.Provider>
   )
 }
 

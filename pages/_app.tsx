@@ -1,10 +1,12 @@
 import { CssBaseline } from '@material-ui/core'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import DefaultLayout from '../layouts/DefaultLayout'
 import '../styles/globals.css'
+import { QueryClient, QueryClientProvider } from 'react-query'
+import { Hydrate } from 'react-query/hydration'
 
 const App = ({ Component, pageProps }) => {
-  React.useEffect(() => {
+  useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side')
     if (jssStyles) {
@@ -12,14 +14,18 @@ const App = ({ Component, pageProps }) => {
     }
   }, [])
 
+  const [queryClient] = useState(() => new QueryClient())
+
   const getLayout =
     Component.layout || ((page) => <DefaultLayout children={page} />)
 
   return getLayout(
-    <>
-      <CssBaseline />
-      <Component {...pageProps} />
-    </>
+    <QueryClientProvider client={queryClient}>
+      <Hydrate state={pageProps.dehydratedState}>
+        <CssBaseline />
+        <Component {...pageProps} />
+      </Hydrate>
+    </QueryClientProvider>
   )
 }
 

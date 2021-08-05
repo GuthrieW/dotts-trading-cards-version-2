@@ -17,6 +17,7 @@ import { DOTTS_ACCESS_TOKEN } from '../utils/constants'
 import axios from 'axios'
 import Link from 'next/link'
 import Router from 'next/router'
+import TradingIcon from '../public/icons/TradingIcon'
 
 const drawerWidth = 240
 
@@ -102,6 +103,18 @@ function PermanentDrawerLeft({ value, updateTabValue }) {
                 <CommunityIcon />
               </ListItemIcon>
               <ListItemText primary={'Community'} />
+            </MenuItem>
+          </Link>
+          <Link href="/Trading">
+            <MenuItem
+            onClick={() => updateTabValue(4)}
+            selected={value === 4}
+            button
+            >
+              <ListItemIcon>
+                <TradingIcon />
+              </ListItemIcon>
+              <ListItemText primary={'Trading'} />
             </MenuItem>
           </Link>
         </List>

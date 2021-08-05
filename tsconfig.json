@@ -20,7 +20,9 @@
     "**/*.tsx",
     "pages/index.tsx",
     "pages/api/schemas/Card.ts",
-    "pages/api/schemas/User.js"
-, "pages/api/database/database.js"  ],
+    "pages/api/schemas/User.js",
+    "pages/api/database/database.js",
+    "pages/Trading/MyTrades/[_id].jsx"
+  ],
   "exclude": ["node_modules"]
 }
