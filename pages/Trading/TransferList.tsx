@@ -17,8 +17,10 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  TextField,
 } from '@material-ui/core'
 import Router from 'next/router'
+import { Autocomplete } from '@material-ui/lab'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,6 +63,8 @@ export default function TransferList(props) {
   const leftChecked = intersection(checked, left)
   const rightChecked = intersection(checked, right)
   const [currentUser, setCurrentUser] = useState(null)
+  const [userCardFilter, setUserCardFilter] = useState(null)
+  const [tradePartnerCardFilter, setTradePartnerCardFilter] = useState(null)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -227,6 +231,23 @@ export default function TransferList(props) {
     }
   }
 
+  const handleFilterChange = (value, isUser) => {
+    if (value && isUser) {
+      setUserCardFilter(value.playerName)
+    }
+
+    if (!value && isUser) {
+      setUserCardFilter(null)
+    }
+    if (value && !isUser) {
+      setTradePartnerCardFilter(value.playerName)
+    }
+
+    if (!value && !isUser) {
+      setTradePartnerCardFilter(null)
+    }
+  }
+
   const customList = (items, isUser) => (
     <>
       <Paper>
@@ -234,34 +255,60 @@ export default function TransferList(props) {
           {isUser ? 'Your Cards' : 'Trade Partner Cards'}
         </div>
       </Paper>
+      {items && (
+        <Autocomplete
+          id="combo-box-demo"
+          options={items}
+          getOptionSelected={(option, value) =>
+            option.playerName === value.playerName
+          }
+          onChange={(event, value) => handleFilterChange(value, isUser)}
+          getOptionLabel={(option) => `${option.playerName} - ${option.rarity}`}
+          renderInput={(params) => (
+            <TextField {...params} label="Combo box" variant="outlined" />
+          )}
+        />
+      )}
       <Paper className={classes.paper}>
         <List dense component="div" role="list">
-          {items.map((value, index) => {
-            const { playerName, rarity, playerTeam } = value
-            const labelId = `transfer-list-item-${value}-label`
+          {items
+            .filter((card) => {
+              if (isUser && userCardFilter) {
+                return card.playerName === userCardFilter
+              }
 
-            return (
-              <ListItem
-                key={value.playerName + index}
-                role="listitem"
-                button
-                onClick={handleToggle(value)}
-              >
-                <ListItemIcon>
-                  <Checkbox
-                    checked={checked.indexOf(value) !== -1}
-                    tabIndex={-1}
-                    disableRipple
-                    inputProps={{ 'aria-labelledby': labelId }}
+              if (!isUser && tradePartnerCardFilter) {
+                return card.playerName === tradePartnerCardFilter
+              }
+
+              return card
+            })
+            .map((value, index) => {
+              const { playerName, rarity, playerTeam } = value
+              const labelId = `transfer-list-item-${value}-label`
+
+              return (
+                <ListItem
+                  key={value.playerName + index}
+                  role="listitem"
+                  button
+                  onClick={handleToggle(value)}
+                >
+                  <ListItemIcon>
+                    <Checkbox
+                      checked={checked.indexOf(value) !== -1}
+                      tabIndex={-1}
+                      disableRipple
+                      inputProps={{ 'aria-labelledby': labelId }}
+                    />
+                  </ListItemIcon>
+                  <ListItemText
+                    id={labelId}
+                    primary={`${playerName} (${rarity})`}
                   />
-                </ListItemIcon>
-                <ListItemText
-                  id={labelId}
-                  primary={`${playerName} (${rarity})`}
-                />
-              </ListItem>
-            )
-          })}
+                </ListItem>
+              )
+            })}
           <ListItem />
         </List>
       </Paper>
