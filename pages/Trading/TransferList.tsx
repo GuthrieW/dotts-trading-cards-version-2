@@ -207,10 +207,6 @@ export default function TransferList(props) {
 
   const handleCreateTradeProposal = async () => {
     setOpen(false)
-    console.log('offeringUserId', currentUser._id)
-    console.log('receivingUserId', props.tradePartner.id)
-    console.log('offeringUserCardIds', leftChecked)
-    console.log('receivingUserCardIds', rightChecked)
     const trades = await axios({
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),

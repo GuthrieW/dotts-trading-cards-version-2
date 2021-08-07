@@ -60,7 +60,6 @@ const CollectionView = (props) => {
   }, [])
 
   const getUserApiCallOptions = () => {
-    console.log('props', props)
     const apiCallOptions =
       props.isflUsername != null
         ? {
@@ -74,7 +73,6 @@ const CollectionView = (props) => {
             data: {},
           }
 
-    console.log('apiCallOptions', apiCallOptions)
     return apiCallOptions
   }
 

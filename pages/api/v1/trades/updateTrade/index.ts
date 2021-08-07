@@ -28,7 +28,6 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
 
     response.status(200).send(result)
   } catch (error) {
-    console.log({ error })
     response.status(200).json({ error: error })
   }
 }
