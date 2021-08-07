@@ -71,8 +71,8 @@ function PermanentDrawerLeft({ value, updateTabValue }) {
         <List>
           <Link href="/MyCards">
             <MenuItem
-              onClick={() => updateTabValue(1)}
-              selected={value === 1}
+              onClick={() => updateTabValue(0)}
+              selected={value === 0}
               button
             >
               <ListItemIcon>
@@ -83,8 +83,8 @@ function PermanentDrawerLeft({ value, updateTabValue }) {
           </Link>
           <Link href="/OpenPacks">
             <MenuItem
-              onClick={() => updateTabValue(2)}
-              selected={value === 2}
+              onClick={() => updateTabValue(1)}
+              selected={value === 1}
               button
             >
               <ListItemIcon>
@@ -95,8 +95,8 @@ function PermanentDrawerLeft({ value, updateTabValue }) {
           </Link>
           <Link href="/Community">
             <MenuItem
-              onClick={() => updateTabValue(3)}
-              selected={value === 3}
+              onClick={() => updateTabValue(2)}
+              selected={value === 2}
               button
             >
               <ListItemIcon>
@@ -107,9 +107,9 @@ function PermanentDrawerLeft({ value, updateTabValue }) {
           </Link>
           <Link href="/Trading">
             <MenuItem
-            onClick={() => updateTabValue(4)}
-            selected={value === 4}
-            button
+              onClick={() => updateTabValue(3)}
+              selected={value === 4}
+              button
             >
               <ListItemIcon>
                 <TradingIcon />

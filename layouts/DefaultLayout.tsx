@@ -21,7 +21,7 @@ import SidebarNav from '../components/SidebarNav'
 import axios from 'axios'
 import { DOTTS_ACCESS_TOKEN } from '../utils/constants'
 import Link from 'next/link'
-import Router from 'next/router'
+import Router, { useRouter } from 'next/router'
 import TradingIcon from '../public/icons/TradingIcon'
 
 const darkTheme = createMuiTheme({
@@ -30,14 +30,37 @@ const darkTheme = createMuiTheme({
   },
 })
 
-export const UserContext = React.createContext(null);
+export const UserContext = React.createContext(null)
+
+const handleSetNavValueOnLoad = (path) => {
+  switch (path) {
+    case 'MyCards':
+      return 0
+    case 'OpenPacks':
+      return 1
+    case 'Community':
+      return 2
+    case 'Trading':
+      return 3
+    default:
+      return 0
+  }
+}
 
 const DefaultLayout = ({ children }) => {
   const classes = useStyles()
   const [value, setValue] = useState(0)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
-  const [userEmail, setUserEmail] = useState('');
+  const [userEmail, setUserEmail] = useState('')
+  const router = useRouter()
+
+  useEffect(() => {
+    if (router && router.pathname) {
+      setValue(handleSetNavValueOnLoad(router.pathname.split('/')[1]))
+    }
+  }, [router])
+
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios({
@@ -52,7 +75,6 @@ const DefaultLayout = ({ children }) => {
       if (result.data.error) {
         setIsLoggedIn(false)
       } else {
-        console.log('user', result.data)
         setUserEmail(result.data.email)
         setIsLoggedIn(true)
       }
@@ -80,74 +102,76 @@ const DefaultLayout = ({ children }) => {
 
   return (
     <UserContext.Provider value={userEmail}>
-    <ThemeProvider theme={darkTheme}>
-      {!isLoggedIn && <SplashScreen />}
-      {isLoggedIn && (
-        <>
-          <div className={classes.root}>
-            <AppBar position="fixed" className={classes.appBar}>
-              <Toolbar>
-                <Link href="/">
-                  <div className={classes.headerLogoContainer}>
-                    {!lgUp && (
-                      <img
-                        className={classes.headerLogo}
-                        src="/images/Dotts-Logo-White.png"
-                      />
-                    )}
-                  </div>
-                </Link>
-                <Typography variant="h6" noWrap>
-                  <Button onClick={handleSignOut}>Sign out</Button>
-                </Typography>
-              </Toolbar>
-            </AppBar>
-            {lgUp && <SidebarNav value={value} updateTabValue={updateValue} />}
-            <main className={classes.content}>
-              <div className={classes.toolbar} />
-              {children}
-            </main>
-            {!lgUp && (
-              <>
-                <BottomNavigation
-                  value={value}
-                  onChange={(event, newValue) => {
-                    setValue(newValue)
-                  }}
-                  showLabels
-                  className={classes.footer}
-                >
-                  <BottomNavigationAction
-                    component={BottomNavigationActionLink}
-                    href={'/MyCards'}
-                    label="My Cards"
-                    icon={<MyCardsIcon />}
-                  />
-                  <BottomNavigationAction
-                    component={BottomNavigationActionLink}
-                    href={'/OpenPacks'}
-                    label="Open Packs"
-                    icon={<OpenPacksIcon />}
-                  />
-                  <BottomNavigationAction
-                    component={BottomNavigationActionLink}
-                    href={'/Community'}
-                    label="Community"
-                    icon={<CommunityIcon />}
-                  />
-                  <BottomNavigationAction
-                    component={BottomNavigationActionLink}
-                    href={'/Trading'}
-                    label="Trading"
-                    icon={<TradingIcon />}
-                  />
-                </BottomNavigation>
-              </>
-            )}
-          </div>
-        </>
-      )}
-    </ThemeProvider>
+      <ThemeProvider theme={darkTheme}>
+        {!isLoggedIn && <SplashScreen />}
+        {isLoggedIn && (
+          <>
+            <div className={classes.root}>
+              <AppBar position="fixed" className={classes.appBar}>
+                <Toolbar>
+                  <Link href="/">
+                    <div className={classes.headerLogoContainer}>
+                      {!lgUp && (
+                        <img
+                          className={classes.headerLogo}
+                          src="/images/Dotts-Logo-White.png"
+                        />
+                      )}
+                    </div>
+                  </Link>
+                  <Typography variant="h6" noWrap>
+                    <Button onClick={handleSignOut}>Sign out</Button>
+                  </Typography>
+                </Toolbar>
+              </AppBar>
+              {lgUp && (
+                <SidebarNav value={value} updateTabValue={updateValue} />
+              )}
+              <main className={classes.content}>
+                <div className={classes.toolbar} />
+                {children}
+              </main>
+              {!lgUp && (
+                <>
+                  <BottomNavigation
+                    value={value}
+                    onChange={(event, newValue) => {
+                      setValue(newValue)
+                    }}
+                    showLabels
+                    className={classes.footer}
+                  >
+                    <BottomNavigationAction
+                      component={BottomNavigationActionLink}
+                      href={'/MyCards'}
+                      label="My Cards"
+                      icon={<MyCardsIcon />}
+                    />
+                    <BottomNavigationAction
+                      component={BottomNavigationActionLink}
+                      href={'/OpenPacks'}
+                      label="Open Packs"
+                      icon={<OpenPacksIcon />}
+                    />
+                    <BottomNavigationAction
+                      component={BottomNavigationActionLink}
+                      href={'/Community'}
+                      label="Community"
+                      icon={<CommunityIcon />}
+                    />
+                    <BottomNavigationAction
+                      component={BottomNavigationActionLink}
+                      href={'/Trading'}
+                      label="Trading"
+                      icon={<TradingIcon />}
+                    />
+                  </BottomNavigation>
+                </>
+              )}
+            </div>
+          </>
+        )}
+      </ThemeProvider>
     </UserContext.Provider>
   )
 }
