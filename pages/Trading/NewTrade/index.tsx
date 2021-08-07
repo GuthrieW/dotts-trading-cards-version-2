@@ -88,7 +88,6 @@ const TradingPage = () => {
 
   const handleSelectTradePartner = (event, value) => {
     if (value) {
-      console.log({ value })
       setTradePartner({ email: value.isflUsername, id: value._id })
     } else {
       setTradePartner('')
