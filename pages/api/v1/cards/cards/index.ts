@@ -34,7 +34,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
         return card._id == group[0]
       })
 
-      _.times(group.length - 1, result.push(cardToAdd))
+      _.times(group.length - 1, () => result.push(cardToAdd))
     }
   })
 
