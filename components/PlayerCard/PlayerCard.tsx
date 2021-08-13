@@ -4,6 +4,7 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
+  Badge,
 } from '@material-ui/core'
 import Image from 'next/image'
 import React from 'react'
@@ -16,17 +17,20 @@ const PlayerCard = ({
   handleOpenCard,
   handleCloseCard,
   open,
+  duplicates,
 }) => {
   const classes = useStyles()
   return (
     <Grid key={card.playerName} item xs={6} md={4} lg={3} className={className}>
       <Box onClick={() => handleOpenCard(card)}>
+        <Badge badgeContent={duplicates ? duplicates : null} color={'primary'}>
           <Image
             width={300}
             height={400}
             className={classes.cardContainer}
             src={card.imageUrl}
           />
+        </Badge>
       </Box>
       <Dialog
         open={open}

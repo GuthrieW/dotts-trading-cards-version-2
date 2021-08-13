@@ -288,12 +288,17 @@ const CollectionView = (props) => {
               pageNumber * numberOfItemsForPage
             )
             .map((card, index) => {
-              return (
+              const numberOfDuplicates = collectionCards.filter(
+                (collectionCard) => collectionCard._id === card._id
+              ).length
                 <PlayerCard
                   className={classes.cardContainer}
                   key={`${card.rarity}-${card.playerName}-${index}`}
                   card={card}
                   currentCard={currentCard}
+                  duplicates={
+                    numberOfDuplicates > 1 ? numberOfDuplicates : null
+                  }
                   handleOpenCard={handleClickOpen}
                   handleCloseCard={handleClose}
                   open={open}
