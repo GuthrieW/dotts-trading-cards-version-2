@@ -5,6 +5,7 @@ import {
   DialogContent,
   DialogTitle,
 } from '@material-ui/core'
+import Image from 'next/image'
 import React from 'react'
 import useStyles from './PlayerCard.styles'
 
@@ -20,7 +21,12 @@ const PlayerCard = ({
   return (
     <Grid key={card.playerName} item xs={6} md={4} lg={3} className={className}>
       <Box onClick={() => handleOpenCard(card)}>
-        <img className={classes.cardContainer} src={card.imageUrl} />
+          <Image
+            width={300}
+            height={400}
+            className={classes.cardContainer}
+            src={card.imageUrl}
+          />
       </Box>
       <Dialog
         open={open}
@@ -30,7 +36,7 @@ const PlayerCard = ({
       >
         <DialogContent>
           {currentCard && (
-            <img className={classes.cardContainer} src={currentCard.imageUrl} />
+            <Image width={300} height={400} src={currentCard.imageUrl} />
           )}
         </DialogContent>
         {currentCard && (
