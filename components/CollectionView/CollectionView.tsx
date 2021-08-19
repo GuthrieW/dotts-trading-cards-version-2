@@ -19,6 +19,7 @@ const CollectionView = (props) => {
   const [open, setOpen] = React.useState(false)
   const [currentCard, setCurrentCard] = useState(null)
   const [collectionCards, setCollectionCards] = useState([])
+  const [uniqueCardsForSearch, setUniqueCardsForSearch] = useState([])
   const [filteredCards, setFilteredCards] = useState([])
 
   useEffect(() => {
@@ -53,7 +54,16 @@ const CollectionView = (props) => {
       if (userCards.data.error) {
       }
 
-      setCollectionCards(userCards.data)
+      setCollectionCards(userCards.data.filter(Boolean))
+      const uniqueFilteredCards = new Set()
+      const uniqueCards = userCards.data.filter((card) => {
+        if (uniqueFilteredCards.has(card._id)) {
+          return false
+        }
+        uniqueFilteredCards.add(card._id)
+        return true
+      })
+      setUniqueCardsForSearch(uniqueCards)
     }
 
     fetchData()
@@ -201,8 +211,10 @@ const CollectionView = (props) => {
     let cardsWithMatchingTerms = []
     for (const card of cards) {
       if (
-        card.playerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        card.playerTeam.toLowerCase().includes(searchTerm.toLowerCase())
+        (card &&
+          card.playerName.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        (card &&
+          card.playerTeam.toLowerCase().includes(searchTerm.toLowerCase()))
       ) {
         cardsWithMatchingTerms.push(card)
       }
@@ -229,7 +241,15 @@ const CollectionView = (props) => {
         cardsToShow = getCardsWithMatchingTerms(cardsToShow, searchTerm)
       }
 
-      setFilteredCards(cardsToShow)
+      const uniqueFilteredCards = new Set()
+      const uniqueCards = cardsToShow.filter((card) => {
+        if (uniqueFilteredCards.has(card._id)) {
+          return false
+        }
+        uniqueFilteredCards.add(card._id)
+        return true
+      })
+      setFilteredCards(uniqueCards)
       return cardsToShow
     }
 
@@ -267,10 +287,10 @@ const CollectionView = (props) => {
       </Box>
       <Autocomplete
         id="grouped-demo"
-        options={collectionCards}
+        options={uniqueCardsForSearch.sort((a, b) => a.rarity - b.rarity)}
         className={classes.search}
-        groupBy={(option) => option.rarity}
-        getOptionLabel={(option) => option.playerName}
+        groupBy={(option) => (option ? option.rarity : '')}
+        getOptionLabel={(option) => (option ? option.playerName : '')}
         clearOnBlur={false}
         renderInput={(params) => (
           <TextField {...params} label="Enter player name" variant="outlined" />
@@ -288,17 +308,24 @@ const CollectionView = (props) => {
               pageNumber * numberOfItemsForPage
             )
             .map((card, index) => {
-              return (
+              const numberOfDuplicates = collectionCards.filter(
+                (collectionCard) => collectionCard._id === card._id
+              ).length
+
+              return card ? (
                 <PlayerCard
                   className={classes.cardContainer}
                   key={`${card.rarity}-${card.playerName}-${index}`}
                   card={card}
                   currentCard={currentCard}
+                  duplicates={
+                    numberOfDuplicates > 1 ? numberOfDuplicates : null
+                  }
                   handleOpenCard={handleClickOpen}
                   handleCloseCard={handleClose}
                   open={open}
                 />
-              )
+              ) : null
             })}
       </Grid>
       <Pagination
