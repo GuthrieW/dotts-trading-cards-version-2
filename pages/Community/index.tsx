@@ -10,7 +10,7 @@ import {
   TextField,
   Typography,
   Box,
-  CircularProgress,
+  LinearProgress,
 } from '@material-ui/core'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
@@ -32,6 +32,9 @@ const columns = [
 function CommunityPage() {
   const classes = useStyles()
   const [value, setValue] = useState(0)
+  const [communityAccountsLoading, setCommunityAccountsLoading] = useState(
+    false
+  )
   const [communityAccounts, setCommunityAccounts] = useState([])
   const [searchTerm, setSearchTerm] = useState({})
   const [allCards, setAllCards] = useState([])
@@ -39,25 +42,32 @@ function CommunityPage() {
   const [searchResultLoading, setSearchResultLoading] = useState(false)
   const [owners, setOwners] = useState([])
 
-  const fetchData = async () => {
-    const accounts = await axios({
-      headers: {
-        Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
-      },
-      method: 'post',
-      url: `/api/v1/users/allUsers`,
-      data: {},
-    })
+  useEffect(() => {
+    const fetchData = async () => {
+      setCommunityAccountsLoading(true)
+      const accounts = await axios({
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
+        },
+        method: 'post',
+        url: `/api/v1/users/allUsers`,
+        data: {},
+      })
 
-    if (accounts.data.error) {
-      console.log('error:', accounts.data.error)
-    } else {
-      setCommunityAccounts(accounts.data)
+      if (accounts.data.error) {
+        console.log('error:', accounts.data.error)
+        setCommunityAccountsLoading(false)
+      } else {
+        setCommunityAccountsLoading(false)
+        setCommunityAccounts(accounts.data)
+        return
+      }
+
       return
     }
 
-    return
-  }
+    fetchData()
+  }, [])
 
   useEffect(() => {
     setAllCardsLoading(true)
@@ -84,7 +94,7 @@ function CommunityPage() {
     }
 
     fetchAllCards()
-  }, [])
+  }, [value])
 
   const fetchSearchResult = async (id) => {
     setSearchResultLoading(true)
@@ -136,57 +146,57 @@ function CommunityPage() {
       </AppBar>
       {value === 0 && (
         <>
-          {(!communityAccounts || communityAccounts.length === 0) && (
-            <Button onClick={() => fetchData()}>Get Users</Button>
-          )}
           <Paper className={classes.root}>
-            <TableContainer className={classes.container}>
-              <Table stickyHeader aria-label="sticky table">
-                <TableHead>
-                  <TableRow>
-                    {columns.map((column) => (
-                      <TableCell
-                        key={column.id}
-                        style={{ minWidth: column.minWidth }}
-                      >
-                        {column.label}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {communityAccounts.map((row, index) => {
-                    if (row.isflUsername === '') {
-                      return
-                    }
-                    return (
-                      <TableRow
-                        hover
-                        role="checkbox"
-                        tabIndex={-1}
-                        key={`${row.isflUsername}-${index}`}
-                      >
-                        {columns.map((column, index) => {
-                          const value =
-                            column.id === 'ownedCards'
-                              ? row[column.id].length
-                              : row[column.id]
+            {communityAccountsLoading && <LinearProgress />}
+            {!communityAccountsLoading && (
+              <TableContainer className={classes.container}>
+                <Table stickyHeader aria-label="sticky table">
+                  <TableHead>
+                    <TableRow>
+                      {columns.map((column) => (
+                        <TableCell
+                          key={column.id}
+                          style={{ minWidth: column.minWidth }}
+                        >
+                          {column.label}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {communityAccounts.map((row, index) => {
+                      if (row.isflUsername === '') {
+                        return
+                      }
+                      return (
+                        <TableRow
+                          hover
+                          role="checkbox"
+                          tabIndex={-1}
+                          key={`${row.isflUsername}-${index}`}
+                        >
+                          {columns.map((column, index) => {
+                            const value =
+                              column.id === 'ownedCards'
+                                ? row[column.id].length
+                                : row[column.id]
 
-                          return (
-                            <TableCell
-                              onClick={() => handleOnClick(row.isflUsername)}
-                              key={`${column.id}-${index}`}
-                            >
-                              {value}
-                            </TableCell>
-                          )
-                        })}
-                      </TableRow>
-                    )
-                  })}
-                </TableBody>
-              </Table>
-            </TableContainer>
+                            return (
+                              <TableCell
+                                onClick={() => handleOnClick(row.isflUsername)}
+                                key={`${column.id}-${index}`}
+                              >
+                                {value}
+                              </TableCell>
+                            )
+                          })}
+                        </TableRow>
+                      )
+                    })}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            )}
           </Paper>
         </>
       )}
@@ -217,19 +227,6 @@ function CommunityPage() {
                 variant="outlined"
               />
             )}
-            filterOptions={(options, params) => {
-              const filtered = filter(options, params)
-
-              // Suggest the creation of a new value
-              if (params.inputValue !== '') {
-                filtered.push({
-                  inputValue: params.inputValue,
-                  title: `"${params.inputValue}"`,
-                })
-              }
-
-              return filtered
-            }}
             onChange={(event, newValue) => {
               if (newValue) {
                 setSearchTerm(newValue)
@@ -238,21 +235,16 @@ function CommunityPage() {
             }}
           />
           <Box mt={2} p={2}>
+            {owners && owners.length > 0 && (
+              <Typography variant="h6">
+                Card owners of: {searchTerm.playerName} - {searchTerm.rarity}
+              </Typography>
+            )}
             <Paper className={classes.root}>
               <TableContainer className={classes.container}>
                 <Table stickyHeader aria-label="sticky table">
-                  <TableHead>
-                    <TableRow>
-                      {owners && owners.length > 0 && (
-                        <Typography variant="h6">
-                          Card owners of: {searchTerm.playerName} -{' '}
-                          {searchTerm.rarity}
-                        </Typography>
-                      )}
-                    </TableRow>
-                  </TableHead>
                   {searchResultLoading ? (
-                    <CircularProgress />
+                    <LinearProgress />
                   ) : (
                     <TableBody>
                       {owners &&
@@ -272,10 +264,7 @@ function CommunityPage() {
                                 const value = row[column.id]
 
                                 return (
-                                  <TableCell
-                                    // onClick={() => handleOnClick(row.isflUsername)}
-                                    key={`${column.id}-${index}`}
-                                  >
+                                  <TableCell key={`${column.id}-${index}`}>
                                     {value}
                                   </TableCell>
                                 )
