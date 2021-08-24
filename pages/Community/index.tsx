@@ -36,7 +36,7 @@ function CommunityPage() {
     false
   )
   const [communityAccounts, setCommunityAccounts] = useState([])
-  const [searchTerm, setSearchTerm] = useState({})
+  const [searchTerm, setSearchTerm] = useState<any>({})
   const [allCards, setAllCards] = useState([])
   const [allCardsLoading, setAllCardsLoading] = useState(false)
   const [searchResultLoading, setSearchResultLoading] = useState(false)
