@@ -91,7 +91,6 @@ function CommunityPage() {
           return true
         })
         setAllCards(uniqueCards)
-        console.log(uniqueCards)
         setAllCardsLoading(false)
         return
       }
