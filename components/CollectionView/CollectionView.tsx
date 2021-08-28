@@ -3,6 +3,7 @@ import {
   Box,
   Chip,
   Grid,
+  LinearProgress,
   TextField,
   useMediaQuery,
   useTheme,
@@ -19,9 +20,12 @@ const CollectionView = (props) => {
   const [open, setOpen] = React.useState(false)
   const [currentCard, setCurrentCard] = useState(null)
   const [collectionCards, setCollectionCards] = useState([])
+  const [collectionCardsLoading, setCollectionCardsLoading] = useState(false)
+  const [uniqueCardsForSearch, setUniqueCardsForSearch] = useState([])
   const [filteredCards, setFilteredCards] = useState([])
 
   useEffect(() => {
+    setCollectionCardsLoading(true);
     const fetchData = async () => {
       const apiCallOptions = getUserApiCallOptions()
 
@@ -51,9 +55,20 @@ const CollectionView = (props) => {
       })
 
       if (userCards.data.error) {
+        setCollectionCardsLoading(false)
       }
 
-      setCollectionCards(userCards.data)
+      setCollectionCards(userCards.data.filter(Boolean))
+      const uniqueFilteredCards = new Set()
+      const uniqueCards = userCards.data.filter(Boolean).filter((card) => {
+        if (uniqueFilteredCards.has(card._id)) {
+          return false
+        }
+        uniqueFilteredCards.add(card._id)
+        return true
+      })
+      setUniqueCardsForSearch(uniqueCards)
+      setCollectionCardsLoading(false);
     }
 
     fetchData()
@@ -199,8 +214,10 @@ const CollectionView = (props) => {
     let cardsWithMatchingTerms = []
     for (const card of cards) {
       if (
-        card.playerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        card.playerTeam.toLowerCase().includes(searchTerm.toLowerCase())
+        (card &&
+          card.playerName.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        (card &&
+          card.playerTeam.toLowerCase().includes(searchTerm.toLowerCase()))
       ) {
         cardsWithMatchingTerms.push(card)
       }
@@ -227,7 +244,15 @@ const CollectionView = (props) => {
         cardsToShow = getCardsWithMatchingTerms(cardsToShow, searchTerm)
       }
 
-      setFilteredCards(cardsToShow)
+      const uniqueFilteredCards = new Set()
+      const uniqueCards = cardsToShow.filter((card) => {
+        if (uniqueFilteredCards.has(card._id)) {
+          return false
+        }
+        uniqueFilteredCards.add(card._id)
+        return true
+      })
+      setFilteredCards(uniqueCards)
       return cardsToShow
     }
 
@@ -265,10 +290,11 @@ const CollectionView = (props) => {
       </Box>
       <Autocomplete
         id="grouped-demo"
-        options={collectionCards}
+        options={uniqueCardsForSearch.sort((a, b) => -b.rarity.localeCompare(a.rarity))}
         className={classes.search}
-        groupBy={(option) => option.rarity}
-        getOptionLabel={(option) => option.playerName}
+        loading={collectionCardsLoading}
+        groupBy={(option) => (option ? option.rarity : '')}
+        getOptionLabel={(option) => (option ? option.playerName : '')}
         clearOnBlur={false}
         renderInput={(params) => (
           <TextField {...params} label="Enter player name" variant="outlined" />
@@ -278,6 +304,9 @@ const CollectionView = (props) => {
         }}
       />
 
+      {
+        collectionCardsLoading ? <LinearProgress /> :
+      
       <Grid className={classes.collectionContainer} container>
         {filteredCards.length > 0 &&
           filteredCards
@@ -286,19 +315,27 @@ const CollectionView = (props) => {
               pageNumber * numberOfItemsForPage
             )
             .map((card, index) => {
-              return (
+              const numberOfDuplicates = collectionCards.filter(
+                (collectionCard) => collectionCard._id === card._id
+              ).length
+
+              return card ? (
                 <PlayerCard
                   className={classes.cardContainer}
                   key={`${card.rarity}-${card.playerName}-${index}`}
                   card={card}
                   currentCard={currentCard}
+                  duplicates={
+                    numberOfDuplicates > 1 ? numberOfDuplicates : null
+                  }
                   handleOpenCard={handleClickOpen}
                   handleCloseCard={handleClose}
                   open={open}
                 />
-              )
+              ) : null
             })}
       </Grid>
+      }
       <Pagination
         count={Math.ceil(filteredCards.length / numberOfItemsForPage)}
         onChange={handlePageChange}

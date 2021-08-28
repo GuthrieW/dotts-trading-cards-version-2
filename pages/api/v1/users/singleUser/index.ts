@@ -5,13 +5,10 @@ import { connect } from '../../../database/database'
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
   const { database, client } = await connect()
   const { isflUsername } = request.body
-  console.log(request.body)
 
   const account = await database.collection('dotts_accounts').findOne({
     isflUsername: isflUsername,
   })
-
-  console.log('account', account)
 
   client.close()
 
