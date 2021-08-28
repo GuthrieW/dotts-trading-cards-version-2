@@ -3,6 +3,7 @@ import {
   Box,
   Chip,
   Grid,
+  LinearProgress,
   TextField,
   useMediaQuery,
   useTheme,
@@ -19,10 +20,12 @@ const CollectionView = (props) => {
   const [open, setOpen] = React.useState(false)
   const [currentCard, setCurrentCard] = useState(null)
   const [collectionCards, setCollectionCards] = useState([])
+  const [collectionCardsLoading, setCollectionCardsLoading] = useState(false)
   const [uniqueCardsForSearch, setUniqueCardsForSearch] = useState([])
   const [filteredCards, setFilteredCards] = useState([])
 
   useEffect(() => {
+    setCollectionCardsLoading(true);
     const fetchData = async () => {
       const apiCallOptions = getUserApiCallOptions()
 
@@ -52,11 +55,12 @@ const CollectionView = (props) => {
       })
 
       if (userCards.data.error) {
+        setCollectionCardsLoading(false)
       }
 
       setCollectionCards(userCards.data.filter(Boolean))
       const uniqueFilteredCards = new Set()
-      const uniqueCards = userCards.data.filter((card) => {
+      const uniqueCards = userCards.data.filter(Boolean).filter((card) => {
         if (uniqueFilteredCards.has(card._id)) {
           return false
         }
@@ -64,6 +68,7 @@ const CollectionView = (props) => {
         return true
       })
       setUniqueCardsForSearch(uniqueCards)
+      setCollectionCardsLoading(false);
     }
 
     fetchData()
@@ -287,8 +292,9 @@ const CollectionView = (props) => {
       </Box>
       <Autocomplete
         id="grouped-demo"
-        options={uniqueCardsForSearch.sort((a, b) => a.rarity - b.rarity)}
+        options={uniqueCardsForSearch.sort((a, b) => -b.rarity.localeCompare(a.rarity))}
         className={classes.search}
+        loading={collectionCardsLoading}
         groupBy={(option) => (option ? option.rarity : '')}
         getOptionLabel={(option) => (option ? option.playerName : '')}
         clearOnBlur={false}
@@ -300,6 +306,9 @@ const CollectionView = (props) => {
         }}
       />
 
+      {
+        collectionCardsLoading ? <LinearProgress /> :
+      
       <Grid className={classes.collectionContainer} container>
         {filteredCards.length > 0 &&
           filteredCards
@@ -328,6 +337,7 @@ const CollectionView = (props) => {
               ) : null
             })}
       </Grid>
+      }
       <Pagination
         count={Math.ceil(filteredCards.length / numberOfItemsForPage)}
         onChange={handlePageChange}
