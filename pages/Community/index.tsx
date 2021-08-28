@@ -82,7 +82,15 @@ function CommunityPage() {
       })
 
       if (allCards.data) {
-        setAllCards(allCards.data)
+        const uniqueFilteredCards = new Set()
+        const uniqueCards = allCards.data.filter((card) => {
+          if (uniqueFilteredCards.has(card._id)) {
+            return false
+          }
+          uniqueFilteredCards.add(card._id)
+          return true
+        })
+        setAllCards(uniqueCards)
         setAllCardsLoading(false)
         return
       }
@@ -140,11 +148,91 @@ function CommunityPage() {
           variant="fullWidth"
           centered
         >
-          <Tab label="Users" value={0} />
-          <Tab label="Card Finder" value={1} />
+          <Tab label="Card Finder" value={0} />
+          <Tab label="Users" value={1} />
         </Tabs>
       </AppBar>
       {value === 0 && (
+        <>
+          <Box mt={2}>
+          <Autocomplete
+            id="grouped-demo"
+            options={allCards.sort((a, b) => -b.rarity.localeCompare(a.rarity))}
+            loading={allCardsLoading}
+            groupBy={(option) => option.rarity}
+            getOptionLabel={(option) => {
+              // Value selected with enter, right from the input
+              if (typeof option === 'string') {
+                return option
+              }
+              // Add "xxx" option created dynamically
+              if (option.inputValue) {
+                return option.inputValue
+              }
+              // Regular option
+              return option.playerName
+            }}
+            clearOnBlur={false}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Enter player name"
+                variant="outlined"
+              />
+            )}
+            onChange={(event, newValue) => {
+              if (newValue) {
+                setSearchTerm(newValue)
+                fetchSearchResult(newValue._id)
+              }
+            }}
+          />
+          </Box>
+          <Box mt={2} p={2}>
+            {owners && owners.length > 0 && (
+              <Typography variant="h6">
+                Card owners of: {searchTerm.playerName} - {searchTerm.rarity}
+              </Typography>
+            )}
+            <Paper className={classes.root}>
+              { searchResultLoading ? <LinearProgress /> : 
+              <TableContainer className={classes.container}>
+                <Table stickyHeader aria-label="sticky table">
+                    <TableBody>
+                      {owners &&
+                        owners.length > 0 &&
+                        owners.map((row, index) => {
+                          if (row.isflUsername === '') {
+                            return
+                          }
+                          return (
+                            <TableRow
+                              hover
+                              role="checkbox"
+                              tabIndex={-1}
+                              key={`${row.isflUsername}-${index}`}
+                            >
+                              {columns.map((column, index) => {
+                                const value = row[column.id]
+
+                                return (
+                                  <TableCell key={`${column.id}-${index}`}>
+                                    {value}
+                                  </TableCell>
+                                )
+                              })}
+                            </TableRow>
+                          )
+                        })}
+                    </TableBody>
+                </Table>
+              </TableContainer>
+            }
+            </Paper>
+          </Box>
+        </>
+      )}
+      {value === 1 && (
         <>
           <Paper className={classes.root}>
             {communityAccountsLoading && <LinearProgress />}
@@ -198,86 +286,6 @@ function CommunityPage() {
               </TableContainer>
             )}
           </Paper>
-        </>
-      )}
-      {value === 1 && (
-        <>
-          <Autocomplete
-            id="grouped-demo"
-            options={allCards}
-            loading={allCardsLoading}
-            groupBy={(option) => option && option.rarity}
-            getOptionLabel={(option) => {
-              // Value selected with enter, right from the input
-              if (typeof option === 'string') {
-                return option
-              }
-              // Add "xxx" option created dynamically
-              if (option.inputValue) {
-                return option.inputValue
-              }
-              // Regular option
-              return option.playerName
-            }}
-            clearOnBlur={false}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Enter player name"
-                variant="outlined"
-              />
-            )}
-            onChange={(event, newValue) => {
-              if (newValue) {
-                setSearchTerm(newValue)
-                fetchSearchResult(newValue._id)
-              }
-            }}
-          />
-          <Box mt={2} p={2}>
-            {owners && owners.length > 0 && (
-              <Typography variant="h6">
-                Card owners of: {searchTerm.playerName} - {searchTerm.rarity}
-              </Typography>
-            )}
-            <Paper className={classes.root}>
-              <TableContainer className={classes.container}>
-                <Table stickyHeader aria-label="sticky table">
-                  {searchResultLoading ? (
-                    <LinearProgress />
-                  ) : (
-                    <TableBody>
-                      {owners &&
-                        owners.length > 0 &&
-                        owners.map((row, index) => {
-                          if (row.isflUsername === '') {
-                            return
-                          }
-                          return (
-                            <TableRow
-                              hover
-                              role="checkbox"
-                              tabIndex={-1}
-                              key={`${row.isflUsername}-${index}`}
-                            >
-                              {columns.map((column, index) => {
-                                const value = row[column.id]
-
-                                return (
-                                  <TableCell key={`${column.id}-${index}`}>
-                                    {value}
-                                  </TableCell>
-                                )
-                              })}
-                            </TableRow>
-                          )
-                        })}
-                    </TableBody>
-                  )}
-                </Table>
-              </TableContainer>
-            </Paper>
-          </Box>
         </>
       )}
     </>
