@@ -29,7 +29,7 @@ const getChipColor = (tradeStatus) => {
 
 const MyTrades = () => {
   const router = useRouter()
-  const [tradeFilter, setTradeFilter] = useState(null)
+  const [tradeFilter, setTradeFilter] = useState('pending')
   const {
     isLoading: currentUserLoading,
     error: currentUserError,
