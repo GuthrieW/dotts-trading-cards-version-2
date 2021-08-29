@@ -258,12 +258,16 @@ export default function TransferList(props) {
       {items && (
         <Autocomplete
           id="combo-box-demo"
-          options={items}
-          getOptionSelected={(option, value) =>
+          options={items.sort(
+            (a, b) => -b.playerName.localeCompare(a.playerName)
+          )}
+          getOptionSelected={(option: any, value: any) =>
             option.playerName === value.playerName
           }
           onChange={(event, value) => handleFilterChange(value, isUser)}
-          getOptionLabel={(option) => `${option.playerName} - ${option.rarity}`}
+          getOptionLabel={(option: any) =>
+            `${option.playerName} - ${option.rarity}`
+          }
           renderInput={(params) => (
             <TextField {...params} label="Combo box" variant="outlined" />
           )}
