@@ -72,6 +72,10 @@ const ForgotPasswordPage = () => {
       <Typography color="textPrimary">
         You will be sent an email with a clickable link to reset your password.
       </Typography>
+      <Typography color="textSecondary">
+        (make sure to check your spam folder)
+      </Typography>
+
       <TextField
         fullWidth
         id="email"

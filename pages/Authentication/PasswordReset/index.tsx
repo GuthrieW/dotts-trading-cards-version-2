@@ -48,7 +48,9 @@ const PasswordResetPage = () => {
           setCanSubmit(false)
         }
       } else {
-        setError('Password not strong enough. Must include 1 uppercase, 1 lowercase, 1 special character, 1 number.')
+        setError(
+          'Password not strong enough. Must include 1 uppercase, 1 lowercase, 1 special character, 1 number.'
+        )
         setCanSubmit(false)
       }
     } else {
