@@ -12,7 +12,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
   })
 
   if (account == null) {
-    response.status(200).json({ success: 'success' })
+    response.status(200).json({ failure: 'email does not exist' })
     return
   }
 
@@ -64,7 +64,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
     }
   })
 
-  response.status(200).json({ success: 'success' })
+  response.status(200).json({ success: { expirationDate } })
   return
 }
 
