@@ -36,7 +36,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
   client.close()
 
   const transporter = NodeMailer.createTransport({
-    service: 'SendPulse',
+    service: 'gmail',
     auth: {
       user: process.env.DOTTS_EMAIL_USER,
       pass: process.env.DOTTS_EMAIL_PASSWORD,
