@@ -18,6 +18,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.57",
     "@material-ui/styles": "^4.11.2",
+    "@sendgrid/mail": "^7.4.6",
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "check-password-strength": "^1.0.15",

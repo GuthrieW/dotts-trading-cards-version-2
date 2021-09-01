@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { connect } from '../../../database/database'
 import NodeMailer from 'nodemailer'
 import CryptoRandomString from 'crypto-random-string'
+import SendGrid from '@sendgrid/mail'
 
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
   const { database, client } = await connect()
@@ -35,19 +36,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
 
   client.close()
 
-  const transporter = NodeMailer.createTransport({
-    host: 'smtp.mail.yahoo.com',
-    port: '465',
-    secure: false,
-    debug: false,
-    logger: false,
-    service: 'Yahoo',
-    auth: {
-      user: process.env.DOTTS_EMAIL_USER,
-      pass: process.env.DOTTS_EMAIL_PASSWORD,
-    },
-  })
-
+  SendGrid.setApiKey(process.env.SENDGRID_API_KEY)
   const emailOptions = {
     from: process.env.DOTTS_EMAIL_USER,
     to: email,
@@ -61,13 +50,30 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
     <p>from your friends at Dotts Trading Cards</p>`,
   }
 
-  transporter.sendMail(emailOptions, (error, info) => {
-    if (error) {
+  SendGrid.send(emailOptions)
+    .then((response) => {
+      console.log(response[0].statusCode)
+      console.log(response[0].headers)
+    })
+    .catch((error) => {
       console.log(error)
-    } else {
-      console.log('Email sent: ' + info.response)
-    }
-  })
+    })
+
+  // const transporter = NodeMailer.createTransport({
+  //   service: 'SendGrid',
+  //   auth: {
+  //     user: process.env.DOTTS_EMAIL_USER,
+  //     pass: process.env.DOTTS_EMAIL_PASSWORD,
+  //   },
+  // })
+
+  // transporter.sendMail(emailOptions, (error, info) => {
+  //   if (error) {
+  //     console.log(error)
+  //   } else {
+  //     console.log('Email sent: ' + info.response)
+  //   }
+  // })
 
   response.status(200).json({ success: { expirationDate } })
   return
