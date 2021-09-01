@@ -36,6 +36,11 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
   client.close()
 
   const transporter = NodeMailer.createTransport({
+    host: 'smtp.mail.yahoo.com',
+    port: '465',
+    secure: false,
+    debug: false,
+    logger: false,
     service: 'Yahoo',
     auth: {
       user: process.env.DOTTS_EMAIL_USER,
