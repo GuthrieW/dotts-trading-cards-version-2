@@ -6,6 +6,7 @@ import {
   ListItem,
   ListItemText,
   CircularProgress,
+  Box,
 } from '@material-ui/core'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
@@ -102,14 +103,19 @@ const SubscribedUsers = () => {
             )
           })}
         </List>
-        {/* <ActionButton
-          onClick={() => handleOnClick(Packs.Type.Regular)}
-          label="Issue Regular Packs"
-        /> */}
-        <ActionButton
-          onClick={() => handleOnClick(Packs.Type.Ultimus)}
-          label="Issue Ultimus Packs"
-        />
+        <Box display="flex">
+          <ActionButton
+            style={{ bottom: '130px' }}
+            onClick={() => handleOnClick(Packs.Type.Regular)}
+            label="Issue Regular Packs"
+            disabled
+          />
+          <ActionButton
+            onClick={() => handleOnClick(Packs.Type.Ultimus)}
+            label="Issue Ultimus Packs"
+            disabled
+          />
+        </Box>
       </>
     )
   }

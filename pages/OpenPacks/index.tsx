@@ -79,8 +79,11 @@ function OpenPacksPage() {
     <>
       {isLoading && <h1>Loading...</h1>}
       {isRedirect && <PackViewerIntermediate packType={packType} />}
-      <h1>Open Packs</h1>
-      <GridList
+      <h1>
+        Pack Opening is currently disabled while we make some changes to the
+        site. Check back soon!
+      </h1>
+      {/* <GridList
         className={classes.packsGrid}
         spacing={16}
         cellHeight={smUp ? 375 : 400}
@@ -117,7 +120,7 @@ function OpenPacksPage() {
             </GridListTile>
           )
         })}
-      </GridList>
+      </GridList> */}
     </>
   )
 }

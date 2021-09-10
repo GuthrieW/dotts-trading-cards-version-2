@@ -48,7 +48,7 @@ const signOut = () => {
   })
 }
 
-function PermanentDrawerLeft({ value, updateTabValue }) {
+function PermanentDrawerLeft({ value, updateTabValue, currentUser }) {
   const classes = useStyles()
 
   return (
@@ -105,18 +105,20 @@ function PermanentDrawerLeft({ value, updateTabValue }) {
               <ListItemText primary={'Community'} />
             </MenuItem>
           </Link>
-          <Link href="/Trading">
-            <MenuItem
-              onClick={() => updateTabValue(3)}
-              selected={value === 4}
-              button
-            >
-              <ListItemIcon>
-                <TradingIcon />
-              </ListItemIcon>
-              <ListItemText primary={'Trading'} />
-            </MenuItem>
-          </Link>
+          {currentUser && currentUser.isTradingBetaUser && (
+            <Link href="/Trading">
+              <MenuItem
+                onClick={() => updateTabValue(3)}
+                selected={value === 4}
+                button
+              >
+                <ListItemIcon>
+                  <TradingIcon />
+                </ListItemIcon>
+                <ListItemText primary={'Trading'} />
+              </MenuItem>
+            </Link>
+          )}
         </List>
       </Drawer>
     </>

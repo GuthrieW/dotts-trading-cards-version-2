@@ -71,13 +71,6 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
       return
     }
 
-    offeringUserCardIds.forEach((card) => {
-      offeringUserInfo.ownedCards.splice(
-        offeringUserInfo.ownedCards.indexOf(card),
-        1
-      )
-    })
-
     const receivingUserInfo = await database
       .collection('dotts_accounts')
       .findOne({
@@ -95,6 +88,13 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
         .json({ error: 'Receiving user does not have required cards.' })
       return
     }
+
+    offeringUserCardIds.forEach((card) => {
+      offeringUserInfo.ownedCards.splice(
+        offeringUserInfo.ownedCards.indexOf(card),
+        1
+      )
+    })
 
     receivingUserCardIds.forEach((card) => {
       receivingUserInfo.ownedCards.splice(

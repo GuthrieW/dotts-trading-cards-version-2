@@ -53,6 +53,7 @@ const DefaultLayout = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [userEmail, setUserEmail] = useState('')
+  const [currentUser, setCurrentUser] = useState(null)
   const router = useRouter()
 
   useEffect(() => {
@@ -80,6 +81,26 @@ const DefaultLayout = ({ children }) => {
       }
 
       setIsLoading(false)
+    }
+
+    fetchData()
+  }, [])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const user = await axios({
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
+        },
+        method: 'post',
+        url: `/api/v1/users/currentUser`,
+        data: {},
+      })
+
+      if (user.data.error) {
+      }
+
+      setCurrentUser(user.data.account)
     }
 
     fetchData()
@@ -125,7 +146,11 @@ const DefaultLayout = ({ children }) => {
                 </Toolbar>
               </AppBar>
               {lgUp && (
-                <SidebarNav value={value} updateTabValue={updateValue} />
+                <SidebarNav
+                  value={value}
+                  updateTabValue={updateValue}
+                  currentUser={currentUser}
+                />
               )}
               <main className={classes.content}>
                 <div className={classes.toolbar} />
@@ -159,12 +184,14 @@ const DefaultLayout = ({ children }) => {
                       label="Community"
                       icon={<CommunityIcon />}
                     />
-                    <BottomNavigationAction
-                      component={BottomNavigationActionLink}
-                      href={'/Trading'}
-                      label="Trading"
-                      icon={<TradingIcon />}
-                    />
+                    {currentUser && currentUser.isTradingBetaUser && (
+                      <BottomNavigationAction
+                        component={BottomNavigationActionLink}
+                        href={'/Trading'}
+                        label="Trading"
+                        icon={<TradingIcon />}
+                      />
+                    )}
                   </BottomNavigation>
                 </>
               )}

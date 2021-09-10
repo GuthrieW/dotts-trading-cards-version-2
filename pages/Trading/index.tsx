@@ -9,7 +9,7 @@ import {
   Typography,
 } from '@material-ui/core'
 import { useQuery } from 'react-query'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { formatDistance, parseISO, subDays } from 'date-fns'
@@ -38,6 +38,12 @@ const MyTrades = () => {
     const response = await getCurrentUser()
     return response
   })
+
+  useEffect(() => {
+    if (!currentUserLoading && !currentUserData.isTradingBetaUser) {
+      router.push('/Dashboard')
+    }
+  }, [currentUserData, currentUserLoading])
 
   const handleChipClick = (filter = null) => {
     if (filter) {
