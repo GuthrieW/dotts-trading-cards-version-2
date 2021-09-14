@@ -40,7 +40,10 @@ const MyTrades = () => {
   })
 
   useEffect(() => {
-    if (!currentUserLoading && !currentUserData.isTradingBetaUser) {
+    if (
+      !currentUserLoading &&
+      !currentUserData.data.account.isTradingBetaUser
+    ) {
       router.push('/Dashboard')
     }
   }, [currentUserData, currentUserLoading])
