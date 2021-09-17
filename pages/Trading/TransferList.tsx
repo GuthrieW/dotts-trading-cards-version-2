@@ -60,6 +60,7 @@ export default function TransferList(props) {
   const [tradePartnerCards, setTradePartnerCards] = useState([])
   const [right, setRight] = useState([4, 5, 6, 7])
   const [open, setOpen] = useState(false)
+  const [tradeProposalLoading, setTradeProposalLoading] = useState(false)
   const leftChecked = intersection(checked, left)
   const rightChecked = intersection(checked, right)
   const [currentUser, setCurrentUser] = useState(null)
@@ -210,7 +211,7 @@ export default function TransferList(props) {
   }
 
   const handleCreateTradeProposal = async () => {
-    setOpen(false)
+    setTradeProposalLoading(true)
     const trades = await axios({
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
@@ -225,8 +226,11 @@ export default function TransferList(props) {
       },
     })
 
+    setTradeProposalLoading(false)
     if (trades.data.error) {
+      setOpen(false)
     } else {
+      setOpen(false)
       Router.reload()
     }
   }
@@ -343,16 +347,16 @@ export default function TransferList(props) {
           <DialogContentText id="alert-dialog-description">
             <b>You trade away:</b>
           </DialogContentText>
-          {leftChecked.map((item) => (
-            <DialogContentText>
+          {leftChecked.map((item, index) => (
+            <DialogContentText key={item.playerName + index}>
               {item.playerName} ({item.rarity})
             </DialogContentText>
           ))}
           <DialogContentText>
             <b>You get:</b>
           </DialogContentText>
-          {rightChecked.map((item) => (
-            <DialogContentText>
+          {rightChecked.map((item, index) => (
+            <DialogContentText key={item.playerName + index}>
               {item.playerName} ({item.rarity})
             </DialogContentText>
           ))}
@@ -361,7 +365,12 @@ export default function TransferList(props) {
           <Button onClick={handleClose} color="primary">
             Disagree
           </Button>
-          <Button onClick={handleCreateTradeProposal} color="primary" autoFocus>
+          <Button
+            onClick={handleCreateTradeProposal}
+            disabled={tradeProposalLoading}
+            color="primary"
+            autoFocus
+          >
             Agree
           </Button>
         </DialogActions>

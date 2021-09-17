@@ -7,7 +7,9 @@ import {
   Grid,
   LinearProgress,
   Typography,
+  Snackbar,
 } from '@material-ui/core'
+import { Alert, Color } from '@material-ui/lab'
 import { useQuery } from 'react-query'
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
@@ -219,6 +221,13 @@ const MyTrades = () => {
         }}
         label={'Create New Trade'}
       />
+      {router.query.message && (
+        <Snackbar open={Boolean(router.query.message)} autoHideDuration={4000}>
+          <Alert severity={router.query.severity as Color}>
+            {router.query.message}
+          </Alert>
+        </Snackbar>
+      )}
     </Box>
   )
 }

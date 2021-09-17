@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
+import { Backdrop, CircularProgress } from '@material-ui/core'
 import axios from 'axios'
 import { useQuery } from 'react-query'
 import { useRouter } from 'next/router'
+import { makeStyles } from '@material-ui/core/styles'
 import { DOTTS_ACCESS_TOKEN } from '../../../utils/constants'
 import {
+  Alert,
   Box,
   Button,
   Card,
@@ -20,6 +23,13 @@ import {
 } from '@material-ui/core'
 import { formatDistance, parseISO, subDays } from 'date-fns'
 import { getCurrentUser, getTradeById } from '../../../utils/requestTemplates'
+
+const useStyles = makeStyles((theme) => ({
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
+  },
+}))
 
 const getChipColor = (tradeStatus) => {
   switch (tradeStatus) {
@@ -53,9 +63,12 @@ const transactTrade = async (
   offeringUserCardIds,
   receivingUserId,
   receivingUserCardIds,
-  _id
+  _id,
+  setTransactionLoading,
+  setTransactionMessage
 ) => {
-  await axios({
+  setTransactionLoading(true)
+  const response = await axios({
     headers: {
       Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
     },
@@ -70,7 +83,22 @@ const transactTrade = async (
     },
   })
 
-  return
+  setTransactionLoading(false)
+
+  if (response.data.error) {
+    setTransactionMessage({
+      severity: 'error',
+      message: response.data.error,
+    })
+  }
+
+  if (response.data.status) {
+    setTransactionMessage({
+      severity: 'success',
+      message: response.data.status,
+    })
+  }
+  return response
 }
 
 const deleteTrade = async (currentTrade) => {
@@ -90,6 +118,13 @@ const TradePage = () => {
   const router = useRouter()
   const { _id } = router.query
   const [dialogOpen, setDialogOpen] = useState(false)
+  const [transactionLoading, setTransactionLoading] = useState(false)
+  const [transactionMessage, setTransactionMessage] = useState({
+    severity: '',
+    message: '',
+  })
+
+  const classes = useStyles()
 
   const {
     isLoading: currentUserLoading,
@@ -139,15 +174,27 @@ const TradePage = () => {
     offeringUserId,
     offeringUserCardIds,
     receivingUserId,
-    receivingUserCardIds
+    receivingUserCardIds,
+    setTransactionLoading,
+    setTransactionMessage
   ) => {
     await transactTrade(
       offeringUserId,
       offeringUserCardIds,
       receivingUserId,
       receivingUserCardIds,
-      _id
+      _id,
+      setTransactionLoading,
+      setTransactionMessage
     )
+
+    router.push({
+      pathname: '/Trading',
+      query: {
+        message: transactionMessage.message,
+        severity: transactionMessage.severity,
+      },
+    })
   }
 
   if (tradeByIdLoading) return <LinearProgress />
@@ -294,12 +341,15 @@ const TradePage = () => {
                 <Button
                   size="small"
                   color="secondary"
+                  disabled={transactionLoading}
                   onClick={() =>
                     handleAcceptTrade(
                       offeringUserId,
                       offeringUserCardIds.map((card) => card._id),
                       receivingUserId,
-                      receivingUserCardIds.map((card) => card._id)
+                      receivingUserCardIds.map((card) => card._id),
+                      setTransactionLoading,
+                      setTransactionMessage
                     )
                   }
                 >
@@ -308,6 +358,7 @@ const TradePage = () => {
                 <Button
                   size="small"
                   color="secondary"
+                  disabled={transactionLoading}
                   onClick={() => handleDeclineTrade(currentTrade._id)}
                 >
                   Decline
@@ -315,6 +366,9 @@ const TradePage = () => {
               </>
             )}
         </Box>
+        <Backdrop className={classes.backdrop} open={transactionLoading}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
       </Box>
     )
   }

@@ -158,7 +158,9 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
 
     client.close()
 
-    response.status(200).json({ currentTrade: currentTrade })
+    response
+      .status(200)
+      .json({ currentTrade: currentTrade, status: 'Trade complete!' })
   } catch (error) {
     response.status(200).json({ error: error })
   }
