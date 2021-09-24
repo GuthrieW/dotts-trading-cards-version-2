@@ -105,7 +105,7 @@ function PermanentDrawerLeft({ value, updateTabValue, currentUser }) {
               <ListItemText primary={'Community'} />
             </MenuItem>
           </Link>
-          {currentUser && currentUser.isTradingBetaUser && (
+          {currentUser && (
             <Link href="/Trading">
               <MenuItem
                 onClick={() => updateTabValue(3)}

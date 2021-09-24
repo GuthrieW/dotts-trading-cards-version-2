@@ -41,15 +41,6 @@ const MyTrades = () => {
     return response
   })
 
-  useEffect(() => {
-    if (
-      !currentUserLoading &&
-      !currentUserData.data.account.isTradingBetaUser
-    ) {
-      router.push('/Dashboard')
-    }
-  }, [currentUserData, currentUserLoading])
-
   const handleChipClick = (filter = null) => {
     if (filter) {
       setTradeFilter(filter)

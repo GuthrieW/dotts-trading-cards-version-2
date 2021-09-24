@@ -191,7 +191,7 @@ const DefaultLayout = ({ children }) => {
                       label="Community"
                       icon={<CommunityIcon />}
                     />
-                    {currentUser && currentUser.isTradingBetaUser && (
+                    {currentUser && (
                       <BottomNavigationAction
                         component={BottomNavigationActionLink}
                         href={'/Trading'}
