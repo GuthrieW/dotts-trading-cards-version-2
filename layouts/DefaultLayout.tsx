@@ -134,8 +134,8 @@ const DefaultLayout = ({ children }) => {
                 color={'secondary'}
               >
                 <Toolbar>
-                  <Typography variant={'h4'}>
-                    CLOSED FOR BETA TESTING
+                  <Typography variant={'h6'}>
+                    Open Beta (limited functionality)
                   </Typography>
                   <Link href="/">
                     <div className={classes.headerLogoContainer}>
