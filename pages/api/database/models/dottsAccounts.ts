@@ -11,5 +11,4 @@ export interface dottsAccounts {
   isProcessor: Boolean
   isPackIssuer: Boolean
   isSubmitter: Boolean
-  isTradingBetaUser: Boolean
 }

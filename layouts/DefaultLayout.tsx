@@ -128,15 +128,8 @@ const DefaultLayout = ({ children }) => {
         {isLoggedIn && (
           <>
             <div className={classes.root}>
-              <AppBar
-                position={'fixed'}
-                className={classes.appBar}
-                color={'secondary'}
-              >
+              <AppBar position={'fixed'} className={classes.appBar}>
                 <Toolbar>
-                  <Typography variant={'h6'}>
-                    Open Beta (limited functionality)
-                  </Typography>
                   <Link href="/">
                     <div className={classes.headerLogoContainer}>
                       {!lgUp && (
