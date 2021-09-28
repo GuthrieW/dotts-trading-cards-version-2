@@ -108,12 +108,10 @@ const SubscribedUsers = () => {
             style={{ bottom: '130px' }}
             onClick={() => handleOnClick(Packs.Type.Regular)}
             label="Issue Regular Packs"
-            disabled
           />
           <ActionButton
             onClick={() => handleOnClick(Packs.Type.Ultimus)}
             label="Issue Ultimus Packs"
-            disabled
           />
         </Box>
       </>
