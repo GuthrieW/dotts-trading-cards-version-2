@@ -22,7 +22,11 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
         email: email,
       })
 
-    if (!accountThatCalledApi.isAdmin && !accountThatCalledApi.isPackIssuer) {
+    if (
+      !accountThatCalledApi.isAdmin &&
+      !accountThatCalledApi.isSubmitter &&
+      !accountThatCalledApi.isProcessor
+    ) {
       response
         .status(200)
         .json({ error: 'User not permitted to update cards.' })
