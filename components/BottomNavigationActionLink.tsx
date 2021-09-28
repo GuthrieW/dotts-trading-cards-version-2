@@ -16,7 +16,7 @@ export const BottomNavigationActionLink = React.forwardRef<
   any
 >(({ href, as, prefetch, ...props }, ref) => (
   <Link href={href} as={as} prefetch={prefetch} passHref>
-    <Button ref={ref} {...props} />
+    <Button ref={ref} {...props} style={{ fontSize: '.6rem' }} />
   </Link>
 ))
 
