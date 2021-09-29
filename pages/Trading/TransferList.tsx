@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
-import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
+import ListItemAvatar from '@material-ui/core/ListItemAvatar'
+import ImageIcon from '@material-ui/icons/Image'
 import ListItemText from '@material-ui/core/ListItemText'
 import Checkbox from '@material-ui/core/Checkbox'
 import Button from '@material-ui/core/Button'
@@ -12,6 +12,7 @@ import { DOTTS_ACCESS_TOKEN } from '../../utils/constants'
 import axios from 'axios'
 import ActionButton from '../../components/ActionButton/ActionButton'
 import {
+  Avatar,
   Dialog,
   DialogActions,
   DialogContent,
@@ -21,6 +22,7 @@ import {
 } from '@material-ui/core'
 import Router from 'next/router'
 import { Autocomplete } from '@material-ui/lab'
+import { VariableSizeList } from 'react-window'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,7 +39,6 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     width: 400,
     height: 230,
-    overflow: 'auto',
   },
   button: {
     margin: theme.spacing(0.5, 0),
@@ -252,76 +253,90 @@ export default function TransferList(props) {
     }
   }
 
-  const customList = (items, isUser) => (
-    <>
-      <Paper>
-        <div className={classes.title}>
-          {isUser ? 'Your Cards' : 'Trade Partner Cards'}
-        </div>
-      </Paper>
-      {items && (
-        <Autocomplete
-          id="combo-box-demo"
-          options={items.sort(
-            (a, b) => -b.playerName.localeCompare(a.playerName)
+  const renderRow = ({ data, style, index }) => {
+    const currentItem = data[index]
+    return (
+      <ListItem
+        button
+        style={style}
+        key={currentItem.playerName + index}
+        onClick={handleToggle(currentItem)}
+      >
+        <ListItemAvatar>
+          {currentItem.imageUrl ? (
+            <Avatar src={currentItem.imageUrl} />
+          ) : (
+            <ImageIcon />
           )}
-          getOptionSelected={(option: any, value: any) =>
-            option.playerName === value.playerName
-          }
-          onChange={(event, value) => handleFilterChange(value, isUser)}
-          getOptionLabel={(option: any) =>
-            `${option.playerName} - ${option.rarity}`
-          }
-          renderInput={(params) => (
-            <TextField {...params} label="Combo box" variant="outlined" />
-          )}
+        </ListItemAvatar>
+        <ListItemText
+          id={currentItem.labelId}
+          primary={`${currentItem.playerName} (${currentItem.rarity})`}
         />
-      )}
-      <Paper className={classes.paper}>
-        <List dense component="div" role="list">
-          {items
-            .filter((card) => {
-              if (isUser && userCardFilter) {
-                return card.playerName === userCardFilter
-              }
+        <Checkbox
+          checked={checked.indexOf(currentItem) !== -1}
+          onClick={handleToggle(currentItem)}
+          tabIndex={-1}
+          disableRipple
+          inputProps={{ 'aria-labelledby': currentItem.labelId }}
+        />
+      </ListItem>
+    )
+  }
 
-              if (!isUser && tradePartnerCardFilter) {
-                return card.playerName === tradePartnerCardFilter
-              }
+  const customList = (items, isUser) => {
+    const itemsToRenderInList = items.filter((card) => {
+      if (isUser && userCardFilter) {
+        return card.playerName === userCardFilter
+      }
 
-              return card
-            })
-            .map((value, index) => {
-              const { playerName, rarity, playerTeam } = value
-              const labelId = `transfer-list-item-${value}-label`
+      if (!isUser && tradePartnerCardFilter) {
+        return card.playerName === tradePartnerCardFilter
+      }
 
-              return (
-                <ListItem
-                  key={value.playerName + index}
-                  role="listitem"
-                  button
-                  onClick={handleToggle(value)}
-                >
-                  <ListItemIcon>
-                    <Checkbox
-                      checked={checked.indexOf(value) !== -1}
-                      tabIndex={-1}
-                      disableRipple
-                      inputProps={{ 'aria-labelledby': labelId }}
-                    />
-                  </ListItemIcon>
-                  <ListItemText
-                    id={labelId}
-                    primary={`${playerName} (${rarity})`}
-                  />
-                </ListItem>
-              )
-            })}
-          <ListItem />
-        </List>
-      </Paper>
-    </>
-  )
+      return card
+    })
+
+    return (
+      <>
+        <Paper>
+          <div className={classes.title}>
+            {isUser ? 'Your Cards' : 'Trade Partner Cards'}
+          </div>
+        </Paper>
+        {items && (
+          <Autocomplete
+            id="combo-box-demo"
+            options={items.sort(
+              (a, b) => -b.playerName.localeCompare(a.playerName)
+            )}
+            getOptionSelected={(option: any, value: any) =>
+              option.playerName === value.playerName
+            }
+            onChange={(event, value) => handleFilterChange(value, isUser)}
+            getOptionLabel={(option: any) =>
+              `${option.playerName} - ${option.rarity}`
+            }
+            renderInput={(params) => (
+              <TextField {...params} label="Combo box" variant="outlined" />
+            )}
+          />
+        )}
+        <Paper className={classes.paper}>
+          <VariableSizeList
+            height={230}
+            width={400}
+            itemCount={itemsToRenderInList.length || 0}
+            {...props}
+            itemSize={() => 50}
+            itemData={itemsToRenderInList}
+          >
+            {renderRow}
+          </VariableSizeList>
+        </Paper>
+      </>
+    )
+  }
 
   return (
     <Grid

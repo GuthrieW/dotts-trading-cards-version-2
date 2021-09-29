@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import { makeStyles } from '@material-ui/core/styles'
 import { DOTTS_ACCESS_TOKEN } from '../../../utils/constants'
 import {
-  Alert,
+  Avatar,
   Box,
   Button,
   Card,
@@ -20,6 +20,10 @@ import {
   DialogContentText,
   DialogTitle,
   LinearProgress,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
 } from '@material-ui/core'
 import { formatDistance, parseISO, subDays } from 'date-fns'
 import { getCurrentUser, getTradeById } from '../../../utils/requestTemplates'
@@ -268,21 +272,49 @@ const TradePage = () => {
                 <Typography variant="h5" component="h3">
                   {isUserTrade ? 'Your' : 'Their'} Offer:{' '}
                 </Typography>
-                {offeringUserCardIds.map((card, index) => (
-                  <div key={`${offeringUserId}-${tradeOfferDate}-${index}`}>
-                    {card.playerName} ({card.rarity}){' '}
-                  </div>
-                ))}
+                <List>
+                  {offeringUserCardIds.map((card, index) => (
+                    <ListItem
+                      key={`${offeringUserId}-${tradeOfferDate}-${index}`}
+                    >
+                      <ListItemAvatar>
+                        {card.imageUrl ? (
+                          <Avatar src={card.imageUrl} />
+                        ) : (
+                          <ImageIcon />
+                        )}
+                      </ListItemAvatar>
+                      <ListItemText
+                        id={card.labelId}
+                        primary={`${card.playerName} (${card.rarity})`}
+                      />
+                    </ListItem>
+                  ))}
+                </List>
               </Grid>
               <Grid item>
                 <Typography variant="h5" component="h3">
                   {isUserTrade ? 'Your' : 'Their'} Request:{' '}
                 </Typography>
-                {receivingUserCardIds.map((card, index) => (
-                  <div key={`${receivingUserId}-${tradeOfferDate}-${index}`}>
-                    {card.playerName} ({card.rarity})
-                  </div>
-                ))}
+                <List>
+                  {receivingUserCardIds.map((card, index) => (
+                    <ListItem
+                      key={`${receivingUserId}-${tradeOfferDate}-${index}`}
+                    >
+                      <ListItemAvatar>
+                        {card.imageUrl ? (
+                          <Avatar src={card.imageUrl} />
+                        ) : (
+                          <ImageIcon />
+                        )}
+                      </ListItemAvatar>
+                      <ListItemText
+                        id={card.labelId}
+                        primary={`${card.playerName} (${card.rarity})`}
+                      />{' '}
+                    </ListItem>
+                  ))}
+                </List>
               </Grid>
             </Grid>
           </Box>
