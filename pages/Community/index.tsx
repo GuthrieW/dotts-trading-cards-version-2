@@ -58,8 +58,12 @@ function CommunityPage() {
         console.log('error:', accounts.data.error)
         setCommunityAccountsLoading(false)
       } else {
+        setCommunityAccounts(
+          accounts.data.sort(
+            (a, b) => -b.isflUsername.localeCompare(a.isflUsername)
+          )
+        )
         setCommunityAccountsLoading(false)
-        setCommunityAccounts(accounts.data)
         return
       }
 
@@ -155,38 +159,40 @@ function CommunityPage() {
       {value === 0 && (
         <>
           <Box mt={2}>
-          <Autocomplete
-            id="grouped-demo"
-            options={allCards.sort((a, b) => -b.rarity.localeCompare(a.rarity))}
-            loading={allCardsLoading}
-            groupBy={(option) => option.rarity}
-            getOptionLabel={(option) => {
-              // Value selected with enter, right from the input
-              if (typeof option === 'string') {
-                return option
-              }
-              // Add "xxx" option created dynamically
-              if (option.inputValue) {
-                return option.inputValue
-              }
-              // Regular option
-              return option.playerName
-            }}
-            clearOnBlur={false}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Enter player name"
-                variant="outlined"
-              />
-            )}
-            onChange={(event, newValue) => {
-              if (newValue) {
-                setSearchTerm(newValue)
-                fetchSearchResult(newValue._id)
-              }
-            }}
-          />
+            <Autocomplete
+              id="grouped-demo"
+              options={allCards.sort(
+                (a, b) => -b.rarity.localeCompare(a.rarity)
+              )}
+              loading={allCardsLoading}
+              groupBy={(option) => option.rarity}
+              getOptionLabel={(option) => {
+                // Value selected with enter, right from the input
+                if (typeof option === 'string') {
+                  return option
+                }
+                // Add "xxx" option created dynamically
+                if (option.inputValue) {
+                  return option.inputValue
+                }
+                // Regular option
+                return option.playerName
+              }}
+              clearOnBlur={false}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Enter player name"
+                  variant="outlined"
+                />
+              )}
+              onChange={(event, newValue) => {
+                if (newValue) {
+                  setSearchTerm(newValue)
+                  fetchSearchResult(newValue._id)
+                }
+              }}
+            />
           </Box>
           <Box mt={2} p={2}>
             {owners && owners.length > 0 && (
@@ -195,9 +201,11 @@ function CommunityPage() {
               </Typography>
             )}
             <Paper className={classes.root}>
-              { searchResultLoading ? <LinearProgress /> : 
-              <TableContainer className={classes.container}>
-                <Table stickyHeader aria-label="sticky table">
+              {searchResultLoading ? (
+                <LinearProgress />
+              ) : (
+                <TableContainer className={classes.container}>
+                  <Table stickyHeader aria-label="sticky table">
                     <TableBody>
                       {owners &&
                         owners.length > 0 &&
@@ -225,9 +233,9 @@ function CommunityPage() {
                           )
                         })}
                     </TableBody>
-                </Table>
-              </TableContainer>
-            }
+                  </Table>
+                </TableContainer>
+              )}
             </Paper>
           </Box>
         </>
