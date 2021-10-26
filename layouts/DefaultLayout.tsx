@@ -163,19 +163,18 @@ const DefaultLayout = ({ children }) => {
                     onChange={(event, newValue) => {
                       setValue(newValue)
                     }}
-                    showLabels
                     className={classes.footer}
                   >
                     <BottomNavigationAction
                       component={BottomNavigationActionLink}
                       href={'/MyCards'}
-                      label="My Cards"
+                      label="Collection"
                       icon={<MyCardsIcon />}
                     />
                     <BottomNavigationAction
                       component={BottomNavigationActionLink}
                       href={'/OpenPacks'}
-                      label="Open Packs"
+                      label="Packs"
                       icon={<OpenPacksIcon />}
                     />
                     <BottomNavigationAction
