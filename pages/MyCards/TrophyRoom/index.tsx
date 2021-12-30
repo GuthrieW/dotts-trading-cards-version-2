@@ -13,6 +13,8 @@ import React, { useEffect, useState } from 'react'
 import useStyles from '../MyCards.styles'
 import { TEAMS, RARITIES, DOTTS_ACCESS_TOKEN } from '../../../utils/constants'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import LockIcon from '@material-ui/icons/Lock'
+import LockOpenIcon from '@material-ui/icons/LockOpen'
 
 const CardsOwned = ({ cards, filterProperty, filterVal }) => {
   const [total, setTotal] = useState([])
@@ -47,6 +49,16 @@ const CardsOwned = ({ cards, filterProperty, filterVal }) => {
                       style={{ display: 'flex' }}
                       key={index + card.playerName}
                     >
+                      {card.currentRotation && (
+                        <LockOpenIcon
+                          style={{ fontSize: '12px', paddingRight: '4px' }}
+                        />
+                      )}
+                      {!card.currentRotation && (
+                        <LockIcon
+                          style={{ fontSize: '12px', paddingRight: '4px' }}
+                        />
+                      )}
                       <span
                         style={{ color: !card.owned && 'gray' }}
                         onClick={() => setCardToView(card.imageUrl)}
@@ -141,12 +153,25 @@ const TrophyRoom = () => {
 
   return (
     <div className={classes.container} style={{ paddingBottom: '32px' }}>
-      <h1 style={{ paddingLeft: 12 }}>Trophy Room</h1>
+      <div>
+        <h1 style={{ paddingLeft: 12 }}>Trophy Room</h1>
+        <div>
+          <div style={{ paddingRight: 4 }}>
+            <LockOpenIcon style={{ fontSize: 10 }} /> - Currently available in
+            packs
+          </div>
+          <div>
+            <LockIcon style={{ fontSize: 10 }} /> - Not currently available in
+            packs
+          </div>
+        </div>
+      </div>
+
       {!responseLoading && (
         <>
-          {TEAMS.map((team) => {
+          {TEAMS.map((team, index) => {
             return (
-              <div>
+              <div key={index}>
                 {allCards && (
                   <CardsOwned
                     filterVal={`${team.CITY_NAME} ${team.TEAM_NAME}`}
@@ -168,9 +193,9 @@ const TrophyRoom = () => {
             }
 
             return true
-          }).map((rarity) => {
+          }).map((rarity, index) => {
             return (
-              <div>
+              <div key={index}>
                 {allCards && (
                   <CardsOwned
                     filterVal={`${rarity.value}`}
