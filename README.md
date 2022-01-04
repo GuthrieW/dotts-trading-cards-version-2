@@ -2,25 +2,23 @@
 
 ## How to Contribute to this Project
 
-1. Contact `caltroit_red_flames#2462` via Discord with your GitHub username and ask to be added as a contributer. He will send you the development `.env` file.
+1. Clone the repository `git clone git@github.com:GuthrieW/dotts-trading-cards-version-2.git`.
 
-2. Clone the repository `git clone git@github.com:GuthrieW/dotts-trading-cards-version-2.git`.
+2. Read the [Development](https://github.com/GuthrieW/dotts-trading-cards-version-2#development) section of the readme.
 
-3. Read the [Development](https://github.com/GuthrieW/dotts-trading-cards-version-2#development) section of the readme.
+3. Pick an issue from [the list on the project's GitHub](https://github.com/GuthrieW/dotts-trading-cards-version-2/issues) and add yourself as an asignee.
 
-4. Pick an issue from [the list on the project's GitHub](https://github.com/GuthrieW/dotts-trading-cards-version-2/issues) and add yourself as an asignee.
+4. Create a branch off of the `master` branch for your changes.
 
-5. Create a branch off of the `master` branch for your changes.
+5. Once your changes are finished and tested created a pull request. Send the link to your pull request to a code owner for review.
 
-6. Once your changes are finished and tested created a pull request. Send the link to your pull request to a code owner for review.
-
-7. Post your pull request as a comment in its corresponding issue.
+6. Post your pull request as a comment in its corresponding issue.
 
 ## Development
 
 ### Dependencies
 
-- Before adding dependencies to the project please contact a code owner via Discord (`caltroit_red_flames#2462` or `KoltClassic#8195`).
+- Before adding dependencies to the project please contact a code owner.
 
 ### Branches
 
@@ -28,7 +26,7 @@
 
 - Branch names should correspond to a specific issue, i.e., [readme-updates](https://github.com/GuthrieW/dotts-trading-cards-version-2/issues/2).
 
-- Branches are required to be reviewed by a code owner (`caltroit_red_flames#2462` or `KoltClassic#8195`).
+- Branches are required to be reviewed by a code owner.
 
 - Direct pushes to the master branch **_are not permitted_**.
 
