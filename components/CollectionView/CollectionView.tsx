@@ -15,6 +15,12 @@ import PlayerCard from '../PlayerCard/PlayerCard'
 import useStyles from './CollectionView.styles'
 import { DOTTS_ACCESS_TOKEN } from '../../utils/constants'
 
+type SortRarityChip = {
+  rarity: string
+  imageUrl: string
+  isEnabled: boolean
+}
+
 const CollectionView = (props) => {
   const [searchTerm, setSearchTerm] = useState('')
   const [open, setOpen] = React.useState(false)
@@ -25,7 +31,7 @@ const CollectionView = (props) => {
   const [filteredCards, setFilteredCards] = useState([])
 
   useEffect(() => {
-    setCollectionCardsLoading(true);
+    setCollectionCardsLoading(true)
     const fetchData = async () => {
       const apiCallOptions = getUserApiCallOptions()
 
@@ -68,7 +74,7 @@ const CollectionView = (props) => {
         return true
       })
       setUniqueCardsForSearch(uniqueCards)
-      setCollectionCardsLoading(false);
+      setCollectionCardsLoading(false)
     }
 
     fetchData()
@@ -164,6 +170,11 @@ const CollectionView = (props) => {
     {
       rarity: 'Charity',
       imageUrl: '/images/diamond-icon.svg',
+      isEnabled: false,
+    },
+    {
+      rarity: 'Least Valuable Player',
+      imageUrl: '',
       isEnabled: false,
     },
   ])
@@ -267,30 +278,33 @@ const CollectionView = (props) => {
 
   return (
     <div className={classes.container}>
-      {props.isflUsername && <h1>{`${props.isflUsername}'s Collection`}</h1>}
-      {!props.isflUsername && <h1>My Collection</h1>}
+      {props.isflUsername ? (
+        <h1>{`${props.isflUsername}'s Collection`}</h1>
+      ) : (
+        <h1>My Collection</h1>
+      )}
       <Box
         className={classes.chipList}
         component="div"
         whiteSpace="nowrap"
         overflow={mdUp ? 'auto' : 'scroll'}
       >
-        {sortOrder.map((rarityFilter, index) => {
-          return (
-            <Chip
-              key={rarityFilter.rarity}
-              className={classes.rarityChip}
-              variant={rarityFilter.isEnabled ? 'default' : 'outlined'}
-              label={rarityFilter.rarity}
-              avatar={<Avatar src={rarityFilter.imageUrl} />}
-              onClick={() => handleChipClick(rarityFilter, index)}
-            />
-          )
-        })}
+        {sortOrder.map((rarityFilter, index) => (
+          <Chip
+            key={rarityFilter.rarity}
+            className={classes.rarityChip}
+            variant={rarityFilter.isEnabled ? 'default' : 'outlined'}
+            label={rarityFilter.rarity}
+            avatar={<Avatar src={rarityFilter.imageUrl} />}
+            onClick={() => handleChipClick(rarityFilter, index)}
+          />
+        ))}
       </Box>
       <Autocomplete
         id="grouped-demo"
-        options={uniqueCardsForSearch.sort((a, b) => -b.rarity.localeCompare(a.rarity))}
+        options={uniqueCardsForSearch.sort(
+          (a, b) => -b.rarity.localeCompare(a.rarity)
+        )}
         className={classes.search}
         loading={collectionCardsLoading}
         groupBy={(option) => (option ? option.rarity : '')}
@@ -303,39 +317,38 @@ const CollectionView = (props) => {
           setSearchTerm(newInputValue)
         }}
       />
+      {collectionCardsLoading ? (
+        <LinearProgress />
+      ) : (
+        <Grid className={classes.collectionContainer} container>
+          {filteredCards.length > 0 &&
+            filteredCards
+              .slice(
+                (pageNumber - 1) * numberOfItemsForPage,
+                pageNumber * numberOfItemsForPage
+              )
+              .map((card, index) => {
+                const numberOfDuplicates = collectionCards.filter(
+                  (collectionCard) => collectionCard._id === card._id
+                ).length
 
-      {
-        collectionCardsLoading ? <LinearProgress /> :
-      
-      <Grid className={classes.collectionContainer} container>
-        {filteredCards.length > 0 &&
-          filteredCards
-            .slice(
-              (pageNumber - 1) * numberOfItemsForPage,
-              pageNumber * numberOfItemsForPage
-            )
-            .map((card, index) => {
-              const numberOfDuplicates = collectionCards.filter(
-                (collectionCard) => collectionCard._id === card._id
-              ).length
-
-              return card ? (
-                <PlayerCard
-                  className={classes.cardContainer}
-                  key={`${card.rarity}-${card.playerName}-${index}`}
-                  card={card}
-                  currentCard={currentCard}
-                  duplicates={
-                    numberOfDuplicates > 1 ? numberOfDuplicates : null
-                  }
-                  handleOpenCard={handleClickOpen}
-                  handleCloseCard={handleClose}
-                  open={open}
-                />
-              ) : null
-            })}
-      </Grid>
-      }
+                return card ? (
+                  <PlayerCard
+                    className={classes.cardContainer}
+                    key={`${card.rarity}-${card.playerName}-${index}`}
+                    card={card}
+                    currentCard={currentCard}
+                    duplicates={
+                      numberOfDuplicates > 1 ? numberOfDuplicates : null
+                    }
+                    handleOpenCard={handleClickOpen}
+                    handleCloseCard={handleClose}
+                    open={open}
+                  />
+                ) : null
+              })}
+        </Grid>
+      )}
       <Pagination
         count={Math.ceil(filteredCards.length / numberOfItemsForPage)}
         onChange={handlePageChange}

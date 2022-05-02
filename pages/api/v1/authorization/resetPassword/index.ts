@@ -42,36 +42,26 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
 
   const salt = await bcrypt.genSalt(10)
   const hashedPassword = await bcrypt.hash(password, salt)
-  const updatedAccount = await database
-    .collection('dotts_accounts')
-    .findOneAndUpdate(
-      {
-        email: databaseResetToken.email,
+  await database.collection('dotts_accounts').findOneAndUpdate(
+    {
+      email: databaseResetToken.email,
+    },
+    {
+      $set: {
+        password: hashedPassword,
       },
-      {
-        $set: {
-          password: hashedPassword,
-        },
+    }
+  )
+  await database.collection('dotts_reset_tokens').findOneAndUpdate(
+    {
+      resetToken: resetToken,
+    },
+    {
+      $set: {
+        used: true,
       },
-      {
-        returnOriginal: false,
-      }
-    )
-  const updatedDatabaseResetToken = await database
-    .collection('dotts_reset_tokens')
-    .findOneAndUpdate(
-      {
-        resetToken: resetToken,
-      },
-      {
-        $set: {
-          used: true,
-        },
-      },
-      {
-        returnOriginal: false,
-      }
-    )
+    }
+  )
   client.close()
 
   response.status(200).json({ success: 'success' })

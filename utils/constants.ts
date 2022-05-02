@@ -15,6 +15,7 @@ export const UNIQUE = 'Unique'
 export const CHARITY = 'Charity'
 export const ANNIVERSARY_FIRST_TEAM = 'Anniversary First Team'
 export const ANNIVERSARY_SECOND_TEAM = 'Anniversary Second Team'
+export const LEAST_VALUABLE_PLAYER = 'Least Valuable Player'
 
 export const DOTTS_USER_ID_STORAGE = 'dottsUserId'
 export const DOTTS_ACCESS_TOKEN = 'dottsAccessToken'
@@ -22,72 +23,76 @@ export const DOTTS_ACCESS_TOKEN = 'dottsAccessToken'
 export const RARITIES = [
   {
     label: 'BACKUP',
-    value: 'Backup',
+    value: BACKUP,
   },
   {
     label: 'STARTER',
-    value: 'Starter',
+    value: STARTER,
   },
   {
     label: 'STAR',
-    value: 'Star',
+    value: STAR,
   },
   {
     label: 'ALL_PRO',
-    value: 'All-Pro',
+    value: ALL_PRO,
   },
   {
     label: 'LEGEND',
-    value: 'Legend',
+    value: LEGEND,
   },
   {
     label: 'AWARD',
-    value: 'Award',
+    value: AWARD,
   },
   {
     label: 'HALL_OF_FAME',
-    value: 'Hall of Fame',
+    value: HALL_OF_FAME,
   },
   {
     label: 'ULTIMUS_CHAMPION',
-    value: 'Ultimus Champion',
+    value: ULTIMUS_CHAMPION,
   },
   {
     label: 'HOLOGRAPH_EXPANSION',
-    value: 'Holograph Expansion',
+    value: HOLOGRAPH_EXPANSION,
   },
   {
     label: 'AUTOGRAPH_ROOKIE',
-    value: 'Autograph Rookie',
+    value: AUTOGRAPH_ROOKIE,
   },
   {
     label: 'FANTASY_KINGS',
-    value: 'Fantasy Kings',
+    value: FANTASY_KINGS,
   },
   {
     label: 'CAPTAIN',
-    value: 'Captain',
+    value: CAPTAIN,
   },
   {
     label: 'ANNIVERSARY_FIRST_TEAM',
-    value: 'Anniversary First Team',
+    value: ANNIVERSARY_FIRST_TEAM,
   },
   {
     label: 'ANNIVERSARY_SECOND_TEAM',
-    value: 'Anniversary Second Team',
+    value: ANNIVERSARY_SECOND_TEAM,
   },
   {
     label: 'TEAM_LOGO',
-    value: 'Team Logo',
+    value: TEAM_LOGO,
   },
   {
     label: 'UNIQUE',
-    value: 'Unique',
+    value: UNIQUE,
   },
   {
     label: 'CHARITY',
-    value: 'Charity',
+    value: CHARITY,
   },
+  {
+    label: 'LEAST_VALUABLE_PLAYER',
+    value: LEAST_VALUABLE_PLAYER
+  }
 ]
 
 export const TEAMS = [

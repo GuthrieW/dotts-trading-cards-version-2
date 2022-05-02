@@ -1,7 +1,7 @@
 import { TextField, Button, Typography } from '@material-ui/core'
 import React, { useState } from 'react'
 import EmailValidator from 'email-validator'
-import CheckPasswordStrength from 'check-password-strength'
+import { passwordStrength } from 'check-password-strength'
 import useStyles from './SignUp.styles'
 import axios from 'axios'
 import Router from 'next/router'
@@ -59,10 +59,10 @@ const SignUpPage = () => {
       isflUsernameExists
     ) {
       const emailValidity = EmailValidator.validate(email)
-      const passwordStrength = CheckPasswordStrength(password).value
+      const strength = passwordStrength(password).value
 
       if (emailValidity) {
-        if (passwordStrength === 'Strong') {
+        if (strength === 'Strong') {
           if (password === confirmPassword) {
             setError('')
             setCanSubmit(true)
@@ -71,7 +71,9 @@ const SignUpPage = () => {
             setCanSubmit(false)
           }
         } else {
-          setError('Password not strong enough. Must include 1 uppercase, 1 lowercase, 1 special character, 1 number.')
+          setError(
+            'Password not strong enough. Must include 1 uppercase, 1 lowercase, 1 special character, 1 number.'
+          )
           setCanSubmit(false)
         }
       } else {

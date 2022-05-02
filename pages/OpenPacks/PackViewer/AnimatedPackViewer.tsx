@@ -27,6 +27,7 @@ const AnimatedPackViewer = ({ cards }) => {
   })) // Create a bunch of springs using the helpers above
   // Create a gesture, we're interested in down-state, delta (current-pos - click-pos), direction and velocity
   const bind = useGesture(
+    //@ts-ignore
     ({
       args: [index],
       down,

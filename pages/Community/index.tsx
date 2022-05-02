@@ -19,7 +19,6 @@ import Router from 'next/router'
 import { DOTTS_ACCESS_TOKEN } from '../../utils/constants'
 import { AppBar } from '@material-ui/core'
 import { Tabs } from '@material-ui/core'
-import { Button } from '@material-ui/core'
 import { Autocomplete, createFilterOptions } from '@material-ui/lab'
 
 const filter = createFilterOptions()
@@ -155,38 +154,40 @@ function CommunityPage() {
       {value === 0 && (
         <>
           <Box mt={2}>
-          <Autocomplete
-            id="grouped-demo"
-            options={allCards.sort((a, b) => -b.rarity.localeCompare(a.rarity))}
-            loading={allCardsLoading}
-            groupBy={(option) => option.rarity}
-            getOptionLabel={(option) => {
-              // Value selected with enter, right from the input
-              if (typeof option === 'string') {
-                return option
-              }
-              // Add "xxx" option created dynamically
-              if (option.inputValue) {
-                return option.inputValue
-              }
-              // Regular option
-              return option.playerName
-            }}
-            clearOnBlur={false}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Enter player name"
-                variant="outlined"
-              />
-            )}
-            onChange={(event, newValue) => {
-              if (newValue) {
-                setSearchTerm(newValue)
-                fetchSearchResult(newValue._id)
-              }
-            }}
-          />
+            <Autocomplete
+              id="grouped-demo"
+              options={allCards.sort(
+                (a, b) => -b.rarity.localeCompare(a.rarity)
+              )}
+              loading={allCardsLoading}
+              groupBy={(option) => option.rarity}
+              getOptionLabel={(option) => {
+                // Value selected with enter, right from the input
+                if (typeof option === 'string') {
+                  return option
+                }
+                // Add "xxx" option created dynamically
+                if (option.inputValue) {
+                  return option.inputValue
+                }
+                // Regular option
+                return option.playerName
+              }}
+              clearOnBlur={false}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Enter player name"
+                  variant="outlined"
+                />
+              )}
+              onChange={(event, newValue) => {
+                if (newValue) {
+                  setSearchTerm(newValue)
+                  fetchSearchResult(newValue._id)
+                }
+              }}
+            />
           </Box>
           <Box mt={2} p={2}>
             {owners && owners.length > 0 && (
@@ -195,9 +196,11 @@ function CommunityPage() {
               </Typography>
             )}
             <Paper className={classes.root}>
-              { searchResultLoading ? <LinearProgress /> : 
-              <TableContainer className={classes.container}>
-                <Table stickyHeader aria-label="sticky table">
+              {searchResultLoading ? (
+                <LinearProgress />
+              ) : (
+                <TableContainer className={classes.container}>
+                  <Table stickyHeader aria-label="sticky table">
                     <TableBody>
                       {owners &&
                         owners.length > 0 &&
@@ -214,7 +217,6 @@ function CommunityPage() {
                             >
                               {columns.map((column, index) => {
                                 const value = row[column.id]
-
                                 return (
                                   <TableCell key={`${column.id}-${index}`}>
                                     {value}
@@ -225,9 +227,9 @@ function CommunityPage() {
                           )
                         })}
                     </TableBody>
-                </Table>
-              </TableContainer>
-            }
+                  </Table>
+                </TableContainer>
+              )}
             </Paper>
           </Box>
         </>
