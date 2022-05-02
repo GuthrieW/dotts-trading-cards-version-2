@@ -53,6 +53,7 @@ const LogInPage = () => {
           password: password,
         },
       })
+      console.log('result', result)
 
       if (result.data.error) {
         setError(result.data.error)
