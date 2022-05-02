@@ -120,6 +120,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
       },
       {
         $push: {
+          // @ts-ignore
           ownedCards: { $each: receivingUserCardIds },
         },
       }
@@ -142,6 +143,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
       },
       {
         $push: {
+          // @ts-ignore
           ownedCards: { $each: offeringUserCardIds },
         },
       }

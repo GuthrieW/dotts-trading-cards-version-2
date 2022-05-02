@@ -1,4 +1,4 @@
-import CheckPasswordStrength from 'check-password-strength'
+import { passwordStrength } from 'check-password-strength'
 import { Alert, AlertTitle } from '@material-ui/lab'
 import Router, { useRouter } from 'next/router'
 import axios from 'axios'
@@ -38,8 +38,8 @@ const PasswordResetPage = () => {
     const confirmPasswordExists = confirmPassword.trim().length > 0
 
     if (passwordExists && confirmPasswordExists) {
-      const passwordStrength = CheckPasswordStrength(password).value
-      if (passwordStrength === 'Strong') {
+      const strength = passwordStrength(password).value
+      if (strength === 'Strong') {
         if (password === confirmPassword) {
           setError('')
           setCanSubmit(true)

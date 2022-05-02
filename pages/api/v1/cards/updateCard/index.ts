@@ -43,30 +43,25 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
       currentRotation,
     } = request.body
 
-    const updatedCard = await database
-      .collection('dotts_cards')
-      .findOneAndUpdate(
-        {
-          _id: new ObjectId(cardId),
+    await database.collection('dotts_cards').findOneAndUpdate(
+      {
+        _id: new ObjectId(cardId),
+      },
+      {
+        $set: {
+          playerName: playerName,
+          playerTeam: playerTeam,
+          rarity: cardRarity,
+          imageUrl: imageUrl,
+          approved: approved,
+          currentRotation: currentRotation,
         },
-        {
-          $set: {
-            playerName: playerName,
-            playerTeam: playerTeam,
-            rarity: cardRarity,
-            imageUrl: imageUrl,
-            approved: approved,
-            currentRotation: currentRotation,
-          },
-        },
-        {
-          returnOriginal: false,
-        }
-      )
+      }
+    )
 
     client.close()
 
-    response.status(200).json({ updatedCard: updatedCard })
+    response.status(200).json({ updatedCard: true })
   } catch (error) {
     response.status(200).json({ error: error })
   }

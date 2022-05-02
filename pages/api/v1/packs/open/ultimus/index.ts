@@ -253,21 +253,17 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
       pulledCards.push(pulledCard[0])
     }
 
-    const newAccount = await database
-      .collection('dotts_accounts')
-      .findOneAndUpdate(
-        { _id: new ObjectId(account._id) },
-        {
-          $push: { ownedCards: { $each: pulledCardIds } },
-          $inc: { ownedUltimusPacks: -1 },
-          $set: {
-            newestCards: pulledCardIds,
-          },
+    await database.collection('dotts_accounts').findOneAndUpdate(
+      { _id: new ObjectId(account._id) },
+      {
+        // @ts-ignore
+        $push: { ownedCards: { $each: pulledCardIds } },
+        $inc: { ownedUltimusPacks: -1 },
+        $set: {
+          newestCards: pulledCardIds,
         },
-        {
-          returnOriginal: false,
-        }
-      )
+      }
+    )
     client.close()
 
     response.status(200).json({ pulledCards: pulledCards })

@@ -25,7 +25,7 @@ const CollectionView = (props) => {
   const [filteredCards, setFilteredCards] = useState([])
 
   useEffect(() => {
-    setCollectionCardsLoading(true);
+    setCollectionCardsLoading(true)
     const fetchData = async () => {
       const apiCallOptions = getUserApiCallOptions()
 
@@ -68,7 +68,7 @@ const CollectionView = (props) => {
         return true
       })
       setUniqueCardsForSearch(uniqueCards)
-      setCollectionCardsLoading(false);
+      setCollectionCardsLoading(false)
     }
 
     fetchData()
@@ -163,6 +163,11 @@ const CollectionView = (props) => {
     },
     {
       rarity: 'Charity',
+      imageUrl: '/images/diamond-icon.svg',
+      isEnabled: false,
+    },
+    {
+      rarity: 'Least Valuable Player',
       imageUrl: '/images/diamond-icon.svg',
       isEnabled: false,
     },
@@ -290,7 +295,9 @@ const CollectionView = (props) => {
       </Box>
       <Autocomplete
         id="grouped-demo"
-        options={uniqueCardsForSearch.sort((a, b) => -b.rarity.localeCompare(a.rarity))}
+        options={uniqueCardsForSearch.sort(
+          (a, b) => -b.rarity.localeCompare(a.rarity)
+        )}
         className={classes.search}
         loading={collectionCardsLoading}
         groupBy={(option) => (option ? option.rarity : '')}
@@ -304,38 +311,38 @@ const CollectionView = (props) => {
         }}
       />
 
-      {
-        collectionCardsLoading ? <LinearProgress /> :
-      
-      <Grid className={classes.collectionContainer} container>
-        {filteredCards.length > 0 &&
-          filteredCards
-            .slice(
-              (pageNumber - 1) * numberOfItemsForPage,
-              pageNumber * numberOfItemsForPage
-            )
-            .map((card, index) => {
-              const numberOfDuplicates = collectionCards.filter(
-                (collectionCard) => collectionCard._id === card._id
-              ).length
+      {collectionCardsLoading ? (
+        <LinearProgress />
+      ) : (
+        <Grid className={classes.collectionContainer} container>
+          {filteredCards.length > 0 &&
+            filteredCards
+              .slice(
+                (pageNumber - 1) * numberOfItemsForPage,
+                pageNumber * numberOfItemsForPage
+              )
+              .map((card, index) => {
+                const numberOfDuplicates = collectionCards.filter(
+                  (collectionCard) => collectionCard._id === card._id
+                ).length
 
-              return card ? (
-                <PlayerCard
-                  className={classes.cardContainer}
-                  key={`${card.rarity}-${card.playerName}-${index}`}
-                  card={card}
-                  currentCard={currentCard}
-                  duplicates={
-                    numberOfDuplicates > 1 ? numberOfDuplicates : null
-                  }
-                  handleOpenCard={handleClickOpen}
-                  handleCloseCard={handleClose}
-                  open={open}
-                />
-              ) : null
-            })}
-      </Grid>
-      }
+                return card ? (
+                  <PlayerCard
+                    className={classes.cardContainer}
+                    key={`${card.rarity}-${card.playerName}-${index}`}
+                    card={card}
+                    currentCard={currentCard}
+                    duplicates={
+                      numberOfDuplicates > 1 ? numberOfDuplicates : null
+                    }
+                    handleOpenCard={handleClickOpen}
+                    handleCloseCard={handleClose}
+                    open={open}
+                  />
+                ) : null
+              })}
+        </Grid>
+      )}
       <Pagination
         count={Math.ceil(filteredCards.length / numberOfItemsForPage)}
         onChange={handlePageChange}
