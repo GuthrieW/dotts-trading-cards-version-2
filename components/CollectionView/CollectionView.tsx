@@ -174,7 +174,7 @@ const CollectionView = (props) => {
     },
     {
       rarity: 'Least Valuable Player',
-      imageUrl: '',
+      imageUrl: '/images/diamond-icon.svg',
       isEnabled: false,
     },
   ])
