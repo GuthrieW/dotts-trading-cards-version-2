@@ -8,7 +8,7 @@ export async function connect() {
 
   await client.connect()
 
-  //const database = client.db('dotts_testing')
+  // const database = client.db('dotts_testing')
   const database = client.db('nsfl_trading_cards')
   return { database, client }
 }
