@@ -172,5 +172,3 @@ export const TEAMS = [
     ABBREVIATION: 'TML',
   },
 ]
-
-export const noop = () => {}

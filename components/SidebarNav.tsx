@@ -1,15 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import {
-  Drawer,
-  List,
-  Divider,
-  ListItemIcon,
-  ListItemText,
-  Box,
-  MenuItem,
-  makeStyles,
-  Button,
-} from '@material-ui/core'
 import MyCardsIcon from '../public/icons/MyCardsIcon'
 import OpenPacksIcon from '../public/icons/OpenPacksIcon'
 import CommunityIcon from '../public/icons/CommunityIcon'
@@ -20,26 +9,6 @@ import Router from 'next/router'
 import TradingIcon from '../public/icons/TradingIcon'
 
 const drawerWidth = 240
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-  },
-  drawerPaper: {
-    width: drawerWidth,
-  },
-  // necessary for content to be below app bar
-  sidebarLogo: {
-    cursor: 'pointer',
-    width: 100,
-    alignSelf: 'center',
-    ...theme.mixins.toolbar,
-  },
-}))
 
 const signOut = () => {
   localStorage.removeItem(DOTTS_ACCESS_TOKEN)

@@ -1,4 +1,3 @@
-import { CssBaseline } from '@material-ui/core'
 import React, { useState, useEffect } from 'react'
 import DefaultLayout from '../layouts/DefaultLayout'
 import '../styles/globals.css'
@@ -22,7 +21,6 @@ const App = ({ Component, pageProps }) => {
   return getLayout(
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
-        <CssBaseline />
         <Component {...pageProps} />
       </Hydrate>
     </QueryClientProvider>
