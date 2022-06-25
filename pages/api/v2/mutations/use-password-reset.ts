@@ -5,13 +5,13 @@ type UsePasswordResetRequest = {}
 
 type UsePasswordReset = {
   passwordReset: Function
-  response: AxiosResponse
+  isSuccess: boolean
   isLoading: boolean
-  isError: any
+  error: any
 }
 
 const usePasswordReset = (): UsePasswordReset => {
-  const { mutate, data, error, isLoading } = useMutation(
+  const { mutate, isSuccess, isLoading, error } = useMutation(
     ({}: UsePasswordResetRequest) => {
       return axios({
         method: 'post',
@@ -23,9 +23,9 @@ const usePasswordReset = (): UsePasswordReset => {
 
   return {
     passwordReset: mutate,
-    response: data.data,
+    isSuccess,
     isLoading,
-    isError: error,
+    error,
   }
 }
 

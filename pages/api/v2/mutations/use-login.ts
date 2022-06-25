@@ -5,13 +5,13 @@ type UseLoginRequest = {}
 
 type UseLogin = {
   login: Function
-  response: AxiosResponse
+  isSuccess: boolean
   isLoading: boolean
-  isError: any
+  error: any
 }
 
 const useLogin = (): UseLogin => {
-  const { mutate, data, error, isLoading } = useMutation(
+  const { mutate, isSuccess, isLoading, error } = useMutation(
     ({}: UseLoginRequest) => {
       return axios({
         method: 'post',
@@ -23,9 +23,9 @@ const useLogin = (): UseLogin => {
 
   return {
     login: mutate,
-    response: data.data,
+    isSuccess,
     isLoading,
-    isError: error,
+    error,
   }
 }
 

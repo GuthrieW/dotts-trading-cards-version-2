@@ -5,25 +5,27 @@ type UseSignUpRequest = {}
 
 type UseSignUp = {
   signUp: Function
-  response: AxiosResponse
+  isSuccess: boolean
   isLoading: boolean
-  isError: any
+  error: any
 }
 
 const useSignUp = (): UseSignUpRequest => {
-  const { mutate, data, error, isLoading } = useMutation(({}: UseSignUp) => {
-    return axios({
-      method: 'post',
-      url: '',
-      data: {},
-    })
-  })
+  const { mutate, data, isSuccess, isLoading, error } = useMutation(
+    ({}: UseSignUp) => {
+      return axios({
+        method: 'post',
+        url: '',
+        data: {},
+      })
+    }
+  )
 
   return {
     signUp: mutate,
-    response: data.data,
+    isSuccess,
     isLoading,
-    isError: error,
+    error,
   }
 }
 
