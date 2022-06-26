@@ -6,7 +6,7 @@ type UseGetAllCardsRequest = {}
 type UseGetAllCards = {
   allCards: any
   isFetching: boolean
-  isError: any
+  error: any
 }
 
 export const UseGetAllCardsKeys = 'use-get-all-cards-key'
@@ -22,7 +22,7 @@ const useGetAllCards = ({}: UseGetAllCardsRequest): UseGetAllCards => {
   return {
     allCards: data.data,
     isFetching,
-    isError: error,
+    error,
   }
 }
 

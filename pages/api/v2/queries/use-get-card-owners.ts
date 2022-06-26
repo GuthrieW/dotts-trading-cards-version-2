@@ -6,12 +6,12 @@ type UseGetCardOwnersRequest = {}
 type UseGetCardOwners = {
   cardOwners: any
   isFetching: boolean
-  isError: any
+  error: any
 }
 
 export const UseGetCardOwnersKeys = 'use-get-card-owners-key'
 
-const useGetAllCards = ({}: UseGetCardOwnersRequest): UseGetCardOwners => {
+const useGetAllCardOwners = ({}: UseGetCardOwnersRequest): UseGetCardOwners => {
   const { data, error, isFetching } = useQuery(
     UseGetCardOwnersKeys,
     async () => {
@@ -25,8 +25,8 @@ const useGetAllCards = ({}: UseGetCardOwnersRequest): UseGetCardOwners => {
   return {
     cardOwners: data.data,
     isFetching,
-    isError: error,
+    error,
   }
 }
 
-export default useGetAllCards
+export default useGetAllCardOwners

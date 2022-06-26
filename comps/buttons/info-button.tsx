@@ -1,0 +1,24 @@
+import React from 'react'
+import Link from 'next/link'
+
+export type InfoButtonProps = {
+  title: string
+  body?: string
+  href?: string
+}
+
+const InfoButton = ({ title, body, href }: InfoButtonProps): JSX.Element => {
+  return href ? (
+    <Link href={href} className="">
+      <div>{title}</div>
+      <div>{body}</div>
+    </Link>
+  ) : (
+    <div className="">
+      <div>{title}</div>
+      <div>{body}</div>
+    </div>
+  )
+}
+
+export default InfoButton

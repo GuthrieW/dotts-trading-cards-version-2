@@ -6,7 +6,7 @@ type UseGetAllUsersRequest = {}
 type UseGetAllUsers = {
   allUsers: any
   isFetching: boolean
-  isError: any
+  error: any
 }
 
 export const UseGetAllUsersKeys = 'use-get-all-users-key'
@@ -22,7 +22,7 @@ const useGetAllUsers = ({}: UseGetAllUsersRequest): UseGetAllUsers => {
   return {
     allUsers: data.data,
     isFetching,
-    isError: error,
+    error,
   }
 }
 

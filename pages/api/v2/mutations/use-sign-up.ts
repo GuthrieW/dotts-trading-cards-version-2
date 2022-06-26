@@ -10,9 +10,9 @@ type UseSignUp = {
   error: any
 }
 
-const useSignUp = (): UseSignUpRequest => {
+const useSignUp = (): UseSignUp => {
   const { mutate, data, isSuccess, isLoading, error } = useMutation(
-    ({}: UseSignUp) => {
+    ({}: UseSignUpRequest) => {
       return axios({
         method: 'post',
         url: '',

@@ -1,5 +1,5 @@
 import { useMutation } from 'react-query'
-import axios, { AxiosResponse } from 'axios'
+import axios from 'axios'
 
 type UseForgotPasswordRequest = {}
 

@@ -1,43 +1,27 @@
 import React, { useMemo } from 'react'
-import useGetAllUsers from '../api/v2/queries/use-get-all-users'
+import useGetAllCards from '../api/v2/queries/use-get-all-cards'
 import {
   useTable,
   useSortBy,
   usePagination,
   useGlobalFilter,
 } from 'react-table'
-import { useRouter } from 'next/router'
 import SearchBar from '../../comps/inputs/search-bar'
-import Pagination from '../../comps/tables/pagination'
 import Table from '../../comps/tables/table'
+import Pagination from '../../comps/tables/pagination'
+import { toast } from 'react-toastify'
 
-const columnData: ColumnData[] = [
-  {
-    id: 'uid',
-    Header: 'User ID',
-    accessor: 'uid',
-    title: 'User ID',
-    sortDescFirst: false,
-  },
-  {
-    id: 'username',
-    Header: 'Username',
-    accessor: 'username',
-    title: 'Username',
-    sortDescFirst: false,
-  },
-]
+const columnData = []
 
-const Community = () => {
-  const router = useRouter()
-  const { allUsers, isFetching, error } = useGetAllUsers({})
+const EditCards = () => {
+  const { allCards, isFetching, error } = useGetAllCards({})
 
   const initialState = useMemo(() => {
     return { sortBy: [{ id: 'username' }] }
   }, [])
 
   const columns = useMemo(() => columnData, [])
-  const data = useMemo(() => allUsers, [])
+  const data = useMemo(() => allCards, [])
 
   const {
     getTableProps,
@@ -69,11 +53,11 @@ const Community = () => {
   const updateSearchFilter = (event) => setGlobalFilter(event.target.value)
 
   const handleRowClick = (row) => {
-    const user = row.values
-    router.push({
-      pathname: '/collection/',
-      query: { uid: user.uid },
-    })
+    alert(row)
+  }
+
+  if (error) {
+    toast.warning('Error fetching cards')
   }
 
   return (
@@ -103,4 +87,4 @@ const Community = () => {
   )
 }
 
-export default Community
+export default EditCards

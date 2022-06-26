@@ -1,35 +1,19 @@
 import React, { useMemo } from 'react'
-import useGetAllUsers from '../api/v2/queries/use-get-all-users'
 import {
   useTable,
   useSortBy,
   usePagination,
   useGlobalFilter,
 } from 'react-table'
-import { useRouter } from 'next/router'
+import { toast } from 'react-toastify'
 import SearchBar from '../../comps/inputs/search-bar'
 import Pagination from '../../comps/tables/pagination'
 import Table from '../../comps/tables/table'
+import useGetAllUsers from '../api/v2/queries/use-get-all-users'
 
-const columnData: ColumnData[] = [
-  {
-    id: 'uid',
-    Header: 'User ID',
-    accessor: 'uid',
-    title: 'User ID',
-    sortDescFirst: false,
-  },
-  {
-    id: 'username',
-    Header: 'Username',
-    accessor: 'username',
-    title: 'Username',
-    sortDescFirst: false,
-  },
-]
+const columnData = []
 
-const Community = () => {
-  const router = useRouter()
+const EditUsers = () => {
   const { allUsers, isFetching, error } = useGetAllUsers({})
 
   const initialState = useMemo(() => {
@@ -68,17 +52,15 @@ const Community = () => {
   const gotoLastPage = () => gotoPage(pageCount - 1)
   const updateSearchFilter = (event) => setGlobalFilter(event.target.value)
 
-  const handleRowClick = (row) => {
-    const user = row.values
-    router.push({
-      pathname: '/collection/',
-      query: { uid: user.uid },
-    })
+  const handleRowClick = (row) => {}
+
+  if (error) {
+    toast.warning('Error fetching users')
   }
 
   return (
     <div>
-      <div className="flex justify-end items-center">
+      <div className="flex justify-between items-center">
         <SearchBar onChange={updateSearchFilter} />
       </div>
       <Table
@@ -103,4 +85,4 @@ const Community = () => {
   )
 }
 
-export default Community
+export default EditUsers

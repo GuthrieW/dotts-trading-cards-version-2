@@ -6,30 +6,14 @@ import {
   usePagination,
   useGlobalFilter,
 } from 'react-table'
-import { useRouter } from 'next/router'
 import SearchBar from '../../comps/inputs/search-bar'
 import Pagination from '../../comps/tables/pagination'
 import Table from '../../comps/tables/table'
+import { toast } from 'react-toastify'
 
-const columnData: ColumnData[] = [
-  {
-    id: 'uid',
-    Header: 'User ID',
-    accessor: 'uid',
-    title: 'User ID',
-    sortDescFirst: false,
-  },
-  {
-    id: 'username',
-    Header: 'Username',
-    accessor: 'username',
-    title: 'Username',
-    sortDescFirst: false,
-  },
-]
+const columnData = []
 
-const Community = () => {
-  const router = useRouter()
+const IssuePacks = () => {
   const { allUsers, isFetching, error } = useGetAllUsers({})
 
   const initialState = useMemo(() => {
@@ -68,12 +52,10 @@ const Community = () => {
   const gotoLastPage = () => gotoPage(pageCount - 1)
   const updateSearchFilter = (event) => setGlobalFilter(event.target.value)
 
-  const handleRowClick = (row) => {
-    const user = row.values
-    router.push({
-      pathname: '/collection/',
-      query: { uid: user.uid },
-    })
+  const handleRowClick = (row) => {}
+
+  if (error) {
+    toast.warning('Error fetching users')
   }
 
   return (
@@ -103,4 +85,4 @@ const Community = () => {
   )
 }
 
-export default Community
+export default IssuePacks
