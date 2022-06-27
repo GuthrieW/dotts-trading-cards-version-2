@@ -11,7 +11,7 @@ type UseForgotPassword = {
 }
 
 const useForgotPassword = (): UseForgotPassword => {
-  const { mutate, error, isLoading, isSuccess } = useMutation(
+  const { mutate, isSuccess, isLoading, error } = useMutation(
     ({}: UseForgotPasswordRequest) => {
       return axios({
         method: 'post',

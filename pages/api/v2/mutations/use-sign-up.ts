@@ -11,7 +11,7 @@ type UseSignUp = {
 }
 
 const useSignUp = (): UseSignUp => {
-  const { mutate, data, isSuccess, isLoading, error } = useMutation(
+  const { mutate, isSuccess, isLoading, error } = useMutation(
     ({}: UseSignUpRequest) => {
       return axios({
         method: 'post',

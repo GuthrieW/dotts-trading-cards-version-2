@@ -1,18 +1,18 @@
 import { useMutation } from 'react-query'
 import axios from 'axios'
 
-type UseInsertCardRequest = {}
+type UseApproveCardsRequest = {}
 
-type UseInsertCard = {
-  insertCard: Function
+type UseApproveCards = {
+  approveCards: Function
   isSuccess: boolean
   isLoading: boolean
   error: any
 }
 
-const useInsertCard = (): UseInsertCard => {
+const useApproveCards = (): UseApproveCards => {
   const { mutate, isSuccess, isLoading, error } = useMutation(
-    ({}: UseInsertCardRequest) => {
+    ({}: UseApproveCardsRequest) => {
       return axios({
         method: 'post',
         url: '',
@@ -22,11 +22,11 @@ const useInsertCard = (): UseInsertCard => {
   )
 
   return {
-    insertCard: mutate,
+    approveCards: mutate,
     isSuccess,
     isLoading,
     error,
   }
 }
 
-export default useInsertCard
+export default useApproveCards

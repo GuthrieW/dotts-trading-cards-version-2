@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import MyCardsIcon from '../public/icons/MyCardsIcon'
 import OpenPacksIcon from '../public/icons/OpenPacksIcon'
 import CommunityIcon from '../public/icons/CommunityIcon'
 import { DOTTS_ACCESS_TOKEN } from '../utils/constants'
-import axios from 'axios'
 import Link from 'next/link'
 import Router from 'next/router'
 import TradingIcon from '../public/icons/TradingIcon'
@@ -18,8 +17,6 @@ const signOut = () => {
 }
 
 function PermanentDrawerLeft({ value, updateTabValue, currentUser }) {
-  const classes = useStyles()
-
   return (
     <>
       <Drawer

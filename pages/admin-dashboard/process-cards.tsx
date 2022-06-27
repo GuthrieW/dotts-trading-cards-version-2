@@ -10,11 +10,23 @@ import SearchBar from '../../comps/inputs/search-bar'
 import Table from '../../comps/tables/table'
 import Pagination from '../../comps/tables/pagination'
 import { toast } from 'react-toastify'
+import useApproveCards from '../api/v2/mutations/use-approve-cards'
 
 const columnData = []
 
 const ProcessCards = () => {
-  const { unapprovedCards, isFetching, error } = useGetUnapprovedCards({})
+  const {
+    unapprovedCards,
+    isFetching: getUnapprovedCardsIsFetching,
+    error: getUnapprovedCardsError,
+  } = useGetUnapprovedCards({})
+
+  const {
+    approveCards,
+    isSuccess: approveCardsIsSuccess,
+    isLoading: getUnapprovedCardsIsLoading,
+    error: approveCardsError,
+  } = useApproveCards()
 
   const initialState = useMemo(() => {
     return { sortBy: [{ id: 'username' }] }
@@ -54,8 +66,12 @@ const ProcessCards = () => {
 
   const handleRowClick = (row) => {}
 
-  if (error) {
+  if (getUnapprovedCardsError) {
     toast.warning('Error fetching unapproved cards')
+  }
+
+  if (approveCardsError) {
+    toast.warning('Error approving cards')
   }
 
   return (
