@@ -181,28 +181,6 @@ export default function TransferList(props) {
     setChecked(newChecked)
   }
 
-  const handleAllRight = () => {
-    setRight(right.concat(left))
-    setLeft([])
-  }
-
-  const handleCheckedRight = () => {
-    setRight(right.concat(leftChecked))
-    setLeft(not(left, leftChecked))
-    setChecked(not(checked, leftChecked))
-  }
-
-  const handleCheckedLeft = () => {
-    setLeft(left.concat(rightChecked))
-    setRight(not(right, rightChecked))
-    setChecked(not(checked, rightChecked))
-  }
-
-  const handleAllLeft = () => {
-    setLeft(left.concat(right))
-    setRight([])
-  }
-
   const handleOpen = () => {
     setOpen(true)
   }
