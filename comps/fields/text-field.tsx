@@ -4,7 +4,7 @@ type TextFieldProps = {
   name: string
   label: string
   type: string
-  disabled: boolean
+  disabled?: boolean
 }
 
 const TextField = ({ name, label, type, disabled = false }: TextFieldProps) => (

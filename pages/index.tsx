@@ -3,7 +3,7 @@ import Head from 'next/head'
 import React from 'react'
 import classes from '../styles/Home.module.css'
 import DefaultLayout from '../layouts/DefaultLayout'
-import HomePage from './Dashboard'
+import HomePage from './_Dashboard'
 
 const index = () => {
   return (
