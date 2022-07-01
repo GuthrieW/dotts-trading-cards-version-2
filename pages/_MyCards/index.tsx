@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import _ from 'lodash'
 import { AppBar, Tabs, Tab } from '@material-ui/core'
 import CollectionView from '../../components/CollectionView/CollectionView'
 import TrophyRoom from './TrophyRoom'
