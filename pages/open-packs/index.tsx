@@ -1,4 +1,4 @@
-import { PACK_TYPES } from '../../utils/packs'
+import { PackType, PACK_TYPES } from '../../utils/packs'
 import useOpenPack from '../api/v2/mutations/use-open-pack'
 import useGetCurrentUser from '../api/v2/queries/use-get-current-user'
 
@@ -38,7 +38,7 @@ const OpenPacks = () => {
 
   return (
     <div>
-      {PACK_TYPES.map((packType) => {
+      {PACK_TYPES.map((packType: PackType) => {
         const { type, name, imageUrl } = packType
         const numberOfPacks = getNumberOfPacks(type)
         return (

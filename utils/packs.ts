@@ -5,6 +5,12 @@ export const Packs = {
   },
 }
 
+export type PackType = {
+  type: string
+  name: string
+  imageUrl: string
+}
+
 export const PACK_TYPES = [
   {
     type: 'regular',
