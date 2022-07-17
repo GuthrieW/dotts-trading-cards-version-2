@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 type CheckboxProps = {
   id: string
@@ -31,7 +31,7 @@ const DropdownWithCheckboxGroup = ({
   checkboxes,
   selectedCheckboxIds,
 }: DropdownWithCheckboxGroupProps) => {
-  const [isOpen, setIsOpen] = React.useState(false)
+  const [isOpen, setIsOpen] = useState(false)
 
   const toggleIsOpen = () => setIsOpen(!isOpen)
 
