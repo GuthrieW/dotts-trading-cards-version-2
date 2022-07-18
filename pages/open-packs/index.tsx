@@ -1,6 +1,6 @@
 import { PackType, PACK_TYPES } from '../../utils/packs'
-import useOpenPack from '../api/v2/mutations/use-open-pack'
-import useGetCurrentUser from '../api/v2/queries/use-get-current-user'
+import useOpenPack from '../api/v2/_mutations/use-open-pack'
+import useGetCurrentUser from '../api/v2/_queries/use-get-current-user'
 
 const OpenPacks = () => {
   const {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import useGetLastOpenedPack from '../api/v2/queries/use-get-last-opened-pack'
+import useGetLastOpenedPack from '../api/v2/_queries/use-get-last-opened-pack'
 import ReactCardFlip from 'react-card-flip'
 
 const StaticPackViewer = () => {

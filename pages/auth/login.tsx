@@ -1,5 +1,5 @@
 import React from 'react'
-import useLogin from '../api/v2/mutations/use-login'
+import useLogin from '../api/v2/_mutations/use-login'
 import { Form, Formik } from 'formik'
 import TextField from '../../comps/fields/text-field'
 import { toast } from 'react-toastify'
@@ -18,14 +18,15 @@ const Login = () => {
   return (
     <Formik
       initialValues={{}}
-      onSubmit={(values) => {
+      onSubmit={async (values) => {
         event.preventDefault()
         if (isLoading) {
           toast.warning('Already logging in')
           return
         }
 
-        login(values)
+        const result = await login(values)
+        console.log('result', result)
       }}
     >
       {({ handleSubmit }) => (

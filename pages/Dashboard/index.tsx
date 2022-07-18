@@ -1,7 +1,7 @@
 import React from 'react'
 import { toast } from 'react-toastify'
 import InfoButton, { InfoButtonProps } from '../../comps/buttons/info-button'
-import useGetCurrentUser from '../api/v2/queries/use-get-current-user'
+import useGetCurrentUser from '../api/v2/_queries/use-get-current-user'
 
 type User = {
   isAdmin: boolean

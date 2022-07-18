@@ -1,7 +1,10 @@
 import { useMutation } from 'react-query'
 import axios, { AxiosResponse } from 'axios'
 
-type UseLoginRequest = {}
+type UseLoginRequest = {
+  email: string
+  password: string
+}
 
 type UseLogin = {
   login: Function
@@ -12,11 +15,11 @@ type UseLogin = {
 
 const useLogin = (): UseLogin => {
   const { mutate, isSuccess, isLoading, error } = useMutation(
-    ({}: UseLoginRequest) => {
+    ({ email, password }: UseLoginRequest) => {
       return axios({
         method: 'post',
-        url: '',
-        data: {},
+        url: '/api/v1/authorization/logIn',
+        data: { email, password },
       })
     }
   )

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import useGetAllUsers from '../api/v2/queries/use-get-all-users'
+import useGetAllUsers from '../api/v2/_queries/use-get-all-users'
 import {
   useTable,
   useSortBy,

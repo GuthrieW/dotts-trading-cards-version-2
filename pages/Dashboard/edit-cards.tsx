@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import useGetAllCards from '../api/v2/queries/use-get-all-cards'
+import useGetAllCards from '../api/v2/_queries/use-get-all-cards'
 import {
   useTable,
   useSortBy,

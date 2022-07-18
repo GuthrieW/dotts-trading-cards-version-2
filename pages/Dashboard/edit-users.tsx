@@ -9,7 +9,7 @@ import { toast } from 'react-toastify'
 import SearchBar from '../../comps/inputs/search-bar'
 import Pagination from '../../comps/tables/pagination'
 import Table from '../../comps/tables/table'
-import useGetAllUsers from '../api/v2/queries/use-get-all-users'
+import useGetAllUsers from '../api/v2/_queries/use-get-all-users'
 
 const columnData = []
 

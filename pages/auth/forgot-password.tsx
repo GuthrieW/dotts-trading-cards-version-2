@@ -1,5 +1,5 @@
 import React from 'react'
-import useForgotPassword from '../api/v2/mutations/use-forgot-password'
+import useForgotPassword from '../api/v2/_mutations/use-forgot-password'
 import { Form, Formik } from 'formik'
 import TextField from '../../comps/fields/text-field'
 import { toast } from 'react-toastify'

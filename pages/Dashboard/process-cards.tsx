@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import useGetUnapprovedCards from '../api/v2/queries/use-get-unapproved-cards'
+import useGetUnapprovedCards from '../api/v2/_queries/use-get-unapproved-cards'
 import {
   useTable,
   useSortBy,
@@ -10,7 +10,7 @@ import SearchBar from '../../comps/inputs/search-bar'
 import Table from '../../comps/tables/table'
 import Pagination from '../../comps/tables/pagination'
 import { toast } from 'react-toastify'
-import useApproveCards from '../api/v2/mutations/use-approve-cards'
+import useApproveCards from '../api/v2/_mutations/use-approve-cards'
 
 const columnData = []
 

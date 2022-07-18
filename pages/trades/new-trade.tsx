@@ -1,6 +1,6 @@
 import React from 'react'
-import useGetAllUsers from '../api/v2/queries/use-get-all-users'
-import useGetCurrentUser from '../api/v2/queries/use-get-current-user'
+import useGetAllUsers from '../api/v2/_queries/use-get-all-users'
+import useGetCurrentUser from '../api/v2/_queries/use-get-current-user'
 
 const NewTrade = () => {
   const {

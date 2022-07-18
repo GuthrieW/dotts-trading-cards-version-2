@@ -2,7 +2,7 @@ import React from 'react'
 import { Form, Formik } from 'formik'
 import TextField from '../../comps/fields/text-field'
 import { toast } from 'react-toastify'
-import usePasswordReset from '../api/v2/mutations/use-password-reset'
+import usePasswordReset from '../api/v2/_mutations/use-password-reset'
 
 const PasswordReset = () => {
   const { passwordReset, isSuccess, isLoading, error } = usePasswordReset()

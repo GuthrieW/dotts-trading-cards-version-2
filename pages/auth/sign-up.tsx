@@ -2,7 +2,7 @@ import { Form, Formik } from 'formik'
 import React from 'react'
 import { toast } from 'react-toastify'
 import TextField from '../../comps/fields/text-field'
-import useSignUp from '../api/v2/mutations/use-sign-up'
+import useSignUp from '../api/v2/_mutations/use-sign-up'
 
 const SignUp = () => {
   const { signUp, isSuccess, isLoading, error } = useSignUp()

@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import CollectionGrid from '../../comps/grids/collection-grid'
-import useGetCardsOwnedByUser from '../api/v2/queries/use-get-cards-owned-by-user'
-import useGetCurrentUser from '../api/v2/queries/use-get-current-user'
+import useGetCardsOwnedByUser from '../api/v2/_queries/use-get-cards-owned-by-user'
+import useGetCurrentUser from '../api/v2/_queries/use-get-current-user'
 
 const Collection = () => {
   const router = useRouter()
