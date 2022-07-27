@@ -9,9 +9,11 @@ export type InfoButtonProps = {
 
 const InfoButton = ({ title, body, href }: InfoButtonProps): JSX.Element => {
   return href ? (
-    <Link href={href} className="">
-      <div>{title}</div>
-      <div>{body}</div>
+    <Link href={href}>
+      <div className="">
+        <div>{title}</div>
+        <div>{body}</div>
+      </div>
     </Link>
   ) : (
     <div className="">

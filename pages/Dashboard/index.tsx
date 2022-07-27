@@ -1,7 +1,7 @@
 import React from 'react'
 import { toast } from 'react-toastify'
 import InfoButton, { InfoButtonProps } from '../../comps/buttons/info-button'
-import useGetCurrentUser from '../api/v2/_queries/use-get-current-user'
+// import useGetCurrentUser from '../api/v2/_queries/use-get-current-user'
 
 type User = {
   isAdmin: boolean
@@ -17,28 +17,28 @@ type LinkProps = InfoButtonProps & {
 const PageLinks: LinkProps[] = [
   {
     title: 'Process Cards',
-    href: '/Dashboard/Processor',
+    href: '/dashboard/process-cards',
     disabled: (user: User) => user.isAdmin || user.isProcessor,
   },
   {
     title: 'Submit Cards for Review',
-    href: '/Dashboard/Submitter',
+    href: '/dashboard/submit-cards',
     disabled: (user: User) => user.isAdmin || user.isSubmitter,
   },
   {
     title: 'Issue Packs',
-    href: '/Dashboard/Processor',
+    href: '/dashboard/issue-packs',
     disabled: (user: User) => user.isAdmin || user.isPackIssuer,
   },
   {
     title: 'Edit Cards',
-    href: '/Dashboard/CardEditor',
+    href: '/dashboard/edit-cards',
     disabled: (user: User) =>
       user.isAdmin || user.isSubmitter || user.isProcessor,
   },
   {
     title: 'Edit Users',
-    href: '/Dashboard/UserEditor',
+    href: '/dashboard/edit-users',
     disabled: (user: User) => user.isAdmin || user.isPackIssuer,
   },
   {
@@ -59,7 +59,18 @@ const PageLinks: LinkProps[] = [
 ]
 
 const AdminDashboard = () => {
-  const { currentUser, isFetching, error } = useGetCurrentUser({})
+  const { currentUser, isFetching, error } = {
+    currentUser: {
+      _id: '1234',
+      isflUsername: 'caltroit_red_flames',
+    },
+    isFetching: false,
+    error: null,
+  }
+
+  if (isFetching) {
+    return null
+  }
 
   if (error) {
     toast.warning('Error fetching user information')
@@ -68,13 +79,20 @@ const AdminDashboard = () => {
   return (
     <div>
       {PageLinks.map((pageLink: LinkProps) => {
-        return pageLink.disabled(currentUser) ? null : (
-          <InfoButton
-            title={pageLink.title}
-            body={pageLink.body}
-            href={pageLink.href}
-          />
-        )
+        if (
+          pageLink.disabled &&
+          pageLink.disabled(currentUser as unknown as User)
+        ) {
+          return null
+        } else {
+          return (
+            <InfoButton
+              title={pageLink.title}
+              body={pageLink.body}
+              href={pageLink.href}
+            />
+          )
+        }
       })}
     </div>
   )

@@ -1,24 +1,20 @@
-import React, { useState, useEffect } from 'react'
-import DefaultLayout from '../layouts/DefaultLayout'
+import React, { useState } from 'react'
+import { DefaultSeo } from 'next-seo'
 import '../styles/globals.css'
+
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { Hydrate } from 'react-query/hydration'
 
 const App = ({ Component, pageProps }) => {
-  useEffect(() => {
-    // Remove the server-side injected CSS.
-    const jssStyles = document.querySelector('#jss-server-side')
-    if (jssStyles) {
-      jssStyles.parentElement.removeChild(jssStyles)
-    }
-  }, [])
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+      },
+    },
+  })
 
-  const [queryClient] = useState(() => new QueryClient())
-
-  const getLayout =
-    Component.layout || ((page) => <DefaultLayout children={page} />)
-
-  return getLayout(
+  return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
         <Component {...pageProps} />
@@ -26,7 +22,5 @@ const App = ({ Component, pageProps }) => {
     </QueryClientProvider>
   )
 }
-
-App.getLayout = App
 
 export default App
