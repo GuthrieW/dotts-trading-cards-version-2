@@ -16,36 +16,38 @@ const Login = () => {
   }
 
   return (
-    <Formik
-      initialValues={{}}
-      onSubmit={async (values) => {
-        event.preventDefault()
-        if (isLoading) {
-          toast.warning('Already logging in')
-          return
-        }
+    <div className="flex justify-center items-center">
+      <Formik
+        initialValues={{}}
+        onSubmit={async (values) => {
+          event.preventDefault()
+          if (isLoading) {
+            toast.warning('Already logging in')
+            return
+          }
 
-        const result = await login(values)
-        console.log('result', result)
-      }}
-    >
-      {({ handleSubmit }) => (
-        <Form>
-          <TextField name="email" label="Email" type="text" />
-          <TextField name="password" label="Password" type="password" />
-          <div className="flex items-center justify-end p-6">
-            <button
-              onClick={() => handleSubmit()}
-              type="submit"
-              disabled={isLoading}
-              className=""
-            >
-              Login
-            </button>
-          </div>
-        </Form>
-      )}
-    </Formik>
+          const result = await login(values)
+          console.log('result', result)
+        }}
+      >
+        {({ handleSubmit }) => (
+          <Form>
+            <TextField name="email" label="Email" type="text" />
+            <TextField name="password" label="Password" type="password" />
+            <div className="flex items-center justify-end p-6">
+              <button
+                onClick={() => handleSubmit()}
+                type="submit"
+                disabled={isLoading}
+                className=" bg-red-700 red-700 text-red-700 w-96"
+              >
+                Login
+              </button>
+            </div>
+          </Form>
+        )}
+      </Formik>
+    </div>
   )
 }
 
