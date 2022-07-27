@@ -4,7 +4,7 @@ import { useQuery } from 'react-query'
 type UseGetCurrentUserRequest = {}
 
 type UseGetCurrentUser = {
-  currentUser: any
+  currentUser: DottsAccount
   isFetching: boolean
   error: any
 }
@@ -17,13 +17,13 @@ const useGetCurrentUser = ({}: UseGetCurrentUserRequest): UseGetCurrentUser => {
     async () => {
       return await axios({
         method: 'get',
-        url: '',
+        url: '/api/v2/_queries/users',
       })
     }
   )
 
   return {
-    currentUser: data.data,
+    currentUser: data?.data || {},
     isFetching,
     error,
   }
