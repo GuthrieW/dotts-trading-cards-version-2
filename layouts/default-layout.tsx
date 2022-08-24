@@ -4,11 +4,11 @@ import Footer from './footer'
 import Header from './header'
 
 const DefaultLayout = ({ children }) => {
-  const { currentUser, isFetching, error } = useGetCurrentUser({})
+  // const { currentUser, isFetching, error } = useGetCurrentUser({})
 
-  if (isFetching || error) {
-    return null
-  }
+  // if (isFetching || error) {
+  //   return null
+  // }
 
   return (
     <div className="h-full w-full">

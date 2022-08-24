@@ -16,9 +16,10 @@ type UseLogin = {
 const useLogin = (): UseLogin => {
   const { mutate, isSuccess, isLoading, error } = useMutation(
     ({ email, password }: UseLoginRequest) => {
+      console.log(email, password)
       return axios({
         method: 'post',
-        url: '/api/v1/authorization/logIn',
+        url: '/api/v2/auth/login',
         data: { email, password },
       })
     }

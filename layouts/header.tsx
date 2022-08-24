@@ -21,9 +21,12 @@ const Header = () => {
     error: null,
   }
 
+  console.log(isFetching, error)
+
   if (isFetching || error) {
     return null
   }
+  console.log('here')
 
   const headersLinks: HeaderLink[] = [
     {
@@ -74,7 +77,7 @@ const Header = () => {
           />
           <div className=" sm:flex h-full w-full">
             {headersLinks.map((header, index) => (
-              <NavLink onClick={() => Router.push(header.href)}>
+              <NavLink key={index} onClick={() => Router.push(header.href)}>
                 {header.headerText}
               </NavLink>
             ))}
