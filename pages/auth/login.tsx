@@ -31,18 +31,34 @@ const Login = () => {
         }}
       >
         {({ handleSubmit }) => (
-          <Form>
-            <TextField name="email" label="Email" type="text" />
-            <TextField name="password" label="Password" type="password" />
-            <div className="flex items-center justify-end p-6">
+          <Form className="bg-white shadow-md rounded px-8 pt-6 pb-8 my-4 w-1/2">
+            <TextField
+              name="email"
+              label="Email"
+              type="text"
+              placeholder="Email"
+            />
+            <TextField
+              name="password"
+              label="Password"
+              type="password"
+              placeholder="Password"
+            />
+            <div className="flex items-center justify-between">
               <button
                 onClick={() => handleSubmit()}
                 type="submit"
                 disabled={isLoading}
-                className=" bg-red-700 red-700 text-red-700 w-96"
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               >
                 Login
               </button>
+              <a
+                className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+                href="#"
+              >
+                Forgot Password?
+              </a>
             </div>
           </Form>
         )}
