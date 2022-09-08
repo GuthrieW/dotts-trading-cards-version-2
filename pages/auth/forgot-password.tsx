@@ -4,6 +4,7 @@ import { Form, Formik } from 'formik'
 import TextField from '../../comps/fields/text-field'
 import { toast } from 'react-toastify'
 import SubmitButton from '../../comps/buttons/submit-button'
+import FormWrapper from '../../comps/forms/form-wrapper'
 
 const ForgotPassword = () => {
   const { forgotPassword, isSuccess, isLoading, error } = useForgotPassword()
@@ -17,7 +18,7 @@ const ForgotPassword = () => {
   }
 
   return (
-    <div className="flex justify-center items-center">
+    <FormWrapper>
       <Formik
         initialValues={{}}
         onSubmit={(values) => {
@@ -49,7 +50,7 @@ const ForgotPassword = () => {
           </Form>
         )}
       </Formik>
-    </div>
+    </FormWrapper>
   )
 }
 

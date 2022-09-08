@@ -3,6 +3,7 @@ import React from 'react'
 import { toast } from 'react-toastify'
 import SubmitButton from '../../comps/buttons/submit-button'
 import TextField from '../../comps/fields/text-field'
+import FormWrapper from '../../comps/forms/form-wrapper'
 import useSignUp from '../api/v2/_mutations/use-sign-up'
 
 const SignUp = () => {
@@ -17,7 +18,7 @@ const SignUp = () => {
   }
 
   return (
-    <div className="flex justify-center items-center">
+    <FormWrapper>
       <Formik
         initialValues={{}}
         onSubmit={(values) => {
@@ -55,7 +56,7 @@ const SignUp = () => {
           </Form>
         )}
       </Formik>
-    </div>
+    </FormWrapper>
   )
 }
 

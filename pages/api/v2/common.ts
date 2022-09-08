@@ -8,3 +8,15 @@ export const getAccessTokenFromHeader = (request: NextApiRequest): string => {
 
   return null
 }
+
+export const TableNames = {
+  DOTTS_ACCOUNTS: 'dotts_accounts',
+}
+
+export const Methods = {
+  POST: 'POST',
+  GET: 'GET',
+  PATCH: 'PATCH',
+  DELETE: 'DELETE',
+  PUT: 'PUT',
+}

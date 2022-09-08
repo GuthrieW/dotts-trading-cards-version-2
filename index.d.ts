@@ -14,6 +14,7 @@ type ColumnData = {
 
 type DottsAccount = {
   _id: string
+  isflUsername: string
   ownedCards: string[]
   newestCards: string[]
   email: string

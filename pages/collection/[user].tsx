@@ -6,7 +6,7 @@ import useGetCurrentUser from '../api/v2/_queries/use-get-current-user'
 
 const Collection = () => {
   const router = useRouter()
-  const { user } = router.query
+  const user = router.query.user as string
   const {
     currentUser,
     isFetching: currentUserIsFetching,
@@ -18,7 +18,7 @@ const Collection = () => {
     error: cardsOwnedByUserError,
   } = useGetCardsOwnedByUser({})
 
-  const isCurrentUser = user === currentUser
+  const isCurrentUser = user === currentUser.isflUsername
 
   return (
     <div>

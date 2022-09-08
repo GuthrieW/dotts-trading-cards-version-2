@@ -4,6 +4,7 @@ import { Form, Formik } from 'formik'
 import TextField from '../../comps/fields/text-field'
 import { toast } from 'react-toastify'
 import SubmitButton from '../../comps/buttons/submit-button'
+import FormWrapper from '../../comps/forms/form-wrapper'
 
 const Login = () => {
   const { login, isSuccess, isLoading, error } = useLogin()
@@ -17,17 +18,21 @@ const Login = () => {
   }
 
   return (
-    <div className="flex justify-center items-center">
+    <FormWrapper>
       <Formik
-        initialValues={{}}
+        initialValues={{ email: '', password: '' }}
         onSubmit={async (values) => {
+          console.log('values', values)
           event.preventDefault()
           if (isLoading) {
             toast.warning('Already logging in')
             return
           }
 
-          const result = await login(values)
+          const result = await login({
+            email: values.email,
+            password: values.password,
+          })
           console.log('result', result)
         }}
       >
@@ -59,7 +64,7 @@ const Login = () => {
           </Form>
         )}
       </Formik>
-    </div>
+    </FormWrapper>
   )
 }
 

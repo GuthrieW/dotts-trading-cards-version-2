@@ -1,5 +1,6 @@
 import { useMutation } from 'react-query'
 import axios, { AxiosResponse } from 'axios'
+import { Methods } from '../common'
 
 type UseLoginRequest = {
   email: string
@@ -16,9 +17,8 @@ type UseLogin = {
 const useLogin = (): UseLogin => {
   const { mutate, isSuccess, isLoading, error } = useMutation(
     ({ email, password }: UseLoginRequest) => {
-      console.log(email, password)
       return axios({
-        method: 'post',
+        method: Methods.POST,
         url: '/api/v2/auth/login',
         data: { email, password },
       })
