@@ -3,6 +3,7 @@ import { Form, Formik } from 'formik'
 import TextField from '../../comps/fields/text-field'
 import { toast } from 'react-toastify'
 import usePasswordReset from '../api/v2/_mutations/use-password-reset'
+import SubmitButton from '../../comps/buttons/submit-button'
 
 const PasswordReset = () => {
   const { passwordReset, isSuccess, isLoading, error } = usePasswordReset()
@@ -36,15 +37,18 @@ const PasswordReset = () => {
             label="Confirm Password"
             type="password"
           />
-          <div className="flex items-center justify-end p-6">
-            <button
+          <div className="flex items-center justify-between">
+            <SubmitButton
               onClick={() => handleSubmit()}
-              type="submit"
-              disabled={isLoading}
-              className=""
+              isLoading={isLoading}
+              text="Reset Password"
+            />
+            <a
+              className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+              href="/auth/login"
             >
-              Submit
-            </button>
+              Cancel
+            </a>
           </div>
         </Form>
       )}

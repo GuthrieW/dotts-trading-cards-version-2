@@ -5,17 +5,10 @@ type TextFieldProps = {
   name: string
   label: string
   type: string
-  placeholder?: string
   disabled?: boolean
 }
 
-const TextField = ({
-  name,
-  label,
-  type,
-  placeholder,
-  disabled = false,
-}: TextFieldProps) => (
+const TextField = ({ name, label, type, disabled = false }: TextFieldProps) => (
   <div className=" mb-4">
     <label
       className=" block text-gray-700 text-sm font-bold mb-2"
@@ -29,7 +22,7 @@ const TextField = ({
       name={name}
       type={type}
       disabled={disabled}
-      placeholder={placeholder}
+      placeholder={label}
     />
   </div>
 )

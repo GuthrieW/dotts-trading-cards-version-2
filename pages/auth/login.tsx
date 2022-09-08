@@ -3,6 +3,7 @@ import useLogin from '../api/v2/_mutations/use-login'
 import { Form, Formik } from 'formik'
 import TextField from '../../comps/fields/text-field'
 import { toast } from 'react-toastify'
+import SubmitButton from '../../comps/buttons/submit-button'
 
 const Login = () => {
   const { login, isSuccess, isLoading, error } = useLogin()
@@ -32,33 +33,28 @@ const Login = () => {
       >
         {({ handleSubmit }) => (
           <Form className="bg-white shadow-md rounded px-8 pt-6 pb-8 my-4 w-1/2">
-            <TextField
-              name="email"
-              label="Email"
-              type="text"
-              placeholder="Email"
-            />
-            <TextField
-              name="password"
-              label="Password"
-              type="password"
-              placeholder="Password"
-            />
+            <TextField name="email" label="Email" type="text" />
+            <TextField name="password" label="Password" type="password" />
             <div className="flex items-center justify-between">
-              <button
+              <SubmitButton
                 onClick={() => handleSubmit()}
-                type="submit"
-                disabled={isLoading}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              >
-                Login
-              </button>
-              <a
-                className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-                href="#"
-              >
-                Forgot Password?
-              </a>
+                isLoading={isLoading}
+                text="Login"
+              />
+              <div className="flex items-center justify-between">
+                <a
+                  className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800 ml-2"
+                  href="/auth/sign-up"
+                >
+                  Sign Up
+                </a>
+                <a
+                  className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800 ml-2"
+                  href="/auth/forgot-password"
+                >
+                  Forgot Password?
+                </a>
+              </div>
             </div>
           </Form>
         )}
