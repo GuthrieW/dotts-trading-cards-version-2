@@ -1,7 +1,11 @@
 import { useMutation } from 'react-query'
 import axios, { AxiosResponse } from 'axios'
 
-type UseSignUpRequest = {}
+type UseSignUpRequest = {
+  email: string
+  username: string
+  password: string
+}
 
 type UseSignUp = {
   signUp: Function
@@ -12,11 +16,15 @@ type UseSignUp = {
 
 const useSignUp = (): UseSignUp => {
   const { mutate, isSuccess, isLoading, error } = useMutation(
-    ({}: UseSignUpRequest) => {
+    ({ email, username, password }: UseSignUpRequest) => {
       return axios({
         method: 'post',
-        url: '',
-        data: {},
+        url: '/api/v2/auth/sign-up',
+        data: {
+          isflUsername: username,
+          email,
+          password,
+        },
       })
     }
   )

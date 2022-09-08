@@ -20,7 +20,12 @@ const SignUp = () => {
   return (
     <FormWrapper>
       <Formik
-        initialValues={{}}
+        initialValues={{
+          email: '',
+          username: '',
+          password: '',
+          confirm: '',
+        }}
         onSubmit={(values) => {
           event.preventDefault()
           if (isLoading) {
@@ -28,15 +33,21 @@ const SignUp = () => {
             return
           }
 
-          signUp(values)
+          signUp({
+            email: values.email,
+            username: values.username,
+            password: values.password,
+            confirm: values.confirm,
+          })
         }}
       >
         {({ handleSubmit }) => (
           <Form className="bg-white shadow-md rounded px-8 pt-6 pb-8 my-4 w-1/2">
             <TextField name="email" label="Email" type="text" />
+            <TextField name="username" label="ISFL Username" type="text" />
             <TextField name="password" label="Password" type="password" />
             <TextField
-              name="confirm-password"
+              name="confirm"
               label="Confirm Password"
               type="password"
             />

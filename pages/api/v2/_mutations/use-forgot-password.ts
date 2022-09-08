@@ -1,7 +1,9 @@
 import { useMutation } from 'react-query'
 import axios from 'axios'
 
-type UseForgotPasswordRequest = {}
+type UseForgotPasswordRequest = {
+  email: string
+}
 
 type UseForgotPassword = {
   forgotPassword: Function
@@ -12,11 +14,11 @@ type UseForgotPassword = {
 
 const useForgotPassword = (): UseForgotPassword => {
   const { mutate, isSuccess, isLoading, error } = useMutation(
-    ({}: UseForgotPasswordRequest) => {
+    ({ email }: UseForgotPasswordRequest) => {
       return axios({
         method: 'post',
-        url: '',
-        data: {},
+        url: '/api/v2/auth/forgot-password',
+        data: { email },
       })
     }
   )

@@ -20,7 +20,9 @@ const ForgotPassword = () => {
   return (
     <FormWrapper>
       <Formik
-        initialValues={{}}
+        initialValues={{
+          email: '',
+        }}
         onSubmit={(values) => {
           event.preventDefault()
           if (isLoading) {
