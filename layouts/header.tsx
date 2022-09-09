@@ -1,6 +1,6 @@
 import Router from 'next/router'
 import React from 'react'
-// import useGetCurrentUser from '../pages/api/v2/_queries/use-get-current-user'
+import useGetCurrentUser from '../pages/api/v2/_queries/use-get-current-user'
 import NavLink from './nav-link'
 
 type HeaderLink = {
@@ -12,21 +12,11 @@ type HeaderLink = {
 }
 
 const Header = () => {
-  const { currentUser, isFetching, error } = {
-    currentUser: {
-      _id: '1234',
-      isflUsername: 'caltroit_red_flames',
-    },
-    isFetching: false,
-    error: null,
-  }
-
-  console.log(isFetching, error)
+  const { currentUser, isFetching, error } = useGetCurrentUser({})
 
   if (isFetching || error) {
     return null
   }
-  console.log('here')
 
   const headersLinks: HeaderLink[] = [
     {
@@ -73,7 +63,7 @@ const Header = () => {
           <img
             src="/images/Dotts-Logo-White.png"
             onClick={() => Router.push('/dashboard')}
-            className="h-16 cursor-pointer "
+            className="h-16 cursor-pointer ml-2"
           />
           <div className=" sm:flex h-full w-full">
             {headersLinks.map((header, index) => (

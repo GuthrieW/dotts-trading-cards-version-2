@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { connect } from '../../database/database'
 import JsonWebToken from 'jsonwebtoken'
-import { getAccessTokenFromHeader } from '../common'
+import { getAccessTokenFromHeader, TableNames } from '../common'
 
 export const index = async (
   request: NextApiRequest,
@@ -20,9 +20,11 @@ export const index = async (
       process.env.WEBTOKEN_SECRET
     )
 
-    const account = await database.collection('dotts_accounts').findOne({
-      email: email,
-    })
+    const account = await database
+      .collection(TableNames.DOTTS_ACCOUNTS)
+      .findOne({
+        email: email,
+      })
     response.status(200).json({ account: account })
   } catch (error) {
     response.status(200).json({ error: error })

@@ -5,12 +5,18 @@ import TextField from '../../comps/fields/text-field'
 import { toast } from 'react-toastify'
 import SubmitButton from '../../comps/buttons/submit-button'
 import FormWrapper from '../../comps/forms/form-wrapper'
+import Router from 'next/router'
+import { DOTTS_ACCESS_TOKEN } from '../../utils/constants'
 
 const Login = () => {
-  const { login, isSuccess, isLoading, error } = useLogin()
+  const { login, accessToken, isSuccess, isLoading, error } = useLogin()
 
-  if (isSuccess) {
-    toast.success('Congrats you have an account')
+  if (isSuccess && accessToken) {
+    toast.success('Login successful')
+    localStorage.setItem(DOTTS_ACCESS_TOKEN, accessToken)
+    if (typeof window !== 'undefined') {
+      Router.push('/dashboard')
+    }
   }
 
   if (error) {

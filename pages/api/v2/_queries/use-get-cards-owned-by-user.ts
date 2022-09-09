@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useQuery } from 'react-query'
+import { DOTTS_ACCESS_TOKEN } from '../../../../utils/constants'
 
 type UseGetCardsOwnedByUserRequest = {}
 
@@ -9,14 +10,17 @@ type UseGetCardsOwnedByUser = {
   error: any
 }
 
-export const UseGetCardOwnersKeys = 'use-get-card-owners-key'
+export const UseGetCardsOwnedByUserKey = 'use-get-cards-owned-by-user-key'
 
 const useGetCardsOwnedByUser =
   ({}: UseGetCardsOwnedByUserRequest): UseGetCardsOwnedByUser => {
     const { data, error, isFetching } = useQuery(
-      UseGetCardOwnersKeys,
+      UseGetCardsOwnedByUserKey,
       async () => {
         return await axios({
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
+          },
           method: 'get',
           url: '',
         })
