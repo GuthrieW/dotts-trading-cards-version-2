@@ -71,8 +71,7 @@ const Community = () => {
   const handleRowClick = (row) => {
     const user = row.values
     router.push({
-      pathname: '/collection/',
-      query: { uid: user.uid },
+      pathname: `/collection/${user._id}`,
     })
   }
 

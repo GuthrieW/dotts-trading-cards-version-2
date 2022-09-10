@@ -1,6 +1,7 @@
 import { useMutation } from 'react-query'
 import axios, { AxiosResponse } from 'axios'
 import { DOTTS_ACCESS_TOKEN } from '../../../../utils/constants'
+import { Methods } from '../common'
 
 type UseSignUpRequest = {
   email: string
@@ -22,7 +23,7 @@ const useSignUp = (): UseSignUp => {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
-        method: 'post',
+        method: Methods.PUT,
         url: '/api/v2/auth/sign-up',
         data: {
           isflUsername: username,

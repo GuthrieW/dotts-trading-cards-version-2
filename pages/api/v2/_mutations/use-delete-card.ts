@@ -1,6 +1,7 @@
 import { useMutation } from 'react-query'
 import axios from 'axios'
 import { DOTTS_ACCESS_TOKEN } from '../../../../utils/constants'
+import { Methods } from '../common'
 
 type UseDeleteCardRequest = {}
 
@@ -18,7 +19,7 @@ const useDeleteCard = (): UseDeleteCard => {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
-        method: 'post',
+        method: Methods.DELETE,
         url: '',
         data: {},
       })

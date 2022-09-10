@@ -24,19 +24,14 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
         return
       }
 
-      console.log('cardId', account.ownedCards[0])
       const cardIds: string[] = account.ownedCards.map(
         (card) => new ObjectId(card)
       )
-
-      console.log('id', cardIds[0])
 
       const cardsOwnedByUser = await database
         .collection(TableNames.DOTTS_CARDS)
         .find({ _id: { $in: cardIds } })
         .toArray()
-
-      console.log('cardsOwnedByUser', cardsOwnedByUser)
 
       response.status(200).json({
         cardsOwnedByUser: [cardsOwnedByUser],

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useQuery } from 'react-query'
 import { DOTTS_ACCESS_TOKEN } from '../../../../utils/constants'
+import { Methods } from '../common'
 
 type UseGetUserTradesRequest = {}
 
@@ -20,7 +21,7 @@ const useGetUserTrades = ({}: UseGetUserTradesRequest): UseGetUserTrades => {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
-        method: 'get',
+        method: Methods.GET,
         url: '',
       })
     }

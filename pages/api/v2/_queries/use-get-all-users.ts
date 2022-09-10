@@ -1,11 +1,12 @@
 import axios from 'axios'
 import { useQuery } from 'react-query'
 import { DOTTS_ACCESS_TOKEN } from '../../../../utils/constants'
+import { Methods } from '../common'
 
 type UseGetAllUsersRequest = {}
 
 type UseGetAllUsers = {
-  allUsers: any
+  allUsers: any[]
   isFetching: boolean
   error: any
 }
@@ -18,13 +19,13 @@ const useGetAllUsers = ({}: UseGetAllUsersRequest): UseGetAllUsers => {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
       },
-      method: 'get',
-      url: '',
+      method: Methods.GET,
+      url: '/api/v2/users',
     })
   })
 
   return {
-    allUsers: data.data,
+    allUsers: data?.data?.accounts || [],
     isFetching,
     error,
   }
