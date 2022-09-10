@@ -12,6 +12,7 @@ export const getAccessTokenFromHeader = (request: NextApiRequest): string => {
 export const TableNames = {
   DOTTS_ACCOUNTS: 'dotts_accounts',
   DOTTS_RESET_TOKENS: 'dotts_reset_tokens',
+  DOTTS_CARDS: 'dotts_cards',
 }
 
 export const Methods = {

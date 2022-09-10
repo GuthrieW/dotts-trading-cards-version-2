@@ -17,6 +17,8 @@ const DefaultLayout = ({ children }) => {
     }
   }
 
+  console.log('isAuthenticated', isAuthenticated)
+
   return (
     <div className="h-full w-full">
       <Header />

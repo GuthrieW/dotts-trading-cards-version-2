@@ -9,10 +9,15 @@ import SearchBar from '../inputs/search-bar'
 import { useVirtual } from 'react-virtual'
 
 type Card = {
-  player_name: string
-  card_rarity: string
-  teamID: number
-  image_url: string
+  _id: string
+  approved: boolean
+  currentRotation: boolean
+  imageUrl: string
+  playerName: string
+  playerTeam: string
+  rarity: string
+  submissionDate: string
+  submissionUsername: string
 }
 
 type CardWithCount = Card & {
@@ -57,22 +62,22 @@ const CollectionGrid = ({ gridCards }: CollectionGridProps) => {
 
     const filteredCards: Card[] = gridCards
       .filter((card) => {
-        const lowerCaseCardName = card.player_name.toLowerCase()
+        const lowerCaseCardName = card?.playerName?.toLowerCase() ?? ''
         return (
           lowerCaseCardName.includes(lowerCaseSearchString) ||
-          card.player_name.includes(searchString)
+          card?.playerName?.includes(searchString)
         )
       })
       .filter((card) => {
         return (
           selectedRarities.length === 0 ||
-          selectedRarities.includes(card.card_rarity)
+          selectedRarities.includes(card?.rarity)
         )
       })
       .filter((card) => {
         return (
           selectedTeams.length === 0 ||
-          selectedTeams.includes(card.teamID.toString())
+          selectedTeams.includes(card?.playerTeam?.toString())
         )
       })
 
@@ -167,12 +172,12 @@ const CollectionGrid = ({ gridCards }: CollectionGridProps) => {
               >
                 <img
                   className="w-full h-full cursor-pointer rounded-sm"
-                  src={card.image_url}
-                  alt={card.player_name}
+                  src={card?.imageUrl}
+                  alt={card?.playerName}
                 />
-                {card.quantity > 1 && (
+                {card?.quantity > 1 && (
                   <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/4 sm:translate-x-1/2 -translate-y-1/2 bg-neutral-800 rounded-full">
-                    {card.quantity}
+                    {card?.quantity}
                   </span>
                 )}
               </div>

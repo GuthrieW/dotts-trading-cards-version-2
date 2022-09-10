@@ -22,7 +22,7 @@ const Header = () => {
     {
       id: 'collection',
       headerText: 'Collection',
-      href: `/collection?uid=${currentUser.isflUsername}`,
+      href: `/collection/${currentUser._id}`,
       admin: false,
       cardTeam: false,
     },

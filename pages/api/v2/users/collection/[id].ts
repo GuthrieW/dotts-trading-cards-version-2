@@ -1,34 +1,45 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { connect } from '../../../database/database'
 import { Methods, TableNames } from '../../common'
+import { ObjectId } from 'mongodb'
 
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
   const { method, body, query } = request
 
   if (method === Methods.GET) {
-    const { id } = query
+    const id = query.id as string
     const { database, client } = await connect()
 
     try {
       const account = await database
         .collection(TableNames.DOTTS_ACCOUNTS)
         .findOne({
-          _id: id,
+          _id: new ObjectId(id),
         })
 
       if (!account) {
         response
           .status(200)
-          .json({ error: 'An account with that username does not exists' })
+          .json({ error: 'An account with that id does not exists' })
         return
       }
 
+      console.log('cardId', account.ownedCards[0])
+      const cardIds: string[] = account.ownedCards.map(
+        (card) => new ObjectId(card)
+      )
+
+      console.log('id', cardIds[0])
+
+      const cardsOwnedByUser = await database
+        .collection(TableNames.DOTTS_CARDS)
+        .find({ _id: { $in: cardIds } })
+        .toArray()
+
+      console.log('cardsOwnedByUser', cardsOwnedByUser)
+
       response.status(200).json({
-        isAdmin: account.isAdmin,
-        isProcessor: account.isProcessor,
-        isPackIssuer: account.isPackIssuer,
-        isSubmitter: account.isSubmitter,
-        isSubscribed: account.isSubscribed,
+        cardsOwnedByUser: [cardsOwnedByUser],
       })
     } catch (error) {
       console.log(error)

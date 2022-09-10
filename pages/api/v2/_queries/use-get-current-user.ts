@@ -21,13 +21,13 @@ const useGetCurrentUser = ({}: UseGetCurrentUserRequest): UseGetCurrentUser => {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
         method: 'get',
-        url: '/api/v2/_queries/users',
+        url: '/api/v2/users/current',
       })
     }
   )
 
   return {
-    currentUser: data?.data || {},
+    currentUser: data?.data?.currentUser,
     isFetching,
     error,
   }
