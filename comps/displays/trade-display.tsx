@@ -5,9 +5,10 @@ import TradeItems from './trade-items'
 
 export type TradeDisplayProps = {
   trade: DottsTrade
+  allowHref?: boolean
 }
 
-const TradeDisplay = ({ trade }: TradeDisplayProps) => {
+const TradeDisplay = ({ trade, allowHref = true }: TradeDisplayProps) => {
   const {
     _id,
     offeringUserId,
@@ -22,26 +23,26 @@ const TradeDisplay = ({ trade }: TradeDisplayProps) => {
     tradeStatus === 'completed' || tradeStatus === 'declined'
 
   return (
-    <Link className="mb-2" href={tradeResolved ? '#' : `/trades/${_id}`}>
-      <div className="flex justify-between items-start m-2">
-        <div className="flex flex-col justify-start items-start">
-          <div>Offer Date: {tradeOfferDate}</div>
-          <div className="flex flex-row">
-            <TradeItems
-              userId={offeringUserId}
-              cards={offeringUserCards}
-              tradePartnerRole="offering"
-              tradeStatus={tradeStatus}
-            />
-            <TradeItems
-              userId={receivingUserId}
-              cards={receivingUserCards}
-              tradePartnerRole="receiving"
-              tradeStatus={tradeStatus}
-            />
-          </div>
+    <Link href={tradeResolved || !allowHref ? '#' : `/trades/${_id}`}>
+      <div
+        title={tradeResolved ? '' : 'Open trade'}
+        className={`flex justify-between items-centers rounded-lg border border-gray-600 shadow-sm my-2 ${
+          tradeResolved || !allowHref ? '' : 'cursor-pointer'
+        }`}
+      >
+        <div className="flex flex-row w-3/4">
+          <TradeItems
+            userId={offeringUserId}
+            cards={offeringUserCards}
+            tradePartnerRole="offering"
+          />
+          <TradeItems
+            userId={receivingUserId}
+            cards={receivingUserCards}
+            tradePartnerRole="receiving"
+          />
         </div>
-        <div className="flex flex-col justify-end items-end">
+        <div className="flex justify-end items-start w-1/4 m-1">
           <TextIcon>{tradeStatus.toUpperCase()}</TextIcon>
           {tradeResolvedDate && (
             <p>{formatDistance(new Date(), tradeResolvedDate ?? new Date())}</p>
