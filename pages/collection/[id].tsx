@@ -1,7 +1,7 @@
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
 import React from 'react'
-import CollectionGrid from '../../comps/grids/collection-grid'
+import CollectionGrid from '../../components/grids/collection-grid'
 import useGetCardsOwnedByUser from '../api/v2/_queries/use-get-cards-owned-by-user'
 import useGetCurrentUser from '../api/v2/_queries/use-get-current-user'
 

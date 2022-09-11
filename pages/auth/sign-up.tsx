@@ -2,9 +2,9 @@ import { Form, Formik } from 'formik'
 import { NextSeo } from 'next-seo'
 import React from 'react'
 import { toast } from 'react-toastify'
-import SubmitButton from '../../comps/buttons/submit-button'
-import TextField from '../../comps/fields/text-field'
-import FormWrapper from '../../comps/forms/form-wrapper'
+import SubmitButton from '../../components/buttons/submit-button'
+import TextField from '../../components/fields/text-field'
+import FormWrapper from '../../components/forms/form-wrapper'
 import useSignUp from '../api/v2/_mutations/use-sign-up'
 
 const SignUp = () => {

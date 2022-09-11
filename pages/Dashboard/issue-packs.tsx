@@ -6,9 +6,9 @@ import {
   usePagination,
   useGlobalFilter,
 } from 'react-table'
-import SearchBar from '../../comps/inputs/search-bar'
-import Pagination from '../../comps/tables/pagination'
-import Table from '../../comps/tables/table'
+import SearchBar from '../../components/inputs/search-bar'
+import Pagination from '../../components/tables/pagination'
+import Table from '../../components/tables/table'
 import { toast } from 'react-toastify'
 import { NextSeo } from 'next-seo'
 

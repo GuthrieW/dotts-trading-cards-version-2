@@ -7,9 +7,9 @@ import {
   useGlobalFilter,
 } from 'react-table'
 import { toast } from 'react-toastify'
-import SearchBar from '../../comps/inputs/search-bar'
-import Pagination from '../../comps/tables/pagination'
-import Table from '../../comps/tables/table'
+import SearchBar from '../../components/inputs/search-bar'
+import Pagination from '../../components/tables/pagination'
+import Table from '../../components/tables/table'
 import useGetAllUsers from '../api/v2/_queries/use-get-all-users'
 
 const columnData = [

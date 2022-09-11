@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react'
 import { toast } from 'react-toastify'
-import TradeDisplay from '../../comps/displays/trade-display'
-import DropdownWithCheckboxGroup from '../../comps/dropdowns/multi-select-dropdown'
+import TradeDisplay from '../../components/displays/trade-display'
+import DropdownWithCheckboxGroup from '../../components/dropdowns/multi-select-dropdown'
 import useGetUserTrades from '../api/v2/_queries/use-get-current-user-trades'
 
 const TradeStatuses = ['completed', 'pending', 'declined']

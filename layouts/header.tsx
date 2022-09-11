@@ -67,7 +67,7 @@ const Header = () => {
           />
           <div className=" sm:flex h-full w-full">
             {headersLinks.map((header, index) => (
-              <NavLink key={index} onClick={() => Router.push(header.href)}>
+              <NavLink key={index} href={header.href}>
                 {header.headerText}
               </NavLink>
             ))}

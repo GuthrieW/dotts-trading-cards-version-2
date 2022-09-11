@@ -2,19 +2,19 @@ import React, { MouseEventHandler } from 'react'
 
 type NavLinkProps = {
   children: any
-  onClick?: MouseEventHandler
+  href?: string
 }
 
-const NavLink = ({ children, onClick }: NavLinkProps) => {
+const NavLink = ({ children, href }: NavLinkProps) => {
   return (
-    <div
-      onClick={onClick}
+    <a
+      href={href}
       className={`flex items-center mx-2 text-gray-100 cursor-pointer h-full border-b-4 border-neutral-800 ${
-        onClick ? 'hover:border-b-4 hover:border-b-white' : ''
+        href ? 'hover:border-b-4 hover:border-b-white' : ''
       }`}
     >
       {children}
-    </div>
+    </a>
   )
 }
 
