@@ -31,18 +31,6 @@ import SearchBar from '../inputs/search-bar'
 import { useVirtual } from 'react-virtual'
 import ShinyImage from '../images/shiny-image'
 
-type Card = {
-  _id: string
-  approved: boolean
-  currentRotation: boolean
-  imageUrl: string
-  playerName: string
-  playerTeam: string
-  rarity: string
-  submissionDate: string
-  submissionUsername: string
-}
-
 type CardWithCount = Card & {
   quantity: number
 }

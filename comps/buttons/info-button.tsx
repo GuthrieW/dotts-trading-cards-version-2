@@ -1,5 +1,4 @@
 import React from 'react'
-import Link from 'next/link'
 import ShinyImage from '../images/shiny-image'
 
 export type InfoButtonProps = {

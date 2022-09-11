@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { toast } from 'react-toastify'
 import ButtonGroup from '../../comps/buttons/button-group'
 import useGetCurrentUser from '../api/v2/_queries/use-get-current-user'
-import useGetUserTrades from '../api/v2/_queries/use-get-user-trades'
+import useGetUserTrades from '../api/v2/_queries/use-get-current-user-trades'
 
 type TradeStatus = 'Completed' | 'Pending' | 'Declined'
 

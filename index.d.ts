@@ -12,6 +12,18 @@ type ColumnData = {
   sortDescFirst: boolean
 }
 
+type Card = {
+  _id: string
+  approved: boolean
+  currentRotation: boolean
+  imageUrl: string
+  playerName: string
+  playerTeam: string
+  rarity: string
+  submissionDate: string
+  submissionUsername: string
+}
+
 type DottsAccount = {
   _id: string
   isflUsername: string
@@ -26,4 +38,17 @@ type DottsAccount = {
   isProcessor: boolean
   isPackIssuer: boolean
   isSubmitter: boolean
+}
+
+type TradeStatus = 'declined' | 'completed' | 'pending'
+
+type DottsTrade = {
+  _id: string
+  offeringUserId: string
+  receivingUserId: string
+  offeringUserCardIds: DottsCard[]
+  receivingUserCardIds: DottsCard[]
+  tradeStatus: TradeStatus
+  tradeOfferDate: any
+  tradeResolvedDate: any
 }
