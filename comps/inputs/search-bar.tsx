@@ -1,15 +1,17 @@
-import React from 'react'
+import React, { ChangeEventHandler } from 'react'
 
 type SearchBarProps = {
-  onChange: Function
+  onChange: ChangeEventHandler<HTMLInputElement>
+  disabled?: boolean
 }
 
-const SearchBar = ({ onChange }) => (
+const SearchBar = ({ onChange, disabled }: SearchBarProps) => (
   <input
     className="my-2 px-2 h-8 rounded-md border border-black text-black font-normal text-base w-full min-w-0"
     type="text"
     placeholder="Search"
     onChange={onChange}
+    disabled={disabled}
   />
 )
 

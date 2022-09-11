@@ -20,12 +20,14 @@ const useGetAllCards = ({}: UseGetAllCardsRequest): UseGetAllCards => {
         Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
       },
       method: Methods.GET,
-      url: '',
+      url: '/api/v2/cards/all',
     })
   })
 
+  console.log('data', data)
+
   return {
-    allCards: data.data,
+    allCards: data?.data?.allCards ?? [],
     isFetching,
     error,
   }

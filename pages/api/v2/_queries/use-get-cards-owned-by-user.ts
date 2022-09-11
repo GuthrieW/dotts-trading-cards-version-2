@@ -8,6 +8,7 @@ type UseGetCardsOwnedByUserRequest = {
 }
 
 type UseGetCardsOwnedByUser = {
+  isflUsername: string
   cardsOwnedByUser: any
   isFetching: boolean
   error: any
@@ -21,7 +22,6 @@ const useGetCardsOwnedByUser = ({
   const { data, error, isFetching } = useQuery(
     UseGetCardsOwnedByUserKey,
     async () => {
-      console.log('query user', id)
       return await axios({
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
@@ -32,10 +32,9 @@ const useGetCardsOwnedByUser = ({
     }
   )
 
-  console.log(data)
-
   return {
-    cardsOwnedByUser: data?.data?.cardsOwnedByUser ?? [],
+    isflUsername: data?.data?.isflUsername || '',
+    cardsOwnedByUser: data?.data?.cardsOwnedByUser || [],
     isFetching,
     error,
   }

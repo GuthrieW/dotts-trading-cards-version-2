@@ -44,6 +44,7 @@ const Table = ({
         className="table-row-group bg-gray-100 mx-auto my-0 align-middle relative"
       >
         {rows.map((row, index) => {
+          console.log('row', row)
           prepareRow(row)
           return (
             <tr

@@ -14,6 +14,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
     response.status(200).json({ isAuthenticated: true })
   } catch (error) {
     response.status(200).json({ isAuthenticated: false })
+    return
   }
   return
 }

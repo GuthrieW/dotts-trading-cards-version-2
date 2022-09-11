@@ -73,7 +73,9 @@ const Header = () => {
             ))}
           </div>
         </div>
-        <div>{currentUser.isflUsername}</div>
+        <div className="flex justify-center items-center text-gray-100 mr-2">
+          {currentUser.isflUsername}
+        </div>
       </div>
     </header>
   )

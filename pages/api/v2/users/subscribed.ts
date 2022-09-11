@@ -13,7 +13,9 @@ export const index = async (
     try {
       const account = await database
         .collection(TableNames.DOTTS_ACCOUNTS)
-        .find({})
+        .find({
+          isSubscribed: true,
+        })
         .toArray()
       const minifiedAccounts = account.map((account) => {
         return {

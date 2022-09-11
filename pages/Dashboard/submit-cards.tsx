@@ -67,7 +67,7 @@ const SubmitCards = () => {
               disabled={isLoading}
               className=""
             >
-              Login
+              Submit Card
             </button>
           </div>
         </Form>

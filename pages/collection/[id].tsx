@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import React, { useState } from 'react'
+import React from 'react'
 import CollectionGrid from '../../comps/grids/collection-grid'
 import useGetCardsOwnedByUser from '../api/v2/_queries/use-get-cards-owned-by-user'
 import useGetCurrentUser from '../api/v2/_queries/use-get-current-user'
@@ -9,14 +9,13 @@ const Collection = () => {
   const userId = router.query.id as string
 
   const {
+    isflUsername,
     cardsOwnedByUser,
     isFetching: cardsOwnedByUserIsFetching,
     error: cardsOwnedByUserError,
   } = useGetCardsOwnedByUser({
     id: userId,
   })
-
-  console.log('cardsOwnedByUser', cardsOwnedByUser)
 
   const {
     currentUser,
@@ -36,12 +35,17 @@ const Collection = () => {
 
   return (
     <div>
+      {isCurrentUser ? (
+        <h2>Your Collection</h2>
+      ) : (
+        <h2>{isflUsername}'s Collection</h2>
+      )}
       {cardsOwnedByUser.length === 0 ? (
         <div className="text-center">
           <p className="text-xl">
             {isCurrentUser
               ? "You don't have any cards in your collection."
-              : `${currentUser.isflUsername} doesn't have any cards in their collection.`}
+              : `${isflUsername} doesn't have any cards in their collection.`}
           </p>
           {isCurrentUser && (
             <p className="text-xl">

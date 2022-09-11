@@ -13,17 +13,24 @@ import Table from '../../comps/tables/table'
 
 const columnData: ColumnData[] = [
   {
-    id: 'uid',
-    Header: 'User ID',
-    accessor: 'uid',
-    title: 'User ID',
+    id: '_id',
+    Header: '_id',
+    accessor: '_id',
+    title: '_id',
     sortDescFirst: false,
   },
   {
-    id: 'username',
-    Header: 'Username',
-    accessor: 'username',
-    title: 'Username',
+    id: 'isflUsername',
+    Header: 'ISFL Username',
+    accessor: 'isflUsername',
+    title: 'ISFL Username',
+    sortDescFirst: false,
+  },
+  {
+    id: 'numberOfOwnedCards',
+    Header: 'Owned Cards',
+    accessor: 'numberOfOwnedCards',
+    title: 'Owned Cards',
     sortDescFirst: false,
   },
 ]
@@ -33,11 +40,11 @@ const Community = () => {
   const { allUsers, isFetching, error } = useGetAllUsers({})
 
   const initialState = useMemo(() => {
-    return { sortBy: [{ id: 'username' }] }
+    return { sortBy: [{ id: 'isflUsername' }] }
   }, [])
 
   const columns = useMemo(() => columnData, [])
-  const data = useMemo(() => allUsers, [])
+  const data = useMemo(() => allUsers, [allUsers])
 
   const {
     getTableProps,
@@ -77,27 +84,33 @@ const Community = () => {
 
   return (
     <div>
-      <div className="flex justify-end items-center">
-        <SearchBar onChange={updateSearchFilter} />
+      <div className="flex justify-end flex-row max-w-full">
+        <div className="flex justify-center items-center">
+          <SearchBar disabled={isFetching} onChange={updateSearchFilter} />
+        </div>
       </div>
-      <Table
-        getTableProps={getTableProps}
-        headerGroups={headerGroups}
-        getTableBodyProps={getTableBodyProps}
-        rows={page}
-        prepareRow={prepareRow}
-        onRowClick={handleRowClick}
-      />
-      <Pagination
-        pageOptions={pageOptions}
-        pageIndex={pageIndex}
-        canNextPage={canNextPage}
-        nextPage={nextPage}
-        canPreviousPage={canPreviousPage}
-        previousPage={previousPage}
-        gotoPage={gotoPage}
-        gotoLastPage={gotoLastPage}
-      />
+      {isFetching || error ? null : (
+        <>
+          <Table
+            getTableProps={getTableProps}
+            headerGroups={headerGroups}
+            getTableBodyProps={getTableBodyProps}
+            rows={page}
+            prepareRow={prepareRow}
+            onRowClick={handleRowClick}
+          />
+          <Pagination
+            pageOptions={pageOptions}
+            pageIndex={pageIndex}
+            canNextPage={canNextPage}
+            nextPage={nextPage}
+            canPreviousPage={canPreviousPage}
+            previousPage={previousPage}
+            gotoPage={gotoPage}
+            gotoLastPage={gotoLastPage}
+          />
+        </>
+      )}
     </div>
   )
 }

@@ -34,15 +34,20 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
         .toArray()
 
       response.status(200).json({
-        cardsOwnedByUser: [cardsOwnedByUser],
+        isflUsername: account.isflUsername,
+        cardsOwnedByUser: cardsOwnedByUser,
       })
     } catch (error) {
       console.log(error)
+      response.status(400).json({ error })
     } finally {
       client.close()
       return
     }
   }
+
+  response.status(400).json({ error: 'Method Not Allowed' })
+  return
 }
 
 export default index

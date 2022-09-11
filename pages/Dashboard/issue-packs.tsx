@@ -21,7 +21,7 @@ const IssuePacks = () => {
   }, [])
 
   const columns = useMemo(() => columnData, [])
-  const data = useMemo(() => allUsers, [])
+  const data = useMemo(() => allUsers, [allUsers])
 
   const {
     getTableProps,
@@ -53,6 +53,10 @@ const IssuePacks = () => {
   const updateSearchFilter = (event) => setGlobalFilter(event.target.value)
 
   const handleRowClick = (row) => {}
+
+  if (isFetching) {
+    return null
+  }
 
   if (error) {
     toast.warning('Error fetching users')

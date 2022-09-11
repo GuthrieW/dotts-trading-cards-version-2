@@ -1,12 +1,35 @@
 //TODO: Add onclick effect for viewing cards up close
 //TODO: Add sorting based on rarity, it's currently random
 
-import { randomInt } from 'crypto'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
-import { RARITIES, Rarity, Team, TEAMS } from '../../utils/constants'
+import {
+  ALL_PRO,
+  ANNIVERSARY_FIRST_TEAM,
+  ANNIVERSARY_SECOND_TEAM,
+  AUTOGRAPH_ROOKIE,
+  AWARD,
+  BACKUP,
+  CAPTAIN,
+  CHARITY,
+  FANTASY_KINGS,
+  HALL_OF_FAME,
+  HOLOGRAPH_EXPANSION,
+  LEAST_VALUABLE_PLAYER,
+  LEGEND,
+  RARITIES,
+  Rarity,
+  STAR,
+  STARTER,
+  Team,
+  TEAMS,
+  TEAM_LOGO,
+  ULTIMUS_CHAMPION,
+  UNIQUE,
+} from '../../utils/constants'
 import DropdownWithCheckboxGroup from '../dropdowns/multi-select-dropdown'
 import SearchBar from '../inputs/search-bar'
 import { useVirtual } from 'react-virtual'
+import ShinyImage from '../images/shiny-image'
 
 type Card = {
   _id: string
@@ -28,14 +51,56 @@ type CollectionGridProps = {
   gridCards: Card[]
 }
 
-const rarityToNumercialValue = () => {
-  return randomInt(5)
+const rarityToNumercialValue = (rarity) => {
+  switch (rarity) {
+    case BACKUP:
+      return 0
+    case STARTER:
+      return 1
+    case STAR:
+      return 2
+    case ALL_PRO:
+      return 3
+    case LEGEND:
+      return 4
+    case AWARD:
+      return 5
+    case HALL_OF_FAME:
+      return 6
+    case ULTIMUS_CHAMPION:
+      return 7
+    case HOLOGRAPH_EXPANSION:
+      return 8
+    case AUTOGRAPH_ROOKIE:
+      return 9
+    case FANTASY_KINGS:
+      return 10
+    case CAPTAIN:
+      return 11
+    case TEAM_LOGO:
+      return 12
+    case UNIQUE:
+      return 13
+    case CHARITY:
+      return 14
+    case ANNIVERSARY_FIRST_TEAM:
+      return 15
+    case ANNIVERSARY_SECOND_TEAM:
+      return 16
+    case LEAST_VALUABLE_PLAYER:
+      return 17
+    default:
+      return 1000
+  }
 }
 
 const combineDuplicates = (cards: Card[]): CardWithCount[] => {
   const combinedCards: CardWithCount[] = []
   cards.forEach((card: Card) => {
-    const foundIndex: number = combinedCards.findIndex((card: Card) => false)
+    const foundIndex: number = combinedCards.findIndex((indexedCard: Card) => {
+      return card._id === indexedCard._id
+    })
+
     if (foundIndex !== -1) {
       combinedCards.at(foundIndex).quantity += 1
     } else {
@@ -53,40 +118,43 @@ const CollectionGrid = ({ gridCards }: CollectionGridProps) => {
   const [searchString, setSearchString] = useState<string>('')
   const [selectedRarities, setSelectedRarities] = useState<string[]>([])
   const [selectedTeams, setSelectedTeams] = useState<string[]>([])
-  const [selectedCard, setSelectedCard] = useState<Card | null>(null)
-  const [lightBoxIsOpen, setLightBoxIsOpen] = useState<boolean>(false)
+  // const [selectedCard, setSelectedCard] = useState<Card | null>(null)
+  // const [lightBoxIsOpen, setLightBoxIsOpen] = useState<boolean>(false)
   const parentRef = useRef()
 
-  const processedCards: CardWithCount[] = useMemo(() => {
+  const processedCards: Card[] = useMemo(() => {
+    gridCards = gridCards.filter(
+      (card) => card.playerName && card.playerTeam && card.imageUrl && card._id
+    )
+
     const lowerCaseSearchString = searchString.toLowerCase()
 
     const filteredCards: Card[] = gridCards
       .filter((card) => {
-        const lowerCaseCardName = card?.playerName?.toLowerCase() ?? ''
+        const lowerCaseCardName = card.playerName.toLowerCase() ?? ''
         return (
           lowerCaseCardName.includes(lowerCaseSearchString) ||
-          card?.playerName?.includes(searchString)
+          card.playerName.includes(searchString)
         )
       })
       .filter((card) => {
         return (
           selectedRarities.length === 0 ||
-          selectedRarities.includes(card?.rarity)
+          selectedRarities.includes(card.rarity)
         )
       })
       .filter((card) => {
         return (
-          selectedTeams.length === 0 ||
-          selectedTeams.includes(card?.playerTeam?.toString())
+          selectedTeams.length === 0 || selectedTeams.includes(card.playerTeam)
         )
       })
 
-    const cardsWithDuplicatesCombined: CardWithCount[] =
-      combineDuplicates(filteredCards)
+    // const cardsWithDuplicatesCombined: CardWithCount[] =
+    //   combineDuplicates(filteredCards)
 
-    return cardsWithDuplicatesCombined.sort((a, b) => {
-      const aRanking = rarityToNumercialValue()
-      const bRanking = rarityToNumercialValue()
+    return filteredCards.sort((a, b) => {
+      const aRanking = rarityToNumercialValue(a.rarity)
+      const bRanking = rarityToNumercialValue(b.rarity)
       return bRanking - aRanking
     })
   }, [gridCards, searchString, selectedRarities, selectedTeams])
@@ -116,18 +184,19 @@ const CollectionGrid = ({ gridCards }: CollectionGridProps) => {
   const PlayerCardRarityCheckboxes: CollectionTableButtons[] = RARITIES.map(
     (rarity: Rarity) => {
       return {
-        id: rarity.label,
-        text: rarity.label,
-        onClick: () => updateSelectedRarityButtonIds(rarity.label),
+        id: rarity.value,
+        text: rarity.value,
+        onClick: () => updateSelectedRarityButtonIds(rarity.value),
       }
     }
   )
 
   const TeamCheckboxes: CollectionTableButtons[] = TEAMS.map((team: Team) => {
     return {
-      id: team.ABBREVIATION,
+      id: team.CITY_NAME + ' ' + team.TEAM_NAME,
       text: team.ABBREVIATION,
-      onClick: () => updateSelectedTeamButtonIds(team.ABBREVIATION),
+      onClick: () =>
+        updateSelectedTeamButtonIds(team.CITY_NAME + ' ' + team.TEAM_NAME),
     }
   })
 
@@ -159,39 +228,26 @@ const CollectionGrid = ({ gridCards }: CollectionGridProps) => {
           style={{ height: `${rowVirtualization.totalSize}px` }}
         >
           {rowVirtualization.virtualItems.map((item, index) => {
-            console.log('item', item)
             const card = processedCards[item.index]
             return (
               <div
                 className="relative transition ease-linear shadow-none hover:scale-105 hover:shadow-xl"
                 key={index}
-                onClick={() => {
-                  setSelectedCard(card)
-                  setLightBoxIsOpen(true)
-                }}
               >
-                <img
-                  className="w-full h-full cursor-pointer rounded-sm"
-                  src={card?.imageUrl}
-                  alt={card?.playerName}
-                />
-                {card?.quantity > 1 && (
+                <div className="w-full h-full cursor-pointer rounded-sm">
+                  <ShinyImage imageUrl={card.imageUrl} movementThreshold={80} />
+                </div>
+
+                {/* {card.quantity > 1 && (
                   <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/4 sm:translate-x-1/2 -translate-y-1/2 bg-neutral-800 rounded-full">
-                    {card?.quantity}
+                    {card.quantity}
                   </span>
-                )}
+                )} */}
               </div>
             )
           })}
         </div>
       </div>
-      {/* {lightBoxIsOpen && (
-        // <CardLightBoxModal
-        //   cardName={selectedCard.player_name}
-        //   cardImage={selectedCard.image_url}
-        //   setShowModal={() => setLightBoxIsOpen(false)}
-        // />
-      )} */}
     </div>
   )
 }

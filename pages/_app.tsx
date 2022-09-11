@@ -30,7 +30,6 @@ const App = ({ Component, pageProps }) => {
 
   const isAuthPage = window.location.href.includes('auth')
 
-  console.log('isAuthPage', isAuthPage)
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
