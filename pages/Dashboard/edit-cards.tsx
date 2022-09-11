@@ -11,6 +11,7 @@ import Table from '../../components/tables/table'
 import Pagination from '../../components/tables/pagination'
 import { toast } from 'react-toastify'
 import { NextSeo } from 'next-seo'
+import { format } from 'date-fns'
 
 const columnData = [
   {
@@ -65,7 +66,8 @@ const columnData = [
   {
     id: 'submissionDate',
     Header: 'Submission Date',
-    accessor: 'submissionDate',
+    accessor: (card) =>
+      format(new Date(card.submissionDate), 'yyyy-MM-dd HH:mm:ss'),
     title: 'Submission Date',
     sortDescFirst: false,
   },
@@ -132,6 +134,7 @@ const EditCards = () => {
   return (
     <>
       <NextSeo title="Edit Cards" />
+      <h1>Edit Cards</h1>
       <div>
         <div className="flex justify-end items-center">
           <SearchBar onChange={updateSearchFilter} />

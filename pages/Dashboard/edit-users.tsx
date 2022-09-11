@@ -139,6 +139,7 @@ const EditUsers = () => {
   return (
     <>
       <NextSeo title="Edit Users" />
+      <h1>Edit Users</h1>
       <div>
         <div className="flex justify-between items-center">
           <SearchBar onChange={updateSearchFilter} />

@@ -8,7 +8,7 @@ export default class MyDocument extends Document {
         <Head>
           <link href={'public/favicon.svg'} />
         </Head>
-        <body style={{ margin: '0px' }}>
+        <body className="m-0 bg-neutral-700 text-white">
           <Main />
           <NextScript />
         </body>

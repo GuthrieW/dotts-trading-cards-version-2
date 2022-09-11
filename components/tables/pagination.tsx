@@ -41,7 +41,7 @@ const Pagination = ({
         Page {pageIndex + 1} of {pageOptions.length} | Go to page:
       </span>
       <input
-        className="mx-1 w-10"
+        className="mx-1 w-10 bg-neutral-700 text-white"
         type="number"
         defaultValue={pageIndex + 1}
         onChange={(e) => {

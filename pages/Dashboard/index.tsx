@@ -86,6 +86,7 @@ const AdminDashboard = () => {
   return (
     <>
       <NextSeo title="Dashboard" />
+      <h1>Dashboard</h1>
       <div className="m-2">
         <div className="grid grid-cols-3 gap-4">
           {UserLinks.map((pageLink: LinkProps, index) => {
@@ -97,6 +98,7 @@ const AdminDashboard = () => {
             } else {
               return (
                 <InfoButton
+                  key={index}
                   title={pageLink.title}
                   body={pageLink.body}
                   href={pageLink.href}
@@ -107,7 +109,7 @@ const AdminDashboard = () => {
           })}
         </div>
         <div className="grid grid-cols-3 gap-4">
-          {EmployeeLinks.map((pageLink: LinkProps) => {
+          {EmployeeLinks.map((pageLink: LinkProps, index) => {
             if (
               pageLink.disabled &&
               pageLink.disabled(currentUser as unknown as User)
@@ -116,6 +118,7 @@ const AdminDashboard = () => {
             } else {
               return (
                 <InfoButton
+                  key={index}
                   title={pageLink.title}
                   body={pageLink.body}
                   href={pageLink.href}
@@ -126,7 +129,7 @@ const AdminDashboard = () => {
           })}
         </div>
         <div className="grid grid-cols-2 gap-4">
-          {AdminLinks.map((pageLink: LinkProps) => {
+          {AdminLinks.map((pageLink: LinkProps, index) => {
             if (
               pageLink.disabled &&
               pageLink.disabled(currentUser as unknown as User)
@@ -135,6 +138,7 @@ const AdminDashboard = () => {
             } else {
               return (
                 <InfoButton
+                  key={index}
                   title={pageLink.title}
                   body={pageLink.body}
                   href={pageLink.href}

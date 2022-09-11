@@ -65,7 +65,9 @@ const ProcessCards = () => {
   const gotoLastPage = () => gotoPage(pageCount - 1)
   const updateSearchFilter = (event) => setGlobalFilter(event.target.value)
 
-  const handleRowClick = (row) => {}
+  const handleRowClick = (row) => {
+    console.log(row.values)
+  }
 
   if (getUnapprovedCardsError) {
     toast.warning('Error fetching unapproved cards')
@@ -78,6 +80,7 @@ const ProcessCards = () => {
   return (
     <>
       <NextSeo title="Process Cards" />
+      <h1>Process Cards</h1>
       <div>
         <div className="flex justify-end items-center">
           <SearchBar onChange={updateSearchFilter} />

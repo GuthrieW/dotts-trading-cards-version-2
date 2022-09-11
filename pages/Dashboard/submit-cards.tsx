@@ -21,6 +21,7 @@ const SubmitCards = () => {
   return (
     <>
       <NextSeo title="Submit Cards" />
+      <h1>Submit Cards</h1>
       <Formik
         initialValues={{}}
         onSubmit={(values) => {

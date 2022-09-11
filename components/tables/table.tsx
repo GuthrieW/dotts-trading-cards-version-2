@@ -41,7 +41,7 @@ const Table = ({
       </thead>
       <tbody
         {...getTableBodyProps()}
-        className="table-row-group bg-gray-100 mx-auto my-0 align-middle relative"
+        className="table-row-group bg-neutral-700 mx-auto my-0 align-middle relative"
       >
         {rows.map((row, index) => {
           console.log('row', row)
@@ -50,7 +50,7 @@ const Table = ({
             <tr
               {...row.getRowProps()}
               key={index}
-              className="hover:bg-gray-300"
+              className="hover:bg-neutral-500"
               onClick={() => onRowClick(row)}
             >
               {row.cells.map((cell, index) => (

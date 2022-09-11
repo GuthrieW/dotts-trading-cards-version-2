@@ -9,7 +9,7 @@ const AuthenticationLayout = ({ children }) => (
         </div>
       </div>
     </header>
-    {children}
+    <div className="mx-2">{children}</div>
     <Footer />
   </div>
 )

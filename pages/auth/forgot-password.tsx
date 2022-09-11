@@ -37,7 +37,7 @@ const ForgotPassword = () => {
           }}
         >
           {({ handleSubmit }) => (
-            <Form className="bg-white shadow-md rounded px-8 pt-6 pb-8 my-4 w-1/2">
+            <Form className="bg-neutral-600 shadow-lg rounded px-8 pt-6 pb-8 my-4 w-1/2">
               <TextField name="email" label="Email" type="text" />
               <div className="flex items-center justify-between">
                 <SubmitButton

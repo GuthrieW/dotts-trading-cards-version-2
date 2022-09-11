@@ -32,7 +32,7 @@ const PasswordReset = () => {
         }}
       >
         {({ handleSubmit }) => (
-          <Form>
+          <Form className="bg-neutral-600 shadow-lg">
             <TextField name="password" label="Password" type="password" />
             <TextField
               name="confirm-password"

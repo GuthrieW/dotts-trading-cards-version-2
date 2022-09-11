@@ -86,6 +86,7 @@ const Community = () => {
   return (
     <>
       <NextSeo title="Community" />
+      <h1>Community</h1>
       <div>
         <div className="flex justify-end flex-row max-w-full">
           <div className="flex justify-center items-center">

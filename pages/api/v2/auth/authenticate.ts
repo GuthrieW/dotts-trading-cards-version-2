@@ -5,7 +5,7 @@ import { getAccessTokenFromHeader } from '../common'
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
   const accessToken = getAccessTokenFromHeader(request)
   if (accessToken == null) {
-    response.status(200).json({ isAuthenticated: false })
+    response.status(400).json({ isAuthenticated: false, error: true })
     return
   }
 

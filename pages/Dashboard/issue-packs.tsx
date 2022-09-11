@@ -53,7 +53,9 @@ const IssuePacks = () => {
   const gotoLastPage = () => gotoPage(pageCount - 1)
   const updateSearchFilter = (event) => setGlobalFilter(event.target.value)
 
-  const handleRowClick = (row) => {}
+  const handleRowClick = (row) => {
+    console.log(row.values)
+  }
 
   if (isFetching) {
     return null
@@ -66,6 +68,7 @@ const IssuePacks = () => {
   return (
     <>
       <NextSeo title="Issue Packs" />
+      <h1>Issue Packs</h1>
       <div>
         <div className="flex justify-end items-center">
           <SearchBar onChange={updateSearchFilter} />

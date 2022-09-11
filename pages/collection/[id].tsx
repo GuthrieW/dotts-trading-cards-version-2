@@ -43,9 +43,9 @@ const Collection = () => {
       />
       <div>
         {isCurrentUser ? (
-          <h2>Your Collection</h2>
+          <h1>Your Collection</h1>
         ) : (
-          <h2>{isflUsername}'s Collection</h2>
+          <h1>{isflUsername}'s Collection</h1>
         )}
         {cardsOwnedByUser.length === 0 ? (
           <div className="text-center">

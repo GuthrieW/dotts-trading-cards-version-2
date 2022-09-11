@@ -12,12 +12,12 @@ const TradeItems = ({ userId, cards, tradePartnerRole }) => {
       <p>
         {tradePartnerRole === 'offering' ? 'Offered' : 'Received'} By: {userId}
       </p>
-      <div className="flex flex-wrap ml-2">
+      <div className="flex flex-wrap ml-2 bg-neutral-700">
         {cards.map((card: Card) => (
           <img
-            className="border border-gray-100 shadow-sm mb-1 relative h-40"
+            className="rounded-sm m-1 relative h-40"
             src={card.imageUrl}
-            alt="user image"
+            alt={`${card.playerName} - ${card.playerTeam} - ${card.rarity}`}
           />
         ))}
       </div>

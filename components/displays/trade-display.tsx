@@ -43,7 +43,7 @@ const TradeDisplay = ({ trade, allowHref = true }: TradeDisplayProps) => {
           />
         </div>
         <div className="flex justify-end items-start w-1/4 m-1">
-          <TextIcon>{tradeStatus.toUpperCase()}</TextIcon>
+          <TextIcon text={tradeStatus.toUpperCase()} />
           {tradeResolvedDate && (
             <p>{formatDistance(new Date(), tradeResolvedDate ?? new Date())}</p>
           )}
