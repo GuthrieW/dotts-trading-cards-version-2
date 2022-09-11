@@ -13,7 +13,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
     const email = JsonWebToken.verify(accessToken, process.env.WEBTOKEN_SECRET)
     response.status(200).json({ isAuthenticated: true })
   } catch (error) {
-    response.status(200).json({ isAuthenticated: false })
+    response.status(400).json({ isAuthenticated: false, error })
     return
   }
   return

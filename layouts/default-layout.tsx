@@ -8,6 +8,8 @@ import Header from './header'
 const DefaultLayout = ({ children }) => {
   const { isAuthenticated, isFetching, error } = useAuthentication({})
 
+  console.log(error)
+
   if (isFetching) {
     return null
   }

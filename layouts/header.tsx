@@ -1,6 +1,8 @@
 import Router from 'next/router'
 import React from 'react'
+import Button from '../components/buttons/button'
 import useGetCurrentUser from '../pages/api/v2/_queries/use-get-current-user'
+import { DOTTS_ACCESS_TOKEN } from '../utils/constants'
 import NavLink from './nav-link'
 
 type HeaderLink = {
@@ -13,6 +15,13 @@ type HeaderLink = {
 
 const Header = () => {
   const { currentUser, isFetching, error } = useGetCurrentUser({})
+
+  const handleSignOut = () => {
+    localStorage.removeItem(DOTTS_ACCESS_TOKEN)
+    Router.push({
+      pathname: `/auth/login`,
+    })
+  }
 
   if (isFetching || error) {
     return null
@@ -74,7 +83,13 @@ const Header = () => {
           </div>
         </div>
         <div className="flex justify-center items-center text-gray-100 mr-2">
-          {currentUser.isflUsername}
+          <a
+            className="flex flex-col justify-center items-center mx-2 text-gray-100 cursor-pointer h-full border-b-4 border-neutral-800 hover:border-b-4 hover:border-b-white"
+            onClick={handleSignOut}
+          >
+            <div>{currentUser.isflUsername}</div>
+            <div>Signout</div>
+          </a>
         </div>
       </div>
     </header>
