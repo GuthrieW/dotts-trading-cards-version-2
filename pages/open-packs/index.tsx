@@ -1,6 +1,7 @@
 import { PackType, PACK_TYPES } from '../../utils/packs'
 import useOpenPack from '../api/v2/_mutations/use-open-pack'
 import useGetCurrentUser from '../api/v2/_queries/use-get-current-user'
+import { NextSeo } from 'next-seo'
 
 const OpenPacks = () => {
   const {
@@ -37,27 +38,30 @@ const OpenPacks = () => {
   }
 
   return (
-    <div>
-      {PACK_TYPES.map((packType: PackType) => {
-        const { type, name, imageUrl } = packType
-        const numberOfPacks = getNumberOfPacks(type)
-        return (
-          <div className="flex flex-col">
-            <div>{name}</div>
-            <img
-              className=""
-              src={imageUrl}
-              onClick={() => handleOnClick(type)}
-            />
-            {numberOfPacks > 1 && (
-              <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/4 sm:translate-x-1/2 -translate-y-1/2 bg-neutral-800 rounded-full">
-                {numberOfPacks}
-              </span>
-            )}
-          </div>
-        )
-      })}
-    </div>
+    <>
+      <NextSeo title="Open Packs" />
+      <div>
+        {PACK_TYPES.map((packType: PackType) => {
+          const { type, name, imageUrl } = packType
+          const numberOfPacks = getNumberOfPacks(type)
+          return (
+            <div className="flex flex-col">
+              <div>{name}</div>
+              <img
+                className=""
+                src={imageUrl}
+                onClick={() => handleOnClick(type)}
+              />
+              {numberOfPacks > 1 && (
+                <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/4 sm:translate-x-1/2 -translate-y-1/2 bg-neutral-800 rounded-full">
+                  {numberOfPacks}
+                </span>
+              )}
+            </div>
+          )
+        })}
+      </div>
+    </>
   )
 }
 

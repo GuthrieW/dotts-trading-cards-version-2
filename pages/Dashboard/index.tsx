@@ -1,3 +1,4 @@
+import { NextSeo } from 'next-seo'
 import React from 'react'
 import { toast } from 'react-toastify'
 import InfoButton, { InfoButtonProps } from '../../comps/buttons/info-button'
@@ -81,65 +82,68 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className="m-2">
-      <div className="grid grid-cols-3 gap-4">
-        {UserLinks.map((pageLink: LinkProps, index) => {
-          if (
-            pageLink.disabled &&
-            pageLink.disabled(currentUser as unknown as User)
-          ) {
-            return null
-          } else {
-            return (
-              <InfoButton
-                title={pageLink.title}
-                body={pageLink.body}
-                href={pageLink.href}
-                imageUrl={pageLink.imageUrl}
-              />
-            )
-          }
-        })}
+    <>
+      <NextSeo title="Dashboard" />
+      <div className="m-2">
+        <div className="grid grid-cols-3 gap-4">
+          {UserLinks.map((pageLink: LinkProps, index) => {
+            if (
+              pageLink.disabled &&
+              pageLink.disabled(currentUser as unknown as User)
+            ) {
+              return null
+            } else {
+              return (
+                <InfoButton
+                  title={pageLink.title}
+                  body={pageLink.body}
+                  href={pageLink.href}
+                  imageUrl={pageLink.imageUrl}
+                />
+              )
+            }
+          })}
+        </div>
+        <div className="grid grid-cols-3 gap-4">
+          {EmployeeLinks.map((pageLink: LinkProps) => {
+            if (
+              pageLink.disabled &&
+              pageLink.disabled(currentUser as unknown as User)
+            ) {
+              return null
+            } else {
+              return (
+                <InfoButton
+                  title={pageLink.title}
+                  body={pageLink.body}
+                  href={pageLink.href}
+                  imageUrl={pageLink.imageUrl}
+                />
+              )
+            }
+          })}
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          {AdminLinks.map((pageLink: LinkProps) => {
+            if (
+              pageLink.disabled &&
+              pageLink.disabled(currentUser as unknown as User)
+            ) {
+              return null
+            } else {
+              return (
+                <InfoButton
+                  title={pageLink.title}
+                  body={pageLink.body}
+                  href={pageLink.href}
+                  imageUrl={pageLink.imageUrl}
+                />
+              )
+            }
+          })}
+        </div>
       </div>
-      <div className="grid grid-cols-3 gap-4">
-        {EmployeeLinks.map((pageLink: LinkProps) => {
-          if (
-            pageLink.disabled &&
-            pageLink.disabled(currentUser as unknown as User)
-          ) {
-            return null
-          } else {
-            return (
-              <InfoButton
-                title={pageLink.title}
-                body={pageLink.body}
-                href={pageLink.href}
-                imageUrl={pageLink.imageUrl}
-              />
-            )
-          }
-        })}
-      </div>
-      <div className="grid grid-cols-2 gap-4">
-        {AdminLinks.map((pageLink: LinkProps) => {
-          if (
-            pageLink.disabled &&
-            pageLink.disabled(currentUser as unknown as User)
-          ) {
-            return null
-          } else {
-            return (
-              <InfoButton
-                title={pageLink.title}
-                body={pageLink.body}
-                href={pageLink.href}
-                imageUrl={pageLink.imageUrl}
-              />
-            )
-          }
-        })}
-      </div>
-    </div>
+    </>
   )
 }
 

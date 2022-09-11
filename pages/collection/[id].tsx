@@ -1,3 +1,4 @@
+import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
 import React from 'react'
 import CollectionGrid from '../../comps/grids/collection-grid'
@@ -34,36 +35,43 @@ const Collection = () => {
   const isCurrentUser = userId === currentUser._id
 
   return (
-    <div>
-      {isCurrentUser ? (
-        <h2>Your Collection</h2>
-      ) : (
-        <h2>{isflUsername}'s Collection</h2>
-      )}
-      {cardsOwnedByUser.length === 0 ? (
-        <div className="text-center">
-          <p className="text-xl">
-            {isCurrentUser
-              ? "You don't have any cards in your collection."
-              : `${isflUsername} doesn't have any cards in their collection.`}
-          </p>
-          {isCurrentUser && (
+    <>
+      <NextSeo
+        title={
+          isCurrentUser ? 'Your Collection' : `${isflUsername}'s Collection}`
+        }
+      />
+      <div>
+        {isCurrentUser ? (
+          <h2>Your Collection</h2>
+        ) : (
+          <h2>{isflUsername}'s Collection</h2>
+        )}
+        {cardsOwnedByUser.length === 0 ? (
+          <div className="text-center">
             <p className="text-xl">
-              Go to the{' '}
-              <a
-                className="text-blue-500 hover:text-blue-600 transition-colors duration-200 my-4"
-                href="https://forums.sim-football.com/showthread.php?tid=25272"
-              >
-                pack shop
-              </a>{' '}
-              to get some packs!
+              {isCurrentUser
+                ? "You don't have any cards in your collection."
+                : `${isflUsername} doesn't have any cards in their collection.`}
             </p>
-          )}
-        </div>
-      ) : (
-        <CollectionGrid gridCards={cardsOwnedByUser} />
-      )}
-    </div>
+            {isCurrentUser && (
+              <p className="text-xl">
+                Go to the{' '}
+                <a
+                  className="text-blue-500 hover:text-blue-600 transition-colors duration-200 my-4"
+                  href="https://forums.sim-football.com/showthread.php?tid=25272"
+                >
+                  pack shop
+                </a>{' '}
+                to get some packs!
+              </p>
+            )}
+          </div>
+        ) : (
+          <CollectionGrid gridCards={cardsOwnedByUser} />
+        )}
+      </div>
+    </>
   )
 }
 

@@ -11,6 +11,7 @@ import Table from '../../comps/tables/table'
 import Pagination from '../../comps/tables/pagination'
 import { toast } from 'react-toastify'
 import useApproveCards from '../api/v2/_mutations/use-approve-cards'
+import { NextSeo } from 'next-seo'
 
 const columnData = []
 
@@ -75,29 +76,32 @@ const ProcessCards = () => {
   }
 
   return (
-    <div>
-      <div className="flex justify-end items-center">
-        <SearchBar onChange={updateSearchFilter} />
+    <>
+      <NextSeo title="Process Cards" />
+      <div>
+        <div className="flex justify-end items-center">
+          <SearchBar onChange={updateSearchFilter} />
+        </div>
+        <Table
+          getTableProps={getTableProps}
+          headerGroups={headerGroups}
+          getTableBodyProps={getTableBodyProps}
+          rows={page}
+          prepareRow={prepareRow}
+          onRowClick={handleRowClick}
+        />
+        <Pagination
+          pageOptions={pageOptions}
+          pageIndex={pageIndex}
+          canNextPage={canNextPage}
+          nextPage={nextPage}
+          canPreviousPage={canPreviousPage}
+          previousPage={previousPage}
+          gotoPage={gotoPage}
+          gotoLastPage={gotoLastPage}
+        />
       </div>
-      <Table
-        getTableProps={getTableProps}
-        headerGroups={headerGroups}
-        getTableBodyProps={getTableBodyProps}
-        rows={page}
-        prepareRow={prepareRow}
-        onRowClick={handleRowClick}
-      />
-      <Pagination
-        pageOptions={pageOptions}
-        pageIndex={pageIndex}
-        canNextPage={canNextPage}
-        nextPage={nextPage}
-        canPreviousPage={canPreviousPage}
-        previousPage={previousPage}
-        gotoPage={gotoPage}
-        gotoLastPage={gotoLastPage}
-      />
-    </div>
+    </>
   )
 }
 

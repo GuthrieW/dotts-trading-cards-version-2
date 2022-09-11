@@ -10,6 +10,7 @@ import SearchBar from '../../comps/inputs/search-bar'
 import Pagination from '../../comps/tables/pagination'
 import Table from '../../comps/tables/table'
 import { toast } from 'react-toastify'
+import { NextSeo } from 'next-seo'
 
 const columnData = []
 
@@ -63,29 +64,32 @@ const IssuePacks = () => {
   }
 
   return (
-    <div>
-      <div className="flex justify-end items-center">
-        <SearchBar onChange={updateSearchFilter} />
+    <>
+      <NextSeo title="Issue Packs" />
+      <div>
+        <div className="flex justify-end items-center">
+          <SearchBar onChange={updateSearchFilter} />
+        </div>
+        <Table
+          getTableProps={getTableProps}
+          headerGroups={headerGroups}
+          getTableBodyProps={getTableBodyProps}
+          rows={page}
+          prepareRow={prepareRow}
+          onRowClick={handleRowClick}
+        />
+        <Pagination
+          pageOptions={pageOptions}
+          pageIndex={pageIndex}
+          canNextPage={canNextPage}
+          nextPage={nextPage}
+          canPreviousPage={canPreviousPage}
+          previousPage={previousPage}
+          gotoPage={gotoPage}
+          gotoLastPage={gotoLastPage}
+        />
       </div>
-      <Table
-        getTableProps={getTableProps}
-        headerGroups={headerGroups}
-        getTableBodyProps={getTableBodyProps}
-        rows={page}
-        prepareRow={prepareRow}
-        onRowClick={handleRowClick}
-      />
-      <Pagination
-        pageOptions={pageOptions}
-        pageIndex={pageIndex}
-        canNextPage={canNextPage}
-        nextPage={nextPage}
-        canPreviousPage={canPreviousPage}
-        previousPage={previousPage}
-        gotoPage={gotoPage}
-        gotoLastPage={gotoLastPage}
-      />
-    </div>
+    </>
   )
 }
 

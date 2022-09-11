@@ -10,6 +10,7 @@ import { useRouter } from 'next/router'
 import SearchBar from '../../comps/inputs/search-bar'
 import Pagination from '../../comps/tables/pagination'
 import Table from '../../comps/tables/table'
+import { NextSeo } from 'next-seo'
 
 const columnData: ColumnData[] = [
   {
@@ -83,35 +84,38 @@ const Community = () => {
   }
 
   return (
-    <div>
-      <div className="flex justify-end flex-row max-w-full">
-        <div className="flex justify-center items-center">
-          <SearchBar disabled={isFetching} onChange={updateSearchFilter} />
+    <>
+      <NextSeo title="Community" />
+      <div>
+        <div className="flex justify-end flex-row max-w-full">
+          <div className="flex justify-center items-center">
+            <SearchBar disabled={isFetching} onChange={updateSearchFilter} />
+          </div>
         </div>
+        {isFetching || error ? null : (
+          <>
+            <Table
+              getTableProps={getTableProps}
+              headerGroups={headerGroups}
+              getTableBodyProps={getTableBodyProps}
+              rows={page}
+              prepareRow={prepareRow}
+              onRowClick={handleRowClick}
+            />
+            <Pagination
+              pageOptions={pageOptions}
+              pageIndex={pageIndex}
+              canNextPage={canNextPage}
+              nextPage={nextPage}
+              canPreviousPage={canPreviousPage}
+              previousPage={previousPage}
+              gotoPage={gotoPage}
+              gotoLastPage={gotoLastPage}
+            />
+          </>
+        )}
       </div>
-      {isFetching || error ? null : (
-        <>
-          <Table
-            getTableProps={getTableProps}
-            headerGroups={headerGroups}
-            getTableBodyProps={getTableBodyProps}
-            rows={page}
-            prepareRow={prepareRow}
-            onRowClick={handleRowClick}
-          />
-          <Pagination
-            pageOptions={pageOptions}
-            pageIndex={pageIndex}
-            canNextPage={canNextPage}
-            nextPage={nextPage}
-            canPreviousPage={canPreviousPage}
-            previousPage={previousPage}
-            gotoPage={gotoPage}
-            gotoLastPage={gotoLastPage}
-          />
-        </>
-      )}
-    </div>
+    </>
   )
 }
 

@@ -1,3 +1,4 @@
+import { NextSeo } from 'next-seo'
 import React, { useMemo } from 'react'
 import {
   useTable,
@@ -136,29 +137,32 @@ const EditUsers = () => {
   }
 
   return (
-    <div>
-      <div className="flex justify-between items-center">
-        <SearchBar onChange={updateSearchFilter} />
+    <>
+      <NextSeo title="Edit Users" />
+      <div>
+        <div className="flex justify-between items-center">
+          <SearchBar onChange={updateSearchFilter} />
+        </div>
+        <Table
+          getTableProps={getTableProps}
+          headerGroups={headerGroups}
+          getTableBodyProps={getTableBodyProps}
+          rows={page}
+          prepareRow={prepareRow}
+          onRowClick={handleRowClick}
+        />
+        <Pagination
+          pageOptions={pageOptions}
+          pageIndex={pageIndex}
+          canNextPage={canNextPage}
+          nextPage={nextPage}
+          canPreviousPage={canPreviousPage}
+          previousPage={previousPage}
+          gotoPage={gotoPage}
+          gotoLastPage={gotoLastPage}
+        />
       </div>
-      <Table
-        getTableProps={getTableProps}
-        headerGroups={headerGroups}
-        getTableBodyProps={getTableBodyProps}
-        rows={page}
-        prepareRow={prepareRow}
-        onRowClick={handleRowClick}
-      />
-      <Pagination
-        pageOptions={pageOptions}
-        pageIndex={pageIndex}
-        canNextPage={canNextPage}
-        nextPage={nextPage}
-        canPreviousPage={canPreviousPage}
-        previousPage={previousPage}
-        gotoPage={gotoPage}
-        gotoLastPage={gotoLastPage}
-      />
-    </div>
+    </>
   )
 }
 
