@@ -10,7 +10,14 @@ import { DOTTS_ACCESS_TOKEN } from '../../utils/constants'
 import { NextSeo } from 'next-seo'
 
 const Login = () => {
-  const { login, accessToken, isSuccess, isLoading, error } = useLogin()
+  const {
+    login,
+    accessToken,
+    authenticationFailed,
+    isSuccess,
+    isLoading,
+    error,
+  } = useLogin()
 
   if (isSuccess && accessToken) {
     toast.success('Login successful')
@@ -18,6 +25,10 @@ const Login = () => {
     if (typeof window !== 'undefined') {
       Router.push('/home')
     }
+  }
+
+  if (authenticationFailed) {
+    toast.error(authenticationFailed)
   }
 
   if (error) {

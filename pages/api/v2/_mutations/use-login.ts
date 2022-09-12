@@ -10,6 +10,7 @@ type UseLoginRequest = {
 type UseLogin = {
   login: Function
   accessToken: string
+  authenticationFailed: any
   isSuccess: boolean
   isLoading: boolean
   error: any
@@ -29,6 +30,7 @@ const useLogin = (): UseLogin => {
   return {
     login: mutate,
     accessToken: data?.data?.accessToken,
+    authenticationFailed: data?.data?.error,
     isSuccess,
     isLoading,
     error,
