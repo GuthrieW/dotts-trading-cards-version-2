@@ -190,7 +190,7 @@ const CollectionGrid = ({ gridCards }: CollectionGridProps) => {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <div className="w-full lg:w-3/4 flex justify-between items-center">
+      <div className="w-full flex justify-between items-center">
         <div className="flex">
           <DropdownWithCheckboxGroup
             title="Rarity"

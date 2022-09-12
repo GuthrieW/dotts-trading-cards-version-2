@@ -16,7 +16,7 @@ const Login = () => {
     toast.success('Login successful')
     localStorage.setItem(DOTTS_ACCESS_TOKEN, accessToken)
     if (typeof window !== 'undefined') {
-      Router.push('/dashboard')
+      Router.push('/home')
     }
   }
 
