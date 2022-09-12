@@ -51,11 +51,11 @@ const rarityToNumercialValue = (rarity) => {
       return 3
     case LEGEND:
       return 4
-    case AWARD:
+    case CAPTAIN:
       return 5
-    case HALL_OF_FAME:
+    case LEAST_VALUABLE_PLAYER:
       return 6
-    case ULTIMUS_CHAMPION:
+    case TEAM_LOGO:
       return 7
     case HOLOGRAPH_EXPANSION:
       return 8
@@ -63,9 +63,9 @@ const rarityToNumercialValue = (rarity) => {
       return 9
     case FANTASY_KINGS:
       return 10
-    case CAPTAIN:
+    case AWARD:
       return 11
-    case TEAM_LOGO:
+    case ULTIMUS_CHAMPION:
       return 12
     case UNIQUE:
       return 13
@@ -75,7 +75,7 @@ const rarityToNumercialValue = (rarity) => {
       return 15
     case ANNIVERSARY_SECOND_TEAM:
       return 16
-    case LEAST_VALUABLE_PLAYER:
+    case HALL_OF_FAME:
       return 17
     default:
       return 1000

@@ -2,61 +2,84 @@ import { PackType, PACK_TYPES } from '../../utils/packs'
 import useOpenPack from '../api/v2/_mutations/use-open-pack'
 import useGetCurrentUser from '../api/v2/_queries/use-get-current-user'
 import { NextSeo } from 'next-seo'
+import { toast } from 'react-toastify'
+import Router from 'next/router'
+
+const ULTIMUS = 'ultimus'
+const REGULAR = 'regular'
 
 const OpenPacks = () => {
   const {
     currentUser,
-    isFetching,
-    error: getCurrentUserError,
+    isFetching: currentUserIsFetching,
+    error: currentUserError,
   } = useGetCurrentUser({})
-  const { openPack, isSuccess, isLoading, error: openPackError } = useOpenPack()
+  const {
+    openPack,
+    isSuccess: openPackIsSuccess,
+    isLoading: openPackIsLoading,
+    error: openPackError,
+  } = useOpenPack()
 
-  const getNumberOfPacks = (packType) => {
-    if (packType === 'regular') {
-      return currentUser?.ownedRegularPacks
-    } else if (packType === 'ultimus') {
-      return currentUser?.ownedUltimusPacks
-    }
+  if (currentUserIsFetching) {
+    return null
+  }
 
-    return 0
+  if (currentUserError) {
+    toast.warning('Error fetching user')
+    return null
+  }
+
+  if (openPackIsSuccess) {
+    Router.push('/open-packs/last-pack')
   }
 
   const handleOnClick = async (packType) => {
-    openPack(packType)
-    // if (currentUser) {
-    //   if (packType === 'regular') {
-    //     if (currentUser.ownedRegularPacks > 0) {
-    //       openPack()
-    //       setPackType(packType)
-    //     }
-    //   } else if (packType === 'ultimus') {
-    //     if (currentUser.ownedUltimusPacks > 0) {
-    //       setPackType(packType)
-    //     }
-    //   }
-    // }
+    if (openPackIsLoading) {
+      toast.warning('Already opening a pack')
+      return
+    }
+
+    if (packType === ULTIMUS) {
+      if (currentUser.ownedUltimusPacks > 0) {
+        openPack({ packType: ULTIMUS })
+      }
+    } else if (packType === REGULAR) {
+      if (currentUser.ownedRegularPacks > 0) {
+        openPack({ packType: REGULAR })
+      }
+    }
+  }
+
+  const getNumberOfPacks = (packType) => {
+    if (packType === ULTIMUS) {
+      return currentUser.ownedUltimusPacks
+    } else if (packType === REGULAR) {
+      return currentUser.ownedRegularPacks
+    } else {
+      toast.warning('Error getting number of packs')
+    }
   }
 
   return (
     <>
       <NextSeo title="Open Packs" />
-      <div>
-        {PACK_TYPES.map((packType: PackType) => {
+      <div className="m-2 flex flex-row justify-center items-center">
+        {PACK_TYPES.map((packType: PackType, index) => {
           const { type, name, imageUrl } = packType
           const numberOfPacks = getNumberOfPacks(type)
+
           return (
-            <div className="flex flex-col">
-              <div>{name}</div>
+            <div
+              key={index}
+              className="m-8 flex flex-col justify-center items-center w-1/6"
+            >
+              {numberOfPacks} {name} Packs
               <img
-                className=""
-                src={imageUrl}
                 onClick={() => handleOnClick(type)}
+                src={imageUrl}
+                className="cursor-pointer transition ease-in-out bg-blue-500 hover:scale-110 duration-300 mt-5"
               />
-              {numberOfPacks > 1 && (
-                <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/4 sm:translate-x-1/2 -translate-y-1/2 bg-neutral-800 rounded-full">
-                  {numberOfPacks}
-                </span>
-              )}
             </div>
           )
         })}

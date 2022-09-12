@@ -62,7 +62,7 @@ const IssuePacks = () => {
   }
 
   if (error) {
-    toast.warning('Error fetching users')
+    toast.error('Error fetching users')
   }
 
   return (

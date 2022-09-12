@@ -11,7 +11,7 @@ const SubmitCards = () => {
   const { insertCard, isSuccess, isLoading, error } = useInsertCard()
 
   if (error) {
-    toast.warning('Error inserting card')
+    toast.error('Error inserting card')
   }
 
   if (isSuccess) {

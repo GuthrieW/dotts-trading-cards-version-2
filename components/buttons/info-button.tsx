@@ -32,7 +32,7 @@ const InfoButton = ({
     return (
       <a
         href={href}
-        className="flex justify-center items-center cursor-pointer border-neutral-600 bg-slate-500 rounded m-2 "
+        className="flex justify-center items-center cursor-pointer bg-blue-500 hover:bg-blue-700 text-white  rounded m-2 "
       >
         <div>{title}</div>
         <div>{body}</div>

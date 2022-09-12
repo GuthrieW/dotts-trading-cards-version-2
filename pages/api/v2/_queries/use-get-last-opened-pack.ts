@@ -23,13 +23,13 @@ const useGetLastOpenedPack =
             Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
           },
           method: Methods.GET,
-          url: '',
+          url: '/api/v2/cards/last-pack',
         })
       }
     )
 
     return {
-      lastOpenedPack: data.data,
+      lastOpenedPack: data?.data?.lastOpenedPack || [],
       isFetching,
       error,
     }

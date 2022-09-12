@@ -29,6 +29,13 @@ const Header = () => {
 
   const headersLinks: HeaderLink[] = [
     {
+      id: 'dashboard',
+      headerText: 'Dashboard',
+      href: '/dashboard',
+      admin: false,
+      cardTeam: false,
+    },
+    {
       id: 'collection',
       headerText: 'Collection',
       href: `/collection/${currentUser._id}`,
@@ -39,13 +46,6 @@ const Header = () => {
       id: 'community',
       headerText: 'Community',
       href: '/community',
-      admin: false,
-      cardTeam: false,
-    },
-    {
-      id: 'dashboard',
-      headerText: 'Dashboard',
-      href: '/dashboard',
       admin: false,
       cardTeam: false,
     },

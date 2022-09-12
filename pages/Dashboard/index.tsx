@@ -1,6 +1,7 @@
 import { NextSeo } from 'next-seo'
 import React from 'react'
 import { toast } from 'react-toastify'
+import DashboardButton from '../../components/buttons/dashboard-button'
 import InfoButton, {
   InfoButtonProps,
 } from '../../components/buttons/info-button'
@@ -80,14 +81,37 @@ const AdminDashboard = () => {
   }
 
   if (error) {
-    toast.warning('Error fetching user information')
+    toast.error('Error fetching user information')
   }
 
   return (
     <>
       <NextSeo title="Dashboard" />
       <h1>Dashboard</h1>
-      <div className="m-2">
+      <div className="flex flex-col justify-start items-center w-full">
+        {UserLinks.map((link) => (
+          <DashboardButton
+            title={link.title}
+            body={link.body}
+            href={link.href}
+          />
+        ))}
+        {EmployeeLinks.map((link) => (
+          <DashboardButton
+            title={link.title}
+            body={link.body}
+            href={link.href}
+          />
+        ))}
+        {AdminLinks.map((link) => (
+          <DashboardButton
+            title={link.title}
+            body={link.body}
+            href={link.href}
+          />
+        ))}
+      </div>
+      {/* <div className="m-2">
         <div className="grid grid-cols-3 gap-4">
           {UserLinks.map((pageLink: LinkProps, index) => {
             if (
@@ -148,7 +172,7 @@ const AdminDashboard = () => {
             }
           })}
         </div>
-      </div>
+      </div> */}
     </>
   )
 }

@@ -17,7 +17,7 @@ const Table = ({
   prepareRow,
   onRowClick,
 }: TableProps) => (
-  <div className="my-2 rounded-md border border-t-0 border-neutral-800 overflow-x-auto overflow-y-hidden">
+  <div className="my-2 rounded-md border border-t-0 border-neutral-800 overflow-x-auto overflow-y-hidden cursor-pointer">
     <table className="w-full" {...getTableProps()}>
       <thead className="bg-neutral-800 text-gray-100 relative">
         {headerGroups.map((headerGroup, headerGroupIndex) => (

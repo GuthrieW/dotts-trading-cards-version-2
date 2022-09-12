@@ -38,7 +38,7 @@ const DropdownWithCheckboxGroup = ({
   const totalSelected = getTotalSelected(checkboxes, selectedCheckboxIds)
 
   return (
-    <div className="relative z-10 sm:m-2">
+    <div className="relative z-10 sm:m-2 border border-black rounded">
       <button
         className="inline-flex items-center px-4 py-2 text-sm font-medium focus:outline-none focus:shadow-outline"
         onClick={toggleIsOpen}

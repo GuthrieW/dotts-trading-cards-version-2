@@ -128,7 +128,7 @@ const EditCards = () => {
   }
 
   if (error) {
-    toast.warning('Error fetching cards')
+    toast.error('Error fetching cards')
   }
 
   return (
