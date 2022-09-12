@@ -3,18 +3,18 @@ import axios from 'axios'
 import { DOTTS_ACCESS_TOKEN } from '../../../../utils/constants'
 import { Methods } from '../common'
 
-type UseApproveCardsRequest = {}
+type UseApproveCardRequest = {}
 
-type UseApproveCards = {
-  approveCards: Function
+type UseApproveCard = {
+  approveCard: Function
   isSuccess: boolean
   isLoading: boolean
   error: any
 }
 
-const useApproveCards = (): UseApproveCards => {
+const useApproveCard = (): UseApproveCard => {
   const { mutate, isSuccess, isLoading, error } = useMutation(
-    ({}: UseApproveCardsRequest) => {
+    ({}: UseApproveCardRequest) => {
       return axios({
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
@@ -27,11 +27,11 @@ const useApproveCards = (): UseApproveCards => {
   )
 
   return {
-    approveCards: mutate,
+    approveCard: mutate,
     isSuccess,
     isLoading,
     error,
   }
 }
 
-export default useApproveCards
+export default useApproveCard

@@ -6,7 +6,7 @@ type CheckboxProps = {
   text: string
 }
 
-export type DropdownWithCheckboxGroupProps = {
+type DropdownWithCheckboxGroupProps = {
   title: string
   checkboxes: CheckboxProps[]
   selectedCheckboxIds: string[]

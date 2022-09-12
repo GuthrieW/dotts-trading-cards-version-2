@@ -23,13 +23,15 @@ const useGetUnapprovedCards =
             Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
           },
           method: Methods.GET,
-          url: '',
+          url: '/api/v2/cards/unapproved',
         })
       }
     )
 
+    console.log('data', data)
+
     return {
-      unapprovedCards: data.data,
+      unapprovedCards: data?.data?.unapprovedCards || [],
       isFetching,
       error,
     }

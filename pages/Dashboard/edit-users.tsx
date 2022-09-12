@@ -142,7 +142,6 @@ const EditUsers = () => {
       <h1>Edit Users</h1>
       <div>
         <div className="w-full flex justify-between items-center">
-          {/* This div left empty on purpose */}
           <div></div>
           <div className="flex flex-row justify-end items-center">
             <SearchBar onChange={updateSearchFilter} />

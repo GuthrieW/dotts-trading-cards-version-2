@@ -1,6 +1,6 @@
 import React from 'react'
 
-export type DashboardButtonProps = {
+type DashboardButtonProps = {
   title: string
   body?: string
   href: string

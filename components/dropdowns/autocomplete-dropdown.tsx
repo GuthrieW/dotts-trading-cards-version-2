@@ -1,12 +1,12 @@
 import { Field } from 'formik'
 import React, { useId } from 'react'
 
-export type SelectOption = {
+type SelectOption = {
   key: string
   value: string
 }
 
-export type AutocompleteDropdownProps = {
+type AutocompleteDropdownProps = {
   title: string
   options: SelectOption[]
   disabled?: boolean

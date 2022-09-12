@@ -7,7 +7,7 @@ type ButtonProps = {
   text: string
 }
 
-export type ButtonGroupProps = {
+type ButtonGroupProps = {
   buttons: ButtonProps[]
   selectedButtonId: string
 }

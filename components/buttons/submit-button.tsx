@@ -1,6 +1,6 @@
 import React, { MouseEventHandler } from 'react'
 
-export type SubmitButtonProps = {
+type SubmitButtonProps = {
   text: string
   onClick: MouseEventHandler<HTMLButtonElement>
   isLoading: boolean

@@ -3,7 +3,7 @@ import Link from 'next/link'
 import TextIcon from './text-icon'
 import TradeItems from './trade-items'
 
-export type TradeDisplayProps = {
+type TradeDisplayProps = {
   trade: DottsTrade
   allowHref?: boolean
 }

@@ -15,7 +15,7 @@ type User = {
 }
 
 type LinkProps = InfoButtonProps & {
-  disabled?: (user: User) => boolean
+  enabled?: (user: User) => boolean
 }
 
 const UserLinks: LinkProps[] = [
@@ -45,17 +45,17 @@ const EmployeeLinks: LinkProps[] = [
   {
     title: 'Process Cards',
     href: '/dashboard/process-cards',
-    // disabled: (user: User) => user.isAdmin || user.isProcessor,
+    enabled: (user: User) => user.isAdmin || user.isProcessor,
   },
   {
     title: 'Submit Cards for Review',
     href: '/dashboard/submit-cards',
-    // disabled: (user: User) => user.isAdmin || user.isSubmitter,
+    enabled: (user: User) => user.isAdmin || user.isSubmitter,
   },
   {
     title: 'Issue Packs',
     href: '/dashboard/issue-packs',
-    // disabled: (user: User) => user.isAdmin || user.isPackIssuer,
+    enabled: (user: User) => user.isAdmin || user.isPackIssuer,
   },
 ]
 
@@ -63,13 +63,13 @@ const AdminLinks: LinkProps[] = [
   {
     title: 'Edit Cards',
     href: '/dashboard/edit-cards',
-    // disabled: (user: User) =>
-    // user.isAdmin || user.isSubmitter || user.isProcessor,
+    enabled: (user: User) =>
+      user.isAdmin || user.isSubmitter || user.isProcessor,
   },
   {
     title: 'Edit Users',
     href: '/dashboard/edit-users',
-    // disabled: (user: User) => user.isAdmin || user.isPackIssuer,
+    enabled: (user: User) => user.isAdmin || user.isPackIssuer,
   },
 ]
 
@@ -96,83 +96,35 @@ const AdminDashboard = () => {
             href={link.href}
           />
         ))}
-        {EmployeeLinks.map((link) => (
-          <DashboardButton
-            title={link.title}
-            body={link.body}
-            href={link.href}
-          />
-        ))}
-        {AdminLinks.map((link) => (
-          <DashboardButton
-            title={link.title}
-            body={link.body}
-            href={link.href}
-          />
-        ))}
+        {EmployeeLinks.map((link) => {
+          const isEnabled = link.enabled(currentUser)
+          return (
+            <>
+              {isEnabled && (
+                <DashboardButton
+                  title={link.title}
+                  body={link.body}
+                  href={link.href}
+                />
+              )}
+            </>
+          )
+        })}
+        {AdminLinks.map((link) => {
+          const isEnabled = link.enabled(currentUser)
+          return (
+            <>
+              {isEnabled && (
+                <DashboardButton
+                  title={link.title}
+                  body={link.body}
+                  href={link.href}
+                />
+              )}
+            </>
+          )
+        })}
       </div>
-      {/* <div className="m-2">
-        <div className="grid grid-cols-3 gap-4">
-          {UserLinks.map((pageLink: LinkProps, index) => {
-            if (
-              pageLink.disabled &&
-              pageLink.disabled(currentUser as unknown as User)
-            ) {
-              return null
-            } else {
-              return (
-                <InfoButton
-                  key={index}
-                  title={pageLink.title}
-                  body={pageLink.body}
-                  href={pageLink.href}
-                  imageUrl={pageLink.imageUrl}
-                />
-              )
-            }
-          })}
-        </div>
-        <div className="grid grid-cols-3 gap-4">
-          {EmployeeLinks.map((pageLink: LinkProps, index) => {
-            if (
-              pageLink.disabled &&
-              pageLink.disabled(currentUser as unknown as User)
-            ) {
-              return null
-            } else {
-              return (
-                <InfoButton
-                  key={index}
-                  title={pageLink.title}
-                  body={pageLink.body}
-                  href={pageLink.href}
-                  imageUrl={pageLink.imageUrl}
-                />
-              )
-            }
-          })}
-        </div>
-        <div className="grid grid-cols-2 gap-4">
-          {AdminLinks.map((pageLink: LinkProps, index) => {
-            if (
-              pageLink.disabled &&
-              pageLink.disabled(currentUser as unknown as User)
-            ) {
-              return null
-            } else {
-              return (
-                <InfoButton
-                  key={index}
-                  title={pageLink.title}
-                  body={pageLink.body}
-                  href={pageLink.href}
-                  imageUrl={pageLink.imageUrl}
-                />
-              )
-            }
-          })}
-        </div>
-      </div> */}
     </>
   )
 }

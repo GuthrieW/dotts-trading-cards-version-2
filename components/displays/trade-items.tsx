@@ -1,6 +1,6 @@
 import React from 'react'
 
-export type TradeItemsProps = {
+type TradeItemsProps = {
   userId: string
   cards: Card[]
   tradePartnerRole: 'offering' | 'receiving'
