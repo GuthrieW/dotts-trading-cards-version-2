@@ -103,7 +103,7 @@ const ProcessCards = () => {
   } = useDeleteCard()
 
   const initialState = useMemo(() => {
-    return { sortBy: [{ id: 'username' }] }
+    return { sortBy: [{ id: '_id' }] }
   }, [])
 
   const columns = useMemo(() => columnData, [])
