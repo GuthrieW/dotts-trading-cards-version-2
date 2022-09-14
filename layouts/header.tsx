@@ -18,9 +18,7 @@ const Header = () => {
 
   const handleSignOut = () => {
     localStorage.removeItem(DOTTS_ACCESS_TOKEN)
-    Router.push({
-      pathname: `/auth/login`,
-    })
+    Router.push('/auth/login')
   }
 
   if (isFetching || error) {

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import useGetUnapprovedCards from '../api/v2/_queries/use-get-unapproved-cards'
 import {
   useTable,
@@ -14,6 +14,19 @@ import useApproveCard from '../api/v2/_mutations/use-approve-card'
 import { NextSeo } from 'next-seo'
 import useDeleteCard from '../api/v2/_mutations/use-delete-card'
 import { format } from 'date-fns'
+import FormModal from '../../components/modals/form-modal'
+import FormWrapper from '../../components/forms/form-wrapper'
+import { Form, Formik } from 'formik'
+import TextField from '../../components/fields/text-field'
+import Button from '../../components/buttons/button'
+
+type EditableCardData = {
+  _id: string
+  imageUrl: string
+  playerName: string
+  playerTeam: string
+  rarity: string
+}
 
 const columnData = [
   {
@@ -82,16 +95,22 @@ const columnData = [
   },
 ]
 const ProcessCards = () => {
+  const [showModal, setShowModal] = useState<boolean>(false)
+  const [selectedCardData, setSelectedCardData] =
+    useState<EditableCardData>(null)
+
   const {
     unapprovedCards,
     isFetching: getUnapprovedCardsIsFetching,
     error: getUnapprovedCardsError,
   } = useGetUnapprovedCards({})
 
+  console.log('unapprovedCards', unapprovedCards)
+
   const {
     approveCard,
     isSuccess: approveCardsIsSuccess,
-    isLoading: getUnapprovedCardsIsLoading,
+    isLoading: approveCardIsLoading,
     error: approveCardsError,
   } = useApproveCard()
 
@@ -107,7 +126,7 @@ const ProcessCards = () => {
   }, [])
 
   const columns = useMemo(() => columnData, [])
-  const data = useMemo(() => unapprovedCards, [])
+  const data = useMemo(() => unapprovedCards, [unapprovedCards])
 
   const {
     getTableProps,
@@ -139,15 +158,26 @@ const ProcessCards = () => {
   const updateSearchFilter = (event) => setGlobalFilter(event.target.value)
 
   const handleRowClick = (row) => {
-    console.log(row.values)
+    const cardData: EditableCardData = {
+      _id: row?.values?._id ?? '',
+      imageUrl: row?.values?.imageUrl ?? '',
+      playerName: row?.values?.playerName ?? '',
+      playerTeam: row?.values?.playerTeam ?? '',
+      rarity: row?.values?.rarity ?? '',
+    }
+
+    setShowModal(true)
+    setSelectedCardData(cardData)
   }
 
-  if (getUnapprovedCardsError) {
-    toast.warning('Error fetching unapproved cards')
+  if (approveCardsIsSuccess) {
+    toast.success('Successfuly approved card')
+    setShowModal(false)
   }
 
-  if (approveCardsError) {
-    toast.warning('Error approving cards')
+  if (deleteCardIsSuccess) {
+    toast.success('Successfuly deleted card')
+    setShowModal(false)
   }
 
   console.log('Process Cards', unapprovedCards)
@@ -182,6 +212,92 @@ const ProcessCards = () => {
           gotoLastPage={gotoLastPage}
         />
       </div>
+      {showModal && (
+        <FormModal
+          title={`Process ${selectedCardData.playerName}`}
+          toggleModal={() => {
+            setShowModal(false)
+            setSelectedCardData(null)
+          }}
+        >
+          <div>
+            <FormWrapper>
+              <Formik
+                initialValues={{
+                  _id: selectedCardData._id,
+                  imageUrl: selectedCardData.imageUrl,
+                  playerName: selectedCardData.playerName,
+                  playerTeam: selectedCardData.playerTeam,
+                  rarity: selectedCardData.rarity,
+                }}
+                onSubmit={async (values) => {}}
+              >
+                {({ handleSubmit, initialValues }) => (
+                  <Form className="w-full">
+                    <TextField
+                      name="playerName"
+                      label="Player Name"
+                      type="text"
+                      disabled={true}
+                    />
+                    <TextField
+                      name="imageUrl"
+                      label="Image URL"
+                      type="text"
+                      disabled={true}
+                    />
+                    <TextField
+                      name="playerTeam"
+                      label="Player Team"
+                      type="text"
+                      disabled={true}
+                    />
+                    <TextField
+                      name="rarity"
+                      label="Rarity"
+                      type="text"
+                      disabled={true}
+                    />
+                    <div>
+                      <Button
+                        onClick={() => {
+                          if (approveCardIsLoading || deleteCardIsLoading) {
+                            toast.warning('Already approving card')
+                          }
+                          approveCard(selectedCardData._id)
+                        }}
+                        isLoading={approveCardIsLoading || deleteCardIsLoading}
+                      >
+                        Approve Card
+                      </Button>
+                      <Button
+                        isLoading={approveCardIsLoading || deleteCardIsLoading}
+                        onClick={() => {
+                          if (approveCardIsLoading || deleteCardIsLoading) {
+                            toast.warning('Already deleting card')
+                          }
+                          deleteCard(selectedCardData._id)
+                        }}
+                      >
+                        Delete Card
+                      </Button>
+                      <Button
+                        isLoading={approveCardIsLoading || deleteCardIsLoading}
+                        onClick={() => {
+                          setShowModal(false)
+                          setSelectedCardData(null)
+                        }}
+                      >
+                        Cancel
+                      </Button>
+                    </div>
+                  </Form>
+                )}
+              </Formik>
+            </FormWrapper>
+          </div>
+        </FormModal>
+      )}
     </>
   )
 }
