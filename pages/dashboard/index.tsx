@@ -18,7 +18,7 @@ type LinkProps = InfoButtonProps & {
   enabled?: (user: User) => boolean
 }
 
-const UserLinks: LinkProps[] = [
+const ExternalLinks: LinkProps[] = [
   {
     title: 'How to Purchase',
     body: 'Start here!',
@@ -41,30 +41,27 @@ const UserLinks: LinkProps[] = [
   },
 ]
 
-const EmployeeLinks: LinkProps[] = [
-  {
-    title: 'Process Cards',
-    href: '/dashboard/process-cards',
-    enabled: (user: User) => user.isAdmin || user.isProcessor,
-  },
+const InternalLinks: LinkProps[] = [
   {
     title: 'Submit Cards for Review',
     href: '/dashboard/submit-cards',
     enabled: (user: User) => user.isAdmin || user.isSubmitter,
   },
   {
-    title: 'Issue Packs',
-    href: '/dashboard/issue-packs',
-    enabled: (user: User) => user.isAdmin || user.isPackIssuer,
+    title: 'Process Cards',
+    href: '/dashboard/process-cards',
+    enabled: (user: User) => user.isAdmin || user.isProcessor,
   },
-]
-
-const AdminLinks: LinkProps[] = [
   {
     title: 'Edit Cards',
     href: '/dashboard/edit-cards',
     enabled: (user: User) =>
       user.isAdmin || user.isSubmitter || user.isProcessor,
+  },
+  {
+    title: 'Issue Packs',
+    href: '/dashboard/issue-packs',
+    enabled: (user: User) => user.isAdmin || user.isPackIssuer,
   },
   {
     title: 'Edit Users',
@@ -89,28 +86,14 @@ const AdminDashboard = () => {
       <NextSeo title="Dashboard" />
       <h1>Dashboard</h1>
       <div className="flex flex-col justify-start items-center w-full">
-        {UserLinks.map((link) => (
+        {ExternalLinks.map((link) => (
           <DashboardButton
             title={link.title}
             body={link.body}
             href={link.href}
           />
         ))}
-        {EmployeeLinks.map((link) => {
-          const isEnabled = link.enabled(currentUser)
-          return (
-            <>
-              {isEnabled && (
-                <DashboardButton
-                  title={link.title}
-                  body={link.body}
-                  href={link.href}
-                />
-              )}
-            </>
-          )
-        })}
-        {AdminLinks.map((link) => {
+        {InternalLinks.map((link) => {
           const isEnabled = link.enabled(currentUser)
           return (
             <>

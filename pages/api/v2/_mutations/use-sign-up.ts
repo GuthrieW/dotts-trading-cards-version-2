@@ -1,5 +1,5 @@
-import { useMutation } from 'react-query'
-import axios, { AxiosResponse } from 'axios'
+import { QueryClient, useMutation, useQueryClient } from 'react-query'
+import axios from 'axios'
 import { DOTTS_ACCESS_TOKEN } from '../../../../utils/constants'
 import { Methods } from '../common'
 
@@ -17,6 +17,7 @@ type UseSignUp = {
 }
 
 const useSignUp = (): UseSignUp => {
+  const queryClient: QueryClient = useQueryClient()
   const { mutate, isSuccess, isLoading, error } = useMutation(
     ({ email, username, password }: UseSignUpRequest) => {
       return axios({
@@ -31,7 +32,8 @@ const useSignUp = (): UseSignUp => {
           password,
         },
       })
-    }
+    },
+    { onSuccess: () => {}, onError: () => {} }
   )
 
   return {

@@ -323,10 +323,11 @@ const EditUsers = () => {
                     </div>
                     <div className="flex justify-end">
                       <SubmitButton
-                        text="Submit"
                         onClick={() => handleSubmit()}
                         isLoading={isLoading}
-                      />
+                      >
+                        Submit
+                      </SubmitButton>
                       <Button
                         text="Cancel"
                         onClick={() => setShowModal(false)}

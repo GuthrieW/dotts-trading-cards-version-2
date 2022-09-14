@@ -1,12 +1,12 @@
 import React, { MouseEventHandler } from 'react'
 
 type SubmitButtonProps = {
-  text: string
   onClick: MouseEventHandler<HTMLButtonElement>
   isLoading: boolean
+  children: any
 }
 
-const SubmitButton = ({ text, onClick, isLoading }: SubmitButtonProps) => {
+const SubmitButton = ({ children, onClick, isLoading }: SubmitButtonProps) => {
   return (
     <button
       onClick={onClick}
@@ -14,7 +14,7 @@ const SubmitButton = ({ text, onClick, isLoading }: SubmitButtonProps) => {
       disabled={isLoading}
       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2"
     >
-      {text}
+      {children}
     </button>
   )
 }

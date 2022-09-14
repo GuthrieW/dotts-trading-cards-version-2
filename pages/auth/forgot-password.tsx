@@ -43,8 +43,9 @@ const ForgotPassword = () => {
                 <SubmitButton
                   onClick={() => handleSubmit()}
                   isLoading={isLoading}
-                  text="Submit"
-                />
+                >
+                  Submit
+                </SubmitButton>
                 <a
                   className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
                   href="/auth/login"

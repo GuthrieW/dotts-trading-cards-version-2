@@ -11,8 +11,8 @@ type TradeDisplayProps = {
 const TradeDisplay = ({ trade, allowHref = true }: TradeDisplayProps) => {
   const {
     _id,
-    offeringUserId,
-    receivingUserId,
+    offeringUsername,
+    receivingUsername,
     offeringUserCardIds: offeringUserCards,
     receivingUserCardIds: receivingUserCards,
     tradeStatus,
@@ -32,12 +32,12 @@ const TradeDisplay = ({ trade, allowHref = true }: TradeDisplayProps) => {
       >
         <div className="flex flex-row w-3/4">
           <TradeItems
-            userId={offeringUserId}
+            username={offeringUsername}
             cards={offeringUserCards}
             tradePartnerRole="offering"
           />
           <TradeItems
-            userId={receivingUserId}
+            username={receivingUsername}
             cards={receivingUserCards}
             tradePartnerRole="receiving"
           />

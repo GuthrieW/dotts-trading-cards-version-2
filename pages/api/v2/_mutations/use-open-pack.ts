@@ -1,4 +1,4 @@
-import { useMutation } from 'react-query'
+import { QueryClient, useMutation, useQueryClient } from 'react-query'
 import axios from 'axios'
 import { DOTTS_ACCESS_TOKEN } from '../../../../utils/constants'
 import { Methods } from '../common'
@@ -15,6 +15,7 @@ type UseOpenPack = {
 }
 
 const useOpenPack = (): UseOpenPack => {
+  const queryClient: QueryClient = useQueryClient()
   const { mutate, isSuccess, isLoading, error } = useMutation(
     ({ packType }: UseOpenPackRequest) => {
       return axios({
@@ -25,7 +26,8 @@ const useOpenPack = (): UseOpenPack => {
         url: '/api/v2/packs/open',
         data: { packType },
       })
-    }
+    },
+    { onSuccess: () => {}, onError: () => {} }
   )
 
   return {

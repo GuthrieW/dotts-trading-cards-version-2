@@ -1,4 +1,4 @@
-import { useMutation } from 'react-query'
+import { QueryClient, useMutation, useQueryClient } from 'react-query'
 import axios from 'axios'
 import { DOTTS_ACCESS_TOKEN } from '../../../../utils/constants'
 import { Methods } from '../common'
@@ -13,6 +13,7 @@ type UseApproveCard = {
 }
 
 const useApproveCard = (): UseApproveCard => {
+  const queryClient: QueryClient = useQueryClient()
   const { mutate, isSuccess, isLoading, error } = useMutation(
     ({}: UseApproveCardRequest) => {
       return axios({
@@ -23,7 +24,8 @@ const useApproveCard = (): UseApproveCard => {
         url: '',
         data: {},
       })
-    }
+    },
+    { onSuccess: () => {}, onError: () => {} }
   )
 
   return {

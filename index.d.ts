@@ -51,4 +51,6 @@ type DottsTrade = {
   tradeStatus: TradeStatus
   tradeOfferDate: any
   tradeResolvedDate: any
+  offeringUsername?: string
+  receivingUsername?: string
 }

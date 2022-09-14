@@ -27,22 +27,57 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
         return
       }
 
-      const tradesOfferedToUser = await database
+      const tradesOfferedToUser: any = await database
         .collection(TableNames.DOTTS_TRADES)
         .find({ offeringUserId: account._id.toString() })
         .toArray()
 
-      const tradesOfferedByUser = await database
+      const tradesOfferedByUser: any = await database
         .collection(TableNames.DOTTS_TRADES)
         .find({ receivingUserId: account._id.toString() })
         .toArray()
 
-      const allTradesInvolvingUser = [
+      const allTradesInvolvingUser: DottsTrade[] = [
         ...tradesOfferedToUser,
         ...tradesOfferedByUser,
       ]
 
-      response.status(200).json({ trades: allTradesInvolvingUser })
+      const userIdToUsernameMap: Map<string, string> = new Map<string, string>()
+      const tradesWithUsernames: DottsTrade[] = await Promise.all(
+        allTradesInvolvingUser.map(async (trade: DottsTrade) => {
+          if (!userIdToUsernameMap.get(trade.offeringUserId)) {
+            const offeringAccount = await database
+              .collection(TableNames.DOTTS_ACCOUNTS)
+              .findOne({
+                _id: new ObjectId(trade.offeringUserId),
+              })
+            userIdToUsernameMap.set(
+              offeringAccount._id.toString(),
+              offeringAccount.isflUsername
+            )
+          }
+
+          if (!userIdToUsernameMap.get(trade.receivingUserId)) {
+            const receivingAccount = await database
+              .collection(TableNames.DOTTS_ACCOUNTS)
+              .findOne({
+                _id: new ObjectId(trade.receivingUserId),
+              })
+            userIdToUsernameMap.set(
+              receivingAccount._id.toString(),
+              receivingAccount.isflUsername
+            )
+          }
+
+          return {
+            ...trade,
+            offeringUsername: userIdToUsernameMap.get(trade.offeringUserId),
+            receivingUsername: userIdToUsernameMap.get(trade.receivingUserId),
+          }
+        })
+      )
+
+      response.status(200).json({ trades: tradesWithUsernames })
     } catch (error) {
       console.log(error)
       response.status(400).json({ error })

@@ -1,4 +1,4 @@
-import { useMutation } from 'react-query'
+import { QueryClient, useMutation, useQueryClient } from 'react-query'
 import axios from 'axios'
 import { DOTTS_ACCESS_TOKEN } from '../../../../utils/constants'
 import { Methods } from '../common'
@@ -23,6 +23,7 @@ type UseUpdateUser = {
 }
 
 const useUpdateUser = (): UseUpdateUser => {
+  const queryClient: QueryClient = useQueryClient()
   const { mutate, isSuccess, isLoading, error, reset } = useMutation(
     ({
       _id,
@@ -50,7 +51,8 @@ const useUpdateUser = (): UseUpdateUser => {
           isSubmitter,
         },
       })
-    }
+    },
+    { onSuccess: () => {}, onError: () => {} }
   )
 
   return {

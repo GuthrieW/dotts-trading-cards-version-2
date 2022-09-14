@@ -8,17 +8,10 @@ import useGetUserTrades from '../api/v2/_queries/use-get-current-user-trades'
 const TradeStatuses = ['completed', 'pending', 'declined']
 
 const Trades = () => {
+  const [searchString, setSearchString] = useState<string>('')
   const [selectedTradeStatuses, setSelectedTradeStatuses] = useState<string[]>(
     []
   )
-  const [searchString, setSearchString] = useState<string>('')
-
-  const updateSelectedTradeStatusButtonIds = (toggleId) =>
-    selectedTradeStatuses.includes(toggleId)
-      ? setSelectedTradeStatuses(
-          selectedTradeStatuses.filter((status) => status != toggleId)
-        )
-      : setSelectedTradeStatuses(selectedTradeStatuses.concat(toggleId))
 
   const {
     trades,
@@ -27,12 +20,22 @@ const Trades = () => {
   } = useGetUserTrades({})
 
   const selectedTrades: DottsTrade[] = useMemo(() => {
-    return trades.filter(
+    const lowercaseSearchString = searchString.toLowerCase()
+
+    const nameFilteredTrades = trades.filter(
+      (trade: DottsTrade) =>
+        trade.offeringUsername
+          ?.toLowerCase()
+          ?.includes(lowercaseSearchString) ||
+        trade.receivingUsername?.toLowerCase()?.includes(lowercaseSearchString)
+    )
+
+    return nameFilteredTrades.filter(
       (trade: DottsTrade) =>
         selectedTradeStatuses.length === 0 ||
         selectedTradeStatuses.includes(trade.tradeStatus)
     )
-  }, [trades, selectedTradeStatuses])
+  }, [trades, searchString, selectedTradeStatuses])
 
   if (userTradesIsFetching) {
     return null
@@ -41,6 +44,13 @@ const Trades = () => {
   if (userTradesError) {
     toast.warning(userTradesError)
   }
+
+  const updateSelectedTradeStatusButtonIds = (toggleId) =>
+    selectedTradeStatuses.includes(toggleId)
+      ? setSelectedTradeStatuses(
+          selectedTradeStatuses.filter((status) => status != toggleId)
+        )
+      : setSelectedTradeStatuses(selectedTradeStatuses.concat(toggleId))
 
   const handleUpdateSearchString = (event) =>
     setSearchString(event.target.value || '')

@@ -1,5 +1,5 @@
-import { useMutation } from 'react-query'
-import axios, { AxiosResponse } from 'axios'
+import { QueryClient, useMutation, useQueryClient } from 'react-query'
+import axios from 'axios'
 import { Methods } from '../common'
 
 type UseLoginRequest = {
@@ -17,6 +17,7 @@ type UseLogin = {
 }
 
 const useLogin = (): UseLogin => {
+  const queryClient: QueryClient = useQueryClient()
   const { mutate, data, isSuccess, isLoading, error } = useMutation(
     ({ email, password }: UseLoginRequest) => {
       return axios({
@@ -24,7 +25,8 @@ const useLogin = (): UseLogin => {
         url: '/api/v2/auth/login',
         data: { email, password },
       })
-    }
+    },
+    { onSuccess: () => {}, onError: () => {} }
   )
 
   return {
