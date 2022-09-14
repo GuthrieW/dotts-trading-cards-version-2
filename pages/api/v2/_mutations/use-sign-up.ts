@@ -2,6 +2,7 @@ import { QueryClient, useMutation, useQueryClient } from 'react-query'
 import axios from 'axios'
 import { DOTTS_ACCESS_TOKEN } from '../../../../utils/constants'
 import { Methods } from '../common'
+import { toast } from 'react-toastify'
 
 type UseSignUpRequest = {
   email: string
@@ -33,7 +34,12 @@ const useSignUp = (): UseSignUp => {
         },
       })
     },
-    { onSuccess: () => {}, onError: () => {} }
+    {
+      onSuccess: () => {},
+      onError: () => {
+        toast.error('Error signing up')
+      },
+    }
   )
 
   return {

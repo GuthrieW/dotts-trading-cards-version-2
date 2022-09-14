@@ -80,7 +80,7 @@ const Trades = () => {
         </div>
       </div>
 
-      <div>
+      <div className="w-full">
         {selectedTrades.map((trade, index) => (
           <TradeDisplay key={index} trade={trade} />
         ))}

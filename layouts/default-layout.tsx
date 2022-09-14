@@ -13,7 +13,6 @@ const DefaultLayout = ({ children }) => {
   }
 
   if (error) {
-    toast.warning('Error authenticating user')
     if (typeof window !== 'undefined') {
       Router.push('/auth/login')
     }

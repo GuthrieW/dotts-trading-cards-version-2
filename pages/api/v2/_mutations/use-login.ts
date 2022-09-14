@@ -1,6 +1,7 @@
 import { QueryClient, useMutation, useQueryClient } from 'react-query'
 import axios from 'axios'
 import { Methods } from '../common'
+import { toast } from 'react-toastify'
 
 type UseLoginRequest = {
   email: string
@@ -26,7 +27,12 @@ const useLogin = (): UseLogin => {
         data: { email, password },
       })
     },
-    { onSuccess: () => {}, onError: () => {} }
+    {
+      onSuccess: () => {},
+      onError: () => {
+        toast.error('Error logging in')
+      },
+    }
   )
 
   return {

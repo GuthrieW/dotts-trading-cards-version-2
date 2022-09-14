@@ -2,6 +2,7 @@ import { QueryClient, useMutation, useQueryClient } from 'react-query'
 import axios from 'axios'
 import { DOTTS_ACCESS_TOKEN } from '../../../../utils/constants'
 import { Methods } from '../common'
+import { toast } from 'react-toastify'
 
 type UseAcceptTradeRequest = {}
 
@@ -25,7 +26,12 @@ const useAcceptTrade = (): UseAcceptTrade => {
         data: {},
       })
     },
-    { onSuccess: () => {}, onError: () => {} }
+    {
+      onSuccess: () => {},
+      onError: () => {
+        toast.error('Error accepting trade')
+      },
+    }
   )
 
   return {

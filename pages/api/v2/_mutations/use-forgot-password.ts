@@ -2,6 +2,7 @@ import { QueryClient, useMutation, useQueryClient } from 'react-query'
 import axios from 'axios'
 import { DOTTS_ACCESS_TOKEN } from '../../../../utils/constants'
 import { Methods } from '../common'
+import { toast } from 'react-toastify'
 
 type UseForgotPasswordRequest = {
   email: string
@@ -27,7 +28,12 @@ const useForgotPassword = (): UseForgotPassword => {
         data: { email },
       })
     },
-    { onSuccess: () => {}, onError: () => {} }
+    {
+      onSuccess: () => {},
+      onError: () => {
+        toast.error('Error creating reset token')
+      },
+    }
   )
 
   return {

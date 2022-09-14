@@ -103,10 +103,6 @@ const IssuePacks = () => {
     return null
   }
 
-  if (error) {
-    toast.error('Error fetching users')
-  }
-
   return (
     <>
       <NextSeo title="Issue Packs" />

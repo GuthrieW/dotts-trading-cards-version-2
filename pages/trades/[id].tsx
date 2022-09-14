@@ -49,7 +49,7 @@ const Trade = () => {
   const userIsTradeReceiver = trade.receivingUserId === currentUser._id
 
   return (
-    <div>
+    <div className="w-full">
       <TradeDisplay allowHref={false} trade={trade} />
       {!tradeResolved && userIsTradeReceiver && (
         <div>

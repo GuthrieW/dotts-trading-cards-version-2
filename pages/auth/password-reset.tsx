@@ -13,10 +13,6 @@ const PasswordReset = () => {
     toast.success('Pog you did it')
   }
 
-  if (error) {
-    toast.error(error)
-  }
-
   return (
     <FormWrapper>
       <Formik

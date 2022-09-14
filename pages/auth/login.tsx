@@ -31,10 +31,6 @@ const Login = () => {
     toast.error(authenticationFailed)
   }
 
-  if (error) {
-    toast.error(error)
-  }
-
   return (
     <>
       <NextSeo title="Login" />

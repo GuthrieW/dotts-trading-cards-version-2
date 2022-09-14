@@ -127,10 +127,6 @@ const EditCards = () => {
     return null
   }
 
-  if (error) {
-    toast.error('Error fetching cards')
-  }
-
   return (
     <>
       <NextSeo title="Edit Cards" />

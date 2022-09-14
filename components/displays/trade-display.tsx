@@ -26,7 +26,7 @@ const TradeDisplay = ({ trade, allowHref = true }: TradeDisplayProps) => {
     <Link href={tradeResolved || !allowHref ? '#' : `/trades/${_id}`}>
       <div
         title={tradeResolved ? '' : 'Open trade'}
-        className={`flex justify-between items-centers rounded-lg border border-neutral-800 shadow-md my-2 ${
+        className={`w-full flex justify-between items-start rounded-lg border border-neutral-800 shadow-md my-2 ${
           tradeResolved || !allowHref ? '' : 'cursor-pointer'
         }`}
       >

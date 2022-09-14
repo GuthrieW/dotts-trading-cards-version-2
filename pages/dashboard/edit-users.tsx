@@ -179,10 +179,6 @@ const EditUsers = () => {
     return null
   }
 
-  if (error) {
-    toast.error('Error fetching users')
-  }
-
   if (isSuccess) {
     toast.success(`${selectedUserData.isflUsername} updated!`)
     setShowModal(false)

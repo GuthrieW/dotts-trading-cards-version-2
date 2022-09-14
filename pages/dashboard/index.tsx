@@ -77,10 +77,6 @@ const AdminDashboard = () => {
     return null
   }
 
-  if (error) {
-    toast.error('Error fetching user information')
-  }
-
   return (
     <>
       <NextSeo title="Dashboard" />

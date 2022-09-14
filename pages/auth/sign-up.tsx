@@ -14,10 +14,6 @@ const SignUp = () => {
     toast.success('Wow you signed up')
   }
 
-  if (error) {
-    toast.error('Aww frick you hecked up')
-  }
-
   return (
     <>
       <NextSeo title="Sign Up" />

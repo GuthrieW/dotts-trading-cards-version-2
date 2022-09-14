@@ -14,10 +14,6 @@ const ForgotPassword = () => {
     toast.success('Check your email boi')
   }
 
-  if (error) {
-    toast.error(error)
-  }
-
   return (
     <>
       <NextSeo title="Forgot Password" />

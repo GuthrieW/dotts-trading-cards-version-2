@@ -9,10 +9,6 @@ const StaticPackViewer = () => {
     return null
   }
 
-  if (error) {
-    toast.error('Error fetching cards')
-  }
-
   console.log('lastOpenedPack', lastOpenedPack)
 
   return (
