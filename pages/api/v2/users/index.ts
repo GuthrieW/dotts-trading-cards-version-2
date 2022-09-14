@@ -18,6 +18,7 @@ export const index = async (
       const minifiedAccounts = account.map((account) => {
         return {
           _id: account._id,
+          email: account.email,
           isflUsername: account.isflUsername,
           numberOfOwnedCards: account.ownedCards.length,
           ownedRegularPacks: account.ownedRegularPacks,
