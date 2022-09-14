@@ -5,15 +5,9 @@ type FormModalProps = {
   children: any
   title: string
   toggleModal: Function
-  submitButtonText: string
 }
 
-const FormModal = ({
-  children,
-  title,
-  toggleModal,
-  submitButtonText,
-}: FormModalProps) => {
+const FormModal = ({ children, title, toggleModal }: FormModalProps) => {
   return (
     <>
       <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">

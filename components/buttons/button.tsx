@@ -1,12 +1,12 @@
 import React, { MouseEventHandler } from 'react'
 
 type ButtonProps = {
-  text: string
+  children: any
   onClick?: MouseEventHandler<HTMLButtonElement>
   isLoading: boolean
 }
 
-const Button = ({ text, onClick, isLoading }: ButtonProps) => {
+const Button = ({ children, onClick, isLoading }: ButtonProps) => {
   return (
     <button
       onClick={onClick}
@@ -14,7 +14,7 @@ const Button = ({ text, onClick, isLoading }: ButtonProps) => {
       disabled={isLoading}
       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2"
     >
-      {text}
+      {children}
     </button>
   )
 }

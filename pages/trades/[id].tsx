@@ -53,16 +53,12 @@ const Trade = () => {
       <TradeDisplay allowHref={false} trade={trade} />
       {!tradeResolved && userIsTradeReceiver && (
         <div>
-          <Button
-            text="Accept"
-            onClick={() => acceptTrade()}
-            isLoading={false}
-          ></Button>
-          <Button
-            text="Decline"
-            onClick={() => declineTrade()}
-            isLoading={false}
-          ></Button>
+          <Button onClick={() => acceptTrade()} isLoading={false}>
+            Accept
+          </Button>
+          <Button onClick={() => declineTrade()} isLoading={false}>
+            Decline
+          </Button>
         </div>
       )}
     </div>

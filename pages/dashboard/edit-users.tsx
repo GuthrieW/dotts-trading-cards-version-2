@@ -222,7 +222,6 @@ const EditUsers = () => {
             setShowModal(false)
             setSelectedUserData(null)
           }}
-          submitButtonText="Submit"
         >
           <FormWrapper>
             <Formik
@@ -325,10 +324,11 @@ const EditUsers = () => {
                         Submit
                       </SubmitButton>
                       <Button
-                        text="Cancel"
                         onClick={() => setShowModal(false)}
                         isLoading={isLoading}
-                      />
+                      >
+                        Cancel
+                      </Button>
                     </div>
                   </div>
                 </Form>

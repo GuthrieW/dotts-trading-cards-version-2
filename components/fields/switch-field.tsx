@@ -14,7 +14,7 @@ const SwitchField = ({
   initialValue,
   disabled = false,
 }: SwitchFieldProps) => {
-  const [isChecked, setIsChecked] = useState(initialValue)
+  const [isChecked, setIsChecked] = useState<boolean>(Boolean(initialValue))
   return (
     <div className="flex items-center mb-4">
       <Field

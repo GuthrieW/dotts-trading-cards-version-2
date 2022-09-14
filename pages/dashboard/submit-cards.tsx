@@ -11,7 +11,7 @@ import SubmitButton from '../../components/buttons/submit-button'
 import useGetCurrentUser from '../api/v2/_queries/use-get-current-user'
 
 const SubmitCards = () => {
-  const [newCardImage, setNewCardImage] = useState('')
+  const [newCardImage, setNewCardImage] = useState<string>('')
   const { insertCard, isSuccess, isLoading, error } = useInsertCard()
   const {
     currentUser,
@@ -72,13 +72,13 @@ const SubmitCards = () => {
                   }}
                 >
                   <TextField
-                    name="player-name"
+                    name="playerName"
                     label="Player Name"
                     type="text"
                     disabled={false}
                   />
                   <SelectField
-                    name="player-team"
+                    name="playerTeam"
                     label="Player Team"
                     options={TEAMS.map((team) => {
                       return {
@@ -89,14 +89,14 @@ const SubmitCards = () => {
                     disabled={false}
                   />
                   <SelectField
-                    name="card-rarity"
-                    label="Card Rarity"
+                    name="rarity"
+                    label="Rarity"
                     options={RARITIES}
                     disabled={false}
                   />
                   <TextField
-                    name="card-image"
-                    label="Card Image"
+                    name="imageUrl"
+                    label="Image Ulr"
                     type="text"
                     disabled={false}
                   />

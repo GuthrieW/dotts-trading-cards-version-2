@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import useGetAllCards from '../api/v2/_queries/use-get-all-cards'
 import {
   useTable,
@@ -12,6 +12,26 @@ import Pagination from '../../components/tables/pagination'
 import { toast } from 'react-toastify'
 import { NextSeo } from 'next-seo'
 import { format } from 'date-fns'
+import FormModal from '../../components/modals/form-modal'
+import FormWrapper from '../../components/forms/form-wrapper'
+import { Formik, Form } from 'formik'
+import useUpdateCard from '../api/v2/_mutations/use-update-card'
+import TextField from '../../components/fields/text-field'
+import SelectField from '../../components/fields/select-field'
+import SwitchField from '../../components/fields/switch-field'
+import { RARITIES, TEAMS } from '../../utils/constants'
+import SubmitButton from '../../components/buttons/submit-button'
+import Button from '../../components/buttons/button'
+
+type EditableCardData = {
+  _id: string
+  approved: boolean
+  currentRotation: boolean
+  imageUrl: string
+  playerName: string
+  playerTeam: string
+  rarity: string
+}
 
 const columnData = [
   {
@@ -81,7 +101,17 @@ const columnData = [
 ]
 
 const EditCards = () => {
-  const { allCards, isFetching, error } = useGetAllCards({})
+  const [showModal, setShowModal] = useState<boolean>(false)
+  const [selectedCardData, setSelectedCardData] =
+    useState<EditableCardData>(null)
+  const [cardImage, setCardImage] = useState<string>('')
+
+  const {
+    allCards,
+    isFetching: allCardsFetching,
+    error: allCardsError,
+  } = useGetAllCards({})
+  const { updateCard, isSuccess, isLoading, error, reset } = useUpdateCard()
 
   const initialState = useMemo(() => {
     return { sortBy: [{ id: '_id' }] }
@@ -120,11 +150,30 @@ const EditCards = () => {
   const updateSearchFilter = (event) => setGlobalFilter(event.target.value)
 
   const handleRowClick = (row) => {
-    alert(JSON.stringify(row.values))
+    setCardImage(row?.values?.imageUrl ?? '')
+    const cardData: EditableCardData = {
+      _id: row?.values?._id ?? '',
+      approved: row?.values?.approved === 'true' ?? false,
+      currentRotation: row?.values?.currentRotation === 'true' ?? false,
+      imageUrl: row?.values?.imageUrl ?? '',
+      playerName: row?.values?.playerName ?? '',
+      playerTeam: row?.values?.playerTeam ?? '',
+      rarity: row?.values?.rarity ?? '',
+    }
+
+    setShowModal(true)
+    setSelectedCardData(cardData)
   }
 
-  if (isFetching) {
+  if (allCardsFetching) {
     return null
+  }
+
+  if (isSuccess) {
+    toast.success(`${selectedCardData.playerName} card updated!`)
+    setShowModal(false)
+    setSelectedCardData(null)
+    reset()
   }
 
   return (
@@ -157,6 +206,125 @@ const EditCards = () => {
           gotoLastPage={gotoLastPage}
         />
       </div>
+      {showModal && (
+        <FormModal
+          title={`Edit ${selectedCardData.playerName}`}
+          toggleModal={() => {
+            setShowModal(false)
+            setSelectedCardData(null)
+          }}
+        >
+          <div className="grid grid-cols-2 gap-2">
+            <FormWrapper>
+              <Formik
+                initialValues={{
+                  _id: selectedCardData._id,
+                  approved: selectedCardData.approved,
+                  currentRotation: selectedCardData.currentRotation,
+                  imageUrl: selectedCardData.imageUrl,
+                  playerName: selectedCardData.playerName,
+                  playerTeam: selectedCardData.playerTeam,
+                  rarity: selectedCardData.rarity,
+                }}
+                onSubmit={async (values) => {
+                  event.preventDefault()
+                  if (isLoading) {
+                    toast.warning('Already updating card')
+                    return
+                  }
+
+                  await updateCard({
+                    _id: selectedCardData._id,
+                    approved: values.approved,
+                    currentRotation: values.currentRotation,
+                    imageUrl: values.imageUrl,
+                    playerName: values.playerName,
+                    playerTeam: values.playerTeam,
+                    rarity: values.rarity,
+                  })
+                }}
+              >
+                {({ handleSubmit, initialValues }) => (
+                  <Form
+                    className="w-full"
+                    onChange={(event) => {
+                      // @ts-ignore
+                      const { name, value } = event.target
+
+                      if (name === 'imageUrl') {
+                        setCardImage(value)
+                      }
+                    }}
+                  >
+                    <TextField
+                      name="playerName"
+                      label="Player Name"
+                      type="text"
+                      disabled={false}
+                    />
+                    <TextField
+                      name="imageUrl"
+                      label="Image URL"
+                      type="text"
+                      disabled={false}
+                    />
+                    <SelectField
+                      name="playerTeam"
+                      label="Player Team"
+                      options={TEAMS.map((team) => {
+                        return {
+                          label: `${team.CITY_NAME} ${team.TEAM_NAME}`,
+                          value: `${team.CITY_NAME} ${team.TEAM_NAME}`,
+                        }
+                      })}
+                      disabled={false}
+                    />
+                    <SelectField
+                      name="rarity"
+                      label="Rarity"
+                      options={RARITIES}
+                      disabled={false}
+                    />
+                    <SwitchField
+                      // @ts-ignore
+                      initialValue={initialValues.approved}
+                      name="approved"
+                      label="Approved"
+                      disabled={false}
+                    />
+                    <SwitchField
+                      // @ts-ignore
+                      initialValue={initialValues.currentRotation}
+                      name="currentRotation"
+                      label="Current Rotation"
+                      disabled={false}
+                    />
+                    <div>
+                      <SubmitButton
+                        onClick={() => handleSubmit()}
+                        isLoading={isLoading}
+                      >
+                        Submit
+                      </SubmitButton>
+                      <Button
+                        isLoading={isLoading}
+                        onClick={() => {
+                          setShowModal(false)
+                          setSelectedCardData(null)
+                        }}
+                      >
+                        Cancel
+                      </Button>
+                    </div>
+                  </Form>
+                )}
+              </Formik>
+            </FormWrapper>
+
+            <img src={cardImage} />
+          </div>
+        </FormModal>
+      )}
     </>
   )
 }
