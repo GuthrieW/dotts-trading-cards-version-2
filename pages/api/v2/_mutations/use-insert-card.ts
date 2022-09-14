@@ -4,7 +4,13 @@ import { DOTTS_ACCESS_TOKEN } from '../../../../utils/constants'
 import { Methods } from '../common'
 import { toast } from 'react-toastify'
 
-type UseInsertCardRequest = {}
+type UseInsertCardRequest = {
+  imageUrl: string
+  playerName: string
+  playerTeam: string
+  rarity: string
+  submissionUsername: string
+}
 
 type UseInsertCard = {
   insertCard: Function
@@ -16,14 +22,26 @@ type UseInsertCard = {
 const useInsertCard = (): UseInsertCard => {
   const queryClient: QueryClient = useQueryClient()
   const { mutate, isSuccess, isLoading, error } = useMutation(
-    ({}: UseInsertCardRequest) => {
+    ({
+      imageUrl,
+      playerName,
+      playerTeam,
+      rarity,
+      submissionUsername,
+    }: UseInsertCardRequest) => {
       return axios({
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
         method: Methods.POST,
-        url: '',
-        data: {},
+        url: '/api/v2/cards',
+        data: {
+          imageUrl,
+          playerName,
+          playerTeam,
+          rarity,
+          submissionUsername,
+        },
       })
     },
     {

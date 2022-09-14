@@ -53,7 +53,7 @@ const useUpdateCard = (): UseUpdateCard => {
     {
       onSuccess: () => {},
       onError: () => {
-        toast.error('Error updating user')
+        toast.error('Error updating card')
       },
     }
   )

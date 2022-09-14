@@ -65,7 +65,7 @@ const SubmitCards = () => {
                   className="w-full"
                   onChange={(event) => {
                     // @ts-ignore
-                    if (event.target.name === 'card-image') {
+                    if (event.target.name === 'imageUrl') {
                       // @ts-ignore
                       setNewCardImage(event.target.value)
                     }
