@@ -15,6 +15,7 @@ import TextField from '../../components/fields/text-field'
 import FormWrapper from '../../components/forms/form-wrapper'
 import SearchBar from '../../components/inputs/search-bar'
 import FormModal from '../../components/modals/form-modal'
+import Spinner from '../../components/spinners/spinner'
 import Pagination from '../../components/tables/pagination'
 import Table from '../../components/tables/table'
 import useUpdateUser from '../api/v2/_mutations/use-update-user'
@@ -176,7 +177,7 @@ const EditUsers = () => {
   }
 
   if (isFetching) {
-    return null
+    return <Spinner />
   }
 
   if (isSuccess) {
@@ -193,7 +194,7 @@ const EditUsers = () => {
       <div>
         <div className="w-full flex justify-between items-center">
           <div className="flex">
-            <SearchBar onChange={updateSearchFilter} />
+            <SearchBar onChange={updateSearchFilter} disabled={isFetching} />
           </div>
         </div>
         <Table

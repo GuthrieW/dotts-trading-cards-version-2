@@ -2,6 +2,7 @@ import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
 import React from 'react'
 import CollectionGrid from '../../components/grids/collection-grid'
+import Spinner from '../../components/spinners/spinner'
 import useGetCardsOwnedByUser from '../api/v2/_queries/use-get-cards-owned-by-user'
 import useGetCurrentUser from '../api/v2/_queries/use-get-current-user'
 
@@ -25,11 +26,7 @@ const Collection = () => {
   } = useGetCurrentUser({})
 
   if (cardsOwnedByUserIsFetching || currentUserIsFetching) {
-    return null
-  }
-
-  if (cardsOwnedByUserError || currentUserError) {
-    return null
+    return <Spinner />
   }
 
   const isCurrentUser = userId === currentUser._id

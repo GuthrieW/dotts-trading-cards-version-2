@@ -7,6 +7,7 @@ import useGetTrade from '../api/v2/_queries/use-get-trade'
 import useAcceptTrade from '../api/v2/_mutations/use-accept-trade'
 import useDeclineTrade from '../api/v2/_mutations/use-decline-trade'
 import useGetCurrentUser from '../api/v2/_queries/use-get-current-user'
+import Spinner from '../../components/spinners/spinner'
 
 const Trade = () => {
   const router = useRouter()
@@ -37,7 +38,7 @@ const Trade = () => {
   } = useDeclineTrade()
 
   if (tradeIsFetching || currentUserIsFetching) {
-    return null
+    return <Spinner />
   }
 
   if (tradeError || currentUserError) {

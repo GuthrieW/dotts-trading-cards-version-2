@@ -9,6 +9,7 @@ import { NextSeo } from 'next-seo'
 import FormWrapper from '../../components/forms/form-wrapper'
 import SubmitButton from '../../components/buttons/submit-button'
 import useGetCurrentUser from '../api/v2/_queries/use-get-current-user'
+import Spinner from '../../components/spinners/spinner'
 
 const SubmitCards = () => {
   const [newCardImage, setNewCardImage] = useState<string>('')
@@ -20,11 +21,7 @@ const SubmitCards = () => {
   } = useGetCurrentUser({})
 
   if (currentUserIsFetching) {
-    return null
-  }
-
-  if (currentUserError) {
-    toast.error('Error fetching user')
+    return <Spinner />
   }
 
   if (isSuccess) {

@@ -19,6 +19,7 @@ import FormWrapper from '../../components/forms/form-wrapper'
 import { Form, Formik } from 'formik'
 import TextField from '../../components/fields/text-field'
 import Button from '../../components/buttons/button'
+import Spinner from '../../components/spinners/spinner'
 
 type EditableCardData = {
   _id: string
@@ -171,7 +172,7 @@ const ProcessCards = () => {
   }
 
   if (getUnapprovedCardsIsFetching) {
-    return null
+    return <Spinner />
   }
 
   if (approveCardsIsSuccess) {
@@ -195,7 +196,10 @@ const ProcessCards = () => {
       <div>
         <div className="w-full flex justify-start items-center">
           <div className="flex">
-            <SearchBar onChange={updateSearchFilter} />
+            <SearchBar
+              onChange={updateSearchFilter}
+              disabled={getUnapprovedCardsIsFetching}
+            />
           </div>
         </div>
         <Table

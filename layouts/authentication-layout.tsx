@@ -1,4 +1,5 @@
 import Router from 'next/router'
+import Spinner from '../components/spinners/spinner'
 import useAuthentication from '../pages/api/v2/_queries/use-authentication'
 import Footer from './footer'
 
@@ -9,7 +10,7 @@ const AuthenticationLayout = ({ children }) => {
     return null
   }
 
-  if (error) {
+  if (isAuthenticated) {
     if (typeof window !== 'undefined') {
       Router.push('/dashboard')
     }

@@ -22,6 +22,7 @@ import SwitchField from '../../components/fields/switch-field'
 import { RARITIES, TEAMS } from '../../utils/constants'
 import SubmitButton from '../../components/buttons/submit-button'
 import Button from '../../components/buttons/button'
+import Spinner from '../../components/spinners/spinner'
 
 type EditableCardData = {
   _id: string
@@ -108,7 +109,7 @@ const EditCards = () => {
 
   const {
     allCards,
-    isFetching: allCardsFetching,
+    isFetching: allCardsIsFetching,
     error: allCardsError,
   } = useGetAllCards({})
   const { updateCard, isSuccess, isLoading, error, reset } = useUpdateCard()
@@ -165,8 +166,8 @@ const EditCards = () => {
     setSelectedCardData(cardData)
   }
 
-  if (allCardsFetching) {
-    return null
+  if (allCardsIsFetching) {
+    return <Spinner />
   }
 
   if (isSuccess) {
@@ -183,7 +184,10 @@ const EditCards = () => {
       <div>
         <div className="w-full flex justify-start items-center">
           <div className="flex">
-            <SearchBar onChange={updateSearchFilter} />
+            <SearchBar
+              onChange={updateSearchFilter}
+              disabled={allCardsIsFetching}
+            />
           </div>
         </div>
         <Table

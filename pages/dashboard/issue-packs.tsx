@@ -9,8 +9,8 @@ import {
 import SearchBar from '../../components/inputs/search-bar'
 import Pagination from '../../components/tables/pagination'
 import Table from '../../components/tables/table'
-import { toast } from 'react-toastify'
 import { NextSeo } from 'next-seo'
+import Spinner from '../../components/spinners/spinner'
 
 const columnData = [
   {
@@ -100,7 +100,7 @@ const IssuePacks = () => {
   }
 
   if (isFetching) {
-    return null
+    return <Spinner />
   }
 
   return (
@@ -110,7 +110,7 @@ const IssuePacks = () => {
       <div>
         <div className="w-full flex justify-between items-center">
           <div className="flex">
-            <SearchBar onChange={updateSearchFilter} />
+            <SearchBar onChange={updateSearchFilter} disabled={isFetching} />
           </div>
         </div>
         <Table

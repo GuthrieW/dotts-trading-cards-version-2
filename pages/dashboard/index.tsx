@@ -5,6 +5,7 @@ import DashboardButton from '../../components/buttons/dashboard-button'
 import InfoButton, {
   InfoButtonProps,
 } from '../../components/buttons/info-button'
+import Spinner from '../../components/spinners/spinner'
 import useGetCurrentUser from '../api/v2/_queries/use-get-current-user'
 
 type User = {
@@ -74,7 +75,7 @@ const AdminDashboard = () => {
   const { currentUser, isFetching, error } = useGetCurrentUser({})
 
   if (isFetching) {
-    return null
+    return <Spinner />
   }
 
   return (

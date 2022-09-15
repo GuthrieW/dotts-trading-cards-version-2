@@ -4,6 +4,7 @@ import { toast } from 'react-toastify'
 import TradeDisplay from '../../components/displays/trade-display'
 import DropdownWithCheckboxGroup from '../../components/dropdowns/multi-select-dropdown'
 import SearchBar from '../../components/inputs/search-bar'
+import Spinner from '../../components/spinners/spinner'
 import useGetUserTrades from '../api/v2/_queries/use-get-current-user-trades'
 
 const TradeStatuses = ['completed', 'pending', 'declined']
@@ -39,7 +40,7 @@ const Trades = () => {
   }, [trades, searchString, selectedTradeStatuses])
 
   if (userTradesIsFetching) {
-    return null
+    return <Spinner />
   }
 
   if (userTradesError) {
@@ -73,7 +74,10 @@ const Trades = () => {
       <div>
         <div className="flex justify-start flex-row max-w-full">
           <div className="flex">
-            <SearchBar onChange={handleUpdateSearchString} />
+            <SearchBar
+              onChange={handleUpdateSearchString}
+              disabled={userTradesIsFetching}
+            />
             <DropdownWithCheckboxGroup
               title="Statues"
               checkboxes={tradeStatusCheckboxes}

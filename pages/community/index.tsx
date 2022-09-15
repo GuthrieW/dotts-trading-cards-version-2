@@ -11,6 +11,7 @@ import SearchBar from '../../components/inputs/search-bar'
 import Pagination from '../../components/tables/pagination'
 import Table from '../../components/tables/table'
 import { NextSeo } from 'next-seo'
+import Spinner from '../../components/spinners/spinner'
 
 const columnData: ColumnData[] = [
   {
@@ -73,6 +74,10 @@ const Community = () => {
     usePagination
   )
 
+  if (isFetching) {
+    return <Spinner />
+  }
+
   const gotoLastPage = () => gotoPage(pageCount - 1)
   const updateSearchFilter = (event) => setGlobalFilter(event.target.value)
 
@@ -93,28 +98,24 @@ const Community = () => {
             <SearchBar disabled={isFetching} onChange={updateSearchFilter} />
           </div>
         </div>
-        {isFetching || error ? null : (
-          <>
-            <Table
-              getTableProps={getTableProps}
-              headerGroups={headerGroups}
-              getTableBodyProps={getTableBodyProps}
-              rows={page}
-              prepareRow={prepareRow}
-              onRowClick={handleRowClick}
-            />
-            <Pagination
-              pageOptions={pageOptions}
-              pageIndex={pageIndex}
-              canNextPage={canNextPage}
-              nextPage={nextPage}
-              canPreviousPage={canPreviousPage}
-              previousPage={previousPage}
-              gotoPage={gotoPage}
-              gotoLastPage={gotoLastPage}
-            />
-          </>
-        )}
+        <Table
+          getTableProps={getTableProps}
+          headerGroups={headerGroups}
+          getTableBodyProps={getTableBodyProps}
+          rows={page}
+          prepareRow={prepareRow}
+          onRowClick={handleRowClick}
+        />
+        <Pagination
+          pageOptions={pageOptions}
+          pageIndex={pageIndex}
+          canNextPage={canNextPage}
+          nextPage={nextPage}
+          canPreviousPage={canPreviousPage}
+          previousPage={previousPage}
+          gotoPage={gotoPage}
+          gotoLastPage={gotoLastPage}
+        />
       </div>
     </>
   )

@@ -4,6 +4,7 @@ import useGetCurrentUser from '../api/v2/_queries/use-get-current-user'
 import { NextSeo } from 'next-seo'
 import { toast } from 'react-toastify'
 import Router from 'next/router'
+import Spinner from '../../components/spinners/spinner'
 
 const ULTIMUS = 'ultimus'
 const REGULAR = 'regular'
@@ -22,12 +23,7 @@ const OpenPacks = () => {
   } = useOpenPack()
 
   if (currentUserIsFetching) {
-    return null
-  }
-
-  if (currentUserError) {
-    toast.warning('Error fetching user')
-    return null
+    return <Spinner />
   }
 
   if (openPackIsSuccess) {
