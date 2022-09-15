@@ -12,7 +12,7 @@ const SubmitButton = ({ children, onClick, isLoading }: SubmitButtonProps) => {
       onClick={onClick}
       type="submit"
       disabled={isLoading}
-      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2"
+      className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2"
     >
       {children}
     </button>

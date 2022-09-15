@@ -8,7 +8,7 @@ export const index = async (
   response: NextApiResponse
 ) => {
   const { method, body, query } = request
-  if (method === Methods.POST) {
+  if (method === Methods.PATCH) {
     const userId: string = query.id as string
     const {
       ownedRegularPacks,

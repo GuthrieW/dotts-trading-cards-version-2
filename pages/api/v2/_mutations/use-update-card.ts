@@ -38,7 +38,7 @@ const useUpdateCard = (): UseUpdateCard => {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
-        method: Methods.POST,
+        method: Methods.PATCH,
         url: `/api/v2/cards/${_id}`,
         data: {
           approved,

@@ -105,13 +105,12 @@ const ProcessCards = () => {
     error: getUnapprovedCardsError,
   } = useGetUnapprovedCards({})
 
-  console.log('unapprovedCards', unapprovedCards)
-
   const {
     approveCard,
     isSuccess: approveCardsIsSuccess,
     isLoading: approveCardIsLoading,
-    error: approveCardsError,
+    error: approveCardError,
+    reset: approveCardReset,
   } = useApproveCard()
 
   const {
@@ -119,6 +118,7 @@ const ProcessCards = () => {
     isSuccess: deleteCardIsSuccess,
     isLoading: deleteCardIsLoading,
     error: deleteCardError,
+    reset: deleteCardReset,
   } = useDeleteCard()
 
   const initialState = useMemo(() => {
@@ -170,17 +170,23 @@ const ProcessCards = () => {
     setSelectedCardData(cardData)
   }
 
+  if (getUnapprovedCardsIsFetching) {
+    return null
+  }
+
   if (approveCardsIsSuccess) {
     toast.success('Successfuly approved card')
     setShowModal(false)
+    setSelectedCardData(null)
+    approveCardReset()
   }
 
   if (deleteCardIsSuccess) {
     toast.success('Successfuly deleted card')
     setShowModal(false)
+    setSelectedCardData(null)
+    deleteCardReset()
   }
-
-  console.log('Process Cards', unapprovedCards)
 
   return (
     <>
@@ -220,7 +226,7 @@ const ProcessCards = () => {
             setSelectedCardData(null)
           }}
         >
-          <div>
+          <div className="grid grid-cols-2 gap-2">
             <FormWrapper>
               <Formik
                 initialValues={{
@@ -258,43 +264,46 @@ const ProcessCards = () => {
                       type="text"
                       disabled={true}
                     />
-                    <div>
-                      <Button
-                        onClick={() => {
-                          if (approveCardIsLoading || deleteCardIsLoading) {
-                            toast.warning('Already approving card')
-                          }
-                          approveCard(selectedCardData._id)
-                        }}
-                        isLoading={approveCardIsLoading || deleteCardIsLoading}
-                      >
-                        Approve Card
-                      </Button>
-                      <Button
-                        isLoading={approveCardIsLoading || deleteCardIsLoading}
-                        onClick={() => {
-                          if (approveCardIsLoading || deleteCardIsLoading) {
-                            toast.warning('Already deleting card')
-                          }
-                          deleteCard(selectedCardData._id)
-                        }}
-                      >
-                        Delete Card
-                      </Button>
-                      <Button
-                        isLoading={approveCardIsLoading || deleteCardIsLoading}
-                        onClick={() => {
-                          setShowModal(false)
-                          setSelectedCardData(null)
-                        }}
-                      >
-                        Cancel
-                      </Button>
-                    </div>
                   </Form>
                 )}
               </Formik>
             </FormWrapper>
+            <img src={selectedCardData.imageUrl} />
+          </div>
+          <div className="flex justify-end items-center">
+            <Button
+              onClick={() => {
+                if (approveCardIsLoading || deleteCardIsLoading) {
+                  toast.warning('Already approving card')
+                }
+                approveCard({ _id: selectedCardData._id })
+              }}
+              isLoading={approveCardIsLoading || deleteCardIsLoading}
+              buttonType="confirm"
+            >
+              Approve Card
+            </Button>
+            <Button
+              isLoading={approveCardIsLoading || deleteCardIsLoading}
+              onClick={() => {
+                if (approveCardIsLoading || deleteCardIsLoading) {
+                  toast.warning('Already deleting card')
+                }
+                deleteCard({ _id: selectedCardData._id })
+              }}
+              buttonType="warning"
+            >
+              Delete Card
+            </Button>
+            <Button
+              isLoading={approveCardIsLoading || deleteCardIsLoading}
+              onClick={() => {
+                setShowModal(false)
+                setSelectedCardData(null)
+              }}
+            >
+              Cancel
+            </Button>
           </div>
         </FormModal>
       )}

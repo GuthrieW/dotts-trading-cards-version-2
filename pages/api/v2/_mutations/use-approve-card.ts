@@ -4,25 +4,28 @@ import { DOTTS_ACCESS_TOKEN } from '../../../../utils/constants'
 import { Methods } from '../common'
 import { toast } from 'react-toastify'
 
-type UseApproveCardRequest = {}
+type UseApproveCardRequest = {
+  _id: string
+}
 
 type UseApproveCard = {
   approveCard: Function
   isSuccess: boolean
   isLoading: boolean
   error: any
+  reset: Function
 }
 
 const useApproveCard = (): UseApproveCard => {
   const queryClient: QueryClient = useQueryClient()
-  const { mutate, isSuccess, isLoading, error } = useMutation(
-    ({}: UseApproveCardRequest) => {
+  const { mutate, isSuccess, isLoading, error, reset } = useMutation(
+    ({ _id }: UseApproveCardRequest) => {
       return axios({
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
-        method: Methods.POST,
-        url: '',
+        method: Methods.PATCH,
+        url: `/api/v2/cards/approve/${_id}`,
         data: {},
       })
     },
@@ -39,6 +42,7 @@ const useApproveCard = (): UseApproveCard => {
     isSuccess,
     isLoading,
     error,
+    reset,
   }
 }
 
