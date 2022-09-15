@@ -190,8 +190,9 @@ const CollectionGrid = ({ gridCards }: CollectionGridProps) => {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <div className="w-full flex justify-between items-center">
+      <div className="w-full flex justify-start items-center">
         <div className="flex">
+          <SearchBar onChange={handleUpdateSearchString} />
           <DropdownWithCheckboxGroup
             title="Rarity"
             checkboxes={PlayerCardRarityCheckboxes}
@@ -202,9 +203,6 @@ const CollectionGrid = ({ gridCards }: CollectionGridProps) => {
             checkboxes={TeamCheckboxes}
             selectedCheckboxIds={selectedTeams}
           />
-        </div>
-        <div className="flex flex-row items-center">
-          <SearchBar onChange={handleUpdateSearchString} />
         </div>
       </div>
       <div

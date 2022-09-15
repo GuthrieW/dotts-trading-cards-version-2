@@ -181,9 +181,8 @@ const EditCards = () => {
       <NextSeo title="Edit Cards" />
       <h1>Edit Cards</h1>
       <div>
-        <div className="w-full flex justify-between items-center">
-          <div></div>
-          <div className="flex flex-row justify-end items-center">
+        <div className="w-full flex justify-start items-center">
+          <div className="flex">
             <SearchBar onChange={updateSearchFilter} />
           </div>
         </div>

@@ -1,4 +1,4 @@
-import { formatDistance } from 'date-fns'
+import { format } from 'date-fns'
 import Link from 'next/link'
 import TextIcon from './text-icon'
 import TradeItems from './trade-items'
@@ -17,13 +17,12 @@ const TradeDisplay = ({ trade, allowHref = true }: TradeDisplayProps) => {
     receivingUserCardIds: receivingUserCards,
     tradeStatus,
     tradeOfferDate,
-    tradeResolvedDate,
   } = trade
   const tradeResolved =
     tradeStatus === 'completed' || tradeStatus === 'declined'
 
   return (
-    <Link href={tradeResolved || !allowHref ? '#' : `/trades/${_id}`}>
+    <Link href={tradeResolved || !allowHref ? '' : `/trades/${_id}`}>
       <div
         title={tradeResolved ? '' : 'Open trade'}
         className={`w-full flex justify-between items-start rounded-lg border border-neutral-800 shadow-md my-2 ${
@@ -42,11 +41,12 @@ const TradeDisplay = ({ trade, allowHref = true }: TradeDisplayProps) => {
             tradePartnerRole="receiving"
           />
         </div>
-        <div className="flex justify-end items-start w-1/4 m-1">
+        <div className="flex flex-col justify-center items-end w-1/4 m-1">
           <TextIcon text={tradeStatus.toUpperCase()} />
-          {tradeResolvedDate && (
-            <p>{formatDistance(new Date(), tradeResolvedDate ?? new Date())}</p>
-          )}
+          <p>
+            Trade Offered On{' '}
+            {tradeOfferDate && format(new Date(tradeOfferDate), 'MM-dd-yyyy')}
+          </p>
         </div>
       </div>
     </Link>

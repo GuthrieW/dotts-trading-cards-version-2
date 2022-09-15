@@ -88,8 +88,8 @@ const Community = () => {
       <NextSeo title="Community" />
       <h1>Community</h1>
       <div>
-        <div className="flex justify-end flex-row max-w-full">
-          <div className="flex justify-center items-center">
+        <div className="flex justify-start flex-row max-w-full">
+          <div className="flex">
             <SearchBar disabled={isFetching} onChange={updateSearchFilter} />
           </div>
         </div>

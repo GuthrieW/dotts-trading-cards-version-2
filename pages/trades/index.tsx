@@ -1,3 +1,4 @@
+import { NextSeo } from 'next-seo'
 import React, { useMemo, useState } from 'react'
 import { toast } from 'react-toastify'
 import TradeDisplay from '../../components/displays/trade-display'
@@ -66,26 +67,28 @@ const Trades = () => {
   )
 
   return (
-    <div className="flex flex-col justify-center items-center">
-      <div className="w-full flex justify-between items-center">
-        <div className="flex flex-row justify-start items-center">
-          <DropdownWithCheckboxGroup
-            title="Trade Status"
-            checkboxes={tradeStatusCheckboxes}
-            selectedCheckboxIds={selectedTradeStatuses}
-          />
+    <>
+      <NextSeo title="Trades" />
+      <h1>Trades</h1>
+      <div>
+        <div className="flex justify-start flex-row max-w-full">
+          <div className="flex">
+            <SearchBar onChange={handleUpdateSearchString} />
+            <DropdownWithCheckboxGroup
+              title="Statues"
+              checkboxes={tradeStatusCheckboxes}
+              selectedCheckboxIds={selectedTradeStatuses}
+            />
+          </div>
         </div>
-        <div className="flex flex-row justify-end items-center">
-          <SearchBar onChange={handleUpdateSearchString} />
-        </div>
-      </div>
 
-      <div className="w-full">
-        {selectedTrades.map((trade, index) => (
-          <TradeDisplay key={index} trade={trade} />
-        ))}
+        <div className="w-full">
+          {selectedTrades.map((trade, index) => (
+            <TradeDisplay key={index} trade={trade} />
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 

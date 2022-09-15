@@ -109,8 +109,7 @@ const IssuePacks = () => {
       <h1>Issue Packs</h1>
       <div>
         <div className="w-full flex justify-between items-center">
-          <div></div>
-          <div className="flex flex-row justify-end items-center">
+          <div className="flex">
             <SearchBar onChange={updateSearchFilter} />
           </div>
         </div>
