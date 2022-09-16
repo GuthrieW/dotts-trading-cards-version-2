@@ -10,18 +10,21 @@ import FormWrapper from '../../components/forms/form-wrapper'
 import SubmitButton from '../../components/buttons/submit-button'
 import useGetCurrentUser from '../api/v2/_queries/use-get-current-user'
 import Spinner from '../../components/spinners/spinner'
+import Router from 'next/router'
 
 const SubmitCards = () => {
   const [newCardImage, setNewCardImage] = useState<string>('')
   const { insertCard, isSuccess, isLoading, error } = useInsertCard()
-  const {
-    currentUser,
-    isFetching: currentUserIsFetching,
-    error: currentUserError,
-  } = useGetCurrentUser({})
+  const { currentUser, isFetching: currentUserIsFetching } = useGetCurrentUser(
+    {}
+  )
 
   if (currentUserIsFetching) {
     return <Spinner />
+  }
+
+  if (!currentUser.isAdmin && !currentUser.isSubmitter) {
+    Router.push('/dashboard')
   }
 
   if (isSuccess) {

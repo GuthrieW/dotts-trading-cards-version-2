@@ -26,8 +26,6 @@ const useGetTrade = ({ id }: UseGetTradeRequest): UseGetTrade => {
     })
   })
 
-  console.log('data', data)
-
   return {
     trade: data?.data || null,
     isFetching,

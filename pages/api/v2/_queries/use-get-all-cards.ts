@@ -6,7 +6,7 @@ import { Methods } from '../common'
 type UseGetAllCardsRequest = {}
 
 type UseGetAllCards = {
-  allCards: any
+  allCards: any[]
   isFetching: boolean
   error: any
 }

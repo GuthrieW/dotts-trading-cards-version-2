@@ -28,8 +28,6 @@ const useGetUnapprovedCards =
       }
     )
 
-    console.log('data', data)
-
     return {
       unapprovedCards: data?.data?.unapprovedCards || [],
       isFetching,

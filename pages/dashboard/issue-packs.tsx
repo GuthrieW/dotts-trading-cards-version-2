@@ -18,6 +18,8 @@ import { Packs } from '../../utils/packs'
 import FormModal from '../../components/modals/form-modal'
 import FormWrapper from '../../components/forms/form-wrapper'
 import { toast } from 'react-toastify'
+import useGetDashboardPermissions from '../api/v2/_queries/use-get-dashboard-permissions'
+import Router from 'next/router'
 
 type EditableUserData = {
   _id: string
@@ -73,11 +75,9 @@ const IssuePacks = () => {
   const [showModal, setShowModal] = useState(false)
   const [selectedUser, setSelectedUser] = useState<EditableUserData>(null)
 
-  const {
-    allUsers,
-    isFetching: allUsersIsFetching,
-    error: allUsersError,
-  } = useGetAllUsers({})
+  const { permissions, isFetching: permissionsIsFetching } =
+    useGetDashboardPermissions({})
+  const { allUsers, isFetching: allUsersIsFetching } = useGetAllUsers({})
   const {
     issueSubscriberPacks,
     isSuccess: subscriberPacksIsSuccess,
@@ -147,8 +147,12 @@ const IssuePacks = () => {
     })
   }
 
-  if (allUsersIsFetching) {
+  if (allUsersIsFetching || permissionsIsFetching) {
     return <Spinner />
+  }
+
+  if (!permissions.isAdmin && !permissions.isPackIssuer) {
+    Router.push('/dashboard')
   }
 
   if (subscriberPacksIsSuccess) {

@@ -1,19 +1,30 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { connect } from '../../../database/database'
-import { Methods, TableNames } from '../../common'
+import { getAccessTokenFromHeader, Methods, TableNames } from '../../common'
+import JsonWebToken from 'jsonwebtoken'
 
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
-  const { method, body, query } = request
+  const { method } = request
 
   if (method === Methods.GET) {
-    const { id } = query
     const { database, client } = await connect()
 
     try {
+      const accessToken = getAccessTokenFromHeader(request)
+      if (!accessToken) {
+        response.status(200).json({ error: 'Authentication Failure' })
+        return
+      }
+
+      const email = JsonWebToken.verify(
+        accessToken,
+        process.env.WEBTOKEN_SECRET
+      )
+
       const account = await database
         .collection(TableNames.DOTTS_ACCOUNTS)
         .findOne({
-          _id: id,
+          email: email,
         })
 
       if (!account) {
@@ -24,11 +35,13 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
       }
 
       response.status(200).json({
-        isAdmin: account.isAdmin,
-        isProcessor: account.isProcessor,
-        isPackIssuer: account.isPackIssuer,
-        isSubmitter: account.isSubmitter,
-        isSubscribed: account.isSubscribed,
+        permissions: {
+          isAdmin: account.isAdmin,
+          isProcessor: account.isProcessor,
+          isPackIssuer: account.isPackIssuer,
+          isSubmitter: account.isSubmitter,
+          isSubscribed: account.isSubscribed,
+        },
       })
     } catch (error) {
       console.log(error)

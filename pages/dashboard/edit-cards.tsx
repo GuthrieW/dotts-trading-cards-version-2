@@ -23,6 +23,8 @@ import { RARITIES, TEAMS } from '../../utils/constants'
 import SubmitButton from '../../components/buttons/submit-button'
 import Button from '../../components/buttons/button'
 import Spinner from '../../components/spinners/spinner'
+import Router from 'next/router'
+import useGetDashboardPermissions from '../api/v2/_queries/use-get-dashboard-permissions'
 
 type EditableCardData = {
   _id: string
@@ -107,12 +109,10 @@ const EditCards = () => {
     useState<EditableCardData>(null)
   const [cardImage, setCardImage] = useState<string>('')
 
-  const {
-    allCards,
-    isFetching: allCardsIsFetching,
-    error: allCardsError,
-  } = useGetAllCards({})
-  const { updateCard, isSuccess, isLoading, error, reset } = useUpdateCard()
+  const { permissions, isFetching: permissionsIsFetching } =
+    useGetDashboardPermissions({})
+  const { allCards, isFetching: allCardsIsFetching } = useGetAllCards({})
+  const { updateCard, isSuccess, isLoading, reset } = useUpdateCard()
 
   const initialState = useMemo(() => {
     return { sortBy: [{ id: '_id' }] }
@@ -147,6 +147,23 @@ const EditCards = () => {
     usePagination
   )
 
+  if (allCardsIsFetching || permissionsIsFetching) {
+    console.log('spinning')
+    return <Spinner />
+  }
+
+  if (!permissions.isAdmin || !permissions.isProcessor) {
+    console.log('pushing')
+    Router.push('/dashboard')
+  }
+
+  if (isSuccess) {
+    toast.success(`${selectedCardData.playerName} card updated!`)
+    setShowModal(false)
+    setSelectedCardData(null)
+    reset()
+  }
+
   const gotoLastPage = () => gotoPage(pageCount - 1)
   const updateSearchFilter = (event) => setGlobalFilter(event.target.value)
 
@@ -166,16 +183,7 @@ const EditCards = () => {
     setSelectedCardData(cardData)
   }
 
-  if (allCardsIsFetching) {
-    return <Spinner />
-  }
-
-  if (isSuccess) {
-    toast.success(`${selectedCardData.playerName} card updated!`)
-    setShowModal(false)
-    setSelectedCardData(null)
-    reset()
-  }
+  console.log('rendering the page')
 
   return (
     <>
