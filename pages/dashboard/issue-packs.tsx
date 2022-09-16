@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import useGetAllUsers from '../api/v2/_queries/use-get-all-users'
 import {
   useTable,
@@ -14,7 +14,15 @@ import Spinner from '../../components/spinners/spinner'
 import Button from '../../components/buttons/button'
 import useIssueSubsciberPacks from '../api/v2/_mutations/use-subscriber-issue-packs'
 import useIssueSinglePack from '../api/v2/_mutations/use-issue-single-pack'
-import { Packs, PACK_TYPES } from '../../utils/packs'
+import { Packs } from '../../utils/packs'
+import FormModal from '../../components/modals/form-modal'
+import FormWrapper from '../../components/forms/form-wrapper'
+import { toast } from 'react-toastify'
+
+type EditableUserData = {
+  _id: string
+  isflUsername: string
+}
 
 const columnData = [
   {
@@ -60,7 +68,11 @@ const columnData = [
     sortDescFirst: false,
   },
 ]
+
 const IssuePacks = () => {
+  const [showModal, setShowModal] = useState(false)
+  const [selectedUser, setSelectedUser] = useState<EditableUserData>(null)
+
   const {
     allUsers,
     isFetching: allUsersIsFetching,
@@ -73,6 +85,13 @@ const IssuePacks = () => {
     error: subscriberPacksError,
     reset: subscriberPacksReset,
   } = useIssueSubsciberPacks()
+  const {
+    issueSinglePack,
+    isSuccess: singlePackIsSuccess,
+    isLoading: singlePackIsLoading,
+    error: singlePackError,
+    reset: singlePackReset,
+  } = useIssueSinglePack()
 
   const initialState = useMemo(() => {
     return { sortBy: [{ id: '_id' }] }
@@ -111,11 +130,39 @@ const IssuePacks = () => {
   const updateSearchFilter = (event) => setGlobalFilter(event.target.value)
 
   const handleRowClick = (row) => {
-    alert(JSON.stringify(row.values))
+    console.log(row)
+    const userDate = {
+      _id: row.values._id,
+      isflUsername: row.values.isflUsername,
+    }
+
+    setShowModal(true)
+    setSelectedUser(userDate)
+  }
+
+  const handleSubmit = async (packType: string) => {
+    await issueSinglePack({
+      _id: selectedUser._id,
+      packType,
+    })
   }
 
   if (allUsersIsFetching) {
     return <Spinner />
+  }
+
+  if (subscriberPacksIsSuccess) {
+    toast.success('Subscriber packs issued')
+    setShowModal(false)
+    setSelectedUser(null)
+    subscriberPacksReset()
+  }
+
+  if (singlePackIsSuccess) {
+    toast.success(`Pack issued to ${selectedUser.isflUsername}`)
+    setShowModal(false)
+    setSelectedUser(null)
+    singlePackReset()
   }
 
   return (
@@ -166,6 +213,51 @@ const IssuePacks = () => {
           gotoLastPage={gotoLastPage}
         />
       </div>
+      {showModal && (
+        <FormModal
+          title={`Issue Pack to ${selectedUser.isflUsername}`}
+          toggleModal={() => {
+            setShowModal(false)
+            setSelectedUser(null)
+          }}
+        >
+          <FormWrapper>
+            <Button
+              onClick={() => handleSubmit(Packs.Type.Regular)}
+              isLoading={
+                allUsersIsFetching ||
+                subscriberPacksIsLoading ||
+                singlePackIsLoading
+              }
+            >
+              Issue Base Pack
+            </Button>
+            <Button
+              onClick={() => handleSubmit(Packs.Type.Ultimus)}
+              isLoading={
+                allUsersIsFetching ||
+                subscriberPacksIsLoading ||
+                singlePackIsLoading
+              }
+            >
+              Issue Ultimus Pack
+            </Button>
+            <Button
+              onClick={() => {
+                setShowModal(false)
+                setSelectedUser(null)
+              }}
+              isLoading={
+                allUsersIsFetching ||
+                subscriberPacksIsLoading ||
+                singlePackIsLoading
+              }
+            >
+              Cancel
+            </Button>
+          </FormWrapper>
+        </FormModal>
+      )}
     </>
   )
 }
