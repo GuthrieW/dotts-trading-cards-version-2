@@ -1,16 +1,15 @@
 import Router from 'next/router'
-import Spinner from '../components/spinners/spinner'
 import useAuthentication from '../pages/api/v2/_queries/use-authentication'
 import Footer from './footer'
 
 const AuthenticationLayout = ({ children }) => {
-  const { isAuthenticated, isFetching, error } = useAuthentication({})
+  const { permissions, isFetching, error } = useAuthentication({})
 
   if (isFetching) {
     return null
   }
 
-  if (isAuthenticated) {
+  if (permissions) {
     if (typeof window !== 'undefined') {
       Router.push('/dashboard')
     }
