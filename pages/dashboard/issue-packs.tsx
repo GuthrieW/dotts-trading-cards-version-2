@@ -11,6 +11,10 @@ import Pagination from '../../components/tables/pagination'
 import Table from '../../components/tables/table'
 import { NextSeo } from 'next-seo'
 import Spinner from '../../components/spinners/spinner'
+import Button from '../../components/buttons/button'
+import useIssueSubsciberPacks from '../api/v2/_mutations/use-subscriber-issue-packs'
+import useIssueSinglePack from '../api/v2/_mutations/use-issue-single-pack'
+import { Packs, PACK_TYPES } from '../../utils/packs'
 
 const columnData = [
   {
@@ -57,7 +61,18 @@ const columnData = [
   },
 ]
 const IssuePacks = () => {
-  const { allUsers, isFetching, error } = useGetAllUsers({})
+  const {
+    allUsers,
+    isFetching: allUsersIsFetching,
+    error: allUsersError,
+  } = useGetAllUsers({})
+  const {
+    issueSubscriberPacks,
+    isSuccess: subscriberPacksIsSuccess,
+    isLoading: subscriberPacksIsLoading,
+    error: subscriberPacksError,
+    reset: subscriberPacksReset,
+  } = useIssueSubsciberPacks()
 
   const initialState = useMemo(() => {
     return { sortBy: [{ id: '_id' }] }
@@ -99,7 +114,7 @@ const IssuePacks = () => {
     alert(JSON.stringify(row.values))
   }
 
-  if (isFetching) {
+  if (allUsersIsFetching) {
     return <Spinner />
   }
 
@@ -109,8 +124,27 @@ const IssuePacks = () => {
       <h1>Issue Packs</h1>
       <div>
         <div className="w-full flex justify-between items-center">
-          <div className="flex">
-            <SearchBar onChange={updateSearchFilter} disabled={isFetching} />
+          <div className="flex items-center">
+            <SearchBar
+              onChange={updateSearchFilter}
+              disabled={allUsersIsFetching}
+            />
+            <Button
+              onClick={() =>
+                issueSubscriberPacks({ packType: Packs.Type.Regular })
+              }
+              isLoading={subscriberPacksIsLoading}
+            >
+              Issue Subs Base Packs
+            </Button>
+            <Button
+              onClick={() =>
+                issueSubscriberPacks({ packType: Packs.Type.Ultimus })
+              }
+              isLoading={subscriberPacksIsLoading}
+            >
+              Issue Subs Ultimus Packs
+            </Button>
           </div>
         </div>
         <Table

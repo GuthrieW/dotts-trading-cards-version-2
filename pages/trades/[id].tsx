@@ -41,10 +41,6 @@ const Trade = () => {
     return <Spinner />
   }
 
-  if (tradeError || currentUserError) {
-    toast.warning('Error fetching trade data')
-  }
-
   const tradeResolved =
     trade.tradeStatus === 'completed' || trade.tradeStatus === 'declined'
   const userIsTradeReceiver = trade.receivingUserId === currentUser._id

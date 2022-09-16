@@ -73,7 +73,7 @@ const Trades = () => {
       <h1>Trades</h1>
       <div>
         <div className="flex justify-start flex-row max-w-full">
-          <div className="flex">
+          <div className="flex items-center">
             <SearchBar
               onChange={handleUpdateSearchString}
               disabled={userTradesIsFetching}

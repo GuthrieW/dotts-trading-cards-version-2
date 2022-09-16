@@ -7,7 +7,7 @@ type SearchBarProps = {
 
 const SearchBar = ({ onChange, disabled }: SearchBarProps) => (
   <input
-    className="my-2 px-2 h-8 rounded-md border border-black text-black font-normal text-base w-full min-w-0"
+    className="my-2 px-2 h-8 rounded-md border border-black text-black font-normal text-base w-full min-w-0 mr-2"
     type="text"
     placeholder="Search"
     onChange={onChange}

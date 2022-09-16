@@ -4,26 +4,29 @@ import { DOTTS_ACCESS_TOKEN } from '../../../../utils/constants'
 import { Methods } from '../common'
 import { toast } from 'react-toastify'
 
-type UseIssuePacksRequest = {}
+type UseIssueSubscriberPacksRequest = {
+  packType: string
+}
 
-type UseIssuePacks = {
-  issuePacks: Function
+type UseIssueSubscriberPacks = {
+  issueSubscriberPacks: Function
   isSuccess: boolean
   isLoading: boolean
   error: any
+  reset: Function
 }
 
-const useIssuePacks = (): UseIssuePacks => {
+const useIssueSubscriberPacks = (): UseIssueSubscriberPacks => {
   const queryClient: QueryClient = useQueryClient()
-  const { mutate, isSuccess, isLoading, error } = useMutation(
-    ({}: UseIssuePacksRequest) => {
+  const { mutate, isSuccess, isLoading, error, reset } = useMutation(
+    ({ packType }: UseIssueSubscriberPacksRequest) => {
       return axios({
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
         method: Methods.POST,
-        url: '',
-        data: {},
+        url: '/api/v2/packs/issue/subscribers',
+        data: { packType },
       })
     },
     {
@@ -35,11 +38,12 @@ const useIssuePacks = (): UseIssuePacks => {
   )
 
   return {
-    issuePacks: mutate,
+    issueSubscriberPacks: mutate,
     isSuccess,
     isLoading,
     error,
+    reset,
   }
 }
 
-export default useIssuePacks
+export default useIssueSubscriberPacks

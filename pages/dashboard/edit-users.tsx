@@ -193,7 +193,7 @@ const EditUsers = () => {
       <h1>Edit Users</h1>
       <div>
         <div className="w-full flex justify-between items-center">
-          <div className="flex">
+          <div className="flex items-center">
             <SearchBar onChange={updateSearchFilter} disabled={isFetching} />
           </div>
         </div>

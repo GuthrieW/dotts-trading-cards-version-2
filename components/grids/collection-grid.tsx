@@ -191,7 +191,7 @@ const CollectionGrid = ({ gridCards }: CollectionGridProps) => {
   return (
     <div className="flex flex-col justify-center items-center">
       <div className="w-full flex justify-start items-center">
-        <div className="flex">
+        <div className="flex items-center">
           <SearchBar onChange={handleUpdateSearchString} />
           <DropdownWithCheckboxGroup
             title="Rarity"

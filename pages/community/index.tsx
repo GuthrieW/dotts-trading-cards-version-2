@@ -94,7 +94,7 @@ const Community = () => {
       <h1>Community</h1>
       <div>
         <div className="flex justify-start flex-row max-w-full">
-          <div className="flex">
+          <div className="flex items-center">
             <SearchBar disabled={isFetching} onChange={updateSearchFilter} />
           </div>
         </div>
