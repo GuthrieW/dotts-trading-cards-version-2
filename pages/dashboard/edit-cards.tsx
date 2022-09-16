@@ -24,7 +24,6 @@ import SubmitButton from '../../components/buttons/submit-button'
 import Button from '../../components/buttons/button'
 import Spinner from '../../components/spinners/spinner'
 import Router from 'next/router'
-import useGetDashboardPermissions from '../api/v2/_queries/use-get-dashboard-permissions'
 
 type EditableCardData = {
   _id: string
@@ -109,8 +108,6 @@ const EditCards = () => {
     useState<EditableCardData>(null)
   const [cardImage, setCardImage] = useState<string>('')
 
-  const { permissions, isFetching: permissionsIsFetching } =
-    useGetDashboardPermissions({})
   const { allCards, isFetching: allCardsIsFetching } = useGetAllCards({})
   const { updateCard, isSuccess, isLoading, reset } = useUpdateCard()
 
@@ -147,14 +144,9 @@ const EditCards = () => {
     usePagination
   )
 
-  if (allCardsIsFetching || permissionsIsFetching) {
+  if (allCardsIsFetching) {
     console.log('spinning')
     return <Spinner />
-  }
-
-  if (!permissions.isAdmin || !permissions.isProcessor) {
-    console.log('pushing')
-    Router.push('/dashboard')
   }
 
   if (isSuccess) {

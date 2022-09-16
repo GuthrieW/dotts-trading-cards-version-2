@@ -83,26 +83,24 @@ const AdminDashboard = () => {
       <NextSeo title="Dashboard" />
       <h1>Dashboard</h1>
       <div className="flex flex-col justify-start items-center w-full">
-        {ExternalLinks.map((link) => (
+        {ExternalLinks.map((link, index) => (
           <DashboardButton
+            key={index}
             title={link.title}
             body={link.body}
             href={link.href}
           />
         ))}
-        {InternalLinks.map((link) => {
+        {InternalLinks.map((link, index) => {
           const isEnabled = link.enabled(currentUser)
-          return (
-            <>
-              {isEnabled && (
-                <DashboardButton
-                  title={link.title}
-                  body={link.body}
-                  href={link.href}
-                />
-              )}
-            </>
-          )
+          return isEnabled ? (
+            <DashboardButton
+              key={index}
+              title={link.title}
+              body={link.body}
+              href={link.href}
+            />
+          ) : null
         })}
       </div>
     </>

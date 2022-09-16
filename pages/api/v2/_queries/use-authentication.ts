@@ -3,10 +3,18 @@ import { useQuery } from 'react-query'
 import { DOTTS_ACCESS_TOKEN } from '../../../../utils/constants'
 import { Methods } from '../common'
 
+type Permissions = {
+  isAdmin: boolean
+  isProcessor: boolean
+  isPackIssuer: boolean
+  isSubmitter: boolean
+  isSubscribed: boolean
+}
+
 type UseAuthenticationRequest = {}
 
 type UseAuthentication = {
-  isAuthenticated: boolean
+  permissions: Permissions
   isFetching: boolean
   error: any
 }
@@ -28,7 +36,7 @@ const useAuthentication = ({}: UseAuthenticationRequest): UseAuthentication => {
   )
 
   return {
-    isAuthenticated: data?.data?.isAuthenticated ?? false,
+    permissions: data?.data?.permissions ?? null,
     isFetching,
     error,
   }

@@ -21,7 +21,6 @@ import Pagination from '../../components/tables/pagination'
 import Table from '../../components/tables/table'
 import useUpdateUser from '../api/v2/_mutations/use-update-user'
 import useGetAllUsers from '../api/v2/_queries/use-get-all-users'
-import useGetDashboardPermissions from '../api/v2/_queries/use-get-dashboard-permissions'
 
 type EditableUserData = {
   _id: string
@@ -121,8 +120,6 @@ const EditUsers = () => {
   const [selectedUserData, setSelectedUserData] =
     useState<EditableUserData>(null)
 
-  const { permissions, isFetching: permissionsIsFetching } =
-    useGetDashboardPermissions({})
   const { allUsers, isFetching, error } = useGetAllUsers({})
   const { updateUser, isSuccess, isLoading, reset } = useUpdateUser()
 
@@ -180,12 +177,8 @@ const EditUsers = () => {
     setSelectedUserData(userData)
   }
 
-  if (isFetching || permissionsIsFetching) {
+  if (isFetching) {
     return <Spinner />
-  }
-
-  if (!permissions.isAdmin || !permissions.isPackIssuer) {
-    Router.push('/dashboard')
   }
 
   if (isSuccess) {

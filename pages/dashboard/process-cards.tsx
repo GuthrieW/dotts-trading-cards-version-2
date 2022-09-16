@@ -20,7 +20,6 @@ import { Form, Formik } from 'formik'
 import TextField from '../../components/fields/text-field'
 import Button from '../../components/buttons/button'
 import Spinner from '../../components/spinners/spinner'
-import useGetDashboardPermissions from '../api/v2/_queries/use-get-dashboard-permissions'
 import Router from 'next/router'
 
 type EditableCardData = {
@@ -102,9 +101,6 @@ const ProcessCards = () => {
   const [selectedCardData, setSelectedCardData] =
     useState<EditableCardData>(null)
 
-  const { permissions, isFetching: permissionsIsFetching } =
-    useGetDashboardPermissions({})
-
   const { unapprovedCards, isFetching: getUnapprovedCardsIsFetching } =
     useGetUnapprovedCards({})
 
@@ -171,12 +167,8 @@ const ProcessCards = () => {
     setSelectedCardData(cardData)
   }
 
-  if (getUnapprovedCardsIsFetching || permissionsIsFetching) {
+  if (getUnapprovedCardsIsFetching) {
     return <Spinner />
-  }
-
-  if (!permissions.isAdmin && !permissions.isProcessor) {
-    Router.push('/dashboard')
   }
 
   if (approveCardsIsSuccess) {
