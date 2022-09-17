@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { connect } from '../../database/database'
-import _ from 'lodash'
 import { ObjectId } from 'mongodb'
 import { Methods, TableNames } from '../common'
 import { TradeStatuses } from '../../../../utils/trade-statuses'

@@ -24,7 +24,6 @@
     "email-validator": "^2.0.4",
     "formik": "^2.2.9",
     "jsonwebtoken": "^8.5.1",
-    "lodash": "^4.17.20",
     "mongodb": "^4.5.0",
     "next": "^12.1.5",
     "next-seo": "^5.5.0",
