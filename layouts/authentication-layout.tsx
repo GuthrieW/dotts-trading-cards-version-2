@@ -1,6 +1,5 @@
 import Router from 'next/router'
 import useAuthentication from '../pages/api/v2/_queries/use-authentication'
-import Footer from './footer'
 
 const AuthenticationLayout = ({ children }) => {
   const { permissions, isFetching, error } = useAuthentication({})
@@ -25,7 +24,6 @@ const AuthenticationLayout = ({ children }) => {
         </div>
       </header>
       <div className="mx-2">{children}</div>
-      <Footer />
     </div>
   )
 }
