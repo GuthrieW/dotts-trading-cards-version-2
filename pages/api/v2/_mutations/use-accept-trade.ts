@@ -4,7 +4,13 @@ import { DOTTS_ACCESS_TOKEN } from '../../../../utils/constants'
 import { Methods } from '../common'
 import { toast } from 'react-toastify'
 
-type UseAcceptTradeRequest = {}
+type UseAcceptTradeRequest = {
+  tradeId: string
+  offeringUserId: string
+  offeringUserCardIds: string[]
+  receivingUserId: string
+  receivingUserCardIds: string[]
+}
 
 type UseAcceptTrade = {
   acceptTrade: Function
@@ -16,18 +22,32 @@ type UseAcceptTrade = {
 const useAcceptTrade = (): UseAcceptTrade => {
   const queryClient: QueryClient = useQueryClient()
   const { mutate, isSuccess, isLoading, reset } = useMutation(
-    ({}: UseAcceptTradeRequest) => {
+    ({
+      tradeId,
+      offeringUserId,
+      offeringUserCardIds,
+      receivingUserId,
+      receivingUserCardIds,
+    }: UseAcceptTradeRequest) => {
       return axios({
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
         method: Methods.PATCH,
         url: '/api/v2/trades/accept',
-        data: {},
+        data: {
+          _id: tradeId,
+          offeringUserId,
+          offeringUserCardIds,
+          receivingUserId,
+          receivingUserCardIds,
+        },
       })
     },
     {
-      onSuccess: () => {},
+      onSuccess: () => {
+        toast.success('Trade accepted')
+      },
       onError: () => {
         toast.error('Error accepting trade')
       },

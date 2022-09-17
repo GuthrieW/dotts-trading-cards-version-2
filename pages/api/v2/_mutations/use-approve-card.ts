@@ -29,7 +29,9 @@ const useApproveCard = (): UseApproveCard => {
       })
     },
     {
-      onSuccess: () => {},
+      onSuccess: () => {
+        toast.success('Card approved')
+      },
       onError: () => {
         toast.error('Error approving card')
       },

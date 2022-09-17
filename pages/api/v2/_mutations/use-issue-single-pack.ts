@@ -30,7 +30,9 @@ const useIssueSinglePack = (): UseIssueSinglePack => {
       })
     },
     {
-      onSuccess: () => {},
+      onSuccess: () => {
+        toast.success('Pack issued')
+      },
       onError: () => {
         toast.error('Error issuing pack')
       },

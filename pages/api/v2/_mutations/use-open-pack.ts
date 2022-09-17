@@ -29,7 +29,9 @@ const useOpenPack = (): UseOpenPack => {
       })
     },
     {
-      onSuccess: () => {},
+      onSuccess: () => {
+        toast.success('pack opened')
+      },
       onError: () => {
         toast.error('Error opening pack')
       },

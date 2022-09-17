@@ -29,7 +29,9 @@ const useDeleteCard = (): UseDeleteCard => {
       })
     },
     {
-      onSuccess: () => {},
+      onSuccess: () => {
+        toast.success('Card deleted')
+      },
       onError: () => {
         toast.error('Error deleting card')
       },

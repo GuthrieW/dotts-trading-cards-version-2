@@ -29,7 +29,9 @@ const useIssueSubscriberPacks = (): UseIssueSubscriberPacks => {
       })
     },
     {
-      onSuccess: () => {},
+      onSuccess: () => {
+        toast.success('Subscriber packs issued')
+      },
       onError: () => {
         toast.error('Error issuing packs')
       },

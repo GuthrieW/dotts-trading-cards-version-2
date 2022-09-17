@@ -50,7 +50,9 @@ const useUpdateCard = (): UseUpdateCard => {
       })
     },
     {
-      onSuccess: () => {},
+      onSuccess: () => {
+        toast.success('Card updated')
+      },
       onError: () => {
         toast.error('Error updating card')
       },

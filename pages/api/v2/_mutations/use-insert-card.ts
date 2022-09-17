@@ -45,7 +45,9 @@ const useInsertCard = (): UseInsertCard => {
       })
     },
     {
-      onSuccess: () => {},
+      onSuccess: () => {
+        toast.success('Card created')
+      },
       onError: () => {
         toast.error('Error inserting new card')
       },

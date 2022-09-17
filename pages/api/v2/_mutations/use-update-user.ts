@@ -53,7 +53,9 @@ const useUpdateUser = (): UseUpdateUser => {
       })
     },
     {
-      onSuccess: () => {},
+      onSuccess: () => {
+        toast.success('User updated')
+      },
       onError: () => {
         toast.error('Error updating user')
       },
