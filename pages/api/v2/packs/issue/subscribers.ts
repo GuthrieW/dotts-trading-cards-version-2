@@ -19,14 +19,9 @@ export const index = async (
           ? { ownedUltimusPacks: 1 }
           : { ownedRegularPacks: 1 }
 
-      await database.collection(TableNames.DOTTS_ACCOUNTS).updateMany(
-        {
-          isSubscribed: true,
-        },
-        {
-          $inc: increment,
-        }
-      )
+      await database
+        .collection(TableNames.DOTTS_ACCOUNTS)
+        .updateMany({ isSubscribed: true }, { $inc: increment })
 
       response.status(200).json({ packsIssued: true })
       return

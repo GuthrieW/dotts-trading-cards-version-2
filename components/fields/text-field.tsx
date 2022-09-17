@@ -4,11 +4,18 @@ import { Field } from 'formik'
 type TextFieldProps = {
   name: string
   label: string
-  type: string
+  type: 'text' | 'number'
   disabled?: boolean
+  min?: number
 }
 
-const TextField = ({ name, label, type, disabled = false }: TextFieldProps) => (
+const TextField = ({
+  name,
+  label,
+  type,
+  disabled = false,
+  min,
+}: TextFieldProps) => (
   <div className="mb-4">
     <label className="block text-white text-sm font-bold mb-2" htmlFor={name}>
       {label}
@@ -21,6 +28,7 @@ const TextField = ({ name, label, type, disabled = false }: TextFieldProps) => (
       type={type}
       disabled={disabled}
       placeholder={label}
+      min={min}
     />
   </div>
 )

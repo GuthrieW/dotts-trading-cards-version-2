@@ -6,6 +6,7 @@ import { toast } from 'react-toastify'
 import { UseGetCurrentUserKey } from '../_queries/use-get-current-user'
 import { UseGetCardsOwnedByUserKey } from '../_queries/use-get-cards-owned-by-user'
 import { UseGetLastOpenedPackKey } from '../_queries/use-get-last-opened-pack'
+import { UseGetAllUsersKey } from '../_queries/use-get-all-users'
 
 type UseIssueSinglePackRequest = {
   _id: string
@@ -28,7 +29,7 @@ const useIssueSinglePack = (): UseIssueSinglePack => {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
         method: Methods.POST,
-        url: `/api/v2/packs/issue/single/${_id}`,
+        url: `/api/v2/packs/issue/${_id}`,
         data: { packType },
       })
     },
@@ -36,6 +37,7 @@ const useIssueSinglePack = (): UseIssueSinglePack => {
       onSuccess: () => {
         toast.success('Pack issued')
         queryClient.invalidateQueries(UseGetCurrentUserKey)
+        queryClient.invalidateQueries(UseGetAllUsersKey)
       },
       onError: () => {
         toast.error('Error issuing pack')
