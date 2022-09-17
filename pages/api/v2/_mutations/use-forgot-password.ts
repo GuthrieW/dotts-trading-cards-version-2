@@ -12,12 +12,12 @@ type UseForgotPassword = {
   forgotPassword: Function
   isSuccess: boolean
   isLoading: boolean
-  error: any
+  reset: Function
 }
 
 const useForgotPassword = (): UseForgotPassword => {
   const queryClient: QueryClient = useQueryClient()
-  const { mutate, isSuccess, isLoading, error } = useMutation(
+  const { mutate, isSuccess, isLoading, reset } = useMutation(
     ({ email }: UseForgotPasswordRequest) => {
       return axios({
         headers: {
@@ -40,7 +40,7 @@ const useForgotPassword = (): UseForgotPassword => {
     forgotPassword: mutate,
     isSuccess,
     isLoading,
-    error,
+    reset,
   }
 }
 

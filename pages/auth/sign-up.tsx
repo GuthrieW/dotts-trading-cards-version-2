@@ -8,7 +8,7 @@ import FormWrapper from '../../components/forms/form-wrapper'
 import useSignUp from '../api/v2/_mutations/use-sign-up'
 
 const SignUp = () => {
-  const { signUp, isSuccess, isLoading, error } = useSignUp()
+  const { signUp, isSuccess, isLoading, reset } = useSignUp()
 
   if (isSuccess) {
     toast.success('Wow you signed up')

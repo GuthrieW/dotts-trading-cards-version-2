@@ -18,13 +18,12 @@ type UseUpdateCard = {
   updateCard: Function
   isSuccess: boolean
   isLoading: boolean
-  error: any
   reset: Function
 }
 
 const useUpdateCard = (): UseUpdateCard => {
   const queryClient: QueryClient = useQueryClient()
-  const { mutate, isSuccess, isLoading, error, reset } = useMutation(
+  const { mutate, isSuccess, isLoading, reset } = useMutation(
     ({
       _id,
       approved,
@@ -62,7 +61,6 @@ const useUpdateCard = (): UseUpdateCard => {
     updateCard: mutate,
     isSuccess,
     isLoading,
-    error,
     reset,
   }
 }

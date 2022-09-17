@@ -7,7 +7,7 @@ import SubmitButton from '../../components/buttons/submit-button'
 import FormWrapper from '../../components/forms/form-wrapper'
 
 const PasswordReset = () => {
-  const { passwordReset, isSuccess, isLoading, error } = usePasswordReset()
+  const { passwordReset, isSuccess, isLoading, reset } = usePasswordReset()
 
   if (isSuccess) {
     toast.success('Pog you did it')

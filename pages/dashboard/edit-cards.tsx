@@ -108,7 +108,7 @@ const EditCards = () => {
     useState<EditableCardData>(null)
   const [cardImage, setCardImage] = useState<string>('')
 
-  const { allCards, isFetching: allCardsIsFetching } = useGetAllCards({})
+  const { allCards, isFetching } = useGetAllCards({})
   const { updateCard, isSuccess, isLoading, reset } = useUpdateCard()
 
   const initialState = useMemo(() => {
@@ -144,7 +144,7 @@ const EditCards = () => {
     usePagination
   )
 
-  if (allCardsIsFetching) {
+  if (isFetching) {
     console.log('spinning')
     return <Spinner />
   }

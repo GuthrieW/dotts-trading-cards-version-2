@@ -2,6 +2,7 @@ import axios from 'axios'
 import { useQuery } from 'react-query'
 import { DOTTS_ACCESS_TOKEN } from '../../../../utils/constants'
 import { Methods } from '../common'
+import { toast } from 'react-toastify'
 
 type UseGetCardsOwnedByUserRequest = {
   id: string
@@ -29,6 +30,12 @@ const useGetCardsOwnedByUser = ({
         method: Methods.GET,
         url: `/api/v2/users/collection/${id}`,
       })
+    },
+    {
+      onSuccess: () => {},
+      onError: () => {
+        toast.error('Error getting cards')
+      },
     }
   )
 

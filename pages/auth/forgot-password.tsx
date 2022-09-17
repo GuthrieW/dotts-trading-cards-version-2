@@ -8,7 +8,7 @@ import FormWrapper from '../../components/forms/form-wrapper'
 import { NextSeo } from 'next-seo'
 
 const ForgotPassword = () => {
-  const { forgotPassword, isSuccess, isLoading, error } = useForgotPassword()
+  const { forgotPassword, isSuccess, isLoading, reset } = useForgotPassword()
 
   if (isSuccess) {
     toast.success('Check your email boi')

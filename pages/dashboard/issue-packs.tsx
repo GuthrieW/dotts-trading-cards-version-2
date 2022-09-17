@@ -73,19 +73,17 @@ const IssuePacks = () => {
   const [showModal, setShowModal] = useState(false)
   const [selectedUser, setSelectedUser] = useState<EditableUserData>(null)
 
-  const { allUsers, isFetching: allUsersIsFetching } = useGetAllUsers({})
+  const { allUsers, isFetching } = useGetAllUsers({})
   const {
     issueSubscriberPacks,
     isSuccess: subscriberPacksIsSuccess,
     isLoading: subscriberPacksIsLoading,
-    error: subscriberPacksError,
     reset: subscriberPacksReset,
   } = useIssueSubsciberPacks()
   const {
     issueSinglePack,
     isSuccess: singlePackIsSuccess,
     isLoading: singlePackIsLoading,
-    error: singlePackError,
     reset: singlePackReset,
   } = useIssueSinglePack()
 
@@ -143,7 +141,7 @@ const IssuePacks = () => {
     })
   }
 
-  if (allUsersIsFetching) {
+  if (isFetching) {
     return <Spinner />
   }
 
@@ -168,10 +166,7 @@ const IssuePacks = () => {
       <div>
         <div className="w-full flex justify-between items-center">
           <div className="flex items-center">
-            <SearchBar
-              onChange={updateSearchFilter}
-              disabled={allUsersIsFetching}
-            />
+            <SearchBar onChange={updateSearchFilter} disabled={isFetching} />
             <Button
               onClick={() =>
                 issueSubscriberPacks({ packType: Packs.Type.Regular })
@@ -221,9 +216,7 @@ const IssuePacks = () => {
             <Button
               onClick={() => handleSubmit(Packs.Type.Regular)}
               isLoading={
-                allUsersIsFetching ||
-                subscriberPacksIsLoading ||
-                singlePackIsLoading
+                isFetching || subscriberPacksIsLoading || singlePackIsLoading
               }
             >
               Issue Base Pack
@@ -231,9 +224,7 @@ const IssuePacks = () => {
             <Button
               onClick={() => handleSubmit(Packs.Type.Ultimus)}
               isLoading={
-                allUsersIsFetching ||
-                subscriberPacksIsLoading ||
-                singlePackIsLoading
+                isFetching || subscriberPacksIsLoading || singlePackIsLoading
               }
             >
               Issue Ultimus Pack
@@ -244,9 +235,7 @@ const IssuePacks = () => {
                 setSelectedUser(null)
               }}
               isLoading={
-                allUsersIsFetching ||
-                subscriberPacksIsLoading ||
-                singlePackIsLoading
+                isFetching || subscriberPacksIsLoading || singlePackIsLoading
               }
             >
               Cancel

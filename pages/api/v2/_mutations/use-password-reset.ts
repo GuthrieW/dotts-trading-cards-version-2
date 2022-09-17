@@ -10,12 +10,12 @@ type UsePasswordReset = {
   passwordReset: Function
   isSuccess: boolean
   isLoading: boolean
-  error: any
+  reset: Function
 }
 
 const usePasswordReset = (): UsePasswordReset => {
   const queryClient: QueryClient = useQueryClient()
-  const { mutate, isSuccess, isLoading, error } = useMutation(
+  const { mutate, isSuccess, isLoading, reset } = useMutation(
     ({}: UsePasswordResetRequest) => {
       return axios({
         headers: {
@@ -38,7 +38,7 @@ const usePasswordReset = (): UsePasswordReset => {
     passwordReset: mutate,
     isSuccess,
     isLoading,
-    error,
+    reset,
   }
 }
 

@@ -72,7 +72,7 @@ const InternalLinks: LinkProps[] = [
 ]
 
 const AdminDashboard = () => {
-  const { currentUser, isFetching, error } = useGetCurrentUser({})
+  const { currentUser, isFetching } = useGetCurrentUser({})
 
   if (isFetching) {
     return <Spinner />

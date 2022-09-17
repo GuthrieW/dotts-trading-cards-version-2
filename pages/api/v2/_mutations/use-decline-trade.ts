@@ -10,12 +10,12 @@ type UseDeclineTrade = {
   declineTrade: Function
   isSuccess: boolean
   isLoading: boolean
-  error: any
+  reset: Function
 }
 
 const useDeclineTrade = (): UseDeclineTrade => {
   const queryClient: QueryClient = useQueryClient()
-  const { mutate, isSuccess, isLoading, error } = useMutation(
+  const { mutate, isSuccess, isLoading, reset } = useMutation(
     ({}: UseDeclineTradeRequest) => {
       return axios({
         headers: {
@@ -38,7 +38,7 @@ const useDeclineTrade = (): UseDeclineTrade => {
     declineTrade: mutate,
     isSuccess,
     isLoading,
-    error,
+    reset,
   }
 }
 

@@ -2,6 +2,7 @@ import axios from 'axios'
 import { useQuery } from 'react-query'
 import { DOTTS_ACCESS_TOKEN } from '../../../../utils/constants'
 import { Methods } from '../common'
+import { toast } from 'react-toastify'
 
 type UseGetSubscribedUsersRequest = {}
 
@@ -25,6 +26,12 @@ const useGetSubscribedUsers =
           method: Methods.GET,
           url: '',
         })
+      },
+      {
+        onSuccess: () => {},
+        onError: () => {
+          toast.error('Error getting subscribers')
+        },
       }
     )
 

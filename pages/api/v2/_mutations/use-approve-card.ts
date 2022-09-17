@@ -12,13 +12,12 @@ type UseApproveCard = {
   approveCard: Function
   isSuccess: boolean
   isLoading: boolean
-  error: any
   reset: Function
 }
 
 const useApproveCard = (): UseApproveCard => {
   const queryClient: QueryClient = useQueryClient()
-  const { mutate, isSuccess, isLoading, error, reset } = useMutation(
+  const { mutate, isSuccess, isLoading, reset } = useMutation(
     ({ _id }: UseApproveCardRequest) => {
       return axios({
         headers: {
@@ -41,7 +40,6 @@ const useApproveCard = (): UseApproveCard => {
     approveCard: mutate,
     isSuccess,
     isLoading,
-    error,
     reset,
   }
 }

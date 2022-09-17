@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useQuery } from 'react-query'
+import { toast } from 'react-toastify'
 import { DOTTS_ACCESS_TOKEN } from '../../../../utils/constants'
 import { Methods } from '../common'
 
@@ -25,6 +26,12 @@ const useGetUnapprovedCards =
           method: Methods.GET,
           url: '/api/v2/cards/unapproved',
         })
+      },
+      {
+        onSuccess: () => {},
+        onError: () => {
+          toast.error('Error getting unapproved cards')
+        },
       }
     )
 

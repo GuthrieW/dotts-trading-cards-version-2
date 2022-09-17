@@ -1,10 +1,9 @@
 import React from 'react'
 import useGetLastOpenedPack from '../api/v2/_queries/use-get-last-opened-pack'
-import { toast } from 'react-toastify'
 import Spinner from '../../components/spinners/spinner'
 
 const StaticPackViewer = () => {
-  const { lastOpenedPack, isFetching, error } = useGetLastOpenedPack({})
+  const { lastOpenedPack, isFetching } = useGetLastOpenedPack({})
 
   if (isFetching) {
     return <Spinner />

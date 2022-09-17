@@ -16,12 +16,12 @@ type UseInsertCard = {
   insertCard: Function
   isSuccess: boolean
   isLoading: boolean
-  error: any
+  reset: Function
 }
 
 const useInsertCard = (): UseInsertCard => {
   const queryClient: QueryClient = useQueryClient()
-  const { mutate, isSuccess, isLoading, error } = useMutation(
+  const { mutate, isSuccess, isLoading, reset } = useMutation(
     ({
       imageUrl,
       playerName,
@@ -56,7 +56,7 @@ const useInsertCard = (): UseInsertCard => {
     insertCard: mutate,
     isSuccess,
     isLoading,
-    error,
+    reset,
   }
 }
 

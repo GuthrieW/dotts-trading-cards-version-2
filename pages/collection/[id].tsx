@@ -14,16 +14,13 @@ const Collection = () => {
     isflUsername,
     cardsOwnedByUser,
     isFetching: cardsOwnedByUserIsFetching,
-    error: cardsOwnedByUserError,
   } = useGetCardsOwnedByUser({
     id: userId,
   })
 
-  const {
-    currentUser,
-    isFetching: currentUserIsFetching,
-    error: currentUserError,
-  } = useGetCurrentUser({})
+  const { currentUser, isFetching: currentUserIsFetching } = useGetCurrentUser(
+    {}
+  )
 
   if (cardsOwnedByUserIsFetching || currentUserIsFetching) {
     return <Spinner />

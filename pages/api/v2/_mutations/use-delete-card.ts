@@ -12,13 +12,12 @@ type UseDeleteCard = {
   deleteCard: Function
   isSuccess: boolean
   isLoading: boolean
-  error: any
   reset: Function
 }
 
 const useDeleteCard = (): UseDeleteCard => {
   const queryClient: QueryClient = useQueryClient()
-  const { mutate, isSuccess, isLoading, error, reset } = useMutation(
+  const { mutate, isSuccess, isLoading, reset } = useMutation(
     ({ _id }: UseDeleteCardRequest) => {
       return axios({
         headers: {
@@ -41,7 +40,6 @@ const useDeleteCard = (): UseDeleteCard => {
     deleteCard: mutate,
     isSuccess,
     isLoading,
-    error,
     reset,
   }
 }

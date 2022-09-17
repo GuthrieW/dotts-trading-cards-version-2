@@ -13,13 +13,12 @@ type UseIssueSinglePack = {
   issueSinglePack: Function
   isSuccess: boolean
   isLoading: boolean
-  error: any
   reset: Function
 }
 
 const useIssueSinglePack = (): UseIssueSinglePack => {
   const queryClient: QueryClient = useQueryClient()
-  const { mutate, isSuccess, isLoading, error, reset } = useMutation(
+  const { mutate, isSuccess, isLoading, reset } = useMutation(
     ({ _id, packType }: UseIssueSinglePackRequest) => {
       return axios({
         headers: {
@@ -42,7 +41,6 @@ const useIssueSinglePack = (): UseIssueSinglePack => {
     issueSinglePack: mutate,
     isSuccess,
     isLoading,
-    error,
     reset,
   }
 }

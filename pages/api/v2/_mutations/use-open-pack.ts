@@ -12,12 +12,12 @@ type UseOpenPack = {
   openPack: Function
   isSuccess: boolean
   isLoading: boolean
-  error: any
+  reset: Function
 }
 
 const useOpenPack = (): UseOpenPack => {
   const queryClient: QueryClient = useQueryClient()
-  const { mutate, isSuccess, isLoading, error } = useMutation(
+  const { mutate, isSuccess, isLoading, reset } = useMutation(
     ({ packType }: UseOpenPackRequest) => {
       return axios({
         headers: {
@@ -40,7 +40,7 @@ const useOpenPack = (): UseOpenPack => {
     openPack: mutate,
     isSuccess,
     isLoading,
-    error,
+    reset,
   }
 }
 

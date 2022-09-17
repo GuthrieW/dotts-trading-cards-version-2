@@ -14,12 +14,12 @@ type UseLogin = {
   authenticationFailed: any
   isSuccess: boolean
   isLoading: boolean
-  error: any
+  reset: Function
 }
 
 const useLogin = (): UseLogin => {
   const queryClient: QueryClient = useQueryClient()
-  const { mutate, data, isSuccess, isLoading, error } = useMutation(
+  const { mutate, data, isSuccess, isLoading, reset } = useMutation(
     ({ email, password }: UseLoginRequest) => {
       return axios({
         method: Methods.POST,
@@ -41,7 +41,7 @@ const useLogin = (): UseLogin => {
     authenticationFailed: data?.data?.error,
     isSuccess,
     isLoading,
-    error,
+    reset,
   }
 }
 

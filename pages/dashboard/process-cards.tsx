@@ -101,8 +101,7 @@ const ProcessCards = () => {
   const [selectedCardData, setSelectedCardData] =
     useState<EditableCardData>(null)
 
-  const { unapprovedCards, isFetching: getUnapprovedCardsIsFetching } =
-    useGetUnapprovedCards({})
+  const { unapprovedCards, isFetching } = useGetUnapprovedCards({})
 
   const {
     approveCard,
@@ -167,7 +166,7 @@ const ProcessCards = () => {
     setSelectedCardData(cardData)
   }
 
-  if (getUnapprovedCardsIsFetching) {
+  if (isFetching) {
     return <Spinner />
   }
 
@@ -192,10 +191,7 @@ const ProcessCards = () => {
       <div>
         <div className="w-full flex justify-start items-center">
           <div className="flex items-center">
-            <SearchBar
-              onChange={updateSearchFilter}
-              disabled={getUnapprovedCardsIsFetching}
-            />
+            <SearchBar onChange={updateSearchFilter} disabled={isFetching} />
           </div>
         </div>
         <Table

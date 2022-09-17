@@ -39,7 +39,7 @@ const columnData: ColumnData[] = [
 
 const Community = () => {
   const router = useRouter()
-  const { allUsers, isFetching, error } = useGetAllUsers({})
+  const { allUsers, isFetching } = useGetAllUsers({})
 
   const initialState = useMemo(() => {
     return { sortBy: [{ id: 'isflUsername' }] }

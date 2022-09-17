@@ -17,11 +17,7 @@ const Trades = () => {
     []
   )
 
-  const {
-    trades,
-    isFetching: userTradesIsFetching,
-    error: userTradesError,
-  } = useGetUserTrades({})
+  const { trades, isFetching: userTradesIsFetching } = useGetUserTrades({})
 
   const selectedTrades: DottsTrade[] = useMemo(() => {
     const lowercaseSearchString = searchString.toLowerCase()
@@ -43,10 +39,6 @@ const Trades = () => {
 
   if (userTradesIsFetching) {
     return <Spinner />
-  }
-
-  if (userTradesError) {
-    toast.warning(userTradesError)
   }
 
   const updateSelectedTradeStatusButtonIds = (toggleId) =>

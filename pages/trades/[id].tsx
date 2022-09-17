@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router'
+import Router, { useRouter } from 'next/router'
 import React from 'react'
 import { toast } from 'react-toastify'
 import Button from '../../components/buttons/button'
@@ -13,32 +13,28 @@ const Trade = () => {
   const router = useRouter()
   const tradeId = router.query.id as string
 
-  const {
-    trade,
-    isFetching: tradeIsFetching,
-    error: tradeError,
-  } = useGetTrade({ id: tradeId })
-  const {
-    currentUser,
-    isFetching: currentUserIsFetching,
-    error: currentUserError,
-  } = useGetCurrentUser({})
+  const { trade, isFetching: tradeIsFetching } = useGetTrade({ id: tradeId })
+  const { currentUser, isFetching: currentUserIsFetching } = useGetCurrentUser(
+    {}
+  )
 
   const {
     acceptTrade,
     isSuccess: acceptTradeIsSuccess,
     isLoading: acceptTradeIsLoading,
-    error: acceptTradeError,
   } = useAcceptTrade()
   const {
     declineTrade,
     isSuccess: declineTradeIsSuccess,
     isLoading: declineTradeIsLoading,
-    error: declineTradeError,
   } = useDeclineTrade()
 
   if (tradeIsFetching || currentUserIsFetching) {
     return <Spinner />
+  }
+
+  if (acceptTradeIsSuccess || declineTradeIsSuccess) {
+    Router.push('/trades')
   }
 
   const tradeResolved =
@@ -50,10 +46,28 @@ const Trade = () => {
       <TradeDisplay allowHref={false} trade={trade} />
       {!tradeResolved && userIsTradeReceiver && (
         <div>
-          <Button onClick={() => acceptTrade()} isLoading={false}>
+          <Button
+            onClick={() => {
+              if (acceptTradeIsLoading || declineTradeIsLoading) {
+                toast.warning('Already accepting trade')
+                return
+              }
+              acceptTrade()
+            }}
+            isLoading={false}
+          >
             Accept
           </Button>
-          <Button onClick={() => declineTrade()} isLoading={false}>
+          <Button
+            onClick={() => {
+              if (acceptTradeIsLoading || declineTradeIsLoading) {
+                toast.warning('Already declining trade')
+                return
+              }
+              declineTrade()
+            }}
+            isLoading={false}
+          >
             Decline
           </Button>
         </div>

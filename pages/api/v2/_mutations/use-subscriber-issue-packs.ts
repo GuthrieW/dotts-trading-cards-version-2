@@ -12,13 +12,12 @@ type UseIssueSubscriberPacks = {
   issueSubscriberPacks: Function
   isSuccess: boolean
   isLoading: boolean
-  error: any
   reset: Function
 }
 
 const useIssueSubscriberPacks = (): UseIssueSubscriberPacks => {
   const queryClient: QueryClient = useQueryClient()
-  const { mutate, isSuccess, isLoading, error, reset } = useMutation(
+  const { mutate, isSuccess, isLoading, reset } = useMutation(
     ({ packType }: UseIssueSubscriberPacksRequest) => {
       return axios({
         headers: {
@@ -41,7 +40,6 @@ const useIssueSubscriberPacks = (): UseIssueSubscriberPacks => {
     issueSubscriberPacks: mutate,
     isSuccess,
     isLoading,
-    error,
     reset,
   }
 }

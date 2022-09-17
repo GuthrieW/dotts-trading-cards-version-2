@@ -19,13 +19,12 @@ type UseUpdateUser = {
   updateUser: Function
   isSuccess: boolean
   isLoading: boolean
-  error: any
   reset: Function
 }
 
 const useUpdateUser = (): UseUpdateUser => {
   const queryClient: QueryClient = useQueryClient()
-  const { mutate, isSuccess, isLoading, error, reset } = useMutation(
+  const { mutate, isSuccess, isLoading, reset } = useMutation(
     ({
       _id,
       ownedRegularPacks,
@@ -65,7 +64,6 @@ const useUpdateUser = (): UseUpdateUser => {
     updateUser: mutate,
     isSuccess,
     isLoading,
-    error,
     reset,
   }
 }

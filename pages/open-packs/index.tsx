@@ -10,16 +10,13 @@ const ULTIMUS = 'ultimus'
 const REGULAR = 'regular'
 
 const OpenPacks = () => {
-  const {
-    currentUser,
-    isFetching: currentUserIsFetching,
-    error: currentUserError,
-  } = useGetCurrentUser({})
+  const { currentUser, isFetching: currentUserIsFetching } = useGetCurrentUser(
+    {}
+  )
   const {
     openPack,
     isSuccess: openPackIsSuccess,
     isLoading: openPackIsLoading,
-    error: openPackError,
   } = useOpenPack()
 
   if (currentUserIsFetching) {

@@ -10,12 +10,12 @@ type UseAcceptTrade = {
   acceptTrade: Function
   isSuccess: boolean
   isLoading: boolean
-  error: any
+  reset: Function
 }
 
 const useAcceptTrade = (): UseAcceptTrade => {
   const queryClient: QueryClient = useQueryClient()
-  const { mutate, isSuccess, isLoading, error } = useMutation(
+  const { mutate, isSuccess, isLoading, reset } = useMutation(
     ({}: UseAcceptTradeRequest) => {
       return axios({
         headers: {
@@ -38,7 +38,7 @@ const useAcceptTrade = (): UseAcceptTrade => {
     acceptTrade: mutate,
     isSuccess,
     isLoading,
-    error,
+    reset,
   }
 }
 

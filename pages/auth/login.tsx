@@ -16,7 +16,7 @@ const Login = () => {
     authenticationFailed,
     isSuccess,
     isLoading,
-    error,
+    reset,
   } = useLogin()
 
   if (isSuccess && accessToken) {

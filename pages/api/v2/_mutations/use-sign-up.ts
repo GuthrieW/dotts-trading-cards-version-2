@@ -14,12 +14,12 @@ type UseSignUp = {
   signUp: Function
   isSuccess: boolean
   isLoading: boolean
-  error: any
+  reset: Function
 }
 
 const useSignUp = (): UseSignUp => {
   const queryClient: QueryClient = useQueryClient()
-  const { mutate, isSuccess, isLoading, error } = useMutation(
+  const { mutate, isSuccess, isLoading, reset } = useMutation(
     ({ email, username, password }: UseSignUpRequest) => {
       return axios({
         headers: {
@@ -46,7 +46,7 @@ const useSignUp = (): UseSignUp => {
     signUp: mutate,
     isSuccess,
     isLoading,
-    error,
+    reset,
   }
 }
 

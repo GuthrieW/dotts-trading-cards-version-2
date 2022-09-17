@@ -120,7 +120,7 @@ const EditUsers = () => {
   const [selectedUserData, setSelectedUserData] =
     useState<EditableUserData>(null)
 
-  const { allUsers, isFetching, error } = useGetAllUsers({})
+  const { allUsers, isFetching } = useGetAllUsers({})
   const { updateUser, isSuccess, isLoading, reset } = useUpdateUser()
 
   const initialState = useMemo(() => {

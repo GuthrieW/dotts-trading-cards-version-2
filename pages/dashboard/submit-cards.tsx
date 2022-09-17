@@ -14,12 +14,10 @@ import Router from 'next/router'
 
 const SubmitCards = () => {
   const [newCardImage, setNewCardImage] = useState<string>('')
-  const { insertCard, isSuccess, isLoading, error } = useInsertCard()
-  const { currentUser, isFetching: currentUserIsFetching } = useGetCurrentUser(
-    {}
-  )
+  const { insertCard, isSuccess, isLoading } = useInsertCard()
+  const { currentUser, isFetching } = useGetCurrentUser({})
 
-  if (currentUserIsFetching) {
+  if (isFetching) {
     return <Spinner />
   }
 

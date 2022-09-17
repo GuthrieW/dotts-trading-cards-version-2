@@ -2,6 +2,7 @@ import axios from 'axios'
 import { useQuery } from 'react-query'
 import { DOTTS_ACCESS_TOKEN } from '../../../../utils/constants'
 import { Methods } from '../common'
+import { toast } from 'react-toastify'
 
 type UseGetAllCardsRequest = {}
 
@@ -14,17 +15,24 @@ type UseGetAllCards = {
 export const UseGetAllCardsKeys = 'use-get-all-cards-key'
 
 const useGetAllCards = ({}: UseGetAllCardsRequest): UseGetAllCards => {
-  const { data, error, isFetching } = useQuery(UseGetAllCardsKeys, async () => {
-    return await axios({
-      headers: {
-        Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
+  const { data, error, isFetching } = useQuery(
+    UseGetAllCardsKeys,
+    async () => {
+      return await axios({
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
+        },
+        method: Methods.GET,
+        url: '/api/v2/cards/all',
+      })
+    },
+    {
+      onSuccess: () => {},
+      onError: () => {
+        toast.error('Error getting all cards')
       },
-      method: Methods.GET,
-      url: '/api/v2/cards/all',
-    })
-  })
-
-  console.log('data', data)
+    }
+  )
 
   return {
     allCards: data?.data?.allCards ?? [],

@@ -2,6 +2,7 @@ import axios from 'axios'
 import { useQuery } from 'react-query'
 import { DOTTS_ACCESS_TOKEN } from '../../../../utils/constants'
 import { Methods } from '../common'
+import { toast } from 'react-toastify'
 
 type Permissions = {
   isAdmin: boolean
@@ -32,6 +33,12 @@ const useAuthentication = ({}: UseAuthenticationRequest): UseAuthentication => {
         method: Methods.GET,
         url: `/api/v2/auth/authenticate`,
       })
+    },
+    {
+      onSuccess: () => {},
+      onError: () => {
+        toast.error('Error authenticating')
+      },
     }
   )
 
