@@ -184,10 +184,7 @@ const EditCards = () => {
       <div>
         <div className="w-full flex justify-start items-center">
           <div className="flex items-center">
-            <SearchBar
-              onChange={updateSearchFilter}
-              disabled={allCardsIsFetching}
-            />
+            <SearchBar onChange={updateSearchFilter} disabled={isFetching} />
           </div>
         </div>
         <Table
