@@ -10,8 +10,9 @@ const TradeItems = ({ username, cards, tradePartnerRole }: TradeItemsProps) => {
   return (
     <div className="w-1/2 m-1">
       <p>
-        {tradePartnerRole === 'offering' ? 'Offered' : 'Received'} By:{' '}
-        {username}
+        {tradePartnerRole === 'offering'
+          ? `Sent by ${username}:`
+          : `Sent by ${username}:`}
       </p>
       <div className="flex flex-wrap ml-2 bg-neutral-700">
         {cards.map((card: Card, index: number) => (
