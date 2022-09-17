@@ -54,3 +54,9 @@ type DottsTrade = {
   offeringUsername?: string
   receivingUsername?: string
 }
+
+type CollectionTableButtons = {
+  id: string
+  text: string
+  onClick: Function
+}

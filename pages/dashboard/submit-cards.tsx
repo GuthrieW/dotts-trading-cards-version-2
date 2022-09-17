@@ -26,7 +26,7 @@ const SubmitCards = () => {
   }
 
   if (isSuccess) {
-    toast.success('Card successfully inserted')
+    Router.push('/dashboard/submit-cards')
   }
 
   return (

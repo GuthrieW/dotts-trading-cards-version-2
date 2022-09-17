@@ -27,7 +27,9 @@ const usePasswordReset = (): UsePasswordReset => {
       })
     },
     {
-      onSuccess: () => {},
+      onSuccess: () => {
+        toast.success('Your password has been reset')
+      },
       onError: () => {
         toast.error('Error resetting password')
       },

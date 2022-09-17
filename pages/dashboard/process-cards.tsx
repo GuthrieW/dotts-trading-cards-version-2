@@ -171,14 +171,12 @@ const ProcessCards = () => {
   }
 
   if (approveCardsIsSuccess) {
-    toast.success('Successfuly approved card')
     setShowModal(false)
     setSelectedCardData(null)
     approveCardReset()
   }
 
   if (deleteCardIsSuccess) {
-    toast.success('Successfuly deleted card')
     setShowModal(false)
     setSelectedCardData(null)
     deleteCardReset()

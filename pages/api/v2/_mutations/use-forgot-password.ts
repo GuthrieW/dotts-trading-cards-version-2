@@ -29,7 +29,9 @@ const useForgotPassword = (): UseForgotPassword => {
       })
     },
     {
-      onSuccess: () => {},
+      onSuccess: () => {
+        toast.success('A link has been sent to your email')
+      },
       onError: () => {
         toast.error('Error creating reset token')
       },

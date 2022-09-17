@@ -70,6 +70,7 @@ const Trades = () => {
             <SearchBar
               onChange={handleUpdateSearchString}
               disabled={userTradesIsFetching}
+              placeholder="Trade Partner"
             />
             <DropdownWithCheckboxGroup
               title="Statues"

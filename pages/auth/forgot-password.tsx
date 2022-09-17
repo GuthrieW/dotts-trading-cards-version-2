@@ -6,12 +6,13 @@ import { toast } from 'react-toastify'
 import SubmitButton from '../../components/buttons/submit-button'
 import FormWrapper from '../../components/forms/form-wrapper'
 import { NextSeo } from 'next-seo'
+import Router from 'next/router'
 
 const ForgotPassword = () => {
-  const { forgotPassword, isSuccess, isLoading, reset } = useForgotPassword()
+  const { forgotPassword, isSuccess, isLoading } = useForgotPassword()
 
   if (isSuccess) {
-    toast.success('Check your email boi')
+    Router.push('/dashboard')
   }
 
   return (

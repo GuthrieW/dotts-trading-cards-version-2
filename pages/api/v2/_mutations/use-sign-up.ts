@@ -35,7 +35,9 @@ const useSignUp = (): UseSignUp => {
       })
     },
     {
-      onSuccess: () => {},
+      onSuccess: () => {
+        toast.success('Signup successful')
+      },
       onError: () => {
         toast.error('Error signing up')
       },

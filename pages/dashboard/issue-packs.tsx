@@ -146,14 +146,12 @@ const IssuePacks = () => {
   }
 
   if (subscriberPacksIsSuccess) {
-    toast.success('Subscriber packs issued')
     setShowModal(false)
     setSelectedUser(null)
     subscriberPacksReset()
   }
 
   if (singlePackIsSuccess) {
-    toast.success(`Pack issued to ${selectedUser.isflUsername}`)
     setShowModal(false)
     setSelectedUser(null)
     singlePackReset()

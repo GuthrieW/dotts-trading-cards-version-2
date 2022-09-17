@@ -149,7 +149,6 @@ const EditCards = () => {
   }
 
   if (isSuccess) {
-    toast.success(`${selectedCardData.playerName} card updated!`)
     setShowModal(false)
     setSelectedCardData(null)
     reset()

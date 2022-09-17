@@ -6,6 +6,8 @@ import SubmitButton from '../../components/buttons/submit-button'
 import TextField from '../../components/fields/text-field'
 import FormWrapper from '../../components/forms/form-wrapper'
 import useSignUp from '../api/v2/_mutations/use-sign-up'
+import { passwordStrength } from 'check-password-strength'
+import { validate } from 'email-validator'
 
 const SignUp = () => {
   const { signUp, isSuccess, isLoading, reset } = useSignUp()
@@ -27,6 +29,23 @@ const SignUp = () => {
           }}
           onSubmit={(values) => {
             event.preventDefault()
+            if (!validate(values.email)) {
+              toast.error('Please provide a valid email')
+              return
+            }
+
+            if (passwordStrength(values.password).value !== 'Strong') {
+              toast.error(
+                'Password not strong enough. Must include an uppercase letter, a lowercase letter, a symbol, a number and be at least 10 characters in length'
+              )
+              return
+            }
+
+            if (values.password !== values.confirm) {
+              toast.error('Password and confirmation must match')
+              return
+            }
+
             if (isLoading) {
               toast.warning('Already signing up')
               return

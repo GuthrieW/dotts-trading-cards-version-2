@@ -21,21 +21,16 @@ const ExternalLinks: LinkProps[] = [
     title: 'How to Purchase',
     body: 'Start here!',
     href: 'https://forums.sim-football.com/showthread.php?tid=25272',
-    imageUrl:
-      'https://cdn.vox-cdn.com/thumbor/Ndx21wLsWmumSaCq4HYTlIUzYW4=/37x0:368x186/1600x900/cdn.vox-cdn.com/uploads/chorus_image/image/55827969/VER_HowTo_RGB.0.png',
   },
   {
     title: 'Buy Packs',
     body: 'Build your collection with a new pack of cards! Find the Daily Pack Purchase thread.',
     href: 'https://forums.sim-football.com/forumdisplay.php?fid=366',
-    imageUrl:
-      'https://bloximages.chicago2.vip.townnews.com/pressrepublican.com/content/tncms/assets/v3/editorial/6/88/688104dc-29ae-5e66-ad56-41ee0800409d/622296c991739.image.jpg',
   },
   {
     title: 'Subscribe',
     body: 'Sign up for automatic pack purchases!',
     href: 'https://forums.sim-football.com/showthread.php?tid=25283',
-    imageUrl: 'https://i.ytimg.com/vi/froV-FcSQjc/maxresdefault.jpg',
   },
 ]
 

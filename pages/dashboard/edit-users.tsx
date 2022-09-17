@@ -181,7 +181,6 @@ const EditUsers = () => {
   }
 
   if (isSuccess) {
-    toast.success(`${selectedUserData.isflUsername} updated!`)
     setShowModal(false)
     setSelectedUserData(null)
     reset()

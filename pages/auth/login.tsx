@@ -44,7 +44,7 @@ const Login = () => {
               return
             }
 
-            const result = await login({
+            await login({
               email: values.email,
               password: values.password,
             })
