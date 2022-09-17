@@ -3,6 +3,7 @@ import axios from 'axios'
 import { DOTTS_ACCESS_TOKEN } from '../../../../utils/constants'
 import { Methods } from '../common'
 import { toast } from 'react-toastify'
+import { UseGetAllUsersKey } from '../_queries/use-get-all-users'
 
 type UseSignUpRequest = {
   email: string
@@ -37,6 +38,7 @@ const useSignUp = (): UseSignUp => {
     {
       onSuccess: () => {
         toast.success('Signup successful')
+        queryClient.invalidateQueries(UseGetAllUsersKey)
       },
       onError: () => {
         toast.error('Error signing up')

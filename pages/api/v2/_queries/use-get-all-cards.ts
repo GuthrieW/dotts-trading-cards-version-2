@@ -12,11 +12,11 @@ type UseGetAllCards = {
   error: any
 }
 
-export const UseGetAllCardsKeys = 'use-get-all-cards-key'
+export const UseGetAllCardsKey = 'use-get-all-cards-key'
 
 const useGetAllCards = ({}: UseGetAllCardsRequest): UseGetAllCards => {
   const { data, error, isFetching } = useQuery(
-    UseGetAllCardsKeys,
+    UseGetAllCardsKey,
     async () => {
       return await axios({
         headers: {

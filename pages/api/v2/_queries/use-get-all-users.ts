@@ -12,11 +12,11 @@ type UseGetAllUsers = {
   error: any
 }
 
-export const UseGetAllUsersKeys = 'use-get-all-users-key'
+export const UseGetAllUsersKey = 'use-get-all-users-key'
 
 const useGetAllUsers = ({}: UseGetAllUsersRequest): UseGetAllUsers => {
   const { data, error, isFetching } = useQuery(
-    UseGetAllUsersKeys,
+    UseGetAllUsersKey,
     async () => {
       return await axios({
         headers: {

@@ -3,6 +3,7 @@ import axios from 'axios'
 import { DOTTS_ACCESS_TOKEN } from '../../../../utils/constants'
 import { Methods } from '../common'
 import { toast } from 'react-toastify'
+import { UseGetCurrentUserKey } from '../_queries/use-get-current-user'
 
 type UsePasswordResetRequest = {
   password: string
@@ -32,6 +33,7 @@ const usePasswordReset = (): UsePasswordReset => {
     {
       onSuccess: () => {
         toast.success('Your password has been reset')
+        queryClient.invalidateQueries(UseGetCurrentUserKey)
       },
       onError: () => {
         toast.error('Error resetting password')

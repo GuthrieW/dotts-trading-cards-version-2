@@ -3,6 +3,9 @@ import axios from 'axios'
 import { DOTTS_ACCESS_TOKEN } from '../../../../utils/constants'
 import { Methods } from '../common'
 import { toast } from 'react-toastify'
+import { UseGetAllCardsKey } from '../_queries/use-get-all-cards'
+import { UseGetCardsOwnedByUserKey } from '../_queries/use-get-cards-owned-by-user'
+import { UseGetUnapprovedCardsKey } from '../_queries/use-get-unapproved-cards'
 
 type UseUpdateCardRequest = {
   _id: string
@@ -52,6 +55,9 @@ const useUpdateCard = (): UseUpdateCard => {
     {
       onSuccess: () => {
         toast.success('Card updated')
+        queryClient.invalidateQueries(UseGetAllCardsKey)
+        queryClient.invalidateQueries(UseGetCardsOwnedByUserKey)
+        queryClient.invalidateQueries(UseGetUnapprovedCardsKey)
       },
       onError: () => {
         toast.error('Error updating card')

@@ -2,6 +2,7 @@ import { QueryClient, useMutation, useQueryClient } from 'react-query'
 import axios from 'axios'
 import { Methods } from '../common'
 import { toast } from 'react-toastify'
+import { UseAuthenticationKey } from '../_queries/use-authentication'
 
 type UseLoginRequest = {
   email: string
@@ -28,7 +29,9 @@ const useLogin = (): UseLogin => {
       })
     },
     {
-      onSuccess: () => {},
+      onSuccess: () => {
+        queryClient.invalidateQueries(UseAuthenticationKey)
+      },
       onError: () => {
         toast.error('Error logging in')
       },

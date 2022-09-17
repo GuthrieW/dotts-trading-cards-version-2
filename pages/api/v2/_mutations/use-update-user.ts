@@ -3,6 +3,9 @@ import axios from 'axios'
 import { DOTTS_ACCESS_TOKEN } from '../../../../utils/constants'
 import { Methods } from '../common'
 import { toast } from 'react-toastify'
+import { UseGetAllUsersKey } from '../_queries/use-get-all-users'
+import { UseGetCurrentUserKey } from '../_queries/use-get-current-user'
+import { UseGetSubscribedUsersKey } from '../_queries/use-get-subscribed-users'
 
 type UseUpdateUserRequest = {
   _id: string
@@ -55,6 +58,9 @@ const useUpdateUser = (): UseUpdateUser => {
     {
       onSuccess: () => {
         toast.success('User updated')
+        queryClient.invalidateQueries(UseGetAllUsersKey)
+        queryClient.invalidateQueries(UseGetCurrentUserKey)
+        queryClient.invalidateQueries(UseGetSubscribedUsersKey)
       },
       onError: () => {
         toast.error('Error updating user')

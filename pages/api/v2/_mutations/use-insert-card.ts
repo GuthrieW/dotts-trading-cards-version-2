@@ -3,6 +3,7 @@ import axios from 'axios'
 import { DOTTS_ACCESS_TOKEN } from '../../../../utils/constants'
 import { Methods } from '../common'
 import { toast } from 'react-toastify'
+import { UseGetAllCardsKey } from '../_queries/use-get-all-cards'
 
 type UseInsertCardRequest = {
   imageUrl: string
@@ -47,6 +48,7 @@ const useInsertCard = (): UseInsertCard => {
     {
       onSuccess: () => {
         toast.success('Card created')
+        queryClient.invalidateQueries(UseGetAllCardsKey)
       },
       onError: () => {
         toast.error('Error inserting new card')

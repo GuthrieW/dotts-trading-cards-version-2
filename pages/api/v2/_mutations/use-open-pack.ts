@@ -3,6 +3,9 @@ import axios from 'axios'
 import { DOTTS_ACCESS_TOKEN } from '../../../../utils/constants'
 import { Methods } from '../common'
 import { toast } from 'react-toastify'
+import { UseGetCurrentUserKey } from '../_queries/use-get-current-user'
+import { UseGetCardsOwnedByUserKey } from '../_queries/use-get-cards-owned-by-user'
+import { UseGetLastOpenedPackKey } from '../_queries/use-get-last-opened-pack'
 
 type UseOpenPackRequest = {
   packType: string
@@ -31,6 +34,9 @@ const useOpenPack = (): UseOpenPack => {
     {
       onSuccess: () => {
         toast.success('pack opened')
+        queryClient.invalidateQueries(UseGetCurrentUserKey)
+        queryClient.invalidateQueries(UseGetCardsOwnedByUserKey)
+        queryClient.invalidateQueries(UseGetLastOpenedPackKey)
       },
       onError: () => {
         toast.error('Error opening pack')

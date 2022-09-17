@@ -3,6 +3,9 @@ import axios from 'axios'
 import { DOTTS_ACCESS_TOKEN } from '../../../../utils/constants'
 import { Methods } from '../common'
 import { toast } from 'react-toastify'
+import { UseGetCurrentUserKey } from '../_queries/use-get-current-user'
+import { UseGetCardsOwnedByUserKey } from '../_queries/use-get-cards-owned-by-user'
+import { UseGetLastOpenedPackKey } from '../_queries/use-get-last-opened-pack'
 
 type UseIssueSinglePackRequest = {
   _id: string
@@ -32,6 +35,7 @@ const useIssueSinglePack = (): UseIssueSinglePack => {
     {
       onSuccess: () => {
         toast.success('Pack issued')
+        queryClient.invalidateQueries(UseGetCurrentUserKey)
       },
       onError: () => {
         toast.error('Error issuing pack')

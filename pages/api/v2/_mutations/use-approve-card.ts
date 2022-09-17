@@ -3,6 +3,8 @@ import axios from 'axios'
 import { DOTTS_ACCESS_TOKEN } from '../../../../utils/constants'
 import { Methods } from '../common'
 import { toast } from 'react-toastify'
+import { UseGetAllCardsKey } from '../_queries/use-get-all-cards'
+import { UseGetUnapprovedCardsKey } from '../_queries/use-get-unapproved-cards'
 
 type UseApproveCardRequest = {
   _id: string
@@ -31,6 +33,8 @@ const useApproveCard = (): UseApproveCard => {
     {
       onSuccess: () => {
         toast.success('Card approved')
+        queryClient.invalidateQueries(UseGetAllCardsKey)
+        queryClient.invalidateQueries(UseGetUnapprovedCardsKey)
       },
       onError: () => {
         toast.error('Error approving card')

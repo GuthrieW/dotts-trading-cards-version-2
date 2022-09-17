@@ -3,6 +3,8 @@ import axios from 'axios'
 import { DOTTS_ACCESS_TOKEN } from '../../../../utils/constants'
 import { Methods } from '../common'
 import { toast } from 'react-toastify'
+import { UseGetAllUsersKey } from '../_queries/use-get-all-users'
+import { UseGetCurrentUserKey } from '../_queries/use-get-current-user'
 
 type UseIssueSubscriberPacksRequest = {
   packType: string
@@ -31,6 +33,8 @@ const useIssueSubscriberPacks = (): UseIssueSubscriberPacks => {
     {
       onSuccess: () => {
         toast.success('Subscriber packs issued')
+        queryClient.invalidateQueries(UseGetAllUsersKey)
+        queryClient.invalidateQueries(UseGetCurrentUserKey)
       },
       onError: () => {
         toast.error('Error issuing packs')

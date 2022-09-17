@@ -3,6 +3,8 @@ import axios from 'axios'
 import { DOTTS_ACCESS_TOKEN } from '../../../../utils/constants'
 import { Methods } from '../common'
 import { toast } from 'react-toastify'
+import { UseGetCurrentUserTradesKey } from '../_queries/use-get-current-user-trades'
+import { UseGetTradeKey } from '../_queries/use-get-trade'
 
 type UseDeclineTradeRequest = {
   _id: string
@@ -31,6 +33,8 @@ const useDeclineTrade = (): UseDeclineTrade => {
     {
       onSuccess: () => {
         toast.success('Trade declined')
+        queryClient.invalidateQueries(UseGetCurrentUserTradesKey)
+        queryClient.invalidateQueries(UseGetTradeKey)
       },
       onError: () => {
         toast.error('Error declining trade')
