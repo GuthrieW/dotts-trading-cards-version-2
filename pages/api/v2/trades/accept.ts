@@ -6,16 +6,16 @@ import { Methods, TableNames } from '../common'
 import { TradeStatuses } from '../../../../utils/trade-statuses'
 
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
-  const { method, body, query } = request
+  const { method, body } = request
 
   if (method === Methods.PATCH) {
     const {
+      _id,
       offeringUserId,
       offeringUserCardIds,
       receivingUserId,
       receivingUserCardIds,
-      _id,
-    } = request.body
+    } = body
     const { database, client } = await connect()
 
     try {
@@ -42,23 +42,17 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
       )
 
       if (!offeringUserHasCards || !receivingUserHasCards) {
-        const currentTrade = await database
-          .collection(TableNames.DOTTS_TRADES)
-          .findOneAndUpdate(
-            {
-              _id: new ObjectId(_id),
+        await database.collection(TableNames.DOTTS_TRADES).findOneAndUpdate(
+          { _id: new ObjectId(_id) },
+          {
+            $set: {
+              tradeStatus: TradeStatuses.Declined,
+              tradeResolvedDate: new Date().toISOString(),
             },
-            {
-              $set: {
-                tradeStatus: TradeStatuses.Declined,
-                tradeResolvedDate: new Date().toISOString(),
-              },
-            }
-          )
-        response
-          .status(200)
-          .json({ error: 'Users do not have all required cards' })
-        return
+          }
+        )
+
+        throw new Error('Users do not have all required cards')
       }
 
       offeringUserCardIds.forEach((card) => {
@@ -72,6 +66,13 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
         )
       })
 
+      const actualOfferingCardIds = offeringUserCardIds.map(
+        (card: Card) => card._id
+      )
+      const actualReceivingCardIds = receivingUserCardIds.map(
+        (card: Card) => card._id
+      )
+
       await database
         .collection(TableNames.DOTTS_ACCOUNTS)
         .findOneAndUpdate(
@@ -81,7 +82,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
 
       await database.collection(TableNames.DOTTS_ACCOUNTS).findOneAndUpdate(
         { _id: new ObjectId(offeringUserId) }, // @ts-ignore
-        { $push: { ownedCards: { $each: receivingUserCardIds } } }
+        { $push: { ownedCards: { $each: actualReceivingCardIds } } }
       )
 
       await database
@@ -93,10 +94,10 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
 
       await database.collection(TableNames.DOTTS_ACCOUNTS).findOneAndUpdate(
         { _id: new ObjectId(receivingUserId) }, // @ts-ignore
-        { $push: { ownedCards: { $each: offeringUserCardIds } } }
+        { $push: { ownedCards: { $each: actualOfferingCardIds } } }
       )
 
-      await database.collection('dotts_trades').findOneAndUpdate(
+      await database.collection(TableNames.DOTTS_TRADES).findOneAndUpdate(
         { _id: new ObjectId(_id) },
         {
           $set: {
@@ -122,20 +123,23 @@ const checkForCardsInCollection = (cardCollection, tradeCards) => {
   let cardHash = {}
   let cardArrayFromCollection = []
 
-  tradeCards.forEach((card) => {
-    // if card has already been found at least once
-    if (cardHash[card]) {
-      // update new "last found" position for card
+  console.log('collection', cardCollection)
+
+  tradeCards.forEach((card: Card) => {
+    if (cardHash[card._id]) {
       cardArrayFromCollection.push(
-        cardCollection.find((element) => element._id === card)
+        cardCollection.find((element) => element._id === card._id)
       )
-      cardHash[card] = cardCollection.indexOf(card, cardHash[card] + 1)
+      cardHash[card._id] = cardCollection.indexOf(
+        card._id,
+        cardHash[card._id] + 1
+      )
     }
 
-    if (!cardHash[card]) {
-      cardHash[card] = cardCollection.indexOf(card)
+    if (!cardHash[card._id]) {
+      cardHash[card._id] = cardCollection.indexOf(card._id)
       cardArrayFromCollection.push(
-        cardCollection.find((element) => element._id === card)
+        cardCollection.find((element) => element._id === card._id)
       )
     }
   })

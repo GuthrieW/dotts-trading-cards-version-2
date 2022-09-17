@@ -3,10 +3,9 @@ import axios from 'axios'
 import { DOTTS_ACCESS_TOKEN } from '../../../../utils/constants'
 import { Methods } from '../common'
 import { toast } from 'react-toastify'
-import { TradeStatuses } from '../../../../utils/trade-statuses'
 
 type UseDeclineTradeRequest = {
-  tradeId: string
+  _id: string
 }
 
 type UseDeclineTrade = {
@@ -19,14 +18,14 @@ type UseDeclineTrade = {
 const useDeclineTrade = (): UseDeclineTrade => {
   const queryClient: QueryClient = useQueryClient()
   const { mutate, isSuccess, isLoading, reset } = useMutation(
-    ({ tradeId }: UseDeclineTradeRequest) => {
+    ({ _id }: UseDeclineTradeRequest) => {
       return axios({
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
         method: Methods.PATCH,
-        url: `/api/v2/trades/${tradeId}`,
-        data: { tradeStatus: TradeStatuses.Declined },
+        url: `/api/v2/trades/decline`,
+        data: { tradeId: _id },
       })
     },
     {

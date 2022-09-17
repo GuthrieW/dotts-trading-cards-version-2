@@ -5,7 +5,7 @@ import { Methods } from '../common'
 import { toast } from 'react-toastify'
 
 type UseAcceptTradeRequest = {
-  tradeId: string
+  _id: string
   offeringUserId: string
   offeringUserCardIds: string[]
   receivingUserId: string
@@ -23,7 +23,7 @@ const useAcceptTrade = (): UseAcceptTrade => {
   const queryClient: QueryClient = useQueryClient()
   const { mutate, isSuccess, isLoading, reset } = useMutation(
     ({
-      tradeId,
+      _id,
       offeringUserId,
       offeringUserCardIds,
       receivingUserId,
@@ -36,7 +36,7 @@ const useAcceptTrade = (): UseAcceptTrade => {
         method: Methods.PATCH,
         url: '/api/v2/trades/accept',
         data: {
-          _id: tradeId,
+          _id,
           offeringUserId,
           offeringUserCardIds,
           receivingUserId,

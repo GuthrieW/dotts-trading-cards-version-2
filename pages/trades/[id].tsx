@@ -8,6 +8,7 @@ import useAcceptTrade from '../api/v2/_mutations/use-accept-trade'
 import useDeclineTrade from '../api/v2/_mutations/use-decline-trade'
 import useGetCurrentUser from '../api/v2/_queries/use-get-current-user'
 import Spinner from '../../components/spinners/spinner'
+import { TradeStatuses } from '../../utils/trade-statuses'
 
 const Trade = () => {
   const router = useRouter()
@@ -38,7 +39,8 @@ const Trade = () => {
   }
 
   const tradeResolved =
-    trade.tradeStatus === 'completed' || trade.tradeStatus === 'declined'
+    trade.tradeStatus === TradeStatuses.Complete ||
+    trade.tradeStatus === TradeStatuses.Declined
   const userIsTradeReceiver = trade.receivingUserId === currentUser._id
 
   return (
@@ -52,7 +54,13 @@ const Trade = () => {
                 toast.warning('Already accepting trade')
                 return
               }
-              acceptTrade()
+              acceptTrade({
+                _id: trade._id,
+                offeringUserId: trade.offeringUserId,
+                offeringUserCardIds: trade.offeringUserCardIds,
+                receivingUserId: trade.receivingUserId,
+                receivingUserCardIds: trade.receivingUserCardIds,
+              })
             }}
             isLoading={false}
           >
@@ -64,7 +72,7 @@ const Trade = () => {
                 toast.warning('Already declining trade')
                 return
               }
-              declineTrade()
+              declineTrade({ _id: trade._id })
             }}
             isLoading={false}
           >
