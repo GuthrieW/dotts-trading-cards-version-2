@@ -21,8 +21,8 @@ const useAcceptTrade = (): UseAcceptTrade => {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
-        method: Methods.DELETE,
-        url: '',
+        method: Methods.PATCH,
+        url: '/api/v2/trades/accept',
         data: {},
       })
     },

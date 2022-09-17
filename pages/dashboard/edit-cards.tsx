@@ -23,7 +23,6 @@ import { RARITIES, TEAMS } from '../../utils/constants'
 import SubmitButton from '../../components/buttons/submit-button'
 import Button from '../../components/buttons/button'
 import Spinner from '../../components/spinners/spinner'
-import Router from 'next/router'
 
 type EditableCardData = {
   _id: string

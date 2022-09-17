@@ -1,10 +1,7 @@
 import { NextSeo } from 'next-seo'
 import React from 'react'
-import { toast } from 'react-toastify'
 import DashboardButton from '../../components/buttons/dashboard-button'
-import InfoButton, {
-  InfoButtonProps,
-} from '../../components/buttons/info-button'
+import { InfoButtonProps } from '../../components/buttons/info-button'
 import Spinner from '../../components/spinners/spinner'
 import useGetCurrentUser from '../api/v2/_queries/use-get-current-user'
 

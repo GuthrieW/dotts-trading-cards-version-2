@@ -1,7 +1,6 @@
 import { NextSeo } from 'next-seo'
 import Link from 'next/link'
 import React, { useMemo, useState } from 'react'
-import { toast } from 'react-toastify'
 import Button from '../../components/buttons/button'
 import TradeDisplay from '../../components/displays/trade-display'
 import DropdownWithCheckboxGroup from '../../components/dropdowns/multi-select-dropdown'

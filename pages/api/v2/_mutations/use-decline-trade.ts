@@ -21,7 +21,7 @@ const useDeclineTrade = (): UseDeclineTrade => {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
-        method: Methods.DELETE,
+        method: Methods.PATCH,
         url: '',
         data: {},
       })
