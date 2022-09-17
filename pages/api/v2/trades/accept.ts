@@ -100,7 +100,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
         { _id: new ObjectId(_id) },
         {
           $set: {
-            tradeStatus: TradeStatuses.Complete,
+            tradeStatus: TradeStatuses.Completed,
             tradeResolvedDate: new Date().toISOString(),
           },
         }

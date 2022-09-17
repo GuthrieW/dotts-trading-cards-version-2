@@ -39,7 +39,7 @@ const Trade = () => {
   }
 
   const tradeResolved =
-    trade.tradeStatus === TradeStatuses.Complete ||
+    trade.tradeStatus === TradeStatuses.Completed ||
     trade.tradeStatus === TradeStatuses.Declined
   const userIsTradeReceiver = trade.receivingUserId === currentUser._id
 

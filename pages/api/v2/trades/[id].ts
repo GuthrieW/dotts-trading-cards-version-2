@@ -32,7 +32,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
     const { database, client } = await connect()
 
     try {
-      if (tradeStatus === TradeStatuses.Complete) {
+      if (tradeStatus === TradeStatuses.Completed) {
         throw new Error('Cannot set trade status to complete via this endpoint')
       }
 

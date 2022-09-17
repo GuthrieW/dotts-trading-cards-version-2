@@ -17,7 +17,10 @@ const TradeDisplay = ({ trade, allowHref = true }: TradeDisplayProps) => {
     receivingUserCardIds: receivingUserCards,
     tradeStatus,
     tradeOfferDate,
+    tradeResolvedDate,
   } = trade
+  console.log(trade)
+
   const tradeResolved =
     tradeStatus === 'completed' || tradeStatus === 'declined'
 
@@ -43,10 +46,20 @@ const TradeDisplay = ({ trade, allowHref = true }: TradeDisplayProps) => {
         </div>
         <div className="flex flex-col justify-center items-end w-1/4 m-1">
           <TextIcon text={tradeStatus.toUpperCase()} />
-          <p>
-            Trade Offered On{' '}
-            {tradeOfferDate && format(new Date(tradeOfferDate), 'MM-dd-yyyy')}
-          </p>
+          {tradeOfferDate && (
+            <p>
+              Trade offered on {format(new Date(tradeOfferDate), 'MM-dd-yyyy')}
+            </p>
+          )}
+          {tradeResolvedDate && (
+            <p>
+              Trade resolved on{' '}
+              {format(new Date(tradeResolvedDate), 'MM-dd-yyyy')}
+            </p>
+          )}
+          {tradeResolved && !tradeResolvedDate && (
+            <p>Trade resolution date not recorded</p>
+          )}
         </div>
       </div>
     </Link>

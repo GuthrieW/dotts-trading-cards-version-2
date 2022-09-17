@@ -1,5 +1,5 @@
 export const TradeStatuses = {
-  Complete: 'complete',
+  Completed: 'completed',
   Declined: 'declined',
   Pending: 'pending',
 }
