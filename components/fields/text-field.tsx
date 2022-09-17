@@ -4,7 +4,7 @@ import { Field } from 'formik'
 type TextFieldProps = {
   name: string
   label: string
-  type: 'text' | 'number'
+  type: 'text' | 'number' | 'password'
   disabled?: boolean
   min?: number
 }
