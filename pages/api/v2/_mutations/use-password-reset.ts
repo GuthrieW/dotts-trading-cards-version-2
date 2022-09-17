@@ -4,7 +4,10 @@ import { DOTTS_ACCESS_TOKEN } from '../../../../utils/constants'
 import { Methods } from '../common'
 import { toast } from 'react-toastify'
 
-type UsePasswordResetRequest = {}
+type UsePasswordResetRequest = {
+  password: string
+  resetToken: string
+}
 
 type UsePasswordReset = {
   passwordReset: Function
@@ -16,14 +19,14 @@ type UsePasswordReset = {
 const usePasswordReset = (): UsePasswordReset => {
   const queryClient: QueryClient = useQueryClient()
   const { mutate, isSuccess, isLoading, reset } = useMutation(
-    ({}: UsePasswordResetRequest) => {
+    ({ resetToken, password }: UsePasswordResetRequest) => {
       return axios({
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
         method: Methods.POST,
-        url: '',
-        data: {},
+        url: '/api/v2/auth/reset-password',
+        data: { resetToken, password },
       })
     },
     {

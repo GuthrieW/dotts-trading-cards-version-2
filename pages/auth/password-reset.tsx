@@ -20,22 +20,27 @@ const PasswordReset = () => {
       <NextSeo title="Reset Password" />
       <FormWrapper>
         <Formik
-          initialValues={{}}
+          initialValues={{ password: '', confirmPassword: '' }}
           onSubmit={(values) => {
             event.preventDefault()
+
+            if (values.password !== values.confirmPassword) {
+              toast.error('Password and confirmation must match')
+            }
+
             if (isLoading) {
               toast.warning('Already resetting password')
               return
             }
 
-            passwordReset(values)
+            passwordReset({ password: values.password })
           }}
         >
           {({ handleSubmit }) => (
-            <Form className="bg-neutral-600 shadow-lg">
+            <Form className="bg-neutral-600 shadow-lg rounded px-8 pt-6 pb-8 my-4 w-1/2">
               <TextField name="password" label="Password" type="password" />
               <TextField
-                name="confirm-password"
+                name="confirmPassword"
                 label="Confirm Password"
                 type="password"
               />

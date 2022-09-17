@@ -33,7 +33,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
 
       response.status(200).json({ currentUser })
     } catch (error) {
-      console.log('error', error)
+      console.log(error)
       response.status(400).json({ error })
     } finally {
       client.close()

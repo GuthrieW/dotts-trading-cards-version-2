@@ -8,12 +8,13 @@ import FormWrapper from '../../components/forms/form-wrapper'
 import useSignUp from '../api/v2/_mutations/use-sign-up'
 import { passwordStrength } from 'check-password-strength'
 import { validate } from 'email-validator'
+import Router from 'next/router'
 
 const SignUp = () => {
-  const { signUp, isSuccess, isLoading, reset } = useSignUp()
+  const { signUp, isSuccess, isLoading } = useSignUp()
 
   if (isSuccess) {
-    toast.success('Wow you signed up')
+    Router.push('/auth/login')
   }
 
   return (

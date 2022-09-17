@@ -124,7 +124,6 @@ const IssuePacks = () => {
   const updateSearchFilter = (event) => setGlobalFilter(event.target.value)
 
   const handleRowClick = (row) => {
-    console.log(row)
     const userDate = {
       _id: row.values._id,
       isflUsername: row.values.isflUsername,

@@ -65,7 +65,6 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
       response.status(400).json({ error: 'User not authenticated' })
       return
     }
-    console.log('Authenticated')
 
     const { packType } = body
     const { database, client } = await connect()
@@ -117,8 +116,6 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
         }
       })
 
-      console.log('cardRarities', cardRarities)
-
       const newCards: any[] = await Promise.all(
         cardRarities.map(async (cardRarity: string) => {
           const result = await database
@@ -137,13 +134,9 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
             ])
             .toArray()
 
-          console.log('result', result)
-
           return result[0]
         })
       )
-
-      console.log('newCards', newCards)
 
       const newCardIds: string[] = newCards.map((card) => card._id.toString())
 

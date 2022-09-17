@@ -144,7 +144,6 @@ const EditCards = () => {
   )
 
   if (isFetching) {
-    console.log('spinning')
     return <Spinner />
   }
 
@@ -172,8 +171,6 @@ const EditCards = () => {
     setShowModal(true)
     setSelectedCardData(cardData)
   }
-
-  console.log('rendering the page')
 
   return (
     <>
