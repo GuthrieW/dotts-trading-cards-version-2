@@ -31,7 +31,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
             email,
             process.env.WEBTOKEN_SECRET
           )
-          response.status(200).json({ accessToken: accessToken })
+          response.status(200).json({ accessToken })
         } else {
           response.status(200).json({ error: 'Authentication Failed' })
         }

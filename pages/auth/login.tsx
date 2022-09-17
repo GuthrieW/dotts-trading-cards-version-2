@@ -32,6 +32,10 @@ const Login = () => {
         <Formik
           initialValues={{ email: '', password: '' }}
           onSubmit={async (values) => {
+            if (values.email === '' || values.password === '') {
+              return
+            }
+
             event.preventDefault()
             if (isLoading) {
               toast.warning('Already logging in')

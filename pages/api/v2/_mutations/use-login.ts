@@ -19,7 +19,6 @@ type UseLogin = {
 }
 
 const useLogin = (): UseLogin => {
-  const queryClient: QueryClient = useQueryClient()
   const { mutate, data, isSuccess, isLoading, reset } = useMutation(
     ({ email, password }: UseLoginRequest) => {
       return axios({
@@ -29,9 +28,7 @@ const useLogin = (): UseLogin => {
       })
     },
     {
-      onSuccess: () => {
-        queryClient.invalidateQueries(UseAuthenticationKey)
-      },
+      onSuccess: () => {},
       onError: () => {
         toast.error('Error logging in')
       },
