@@ -79,9 +79,9 @@ const Trades = () => {
             />
           </div>
           <div className="flex items-center">
-            <Button onClick={null} isLoading={false}>
+            {/* <Button onClick={null} isLoading={false}>
               <Link href="trades/new-trade">New Trade</Link>
-            </Button>
+            </Button> */}
           </div>
         </div>
 
