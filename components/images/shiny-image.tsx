@@ -37,6 +37,7 @@ const ShinyImage = ({ imageUrl, movementThreshold = 100 }) => {
       }}
     >
       <img
+        loading="lazy"
         ref={cardImageRef}
         id="card-image"
         className="w-full h-full rounded-sm shadow-lg motion-reduce:hover:transform-none"

@@ -2,6 +2,9 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { connect } from '../../../database/database'
 import { Methods, TableNames } from '../../common'
 import { ObjectId } from 'mongodb'
+import groupBy from 'lodash/groupBy'
+import find from 'lodash/find'
+import times from 'lodash/times'
 
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
   const { method, body, query } = request
@@ -32,6 +35,20 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
         .collection(TableNames.DOTTS_CARDS)
         .find({ _id: { $in: cardIds } })
         .toArray()
+
+      const groupedCards = groupBy(account.ownedCards)
+      Object.entries(groupedCards).forEach(
+        ([key, instances]: [string, string[]]) => {
+          cardsOwnedByUser.find((card, index) => {
+            if (String(card._id) === key) {
+              cardsOwnedByUser[index] = {
+                ...cardsOwnedByUser[index],
+                quantity: instances.length,
+              }
+            }
+          })
+        }
+      )
 
       response.status(200).json({
         isflUsername: account.isflUsername,

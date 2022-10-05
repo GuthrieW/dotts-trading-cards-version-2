@@ -1,5 +1,4 @@
 //TODO: Add onclick effect for viewing cards up close
-//TODO: Add sorting based on rarity, it's currently random
 
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import {
@@ -36,70 +35,28 @@ type CardWithCount = Card & {
 }
 
 type CollectionGridProps = {
-  gridCards: Card[]
+  gridCards: CardWithCount[]
 }
 
-const rarityToNumercialValue = (rarity) => {
-  switch (rarity) {
-    case BACKUP:
-      return 0
-    case STARTER:
-      return 1
-    case STAR:
-      return 2
-    case ALL_PRO:
-      return 3
-    case LEGEND:
-      return 4
-    case CAPTAIN:
-      return 5
-    case LEAST_VALUABLE_PLAYER:
-      return 6
-    case TEAM_LOGO:
-      return 7
-    case HOLOGRAPH_EXPANSION:
-      return 8
-    case AUTOGRAPH_ROOKIE:
-      return 9
-    case FANTASY_KINGS:
-      return 10
-    case AWARD:
-      return 11
-    case ULTIMUS_CHAMPION:
-      return 12
-    case UNIQUE:
-      return 13
-    case CHARITY:
-      return 14
-    case ANNIVERSARY_FIRST_TEAM:
-      return 15
-    case ANNIVERSARY_SECOND_TEAM:
-      return 16
-    case HALL_OF_FAME:
-      return 17
-    default:
-      return 1000
-  }
-}
-
-const combineDuplicates = (cards: Card[]): CardWithCount[] => {
-  const combinedCards: CardWithCount[] = []
-  cards.forEach((card: Card) => {
-    const foundIndex: number = combinedCards.findIndex((indexedCard: Card) => {
-      return card._id === indexedCard._id
-    })
-
-    if (foundIndex !== -1) {
-      combinedCards.at(foundIndex).quantity += 1
-    } else {
-      combinedCards.push({
-        ...card,
-        quantity: 1,
-      })
-    }
-  })
-
-  return combinedCards
+const rarityToNumercialValue = {
+  [BACKUP]: 0,
+  [STARTER]: 1,
+  [STAR]: 2,
+  [ALL_PRO]: 3,
+  [LEGEND]: 4,
+  [CAPTAIN]: 5,
+  [LEAST_VALUABLE_PLAYER]: 6,
+  [TEAM_LOGO]: 7,
+  [HOLOGRAPH_EXPANSION]: 8,
+  [AUTOGRAPH_ROOKIE]: 9,
+  [FANTASY_KINGS]: 10,
+  [AWARD]: 11,
+  [ULTIMUS_CHAMPION]: 12,
+  [UNIQUE]: 13,
+  [CHARITY]: 14,
+  [ANNIVERSARY_SECOND_TEAM]: 15,
+  [ANNIVERSARY_FIRST_TEAM]: 16,
+  [HALL_OF_FAME]: 17,
 }
 
 const CollectionGrid = ({ gridCards }: CollectionGridProps) => {
@@ -110,39 +67,39 @@ const CollectionGrid = ({ gridCards }: CollectionGridProps) => {
   // const [lightBoxIsOpen, setLightBoxIsOpen] = useState<boolean>(false)
   const parentRef = useRef()
 
-  const processedCards: Card[] = useMemo(() => {
+  const processedCards: CardWithCount[] = useMemo(() => {
     gridCards = gridCards.filter(
       (card) => card.playerName && card.playerTeam && card.imageUrl && card._id
     )
 
     const lowerCaseSearchString = searchString.toLowerCase()
 
-    const filteredCards: Card[] = gridCards
-      .filter((card) => {
+    const filteredCards: CardWithCount[] = gridCards
+      .filter((card: CardWithCount) => {
         const lowerCaseCardName = card.playerName.toLowerCase() ?? ''
         return (
           lowerCaseCardName.includes(lowerCaseSearchString) ||
           card.playerName.includes(searchString)
         )
       })
-      .filter((card) => {
+      .filter((card: CardWithCount) => {
         return (
           selectedRarities.length === 0 ||
           selectedRarities.includes(card.rarity)
         )
       })
-      .filter((card) => {
+      .filter((card: CardWithCount) => {
         return (
           selectedTeams.length === 0 || selectedTeams.includes(card.playerTeam)
         )
       })
 
-    // const cardsWithDuplicatesCombined: CardWithCount[] =
-    //   combineDuplicates(filteredCards)
+    return filteredCards.sort((a: CardWithCount, b: CardWithCount) => {
+      console.log('aRarity', a.rarity, rarityToNumercialValue[a.rarity])
+      console.log('bRarity', b.rarity, rarityToNumercialValue[b.rarity])
 
-    return filteredCards.sort((a, b) => {
-      const aRanking = rarityToNumercialValue(a.rarity)
-      const bRanking = rarityToNumercialValue(b.rarity)
+      const aRanking = rarityToNumercialValue[a.rarity] ?? 1000
+      const bRanking = rarityToNumercialValue[b.rarity] ?? 1000
       return bRanking - aRanking
     })
   }, [gridCards, searchString, selectedRarities, selectedTeams])
@@ -224,11 +181,11 @@ const CollectionGrid = ({ gridCards }: CollectionGridProps) => {
                   <ShinyImage imageUrl={card.imageUrl} movementThreshold={80} />
                 </div>
 
-                {/* {card.quantity > 1 && (
+                {card.quantity > 1 && (
                   <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/4 sm:translate-x-1/2 -translate-y-1/2 bg-neutral-800 rounded-full">
                     {card.quantity}
                   </span>
-                )} */}
+                )}
               </div>
             )
           })}
