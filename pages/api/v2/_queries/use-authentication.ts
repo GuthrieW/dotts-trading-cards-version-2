@@ -36,9 +36,7 @@ const useAuthentication = ({}: UseAuthenticationRequest): UseAuthentication => {
     },
     {
       onSuccess: () => {},
-      onError: () => {
-        toast.error('Error authenticating')
-      },
+      onError: () => {},
     }
   )
 

@@ -12,7 +12,7 @@ const ForgotPassword = () => {
   const { forgotPassword, isSuccess, isLoading } = useForgotPassword()
 
   if (isSuccess) {
-    Router.push('/dashboard')
+    Router.push('/auth/login')
   }
 
   return (
