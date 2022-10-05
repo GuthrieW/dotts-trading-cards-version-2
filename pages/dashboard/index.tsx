@@ -34,25 +34,6 @@ const ExternalLinks: LinkProps[] = [
   },
 ]
 
-const HeaderLinks: LinkProps[] = [
-  {
-    title: 'Collection',
-    href: '/collection',
-  },
-  {
-    title: 'Community',
-    href: '/community',
-  },
-  {
-    title: 'Open Packs',
-    href: '/open-packs',
-  },
-  {
-    title: 'Trades',
-    href: '/trades',
-  },
-]
-
 const InternalLinks: LinkProps[] = [
   {
     title: 'Submit Cards for Review',
@@ -84,6 +65,25 @@ const InternalLinks: LinkProps[] = [
 
 const AdminDashboard = () => {
   const { currentUser, isFetching } = useGetCurrentUser({})
+
+  const HeaderLinks: LinkProps[] = [
+    {
+      title: 'Collection',
+      href: `/collection/${currentUser._id}`,
+    },
+    {
+      title: 'Community',
+      href: '/community',
+    },
+    {
+      title: 'Open Packs',
+      href: '/open-packs',
+    },
+    {
+      title: 'Trades',
+      href: '/trades',
+    },
+  ]
 
   if (isFetching) {
     return <Spinner />
