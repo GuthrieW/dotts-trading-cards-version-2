@@ -73,7 +73,7 @@ const Header = () => {
             onClick={() => Router.push('/dashboard')}
             className="h-16 cursor-pointer ml-2"
           />
-          <div className=" sm:flex h-full w-full">
+          <div className=" hidden md:flex h-full w-full">
             {headersLinks.map((header, index) => (
               <NavLink key={index} href={header.href}>
                 {header.headerText}

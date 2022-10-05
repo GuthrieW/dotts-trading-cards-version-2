@@ -24,13 +24,32 @@ const ExternalLinks: LinkProps[] = [
   },
   {
     title: 'Buy Packs',
-    body: 'Build your collection with a new pack of cards! Find the Daily Pack Purchase thread.',
+    body: 'Buy a pack from the single purchase thread',
     href: 'https://forums.sim-football.com/forumdisplay.php?fid=366',
   },
   {
     title: 'Subscribe',
     body: 'Sign up for automatic pack purchases!',
     href: 'https://forums.sim-football.com/showthread.php?tid=25283',
+  },
+]
+
+const HeaderLinks: LinkProps[] = [
+  {
+    title: 'Collection',
+    href: '/collection',
+  },
+  {
+    title: 'Community',
+    href: '/community',
+  },
+  {
+    title: 'Open Packs',
+    href: '/open-packs',
+  },
+  {
+    title: 'Trades',
+    href: '/trades',
   },
 ]
 
@@ -77,6 +96,15 @@ const AdminDashboard = () => {
       <div className="flex flex-col justify-start items-center w-full">
         {ExternalLinks.map((link, index) => (
           <DashboardButton
+            key={index}
+            title={link.title}
+            body={link.body}
+            href={link.href}
+          />
+        ))}
+        {HeaderLinks.map((link, index) => (
+          <DashboardButton
+            optionalClassnames="md:hidden"
             key={index}
             title={link.title}
             body={link.body}
