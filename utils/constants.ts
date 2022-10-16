@@ -20,7 +20,12 @@ export const LEAST_VALUABLE_PLAYER = 'Least Valuable Player'
 export const DOTTS_USER_ID_STORAGE = 'dottsUserId'
 export const DOTTS_ACCESS_TOKEN = 'dottsAccessToken'
 
-export const RARITIES = [
+export type Rarity = {
+  label: string
+  value: string
+}
+
+export const RARITIES: Rarity[] = [
   {
     label: 'BACKUP',
     value: 'Backup',
@@ -95,7 +100,13 @@ export const RARITIES = [
   },
 ]
 
-export const TEAMS = [
+export type Team = {
+  CITY_NAME: string
+  TEAM_NAME: string
+  ABBREVIATION: string
+}
+
+export const TEAMS: Team[] = [
   {
     CITY_NAME: 'Arizona',
     TEAM_NAME: 'Outlaws',
@@ -172,5 +183,3 @@ export const TEAMS = [
     ABBREVIATION: 'TML',
   },
 ]
-
-export const noop = () => {}

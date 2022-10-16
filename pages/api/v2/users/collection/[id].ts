@@ -1,0 +1,70 @@
+import { NextApiRequest, NextApiResponse } from 'next'
+import { connect } from '../../../database/database'
+import { Methods, TableNames } from '../../common'
+import { ObjectId } from 'mongodb'
+import groupBy from 'lodash/groupBy'
+import find from 'lodash/find'
+import times from 'lodash/times'
+
+const index = async (request: NextApiRequest, response: NextApiResponse) => {
+  const { method, body, query } = request
+
+  if (method === Methods.GET) {
+    const id = query.id as string
+    const { database, client } = await connect()
+
+    try {
+      const account = await database
+        .collection(TableNames.DOTTS_ACCOUNTS)
+        .findOne({
+          _id: new ObjectId(id),
+        })
+
+      if (!account) {
+        response
+          .status(200)
+          .json({ error: 'An account with that id does not exists' })
+        return
+      }
+
+      const cardIds: string[] = account.ownedCards.map(
+        (card) => new ObjectId(card)
+      )
+
+      const cardsOwnedByUser = await database
+        .collection(TableNames.DOTTS_CARDS)
+        .find({ _id: { $in: cardIds } })
+        .toArray()
+
+      const groupedCards = groupBy(account.ownedCards)
+      Object.entries(groupedCards).forEach(
+        ([key, instances]: [string, string[]]) => {
+          cardsOwnedByUser.find((card, index) => {
+            if (String(card._id) === key) {
+              cardsOwnedByUser[index] = {
+                ...cardsOwnedByUser[index],
+                quantity: instances.length,
+              }
+            }
+          })
+        }
+      )
+
+      response.status(200).json({
+        isflUsername: account.isflUsername,
+        cardsOwnedByUser: cardsOwnedByUser,
+      })
+    } catch (error) {
+      console.log(error)
+      response.status(400).json({ error })
+    } finally {
+      client.close()
+      return
+    }
+  }
+
+  response.status(400).json({ error: 'Method Not Allowed' })
+  return
+}
+
+export default index

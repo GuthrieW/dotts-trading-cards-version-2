@@ -27,7 +27,7 @@
     "pages/api/schemas/Card.ts",
     "pages/api/schemas/User.js",
     "pages/api/database/database.js",
-    "pages/Trading/MyTrades/[_id].jsx"
+    "pages/_Trading/MyTrades/[_id].jsx"
   ],
   "exclude": [
     "node_modules"

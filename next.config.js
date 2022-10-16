@@ -10,4 +10,5 @@ module.exports = {
       'images-ext-1.discordapp.net',
     ],
   },
+  experimental: { images: { allowFutureImage: true } },
 }

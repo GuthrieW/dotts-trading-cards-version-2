@@ -1,34 +1,53 @@
-import { CssBaseline } from '@material-ui/core'
-import React, { useState, useEffect } from 'react'
-import DefaultLayout from '../layouts/DefaultLayout'
+import React, { useEffect, useState } from 'react'
+import { DefaultSeo } from 'next-seo'
+import SEO from '../next-seo.config'
 import '../styles/globals.css'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { Hydrate } from 'react-query/hydration'
+import DefaultLayout from '../layouts/default-layout'
+import AuthenticationLayout from '../layouts/authentication-layout'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const App = ({ Component, pageProps }) => {
+  const [windowExists, setWindowExists] = useState(false)
+
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+      },
+    },
+  })
+
   useEffect(() => {
-    // Remove the server-side injected CSS.
-    const jssStyles = document.querySelector('#jss-server-side')
-    if (jssStyles) {
-      jssStyles.parentElement.removeChild(jssStyles)
-    }
+    setWindowExists(typeof window !== 'undefined')
   }, [])
 
-  const [queryClient] = useState(() => new QueryClient())
+  if (!windowExists) {
+    return null
+  }
 
-  const getLayout =
-    Component.layout || ((page) => <DefaultLayout children={page} />)
+  const isAuthPage = window.location.href.includes('auth')
 
-  return getLayout(
+  return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
-        <CssBaseline />
-        <Component {...pageProps} />
+        {isAuthPage ? (
+          <AuthenticationLayout>
+            <DefaultSeo {...SEO} />
+            <Component {...pageProps} />
+          </AuthenticationLayout>
+        ) : (
+          <DefaultLayout>
+            <DefaultSeo {...SEO} />
+            <Component {...pageProps} />
+          </DefaultLayout>
+        )}
+        <ToastContainer position="bottom-left" />
       </Hydrate>
     </QueryClientProvider>
   )
 }
-
-App.getLayout = App
 
 export default App
