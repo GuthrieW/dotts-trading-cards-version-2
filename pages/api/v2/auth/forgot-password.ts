@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { connect } from '../..//database/database'
-import NodeMailer from 'nodemailer'
+import NodeMailer, { Transporter } from 'nodemailer'
 import CryptoRandomString from 'crypto-random-string'
 import { Methods, TableNames } from '../common'
 import { add } from 'date-fns'
@@ -39,7 +39,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
         used: false,
       })
 
-      const transporter = NodeMailer.createTransport({
+      const transporter: Transporter = NodeMailer.createTransport({
         service: 'gmail',
         host: 'smtp.gmail.com',
         port: 587,
@@ -49,7 +49,18 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
         },
       })
 
-      transporter.verify().then(console.log).catch(console.error)
+      await new Promise((resolve, reject) => {
+        // verify connection configuration
+        transporter.verify(function (error, success) {
+          if (error) {
+            console.log(error)
+            reject(error)
+          } else {
+            console.log('Server is ready to take our messages')
+            resolve(success)
+          }
+        })
+      })
 
       const emailOptions = {
         from: process.env.DOTTS_EMAIL_USER,
@@ -61,15 +72,21 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
         <p>Click <a href="${passwordResetLink}">here</a> to change your password. This link is valid for exactly one day.
         <p>If you did not request a password change you can ignore this message and continue to use your current password.</p>
         <p>Thanks,</p>
-        <p>from your friends at Dotts Trading Cards</p>`,
+        <p>from your friends at Dotts Trading Cards</p>
+      `,
       }
 
-      transporter.sendMail(emailOptions, (error, info) => {
-        if (error) {
-          console.log(error)
-        } else {
-          console.log('Email sent: ' + info.response)
-        }
+      await new Promise((resolve, reject) => {
+        // send mail
+        transporter.sendMail(emailOptions, (err, info) => {
+          if (err) {
+            console.error(err)
+            reject(err)
+          } else {
+            console.log(info)
+            resolve(info)
+          }
+        })
       })
 
       response.status(200).json({ success: 'success' })
