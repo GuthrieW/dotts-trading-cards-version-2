@@ -41,11 +41,15 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
 
       const transporter = NodeMailer.createTransport({
         service: 'gmail',
+        host: 'smtp.gmail.com',
+        port: 587,
         auth: {
           user: process.env.DOTTS_EMAIL_USER,
           pass: process.env.DOTTS_EMAIL_PASSWORD,
         },
       })
+
+      transporter.verify().then(console.log).catch(console.error)
 
       const emailOptions = {
         from: process.env.DOTTS_EMAIL_USER,
