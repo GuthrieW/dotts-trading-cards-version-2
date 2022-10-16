@@ -16,55 +16,59 @@ type LinkProps = InfoButtonProps & {
   enabled?: (user: User) => boolean
 }
 
-const ExternalLinks: LinkProps[] = [
-  {
-    title: 'How to Purchase',
-    body: 'Start here!',
-    href: 'https://forums.sim-football.com/showthread.php?tid=25272',
-  },
-  {
-    title: 'Buy Packs',
-    body: 'Buy a pack from the single purchase thread',
-    href: 'https://forums.sim-football.com/forumdisplay.php?fid=366',
-  },
-  {
-    title: 'Subscribe',
-    body: 'Sign up for automatic pack purchases!',
-    href: 'https://forums.sim-football.com/showthread.php?tid=25283',
-  },
-]
-
-const InternalLinks: LinkProps[] = [
-  {
-    title: 'Submit Cards for Review',
-    href: '/dashboard/submit-cards',
-    enabled: (user: User) => user.isAdmin || user.isSubmitter,
-  },
-  {
-    title: 'Process Cards',
-    href: '/dashboard/process-cards',
-    enabled: (user: User) => user.isAdmin || user.isProcessor,
-  },
-  {
-    title: 'Edit Cards',
-    href: '/dashboard/edit-cards',
-    enabled: (user: User) =>
-      user.isAdmin || user.isSubmitter || user.isProcessor,
-  },
-  {
-    title: 'Issue Packs',
-    href: '/dashboard/issue-packs',
-    enabled: (user: User) => user.isAdmin || user.isPackIssuer,
-  },
-  {
-    title: 'Edit Users',
-    href: '/dashboard/edit-users',
-    enabled: (user: User) => user.isAdmin || user.isPackIssuer,
-  },
-]
-
 const AdminDashboard = () => {
   const { currentUser, isFetching } = useGetCurrentUser({})
+
+  if (isFetching) {
+    return <Spinner />
+  }
+
+  const ExternalLinks: LinkProps[] = [
+    {
+      title: 'How to Purchase',
+      body: 'Start here!',
+      href: 'https://forums.sim-football.com/showthread.php?tid=25272',
+    },
+    {
+      title: 'Buy Packs',
+      body: 'Buy a pack from the single purchase thread',
+      href: 'https://forums.sim-football.com/forumdisplay.php?fid=366',
+    },
+    {
+      title: 'Subscribe',
+      body: 'Sign up for automatic pack purchases!',
+      href: 'https://forums.sim-football.com/showthread.php?tid=25283',
+    },
+  ]
+
+  const InternalLinks: LinkProps[] = [
+    {
+      title: 'Submit Cards for Review',
+      href: '/dashboard/submit-cards',
+      enabled: (user: User) => user.isAdmin || user.isSubmitter,
+    },
+    {
+      title: 'Process Cards',
+      href: '/dashboard/process-cards',
+      enabled: (user: User) => user.isAdmin || user.isProcessor,
+    },
+    {
+      title: 'Edit Cards',
+      href: '/dashboard/edit-cards',
+      enabled: (user: User) =>
+        user.isAdmin || user.isSubmitter || user.isProcessor,
+    },
+    {
+      title: 'Issue Packs',
+      href: '/dashboard/issue-packs',
+      enabled: (user: User) => user.isAdmin || user.isPackIssuer,
+    },
+    {
+      title: 'Edit Users',
+      href: '/dashboard/edit-users',
+      enabled: (user: User) => user.isAdmin || user.isPackIssuer,
+    },
+  ]
 
   const HeaderLinks: LinkProps[] = [
     {
@@ -84,10 +88,6 @@ const AdminDashboard = () => {
       href: '/trades',
     },
   ]
-
-  if (isFetching) {
-    return <Spinner />
-  }
 
   return (
     <>
