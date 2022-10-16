@@ -1,11 +1,12 @@
 import Router from 'next/router'
+import Spinner from '../components/spinners/spinner'
 import useAuthentication from '../pages/api/v2/_queries/use-authentication'
 
 const AuthenticationLayout = ({ children }) => {
   const { permissions, isFetching, error } = useAuthentication({})
 
   if (isFetching) {
-    return null
+    return <Spinner />
   }
 
   if (permissions) {
