@@ -37,6 +37,7 @@ const useAuthentication = ({}: UseAuthenticationRequest): UseAuthentication => {
     {
       onSuccess: () => {},
       onError: () => {},
+      retry: 1,
     }
   )
 
