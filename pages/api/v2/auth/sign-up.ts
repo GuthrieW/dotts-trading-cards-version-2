@@ -6,7 +6,7 @@ import { TableNames } from '../common'
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
   const { method, body } = request
 
-  if (method === 'POST') {
+  if (method === 'PUT') {
     const { email, isflUsername, password } = body
     const { database, client } = await connect()
 
