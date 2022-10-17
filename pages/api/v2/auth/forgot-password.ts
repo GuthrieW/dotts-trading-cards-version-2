@@ -50,7 +50,6 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
       })
 
       await new Promise((resolve, reject) => {
-        // verify connection configuration
         transporter.verify(function (error, success) {
           if (error) {
             console.log(error)
