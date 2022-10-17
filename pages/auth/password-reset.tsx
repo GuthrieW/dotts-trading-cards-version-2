@@ -6,9 +6,11 @@ import usePasswordReset from '../api/v2/_mutations/use-password-reset'
 import SubmitButton from '../../components/buttons/submit-button'
 import FormWrapper from '../../components/forms/form-wrapper'
 import { NextSeo } from 'next-seo'
-import Router from 'next/router'
+import Router, { useRouter } from 'next/router'
 
 const PasswordReset = () => {
+  const router = useRouter()
+  const resetToken = router.query.resetToken as string
   const { passwordReset, isSuccess, isLoading } = usePasswordReset()
 
   if (isSuccess) {
@@ -33,7 +35,7 @@ const PasswordReset = () => {
               return
             }
 
-            passwordReset({ password: values.password })
+            passwordReset({ password: values.password, resetToken })
           }}
         >
           {({ handleSubmit }) => (
