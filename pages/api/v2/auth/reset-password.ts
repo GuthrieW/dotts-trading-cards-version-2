@@ -24,7 +24,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
         .collection(TableNames.DOTTS_ACCOUNTS)
         .findOneAndUpdate(
           { email: resetTokenData.email },
-          { password: hashedPassword }
+          { $set: { password: hashedPassword } }
         )
 
       response.status(200).json({})
