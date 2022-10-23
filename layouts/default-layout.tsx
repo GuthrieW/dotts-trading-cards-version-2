@@ -16,7 +16,7 @@ const DefaultLayout = ({ children }) => {
     !permissions.isAdmin &&
     !permissions.isProcessor
   ) {
-    Router.push('/dashbord')
+    Router.push('/dashboard')
   }
 
   if (
@@ -24,7 +24,7 @@ const DefaultLayout = ({ children }) => {
     !permissions.isAdmin &&
     !permissions.isPackIssuer
   ) {
-    Router.push('/dashbord')
+    Router.push('/dashboard')
   }
 
   if (
@@ -32,7 +32,7 @@ const DefaultLayout = ({ children }) => {
     !permissions.isAdmin &&
     !permissions.isPackIssuer
   ) {
-    Router.push('/dashbord')
+    Router.push('/dashboard')
   }
 
   if (
@@ -40,7 +40,7 @@ const DefaultLayout = ({ children }) => {
     !permissions.isAdmin &&
     !permissions.isProcessor
   ) {
-    Router.push('/dashbord')
+    Router.push('/dashboard')
   }
 
   if (
@@ -48,7 +48,7 @@ const DefaultLayout = ({ children }) => {
     !permissions.isAdmin &&
     !permissions.isSubmitter
   ) {
-    Router.push('/dashbord')
+    Router.push('/dashboard')
   }
 
   if (error) {
