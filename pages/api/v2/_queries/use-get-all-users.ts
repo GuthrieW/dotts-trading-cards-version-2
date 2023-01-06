@@ -7,7 +7,7 @@ import { toast } from 'react-toastify'
 type UseGetAllUsersRequest = {}
 
 type UseGetAllUsers = {
-  allUsers: any[]
+  allUsers: DottsAccount[]
   isFetching: boolean
   error: any
 }

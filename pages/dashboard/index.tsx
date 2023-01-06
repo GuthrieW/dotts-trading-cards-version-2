@@ -13,7 +13,7 @@ type User = {
 }
 
 type LinkProps = InfoButtonProps & {
-  enabled?: (user: User) => boolean
+  enabled?: (user: DottsAccount) => boolean
 }
 
 const AdminDashboard = () => {
@@ -45,28 +45,28 @@ const AdminDashboard = () => {
     {
       title: 'Submit Cards for Review',
       href: '/dashboard/submit-cards',
-      enabled: (user: User) => user.isAdmin || user.isSubmitter,
+      enabled: (user: DottsAccount) => user.isAdmin || user.isSubmitter,
     },
     {
       title: 'Process Cards',
       href: '/dashboard/process-cards',
-      enabled: (user: User) => user.isAdmin || user.isProcessor,
+      enabled: (user: DottsAccount) => user.isAdmin || user.isProcessor,
     },
     {
       title: 'Edit Cards',
       href: '/dashboard/edit-cards',
-      enabled: (user: User) =>
+      enabled: (user: DottsAccount) =>
         user.isAdmin || user.isSubmitter || user.isProcessor,
     },
     {
       title: 'Issue Packs',
       href: '/dashboard/issue-packs',
-      enabled: (user: User) => user.isAdmin || user.isPackIssuer,
+      enabled: (user: DottsAccount) => user.isAdmin || user.isPackIssuer,
     },
     {
       title: 'Edit Users',
       href: '/dashboard/edit-users',
-      enabled: (user: User) => user.isAdmin || user.isPackIssuer,
+      enabled: (user: DottsAccount) => user.isAdmin || user.isPackIssuer,
     },
   ]
 

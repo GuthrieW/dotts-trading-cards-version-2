@@ -1,12 +1,17 @@
 import { NextSeo } from 'next-seo'
-import Link from 'next/link'
 import React, { useMemo, useState } from 'react'
-import Button from '../../components/buttons/button'
 import TradeDisplay from '../../components/displays/trade-display'
 import DropdownWithCheckboxGroup from '../../components/dropdowns/multi-select-dropdown'
+import SingleSelectDropdown, {
+  OptionProps,
+} from '../../components/dropdowns/single-select-dropdown'
 import SearchBar from '../../components/inputs/search-bar'
 import Spinner from '../../components/spinners/spinner'
 import useGetUserTrades from '../api/v2/_queries/use-get-current-user-trades'
+import useGetAllUsers from '../api/v2/_queries/use-get-all-users'
+import Router from 'next/router'
+import orderBy from 'lodash/orderBy'
+import useGetCurrentUser from '../api/v2/_queries/use-get-current-user'
 
 const TradeStatuses = ['completed', 'pending', 'declined']
 
@@ -16,7 +21,11 @@ const Trades = () => {
     []
   )
 
+  const { currentUser, isFetching: currentUserIsFetching } = useGetCurrentUser(
+    {}
+  )
   const { trades, isFetching: userTradesIsFetching } = useGetUserTrades({})
+  const { allUsers, isFetching: allUsersIsFetching } = useGetAllUsers({})
 
   const selectedTrades: DottsTrade[] = useMemo(() => {
     const lowercaseSearchString = searchString.toLowerCase()
@@ -60,6 +69,23 @@ const Trades = () => {
     }
   )
 
+  const tradeOptions: OptionProps[] = orderBy(
+    allUsers.map((user) => {
+      return {
+        id: user._id,
+        text: user.isflUsername,
+        onClick: () => {
+          Router.push(`/trades/new-trade/${user._id}`)
+        },
+      }
+    }),
+    ['text'],
+    ['asc']
+  )
+  const newTradeOptions = tradeOptions.filter(
+    (option) => currentUser._id !== option.id
+  )
+
   return (
     <>
       <NextSeo title="Trades" />
@@ -79,9 +105,10 @@ const Trades = () => {
             />
           </div>
           <div className="flex items-center">
-            {/* <Button onClick={null} isLoading={false}>
-              <Link href="trades/new-trade">New Trade</Link>
-            </Button> */}
+            <SingleSelectDropdown
+              title={'New Trade'}
+              options={newTradeOptions}
+            />
           </div>
         </div>
 

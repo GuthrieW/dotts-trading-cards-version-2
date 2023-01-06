@@ -33,11 +33,11 @@ type DottsAccount = {
   password: string
   ownedRegularPacks: number
   ownedUltimusPacks: number
-  isSubscribed: boolean
-  isAdmin: boolean
-  isProcessor: boolean
-  isPackIssuer: boolean
-  isSubmitter: boolean
+  isSubscribe?: boolean
+  isAdmin?: boolean
+  isProcessor?: boolean
+  isPackIssuer?: boolean
+  isSubmitter?: boolean
 }
 
 type TradeStatus = 'declined' | 'completed' | 'pending'
