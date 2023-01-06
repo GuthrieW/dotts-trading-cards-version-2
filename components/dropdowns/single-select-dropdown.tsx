@@ -40,11 +40,11 @@ const SingleSelectDropdown = ({
             <div className="py-1">
               {options.map((option, index) => (
                 <div
-                  className="flex w-full px-2 rounded hover:bg-neutral-400"
+                  className="flex w-full px-2 rounded hover:bg-neutral-400 cursor-pointer"
                   key={index}
+                  onClick={() => option.onClick()}
                 >
                   <label
-                    onClick={() => option.onClick()}
                     htmlFor={option.id}
                     className="ml-2 text-sm font-medium text-neutral-800"
                   >
