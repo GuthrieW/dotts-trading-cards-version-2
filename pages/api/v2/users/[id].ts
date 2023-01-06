@@ -36,7 +36,7 @@ export const index = async (
               isSubscribed: isSubscribed,
               isProcessor: isProcessor,
               isPackIssuer: isPackIssuer,
-              isSubmitter: isPackIssuer,
+              isSubmitter: isSubmitter,
             },
           }
         )
