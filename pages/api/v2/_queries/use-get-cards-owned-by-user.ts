@@ -10,7 +10,7 @@ type UseGetCardsOwnedByUserRequest = {
 
 type UseGetCardsOwnedByUser = {
   isflUsername: string
-  cardsOwnedByUser: any
+  cardsOwnedByUser: CardWithCount[]
   isFetching: boolean
   error: any
 }

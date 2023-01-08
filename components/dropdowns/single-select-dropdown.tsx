@@ -42,7 +42,7 @@ const SingleSelectDropdown = ({
                 <div
                   className="flex w-full px-2 rounded hover:bg-neutral-400 cursor-pointer"
                   key={index}
-                  // onClick={() => option.onClick()}
+                  onClick={() => option.onClick()}
                 >
                   <label
                     htmlFor={option.id}

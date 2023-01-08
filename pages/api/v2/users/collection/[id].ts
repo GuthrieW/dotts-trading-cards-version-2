@@ -3,8 +3,6 @@ import { connect } from '../../../database/database'
 import { Methods, TableNames } from '../../common'
 import { ObjectId } from 'mongodb'
 import groupBy from 'lodash/groupBy'
-import find from 'lodash/find'
-import times from 'lodash/times'
 
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
   const { method, body, query } = request
