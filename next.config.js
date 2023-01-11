@@ -1,5 +1,6 @@
 module.exports = {
   images: {
+    unoptimized: true,
     domains: [
       'imgur.com',
       'i.imgur.com',
