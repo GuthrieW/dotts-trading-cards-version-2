@@ -27,7 +27,6 @@ const useGetTradingParners = ({
   const { data, error, isFetching } = useQuery(
     UseGetTradingPartnersKey,
     async () => {
-      console.log('ids', sendingUserId, receivingUserId)
       return await axios({
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),

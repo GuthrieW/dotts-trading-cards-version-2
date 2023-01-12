@@ -38,11 +38,13 @@ const Trades = () => {
         trade.receivingUsername?.toLowerCase()?.includes(lowercaseSearchString)
     )
 
-    return nameFilteredTrades.filter(
+    const statusFilteredTrades = nameFilteredTrades.filter(
       (trade: DottsTrade) =>
         selectedTradeStatuses.length === 0 ||
         selectedTradeStatuses.includes(trade.tradeStatus)
     )
+
+    return orderBy(statusFilteredTrades, ['tradeOfferDate'], ['desc'])
   }, [trades, searchString, selectedTradeStatuses])
 
   if (userTradesIsFetching) {

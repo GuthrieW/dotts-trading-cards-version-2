@@ -16,29 +16,29 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
     } = body as {
       offeringUserId: string
       receivingUserId: string
-      offeringUserCardIds: string[]
-      receivingUserCardIds: string[]
+      offeringUserCardIds: Card[]
+      receivingUserCardIds: Card[]
     }
 
     const { database, client } = await connect()
 
-    const offeringUser: DottsAccount = database
+    const offeringUser: DottsAccount = (await database
       .collection(TableNames.DOTTS_ACCOUNTS)
       .findOne({
         _id: new ObjectId(offeringUserId),
-      }) as unknown as DottsAccount
+      })) as unknown as DottsAccount
 
-    const receivingUser: DottsAccount = database
+    const receivingUser: DottsAccount = (await database
       .collection(TableNames.DOTTS_ACCOUNTS)
       .findOne({
         _id: new ObjectId(receivingUserId),
-      }) as unknown as DottsAccount
+      })) as unknown as DottsAccount
 
-    const offeringUserHasCards = offeringUserCardIds.every((cardId) =>
-      offeringUser.ownedCards.includes(cardId)
+    const offeringUserHasCards = offeringUserCardIds.every((card) =>
+      offeringUser.ownedCards.includes(card._id)
     )
-    const receivingUserHasCards = receivingUserCardIds.every((cardId) =>
-      receivingUser.ownedCards.includes(cardId)
+    const receivingUserHasCards = receivingUserCardIds.every((card) =>
+      receivingUser.ownedCards.includes(card._id)
     )
 
     try {
@@ -52,7 +52,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
         )
       }
 
-      const insertedTrade = database
+      const insertedTrade = await database
         .collection(TableNames.DOTTS_TRADES)
         .insertOne({
           offeringUserId,

@@ -14,8 +14,6 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
         .find({ approved: false })
         .toArray()
 
-      console.log('cards', cards)
-
       response.status(200).json({ unapprovedCards: cards })
     } catch (error) {
       console.log(error)
