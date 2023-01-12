@@ -2,7 +2,7 @@ import React from 'react'
 
 type ShinyImageProps = {
   imageUrl: string
-  movementThreshold: number
+  movementThreshold?: number
   onClick?: Function
 }
 
