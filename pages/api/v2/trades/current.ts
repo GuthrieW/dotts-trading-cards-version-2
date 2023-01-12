@@ -3,7 +3,6 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { connect } from '../../database/database'
 import { getAccessTokenFromHeader, Methods, TableNames } from '../common'
 import JsonWebToken from 'jsonwebtoken'
-import orderBy from 'lodash/orderBy'
 
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
   const { method } = request
