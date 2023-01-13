@@ -54,7 +54,7 @@ const TradeDisplay = ({ trade, allowHref = true }: TradeDisplayProps) => {
                 {format(new Date(tradeOfferDate), 'MM-dd-yyyy')}
               </p>
             )}
-            {tradeResolvedDate && (
+            {/* {tradeResolvedDate && (
               <p>
                 Trade resolved on{' '}
                 {format(new Date(tradeResolvedDate), 'MM-dd-yyyy')}
@@ -62,7 +62,7 @@ const TradeDisplay = ({ trade, allowHref = true }: TradeDisplayProps) => {
             )}
             {tradeResolved && !tradeResolvedDate && (
               <p>Trade resolution date not recorded</p>
-            )}
+            )} */}
           </div>
         </div>
       </div>
