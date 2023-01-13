@@ -67,18 +67,20 @@ const Trade = () => {
             Accept
           </Button>
         )}
-        <Button
-          onClick={() => {
-            if (acceptTradeIsLoading || declineTradeIsLoading) {
-              toast.warning('Already declining trade')
-              return
-            }
-            declineTrade({ _id: trade._id })
-          }}
-          isLoading={false}
-        >
-          Decline
-        </Button>
+        {!tradeResolved && (
+          <Button
+            onClick={() => {
+              if (acceptTradeIsLoading || declineTradeIsLoading) {
+                toast.warning('Already declining trade')
+                return
+              }
+              declineTrade({ _id: trade._id })
+            }}
+            isLoading={false}
+          >
+            Decline
+          </Button>
+        )}
       </div>
     </div>
   )
