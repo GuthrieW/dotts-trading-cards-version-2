@@ -54,17 +54,6 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
         throw new Error('Users do not have all required cards')
       }
 
-      offeringUserCardIds.forEach((card) => {
-        offeringUser.ownedCards.splice(offeringUser.ownedCards.indexOf(card), 1)
-      })
-
-      receivingUserCardIds.forEach((card) => {
-        receivingUser.ownedCards.splice(
-          receivingUser.ownedCards.indexOf(card),
-          1
-        )
-      })
-
       const actualOfferingCardIds = offeringUserCardIds.map(
         (card: Card) => card._id
       )
@@ -72,38 +61,46 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
         (card: Card) => card._id
       )
 
-      // await database
-      //   .collection(TableNames.DOTTS_ACCOUNTS)
-      //   .findOneAndUpdate(
-      //     { _id: new ObjectId(offeringUserId) },
-      //     { $set: { ownedCards: offeringUser.ownedCards } }
-      //   )
+      const offeringUserCards: string[] = offeringUser.ownedCards
+      actualOfferingCardIds.forEach((cardIdToRemove) => {
+        const cardIndex = offeringUserCards.findIndex(
+          (cardId) => cardId === cardIdToRemove
+        )
+
+        offeringUserCards.splice(cardIndex, 1)
+      })
+
+      const receivingUserCards: string[] = receivingUser.ownedCards
+      actualReceivingCardIds.forEach((cardIdToRemove) => {
+        const cardIndex = receivingUserCards.findIndex(
+          (cardId) => cardId === cardIdToRemove
+        )
+
+        receivingUserCards.splice(cardIndex, 1)
+      })
+
+      await database
+        .collection(TableNames.DOTTS_ACCOUNTS)
+        .findOneAndUpdate(
+          { _id: new ObjectId(offeringUserId) },
+          { $set: { ownedCards: offeringUserCards } }
+        )
 
       await database.collection(TableNames.DOTTS_ACCOUNTS).findOneAndUpdate(
         { _id: new ObjectId(offeringUserId) }, // @ts-ignore
         { $push: { ownedCards: { $each: actualReceivingCardIds } } }
       )
 
-      await database.collection(TableNames.DOTTS_ACCOUNTS).findOneAndUpdate(
-        { _id: new ObjectId(offeringUserId) }, // @ts-ignore
-        { $pull: { ownedCards: { $each: actualOfferingCardIds } } }
-      )
-
-      // await database
-      //   .collection(TableNames.DOTTS_ACCOUNTS)
-      //   .findOneAndUpdate(
-      //     { _id: new ObjectId(receivingUserId) },
-      //     { $set: { ownedCards: receivingUser.ownedCards } }
-      //   )
+      await database
+        .collection(TableNames.DOTTS_ACCOUNTS)
+        .findOneAndUpdate(
+          { _id: new ObjectId(receivingUserId) },
+          { $set: { ownedCards: receivingUserCards } }
+        )
 
       await database.collection(TableNames.DOTTS_ACCOUNTS).findOneAndUpdate(
         { _id: new ObjectId(receivingUserId) }, // @ts-ignore
         { $push: { ownedCards: { $each: actualOfferingCardIds } } }
-      )
-
-      await database.collection(TableNames.DOTTS_ACCOUNTS).findOneAndUpdate(
-        { _id: new ObjectId(receivingUserId) }, // @ts-ignore
-        { $pull: { ownedCards: { $each: actualReceivingCardIds } } }
       )
 
       await database.collection(TableNames.DOTTS_TRADES).findOneAndUpdate(
