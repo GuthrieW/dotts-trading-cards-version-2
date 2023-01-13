@@ -1,34 +1,16 @@
-//TODO: Add onclick effect for viewing cards up close
-
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import {
-  ALL_PRO,
-  ANNIVERSARY_FIRST_TEAM,
-  ANNIVERSARY_SECOND_TEAM,
-  AUTOGRAPH_ROOKIE,
-  AWARD,
-  BACKUP,
-  CAPTAIN,
-  CHARITY,
-  FANTASY_KINGS,
-  HALL_OF_FAME,
-  HOLOGRAPH_EXPANSION,
-  LEAST_VALUABLE_PLAYER,
-  LEGEND,
   RARITIES,
   Rarity,
-  STAR,
-  STARTER,
+  rarityToNumercialValue,
   Team,
   TEAMS,
-  TEAM_LOGO,
-  ULTIMUS_CHAMPION,
-  UNIQUE,
 } from '../../utils/constants'
 import DropdownWithCheckboxGroup from '../dropdowns/multi-select-dropdown'
 import SearchBar from '../inputs/search-bar'
 import { useVirtual } from 'react-virtual'
 import ShinyImage from '../images/shiny-image'
+import { sortAndFilterCards } from '../../utils/filter-and-sort-cards'
 
 type CardWithCount = Card & {
   quantity: number
@@ -38,71 +20,23 @@ type CollectionGridProps = {
   gridCards: CardWithCount[]
 }
 
-const rarityToNumercialValue = {
-  [BACKUP]: 0,
-  [STARTER]: 1,
-  [STAR]: 2,
-  [ALL_PRO]: 3,
-  [LEGEND]: 4,
-  [CAPTAIN]: 5,
-  [LEAST_VALUABLE_PLAYER]: 6,
-  [TEAM_LOGO]: 7,
-  [HOLOGRAPH_EXPANSION]: 8,
-  [AUTOGRAPH_ROOKIE]: 9,
-  [FANTASY_KINGS]: 10,
-  [AWARD]: 11,
-  [ULTIMUS_CHAMPION]: 12,
-  [UNIQUE]: 13,
-  [CHARITY]: 14,
-  [ANNIVERSARY_SECOND_TEAM]: 15,
-  [ANNIVERSARY_FIRST_TEAM]: 16,
-  [HALL_OF_FAME]: 17,
-}
-
 const CollectionGrid = ({ gridCards }: CollectionGridProps) => {
   const [searchString, setSearchString] = useState<string>('')
   const [selectedRarities, setSelectedRarities] = useState<string[]>([])
   const [selectedTeams, setSelectedTeams] = useState<string[]>([])
-  // const [selectedCard, setSelectedCard] = useState<Card | null>(null)
-  // const [lightBoxIsOpen, setLightBoxIsOpen] = useState<boolean>(false)
+
   const parentRef = useRef()
 
-  const processedCards: CardWithCount[] = useMemo(() => {
-    gridCards = gridCards.filter(
-      (card) => card.playerName && card.playerTeam && card.imageUrl && card._id
-    )
-
-    const lowerCaseSearchString = searchString.toLowerCase()
-
-    const filteredCards: CardWithCount[] = gridCards
-      .filter((card: CardWithCount) => {
-        const lowerCaseCardName = card.playerName.toLowerCase() ?? ''
-        return (
-          lowerCaseCardName.includes(lowerCaseSearchString) ||
-          card.playerName.includes(searchString)
-        )
-      })
-      .filter((card: CardWithCount) => {
-        return (
-          selectedRarities.length === 0 ||
-          selectedRarities.includes(card.rarity)
-        )
-      })
-      .filter((card: CardWithCount) => {
-        return (
-          selectedTeams.length === 0 || selectedTeams.includes(card.playerTeam)
-        )
-      })
-
-    return filteredCards.sort((a: CardWithCount, b: CardWithCount) => {
-      console.log('aRarity', a.rarity, rarityToNumercialValue[a.rarity])
-      console.log('bRarity', b.rarity, rarityToNumercialValue[b.rarity])
-
-      const aRanking = rarityToNumercialValue[a.rarity] ?? 1000
-      const bRanking = rarityToNumercialValue[b.rarity] ?? 1000
-      return bRanking - aRanking
-    })
-  }, [gridCards, searchString, selectedRarities, selectedTeams])
+  const processedCards: CardWithCount[] = useMemo(
+    () =>
+      sortAndFilterCards(
+        gridCards,
+        searchString,
+        selectedRarities,
+        selectedTeams
+      ),
+    [gridCards, searchString, selectedRarities, selectedTeams]
+  )
 
   const rowVirtualization = useVirtual({
     size: processedCards.length,
@@ -111,17 +45,17 @@ const CollectionGrid = ({ gridCards }: CollectionGridProps) => {
     estimateSize: useCallback(() => 35, []),
   })
 
-  const handleUpdateSearchString = (event) =>
+  const handleUpdateSearchString = (event): void =>
     setSearchString(event.target.value || '')
 
-  const updateSelectedRarityButtonIds = (toggleId) =>
+  const updateSelectedRarityButtonIds = (toggleId): void =>
     selectedRarities.includes(toggleId)
       ? setSelectedRarities(
           selectedRarities.filter((rarity) => rarity != toggleId)
         )
       : setSelectedRarities(selectedRarities.concat(toggleId))
 
-  const updateSelectedTeamButtonIds = (toggleId) =>
+  const updateSelectedTeamButtonIds = (toggleId): void =>
     selectedTeams.includes(toggleId)
       ? setSelectedTeams(selectedTeams.filter((team) => team != toggleId))
       : setSelectedTeams(selectedTeams.concat(toggleId))

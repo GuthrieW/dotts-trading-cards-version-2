@@ -183,3 +183,24 @@ export const TEAMS: Team[] = [
     ABBREVIATION: 'TML',
   },
 ]
+
+export const rarityToNumercialValue = {
+  [BACKUP]: 0,
+  [STARTER]: 1,
+  [STAR]: 2,
+  [ALL_PRO]: 3,
+  [LEGEND]: 4,
+  [CAPTAIN]: 5,
+  [LEAST_VALUABLE_PLAYER]: 6,
+  [TEAM_LOGO]: 7,
+  [HOLOGRAPH_EXPANSION]: 8,
+  [AUTOGRAPH_ROOKIE]: 9,
+  [FANTASY_KINGS]: 10,
+  [AWARD]: 11,
+  [ULTIMUS_CHAMPION]: 12,
+  [UNIQUE]: 13,
+  [CHARITY]: 14,
+  [ANNIVERSARY_SECOND_TEAM]: 15,
+  [ANNIVERSARY_FIRST_TEAM]: 16,
+  [HALL_OF_FAME]: 17,
+}

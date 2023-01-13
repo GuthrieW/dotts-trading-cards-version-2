@@ -2,14 +2,21 @@ import React from 'react'
 
 type ShinyImageProps = {
   imageUrl: string
-  movementThreshold
+  movementThreshold?: number
+  onClick?: Function
 }
 
-const ShinyImage = ({ imageUrl, movementThreshold = 100 }) => {
+const ShinyImage = ({
+  imageUrl,
+  movementThreshold = 100,
+  onClick,
+}: ShinyImageProps) => {
   const cardImageRef = React.useRef<HTMLImageElement>(null)
   const shineRef = React.useRef<HTMLDivElement>(null)
+
   return (
     <div
+      onClick={() => onClick()}
       className="w-full h-full relative motion-reduce:hover:transform-none"
       style={{ transformStyle: 'preserve-3d' }}
       onMouseMove={(event) => {

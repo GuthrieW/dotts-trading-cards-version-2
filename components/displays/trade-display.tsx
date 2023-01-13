@@ -19,7 +19,6 @@ const TradeDisplay = ({ trade, allowHref = true }: TradeDisplayProps) => {
     tradeOfferDate,
     tradeResolvedDate,
   } = trade
-  console.log(trade)
 
   const tradeResolved =
     tradeStatus === 'completed' || tradeStatus === 'declined'
@@ -48,7 +47,7 @@ const TradeDisplay = ({ trade, allowHref = true }: TradeDisplayProps) => {
             />
           </div>
           <div className="flex flex-col justify-center items-end w-1/4 mr-2 my-2">
-            <TextIcon text={tradeStatus.toUpperCase()} />
+            <TextIcon text={tradeStatus?.toUpperCase()} />
             {tradeOfferDate && (
               <p>
                 Trade offered on{' '}

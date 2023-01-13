@@ -16,6 +16,21 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
         _id: new ObjectId(id),
       })
 
+      const offeringUser = await database
+        .collection(TableNames.DOTTS_ACCOUNTS)
+        .findOne({
+          _id: new ObjectId(trade.offeringUserId),
+        })
+
+      const receivingUser = await database
+        .collection(TableNames.DOTTS_ACCOUNTS)
+        .findOne({
+          _id: new ObjectId(trade.receivingUserId),
+        })
+
+      trade.offeringUsername = offeringUser.isflUsername
+      trade.receivingUsername = receivingUser.isflUsername
+
       response.status(200).json(trade)
     } catch (error) {
       console.log(error)

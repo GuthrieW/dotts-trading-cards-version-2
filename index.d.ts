@@ -24,6 +24,10 @@ type Card = {
   submissionUsername: string
 }
 
+type CardWithCount = Card & {
+  quantity: number
+}
+
 type DottsAccount = {
   _id: string
   isflUsername: string
@@ -38,6 +42,10 @@ type DottsAccount = {
   isProcessor?: boolean
   isPackIssuer?: boolean
   isSubmitter?: boolean
+}
+
+type DottsAccountWithCards = DottsAccount & {
+  cards: CardWithCount[]
 }
 
 type TradeStatus = 'declined' | 'completed' | 'pending'
