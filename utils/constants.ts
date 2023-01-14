@@ -27,52 +27,12 @@ export type Rarity = {
 
 export const RARITIES: Rarity[] = [
   {
-    label: 'BACKUP',
-    value: 'Backup',
-  },
-  {
-    label: 'STARTER',
-    value: 'Starter',
-  },
-  {
-    label: 'STAR',
-    value: 'Star',
-  },
-  {
-    label: 'ALL_PRO',
-    value: 'All-Pro',
-  },
-  {
-    label: 'LEGEND',
-    value: 'Legend',
-  },
-  {
-    label: 'AWARD',
-    value: 'Award',
-  },
-  {
     label: 'HALL_OF_FAME',
     value: 'Hall of Fame',
   },
   {
-    label: 'ULTIMUS_CHAMPION',
-    value: 'Ultimus Champion',
-  },
-  {
-    label: 'HOLOGRAPH_EXPANSION',
-    value: 'Holograph Expansion',
-  },
-  {
-    label: 'AUTOGRAPH_ROOKIE',
-    value: 'Autograph Rookie',
-  },
-  {
-    label: 'FANTASY_KINGS',
-    value: 'Fantasy Kings',
-  },
-  {
-    label: 'CAPTAIN',
-    value: 'Captain',
+    label: 'UNIQUE',
+    value: 'Unique',
   },
   {
     label: 'ANNIVERSARY_FIRST_TEAM',
@@ -83,20 +43,62 @@ export const RARITIES: Rarity[] = [
     value: 'Anniversary Second Team',
   },
   {
+    label: 'CHARITY',
+    value: 'Charity',
+  },
+
+  {
+    label: 'AWARD',
+    value: 'Award',
+  },
+  {
+    label: 'ULTIMUS_CHAMPION',
+    value: 'Ultimus Champion',
+  },
+  {
+    label: 'FANTASY_KINGS',
+    value: 'Fantasy Kings',
+  },
+  {
+    label: 'HOLOGRAPH_EXPANSION',
+    value: 'Holograph Expansion',
+  },
+  {
+    label: 'AUTOGRAPH_ROOKIE',
+    value: 'Autograph Rookie',
+  },
+  {
     label: 'TEAM_LOGO',
     value: 'Team Logo',
   },
   {
-    label: 'UNIQUE',
-    value: 'Unique',
-  },
-  {
-    label: 'CHARITY',
-    value: 'Charity',
+    label: 'CAPTAIN',
+    value: 'Captain',
   },
   {
     label: 'LEAST_VALUABLE_PLAYER',
     value: 'Least Valuable Player',
+  },
+
+  {
+    label: 'LEGEND',
+    value: 'Legend',
+  },
+  {
+    label: 'ALL_PRO',
+    value: 'All-Pro',
+  },
+  {
+    label: 'STAR',
+    value: 'Star',
+  },
+  {
+    label: 'STARTER',
+    value: 'Starter',
+  },
+  {
+    label: 'BACKUP',
+    value: 'Backup',
   },
 ]
 
@@ -185,22 +187,22 @@ export const TEAMS: Team[] = [
 ]
 
 export const rarityToNumercialValue = {
-  [BACKUP]: 0,
-  [STARTER]: 1,
-  [STAR]: 2,
-  [ALL_PRO]: 3,
-  [LEGEND]: 4,
-  [CAPTAIN]: 5,
-  [LEAST_VALUABLE_PLAYER]: 6,
-  [TEAM_LOGO]: 7,
-  [HOLOGRAPH_EXPANSION]: 8,
-  [AUTOGRAPH_ROOKIE]: 9,
-  [FANTASY_KINGS]: 10,
-  [AWARD]: 11,
-  [ULTIMUS_CHAMPION]: 12,
-  [CHARITY]: 13,
-  [ANNIVERSARY_SECOND_TEAM]: 14,
+  [HALL_OF_FAME]: 17,
+  [UNIQUE]: 16,
   [ANNIVERSARY_FIRST_TEAM]: 15,
-  [HALL_OF_FAME]: 16,
-  [UNIQUE]: 17,
+  [ANNIVERSARY_SECOND_TEAM]: 14,
+  [CHARITY]: 13,
+  [AWARD]: 12,
+  [ULTIMUS_CHAMPION]: 11,
+  [FANTASY_KINGS]: 10,
+  [HOLOGRAPH_EXPANSION]: 9,
+  [AUTOGRAPH_ROOKIE]: 8,
+  [TEAM_LOGO]: 7,
+  [CAPTAIN]: 6,
+  [LEAST_VALUABLE_PLAYER]: 5,
+  [LEGEND]: 4,
+  [ALL_PRO]: 3,
+  [STAR]: 2,
+  [STARTER]: 1,
+  [BACKUP]: 0,
 }
