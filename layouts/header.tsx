@@ -62,6 +62,13 @@ const Header = () => {
       admin: false,
       cardTeam: false,
     },
+    {
+      id: 'trophy-room',
+      headerText: 'Trophy Room',
+      href: '/trophy-room',
+      admin: false,
+      cardTeam: false,
+    },
   ]
 
   return (

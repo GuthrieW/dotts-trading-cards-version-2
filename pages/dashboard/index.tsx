@@ -87,6 +87,10 @@ const AdminDashboard = () => {
       title: 'Trades',
       href: '/trades',
     },
+    {
+      title: 'Trophy Room',
+      href: '/trophy-room',
+    },
   ]
 
   return (
