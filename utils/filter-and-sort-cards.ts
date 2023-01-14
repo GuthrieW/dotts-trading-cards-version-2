@@ -10,7 +10,12 @@ export const sortAndFilterCards = (
 
   const filteredCards: CardWithCount[] = cards
     .filter(
-      (card) => card.playerName && card.playerTeam && card.imageUrl && card._id
+      (card) =>
+        card.playerName &&
+        card.playerTeam &&
+        card.imageUrl &&
+        card._id &&
+        card.rarity
     )
     .filter((card: CardWithCount) => {
       const lowerCaseCardName = card.playerName.toLowerCase() ?? ''
