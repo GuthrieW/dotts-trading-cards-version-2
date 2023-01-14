@@ -101,7 +101,7 @@ const Trades = () => {
               placeholder="Trade Partner"
             />
             <DropdownWithCheckboxGroup
-              title="Statues"
+              title="Statuses"
               checkboxes={tradeStatusCheckboxes}
               selectedCheckboxIds={selectedTradeStatuses}
             />
