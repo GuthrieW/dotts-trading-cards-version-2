@@ -1,18 +1,20 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { NextSeo } from 'next-seo'
-import Button from '../../components/buttons/button'
-import useRunScript from '../api/v2/_mutations/use-run-script'
+
+import TrophyRoomGrid from '../../components/grids/trophy-room-grid'
+import useGetCurrentUser from '../api/v2/_queries/use-get-current-user'
+import Spinner from '../../components/spinners/spinner'
 
 const TrophyRoom = () => {
-  const { runScript, isLoading, isSuccess, reset } = useRunScript()
+  const { currentUser, isFetching, error } = useGetCurrentUser({})
+
+  if (isFetching) return <Spinner />
 
   return (
     <>
       <NextSeo title="Trophy Room" />
       <h1>Trophy Room</h1>
-      {/* <Button onClick={() => runScript()} isLoading={isLoading}>
-        Fix Collections
-      </Button> */}
+      <TrophyRoomGrid userId={currentUser._id} />
     </>
   )
 }
