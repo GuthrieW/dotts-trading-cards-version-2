@@ -29,7 +29,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
         length: 64,
         type: 'url-safe',
       })
-      const passwordResetLink = `https://www.dottstradingcards.com/auth/password-reset?resetToken=${generatedRandomString}`
+      const passwordResetLink = `https://dottstradingcards.com/auth/password-reset?resetToken=${generatedRandomString}`
       const expirationDate = add(new Date(), { days: 1 })
 
       await database.collection(TableNames.DOTTS_RESET_TOKENS).insertOne({

@@ -68,6 +68,11 @@ const AdminDashboard = () => {
       href: '/dashboard/edit-users',
       enabled: (user: DottsAccount) => user.isAdmin || user.isPackIssuer,
     },
+    {
+      title: 'Admin',
+      href: '/dashboard/admin',
+      enabled: (user: DottsAccount) => user.isAdmin,
+    },
   ]
 
   const HeaderLinks: LinkProps[] = [
