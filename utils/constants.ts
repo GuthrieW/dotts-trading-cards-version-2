@@ -16,6 +16,7 @@ export const CHARITY = 'Charity'
 export const ANNIVERSARY_FIRST_TEAM = 'Anniversary First Team'
 export const ANNIVERSARY_SECOND_TEAM = 'Anniversary Second Team'
 export const LEAST_VALUABLE_PLAYER = 'Least Valuable Player'
+export const BASE = 'Base'
 
 export const DOTTS_USER_ID_STORAGE = 'dottsUserId'
 export const DOTTS_ACCESS_TOKEN = 'dottsAccessToken'
@@ -99,6 +100,10 @@ export const RARITIES: Rarity[] = [
   {
     label: 'BACKUP',
     value: 'Backup',
+  },
+  {
+    label: 'BASE',
+    value: 'Base',
   },
 ]
 
@@ -187,6 +192,7 @@ export const TEAMS: Team[] = [
 ]
 
 export const rarityToNumercialValue = {
+  [BASE]: 18,
   [HALL_OF_FAME]: 17,
   [UNIQUE]: 16,
   [ANNIVERSARY_FIRST_TEAM]: 15,
