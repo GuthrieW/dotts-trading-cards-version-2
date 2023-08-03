@@ -28,6 +28,10 @@ export type Rarity = {
 
 export const RARITIES: Rarity[] = [
   {
+    label: 'BASE',
+    value: 'Base',
+  },
+  {
     label: 'HALL_OF_FAME',
     value: 'Hall of Fame',
   },
@@ -100,10 +104,6 @@ export const RARITIES: Rarity[] = [
   {
     label: 'BACKUP',
     value: 'Backup',
-  },
-  {
-    label: 'BASE',
-    value: 'Base',
   },
 ]
 
