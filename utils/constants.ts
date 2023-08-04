@@ -135,6 +135,11 @@ export const TEAMS: Team[] = [
     ABBREVIATION: 'BER',
   },
   {
+    CITY_NAME: 'Cape Town',
+    TEAM_NAME: 'Crash',
+    ABBREVIATION: 'CTC',
+  },
+  {
     CITY_NAME: 'Chicago',
     TEAM_NAME: 'Butchers',
     ABBREVIATION: 'CHI',
