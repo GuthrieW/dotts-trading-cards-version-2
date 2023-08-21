@@ -6,8 +6,8 @@ import useRunScript from '../api/v2/_mutations/use-run-script'
 import useGetCurrentUser from '../api/v2/_queries/use-get-current-user'
 
 const Admin = () => {
-  const { currentUser, isFetching, error } = useGetCurrentUser({})
-  const { runScript, isLoading, isSuccess, reset } = useRunScript()
+  const { currentUser, isFetching } = useGetCurrentUser({})
+  const { runScript, isLoading } = useRunScript()
 
   if (isFetching) {
     return <Spinner />
