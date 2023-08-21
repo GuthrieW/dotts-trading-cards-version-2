@@ -96,11 +96,12 @@ export const issueCharityCards = async (database: Db): Promise<void> => {
 
   await Promise.all(
     await usersToAddCards.map(async (user) => {
-      const username = new ObjectId(user.name)
       await database.collection(TableNames.DOTTS_ACCOUNTS).findOneAndUpdate(
-        { isflUsername: username }, // @ts-ignore
+        { isflUsername: user.name }, // @ts-ignore
         { $push: { ownedCards: { $each: user.cards } } }
       )
     })
   )
+
+  return
 }
