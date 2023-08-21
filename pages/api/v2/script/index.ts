@@ -1,28 +1,28 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { connect } from '../../database/database'
-import { Methods, TableNames } from '../common'
+import { Methods } from '../common'
+import { updateCurrentRotation } from './updateCurrentRotation'
+import { issueCharityCards } from './issueCharityCards'
+import { Db, MongoClient } from 'mongodb'
+
+const scripts: Record<
+  string,
+  (database: Db, client: MongoClient) => Promise<void>
+> = {
+  updateCurrentRotation: updateCurrentRotation,
+  issueCharityCards: issueCharityCards,
+}
 
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
-  const { method } = request
+  const { method, body } = request
+
+  const scriptName: string = body.scriptName
 
   if (method === Methods.POST) {
     const { database, client } = await connect()
 
     try {
-      const orbitingDeath = []
-      const connorM = []
-      const kotasa = []
-      const qWest = []
-      const shadyShoelace = []
-      const laser = []
-      const limJahey = []
-      const fleshBagSoup = []
-      const starboy = []
-
-      await database.collection(TableNames.DOTTS_ACCOUNTS).findOneAndUpdate(
-        { isflUsername: '' }, // @ts-ignore
-        { $push: { ownedCards: { $each: newCardsForOrbitingDeath } } }
-      )
+      await scripts[scriptName](database, client)
     } catch (error) {
       console.log(error)
       response.status(400).json({ error })
@@ -30,8 +30,6 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
       client.close()
       return
     }
-
-    await database
   }
 
   response.status(400).json({ error: 'Method Not Allowed' })

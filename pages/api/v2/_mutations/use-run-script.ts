@@ -1,10 +1,12 @@
-import { QueryClient, useMutation, useQueryClient } from 'react-query'
+import { useMutation } from 'react-query'
 import axios from 'axios'
 import { DOTTS_ACCESS_TOKEN } from '../../../../utils/constants'
 import { Methods } from '../common'
 import { toast } from 'react-toastify'
 
-type UseRunScriptRequest = {}
+type UseRunScriptRequest = {
+  scriptName: string
+}
 
 type UseRunScript = {
   runScript: Function
@@ -14,15 +16,17 @@ type UseRunScript = {
 }
 
 const useRunScript = (): UseRunScript => {
-  const queryClient: QueryClient = useQueryClient()
   const { mutate, isSuccess, isLoading, reset } = useMutation(
-    ({}: UseRunScriptRequest) => {
+    ({ scriptName }: UseRunScriptRequest) => {
       return axios({
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
         },
         method: Methods.POST,
         url: `/api/v2/script`,
+        data: {
+          scriptName,
+        },
       })
     },
     {

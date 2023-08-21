@@ -20,8 +20,17 @@ const Admin = () => {
   return (
     <>
       <NextSeo title="Admin" />
-      <Button onClick={() => runScript()} isLoading={isLoading}>
-        Run Script
+      <Button
+        onClick={() => runScript({ scriptName: 'updateCurrentRotation' })}
+        isLoading={isLoading}
+      >
+        Run updateCurrentRotation
+      </Button>
+      <Button
+        onClick={() => runScript({ scriptName: 'issueCharityCards' })}
+        isLoading={isLoading}
+      >
+        Run issueCharityCards
       </Button>
     </>
   )
