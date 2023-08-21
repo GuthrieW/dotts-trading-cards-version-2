@@ -13,6 +13,7 @@ export const updateCurrentRotation = async (database: Db): Promise<void> => {
 
   const afterDate = new Date()
   afterDate.setMonth(afterDate.getMonth() - 1)
+  afterDate.setDate(1)
 
   await database
     .collection(TableNames.DOTTS_CARDS)

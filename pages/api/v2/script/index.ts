@@ -27,6 +27,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
       console.log(error)
       response.status(400).json({ error })
     } finally {
+      response.status(200).send('Success')
       client.close()
       return
     }
