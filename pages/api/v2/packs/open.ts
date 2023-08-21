@@ -169,7 +169,7 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
 
 const getRegularPackRarity = (chance): string => {
   if (chance > 0 && chance <= REGULAR_CHANCES.BASE) {
-    return BACKUP
+    return BASE
   } else if (
     chance > REGULAR_CHANCES.BASE &&
     chance <= REGULAR_CHANCES.BASE + REGULAR_CHANCES.AWARD
