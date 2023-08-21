@@ -45,13 +45,26 @@ const SubmitCards = () => {
               }}
               onSubmit={({ imageUrl, playerName, playerTeam, rarity }) => {
                 event.preventDefault()
-                if (isLoading) toast.warning('Already inserting card')
-                if (imageUrl === '') toast.warning('Please enter an image url')
-                if (playerName === '')
+                if (isLoading) {
+                  toast.warning('Already inserting card')
+                  return
+                }
+                if (imageUrl === '') {
+                  toast.warning('Please enter an image url')
+                  return
+                }
+                if (playerName === '') {
                   toast.warning('Please enter a player name')
-                if (playerTeam === '')
+                  return
+                }
+                if (playerTeam === '') {
                   toast.warning('Please enter a player team')
-                if (rarity === '') toast.warning('Please enter a rarity')
+                  return
+                }
+                if (rarity === '') {
+                  toast.warning('Please enter a rarity')
+                  return
+                }
 
                 insertCard({
                   imageUrl,
