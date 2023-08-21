@@ -19,7 +19,7 @@ export const updateCurrentRotation = async (database: Db): Promise<void> => {
     .collection(TableNames.DOTTS_CARDS)
     .updateMany(
       { submissionDate: { $gt: afterDate.toISOString() } },
-      { $set: { currentRotation: true } }
+      { $set: { currentRotation: true, rarity: BASE } }
     )
 
   return
