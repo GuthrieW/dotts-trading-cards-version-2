@@ -1,6 +1,6 @@
 import { Db } from 'mongodb'
 import { TableNames } from '../common'
-import { BASE } from '../../../../utils/constants'
+import { BASE, HALL_OF_FAME } from '../../../../utils/constants'
 
 export const updateCurrentRotation = async (database: Db): Promise<void> => {
   // await database
@@ -11,16 +11,18 @@ export const updateCurrentRotation = async (database: Db): Promise<void> => {
   //   .collection(TableNames.DOTTS_CARDS)
   //   .updateMany({ rarity: BASE }, { $set: { currentRotation: true } })
 
-  const afterDate = new Date()
-  afterDate.setMonth(afterDate.getMonth() - 1)
-  afterDate.setDate(1)
+  const afterDate = new Date(2023, 0, 1)
 
   await database
     .collection(TableNames.DOTTS_CARDS)
     .updateMany(
       { submissionDate: { $gt: afterDate.toISOString() } },
-      { $set: { currentRotation: true, rarity: BASE } }
+      { $set: { currentRotation: true } }
     )
+
+  await database
+    .collection(TableNames.DOTTS_CARDS)
+    .updateMany({ rarity: HALL_OF_FAME }, { $set: { currentRotation: true } })
 
   return
 }
