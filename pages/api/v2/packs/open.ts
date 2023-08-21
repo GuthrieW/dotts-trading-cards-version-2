@@ -224,7 +224,8 @@ const getRegularPackRarity = (chance): string => {
         REGULAR_CHANCES.AUTOGRAPH_ROOKIE +
         REGULAR_CHANCES.CHARITY
   ) {
-    return CHARITY
+    // TODO: change back to CHARITY
+    return BASE
   } else if (
     chance >
       REGULAR_CHANCES.BASE +
@@ -262,7 +263,8 @@ const getRegularPackRarity = (chance): string => {
         REGULAR_CHANCES.CAPTAIN +
         REGULAR_CHANCES.LEAST_VALUABLE_PLAYER
   ) {
-    return LEAST_VALUABLE_PLAYER
+    // TODO: Change back to LVP
+    return BASE
   } else {
     return BASE
   }
