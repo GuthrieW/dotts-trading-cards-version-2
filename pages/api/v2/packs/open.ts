@@ -41,25 +41,25 @@ const REGULAR_CHANCES = {
   LEAST_VALUABLE_PLAYER: 153,
 }
 
-// const ULTIMUS_CHANCES = {
-//   // BACKUP: 3341,
-//   // STARTER: 2262,
-//   // STAR: 1640,
-//   // ALL_PRO: 1113,
-//   // LEGEND: 180,
-//   BASE: 8536,
-//   AWARD: 153,
-//   HALL_OF_FAME: 19,
-//   ULTIMUS_CHAMPION: 399,
-//   AUTOGRAPH_ROOKIE: 130,
-//   CHARITY: 330,
-//   CAPTAIN: 280,
-//   // HOLOGRAPH_EXPANSION: 0,
-//   // FANTASY_KINGS: 0,
-//   // ANNIVERSARY_FIRST_TEAM: 0,
-//   // ANNIVERSARY_SECOND_TEAM: 0,
-//   LEAST_VALUABLE_PLAYER: 153,
-// }
+const ULTIMUS_CHANCES = {
+  // BACKUP: 3341,
+  // STARTER: 2262,
+  // STAR: 1640,
+  // ALL_PRO: 1113,
+  // LEGEND: 180,
+  BASE: 8536,
+  AWARD: 153,
+  HALL_OF_FAME: 19,
+  ULTIMUS_CHAMPION: 399,
+  AUTOGRAPH_ROOKIE: 130,
+  CHARITY: 330,
+  CAPTAIN: 280,
+  // HOLOGRAPH_EXPANSION: 0,
+  // FANTASY_KINGS: 0,
+  // ANNIVERSARY_FIRST_TEAM: 0,
+  // ANNIVERSARY_SECOND_TEAM: 0,
+  LEAST_VALUABLE_PLAYER: 153,
+}
 
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
   const { method, body } = request
@@ -101,22 +101,17 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
         }
       }
 
-      let allWorseThanGold = true
-      const cardChances: number[] = [1, 1, 1, 1, 1, 1].map((num) => {
-        const newNum = Math.floor(Math.random() * 10000) + 1
-        if (newNum > 7824) {
-          allWorseThanGold = false
-        }
-        return newNum
-      })
-
-      if (allWorseThanGold) {
-        cardChances[0] = 7825
-      }
-
-      const cardRarities: string[] = cardChances.map((cardChance) =>
-        getRegularPackRarity(cardChance)
+      const cardChances: number[] = [1, 1, 1, 1, 1, 1].map(
+        () => Math.floor(Math.random() * 10000) + 1
       )
+
+      const cardRarities: string[] = cardChances.map((cardChance) => {
+        if (isUltimusPack) {
+          return getUltimusPackRarity(cardChance)
+        } else {
+          return getRegularPackRarity(cardChance)
+        }
+      })
 
       const newCards: any[] = await Promise.all(
         cardRarities.map(async (cardRarity: string) => {
@@ -262,6 +257,109 @@ const getRegularPackRarity = (chance): string => {
         REGULAR_CHANCES.CHARITY +
         REGULAR_CHANCES.CAPTAIN +
         REGULAR_CHANCES.LEAST_VALUABLE_PLAYER
+  ) {
+    // TODO: Change back to LVP
+    return BASE
+  } else {
+    return BASE
+  }
+}
+
+const getUltimusPackRarity = (chance): string => {
+  if (chance > 0 && chance <= ULTIMUS_CHANCES.BASE) {
+    return BASE
+  } else if (
+    chance > ULTIMUS_CHANCES.BASE &&
+    chance <= ULTIMUS_CHANCES.BASE + ULTIMUS_CHANCES.AWARD
+  ) {
+    return AWARD
+  } else if (
+    chance > ULTIMUS_CHANCES.BASE + ULTIMUS_CHANCES.AWARD &&
+    chance <=
+      ULTIMUS_CHANCES.BASE +
+        ULTIMUS_CHANCES.AWARD +
+        ULTIMUS_CHANCES.HALL_OF_FAME
+  ) {
+    return HALL_OF_FAME
+  } else if (
+    chance >
+      ULTIMUS_CHANCES.BASE +
+        ULTIMUS_CHANCES.AWARD +
+        ULTIMUS_CHANCES.HALL_OF_FAME &&
+    chance <=
+      ULTIMUS_CHANCES.BASE +
+        ULTIMUS_CHANCES.AWARD +
+        ULTIMUS_CHANCES.HALL_OF_FAME +
+        ULTIMUS_CHANCES.ULTIMUS_CHAMPION
+  ) {
+    return ULTIMUS_CHAMPION
+  } else if (
+    chance >
+      ULTIMUS_CHANCES.BASE +
+        ULTIMUS_CHANCES.AWARD +
+        ULTIMUS_CHANCES.HALL_OF_FAME +
+        ULTIMUS_CHANCES.ULTIMUS_CHAMPION &&
+    chance <=
+      ULTIMUS_CHANCES.BASE +
+        ULTIMUS_CHANCES.AWARD +
+        ULTIMUS_CHANCES.HALL_OF_FAME +
+        ULTIMUS_CHANCES.ULTIMUS_CHAMPION +
+        ULTIMUS_CHANCES.AUTOGRAPH_ROOKIE
+  ) {
+    return AUTOGRAPH_ROOKIE
+  } else if (
+    chance >
+      ULTIMUS_CHANCES.BASE +
+        ULTIMUS_CHANCES.AWARD +
+        ULTIMUS_CHANCES.HALL_OF_FAME +
+        ULTIMUS_CHANCES.ULTIMUS_CHAMPION +
+        ULTIMUS_CHANCES.AUTOGRAPH_ROOKIE &&
+    chance <=
+      ULTIMUS_CHANCES.BASE +
+        ULTIMUS_CHANCES.AWARD +
+        ULTIMUS_CHANCES.HALL_OF_FAME +
+        ULTIMUS_CHANCES.ULTIMUS_CHAMPION +
+        ULTIMUS_CHANCES.AUTOGRAPH_ROOKIE +
+        ULTIMUS_CHANCES.CHARITY
+  ) {
+    //TODO: Change back to charity
+    return BASE
+  } else if (
+    chance >
+      ULTIMUS_CHANCES.BASE +
+        ULTIMUS_CHANCES.AWARD +
+        ULTIMUS_CHANCES.HALL_OF_FAME +
+        ULTIMUS_CHANCES.ULTIMUS_CHAMPION +
+        ULTIMUS_CHANCES.AUTOGRAPH_ROOKIE +
+        ULTIMUS_CHANCES.CHARITY &&
+    chance <=
+      ULTIMUS_CHANCES.BASE +
+        ULTIMUS_CHANCES.AWARD +
+        ULTIMUS_CHANCES.HALL_OF_FAME +
+        ULTIMUS_CHANCES.ULTIMUS_CHAMPION +
+        ULTIMUS_CHANCES.AUTOGRAPH_ROOKIE +
+        ULTIMUS_CHANCES.CHARITY +
+        ULTIMUS_CHANCES.CAPTAIN
+  ) {
+    return CAPTAIN
+  } else if (
+    chance >
+      ULTIMUS_CHANCES.BASE +
+        ULTIMUS_CHANCES.AWARD +
+        ULTIMUS_CHANCES.HALL_OF_FAME +
+        ULTIMUS_CHANCES.ULTIMUS_CHAMPION +
+        ULTIMUS_CHANCES.AUTOGRAPH_ROOKIE +
+        ULTIMUS_CHANCES.CHARITY +
+        ULTIMUS_CHANCES.CAPTAIN &&
+    chance <=
+      ULTIMUS_CHANCES.BASE +
+        ULTIMUS_CHANCES.AWARD +
+        ULTIMUS_CHANCES.HALL_OF_FAME +
+        ULTIMUS_CHANCES.ULTIMUS_CHAMPION +
+        ULTIMUS_CHANCES.AUTOGRAPH_ROOKIE +
+        ULTIMUS_CHANCES.CHARITY +
+        ULTIMUS_CHANCES.CAPTAIN +
+        ULTIMUS_CHANCES.LEAST_VALUABLE_PLAYER
   ) {
     // TODO: Change back to LVP
     return BASE
