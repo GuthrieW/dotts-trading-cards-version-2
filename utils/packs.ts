@@ -16,7 +16,7 @@ export const PACK_TYPES = [
     type: 'regular',
     name: 'Regular Pack',
     imageUrl:
-      'https://cdn.discordapp.com/attachments/719410556578299954/773048548026875904/s25_Pack.png',
+      'https://cdn.discordapp.com/attachments/1128513370048438333/1144126080136007761/contest_pack.png',
   },
   {
     type: 'ultimus',
