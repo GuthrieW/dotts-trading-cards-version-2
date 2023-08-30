@@ -1,6 +1,5 @@
 import { Db } from 'mongodb'
 import { TableNames } from '../common'
-import { ObjectId } from 'mongodb'
 
 export const issueCharityCards = async (database: Db): Promise<void> => {
   const usersToAddCards: { name: string; cards: string[] }[] = [
