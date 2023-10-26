@@ -46,6 +46,7 @@ const useRunScript = (): UseRunScript => {
       .map((card) => {
         return `${card._id},${card.imageUrl}`
       })
+      .unshift('_id,old_image_url,new_image_url')
       .join('\n')
 
     const blob = new Blob(['\ufeff', csv], {
