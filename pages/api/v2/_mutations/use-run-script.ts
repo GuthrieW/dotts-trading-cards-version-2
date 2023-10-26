@@ -16,7 +16,7 @@ type UseRunScript = {
 }
 
 const useRunScript = (): UseRunScript => {
-  const { mutate, isSuccess, isLoading, reset } = useMutation(
+  const { mutate, isSuccess, isLoading, reset, data } = useMutation(
     ({ scriptName }: UseRunScriptRequest) => {
       return axios({
         headers: {
@@ -38,6 +38,9 @@ const useRunScript = (): UseRunScript => {
       },
     }
   )
+  if (data) {
+    console.log('data', data.data)
+  }
 
   return {
     runScript: mutate,

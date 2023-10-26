@@ -23,14 +23,23 @@ const Admin = () => {
       <Button
         onClick={() => runScript({ scriptName: 'updateCurrentRotation' })}
         isLoading={isLoading}
+        disabled={true}
       >
         Run updateCurrentRotation
       </Button>
       <Button
         onClick={() => runScript({ scriptName: 'issueCharityCards' })}
         isLoading={isLoading}
+        disabled={true}
       >
         Run issueCharityCards
+      </Button>
+      <Button
+        onClick={() => runScript({ scriptName: 'getImgurCards' })}
+        isLoading={isLoading}
+        disabled={false}
+      >
+        Get Imgur Cards
       </Button>
     </>
   )

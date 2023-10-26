@@ -5,6 +5,7 @@ type ButtonProps = {
   onClick?: MouseEventHandler<HTMLButtonElement>
   isLoading: boolean
   buttonType?: 'confirm' | 'warning' | 'default'
+  disabled?: boolean
 }
 
 const Button = ({
@@ -12,6 +13,7 @@ const Button = ({
   onClick,
   isLoading,
   buttonType = 'default',
+  disabled = false,
 }: ButtonProps) => {
   const color =
     buttonType === 'default'
@@ -24,10 +26,14 @@ const Button = ({
 
   return (
     <button
-      onClick={onClick}
+      onClick={(event) => {
+        if (!disabled && !isLoading) {
+          return onClick(event)
+        }
+      }}
       type="button"
-      disabled={isLoading}
-      className={`${color} text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2`}
+      disabled={disabled || isLoading}
+      className={`${color} text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2 disabled:bg-blue-800 disabled:text-gray-500`}
     >
       {children}
     </button>
