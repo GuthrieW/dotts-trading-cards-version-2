@@ -33,7 +33,8 @@ const useRunScript = (): UseRunScript => {
       onSuccess: () => {
         toast.success('Script finished')
       },
-      onError: () => {
+      onError: (error) => {
+        console.log('error', error)
         toast.error('Error running script')
       },
     }
