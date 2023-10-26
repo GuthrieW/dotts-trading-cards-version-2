@@ -41,6 +41,24 @@ const useRunScript = (): UseRunScript => {
   )
   if (data) {
     console.log('data', data.data)
+
+    const csv: string = data.data
+      .map((card) => {
+        return `${card._id},${card.imageUrl}`
+      })
+      .join(';')
+
+    const blob = new Blob(['\ufeff', csv], {
+      type: 'text/csv;charset=utf-8;',
+    })
+
+    const link = document.createElement('a')
+    link.href = URL.createObjectURL(blob)
+    link.download = 'imgurCards.csv'
+    link.style.display = 'none'
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
   }
 
   return {
