@@ -46,7 +46,7 @@ const useRunScript = (): UseRunScript => {
       .map((card) => {
         return `${card._id},${card.imageUrl}`
       })
-      .join(';')
+      .join('\n')
 
     const blob = new Blob(['\ufeff', csv], {
       type: 'text/csv;charset=utf-8;',
