@@ -35,7 +35,7 @@ const Admin = () => {
         Run issueCharityCards
       </Button>
       <Button
-        onClick={() => runScript({ scriptName: 'getImgurCards' })}
+        onClick={() => runScript({ scriptName: 'getDiscordCards' })}
         isLoading={isLoading}
         disabled={false}
       >

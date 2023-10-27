@@ -3,7 +3,7 @@ import { connect } from '../../database/database'
 import { Methods } from '../common'
 import { updateCurrentRotation } from './updateCurrentRotation'
 import { issueCharityCards } from './issueCharityCards'
-import { getImgurCards } from './getImgurCards'
+import { getDiscordCards } from './getDiscordCards'
 import { Db, MongoClient } from 'mongodb'
 
 const scripts: Record<
@@ -12,7 +12,7 @@ const scripts: Record<
 > = {
   updateCurrentRotation: updateCurrentRotation,
   issueCharityCards: issueCharityCards,
-  getImgurCards: getImgurCards,
+  getDiscordCards: getDiscordCards,
 }
 
 const index = async (request: NextApiRequest, response: NextApiResponse) => {

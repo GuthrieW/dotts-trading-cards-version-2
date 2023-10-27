@@ -1,11 +1,11 @@
 import { Db } from 'mongodb'
 import { TableNames } from '../common'
 
-export const getImgurCards = async (database: Db): Promise<any[]> => {
+export const getDiscordCards = async (database: Db): Promise<any[]> => {
   const cards: any[] = await database
     .collection(TableNames.DOTTS_CARDS)
     .find({
-      imageUrl: { $regex: 'imgur' },
+      imageUrl: { $regex: 'discord' },
     })
     .toArray()
 
