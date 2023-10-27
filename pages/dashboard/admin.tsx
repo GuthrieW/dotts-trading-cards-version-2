@@ -39,7 +39,7 @@ const Admin = () => {
         isLoading={isLoading}
         disabled={false}
       >
-        Get Imgur Cards
+        Get Discord Cards
       </Button>
     </>
   )

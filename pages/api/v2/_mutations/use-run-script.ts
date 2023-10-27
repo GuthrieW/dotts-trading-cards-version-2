@@ -55,7 +55,7 @@ const useRunScript = (): UseRunScript => {
 
     const link = document.createElement('a')
     link.href = URL.createObjectURL(blob)
-    link.download = 'imgurCards.csv'
+    link.download = 'discordCards.csv'
     link.style.display = 'none'
     document.body.appendChild(link)
     link.click()
