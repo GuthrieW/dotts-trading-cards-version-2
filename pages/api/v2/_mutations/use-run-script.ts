@@ -42,12 +42,12 @@ const useRunScript = (): UseRunScript => {
   if (data) {
     console.log('data', data.data)
 
-    const csv: string = data.data
-      .map((card) => {
-        return `${card._id},${card.imageUrl}`
-      })
-      .unshift('_id,old_image_url,new_image_url')
-      .join('\n')
+    const csvWithoutHeaders: string[] = data.data.map((card) => {
+      return `${card._id},${card.imageUrl}`
+    })
+
+    csvWithoutHeaders.unshift('_id,old_image_url,new_image_url')
+    const csv = csvWithoutHeaders.join('\n')
 
     const blob = new Blob(['\ufeff', csv], {
       type: 'text/csv;charset=utf-8;',
