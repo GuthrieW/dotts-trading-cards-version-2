@@ -220,7 +220,7 @@ const getRegularPackRarity = (chance): string => {
         REGULAR_CHANCES.CHARITY
   ) {
     // TODO: change back to CHARITY
-    return BASE
+    return CHARITY
   } else if (
     chance >
       REGULAR_CHANCES.BASE +
@@ -323,7 +323,7 @@ const getUltimusPackRarity = (chance): string => {
         ULTIMUS_CHANCES.CHARITY
   ) {
     //TODO: Change back to charity
-    return BASE
+    return CHARITY
   } else if (
     chance >
       ULTIMUS_CHANCES.BASE +
