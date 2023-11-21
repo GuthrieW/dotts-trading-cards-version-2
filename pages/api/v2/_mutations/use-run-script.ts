@@ -6,6 +6,7 @@ import { toast } from 'react-toastify'
 
 type UseRunScriptRequest = {
   scriptName: string
+  scriptData: string
 }
 
 type UseRunScript = {
@@ -17,7 +18,7 @@ type UseRunScript = {
 
 const useRunScript = (): UseRunScript => {
   const { mutate, isSuccess, isLoading, reset, data } = useMutation(
-    ({ scriptName }: UseRunScriptRequest) => {
+    ({ scriptName, scriptData }: UseRunScriptRequest) => {
       return axios({
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
@@ -26,6 +27,7 @@ const useRunScript = (): UseRunScript => {
         url: `/api/v2/script`,
         data: {
           scriptName,
+          scriptData,
         },
       })
     },

@@ -4,27 +4,30 @@ import { Methods } from '../common'
 import { updateCurrentRotation } from './updateCurrentRotation'
 import { issueCharityCards } from './issueCharityCards'
 import { getDiscordCards } from './getDiscordCards'
-import { Db, MongoClient } from 'mongodb'
+import { Db } from 'mongodb'
+import { fixDiscordCards } from './fixDiscordCards'
 
 const scripts: Record<
   string,
-  (database: Db, client: MongoClient) => Promise<any>
+  (database: Db, scriptData: string) => Promise<any>
 > = {
   updateCurrentRotation: updateCurrentRotation,
   issueCharityCards: issueCharityCards,
   getDiscordCards: getDiscordCards,
+  fixDiscordCards: fixDiscordCards,
 }
 
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
   const { method, body } = request
 
   const scriptName: string = body.scriptName
+  const scriptData: string = body.scriptData
 
   if (method === Methods.POST) {
     const { database, client } = await connect()
 
     try {
-      const result = await scripts[scriptName](database, client)
+      const result = await scripts[scriptName](database, scriptData)
       if (result) {
         response.status(200).json(result)
       } else {

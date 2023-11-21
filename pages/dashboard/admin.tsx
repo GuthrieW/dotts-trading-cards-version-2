@@ -4,6 +4,8 @@ import Button from '../../components/buttons/button'
 import Spinner from '../../components/spinners/spinner'
 import useRunScript from '../api/v2/_mutations/use-run-script'
 import useGetCurrentUser from '../api/v2/_queries/use-get-current-user'
+import 'react-csv-importer/dist/index.css'
+import { Importer, ImporterField } from 'react-csv-importer'
 
 const Admin = () => {
   const { currentUser, isFetching } = useGetCurrentUser({})
@@ -20,27 +22,58 @@ const Admin = () => {
   return (
     <>
       <NextSeo title="Admin" />
-      <Button
-        onClick={() => runScript({ scriptName: 'updateCurrentRotation' })}
-        isLoading={isLoading}
-        disabled={true}
-      >
-        Run updateCurrentRotation
-      </Button>
-      <Button
-        onClick={() => runScript({ scriptName: 'issueCharityCards' })}
-        isLoading={isLoading}
-        disabled={true}
-      >
-        Run issueCharityCards
-      </Button>
-      <Button
-        onClick={() => runScript({ scriptName: 'getDiscordCards' })}
-        isLoading={isLoading}
-        disabled={false}
-      >
-        Get Discord Cards
-      </Button>
+      <div className="flex flex-col divide-x-2">
+        <Button
+          onClick={() =>
+            runScript({ scriptName: 'updateCurrentRotation', scriptData: null })
+          }
+          isLoading={isLoading}
+          disabled={true}
+        >
+          Run updateCurrentRotation
+        </Button>
+        <Button
+          onClick={() =>
+            runScript({ scriptName: 'issueCharityCards', scriptData: null })
+          }
+          isLoading={isLoading}
+          disabled={true}
+        >
+          Run issueCharityCards
+        </Button>
+        <Button
+          onClick={() =>
+            runScript({ scriptName: 'getDiscordCards', scriptData: null })
+          }
+          isLoading={isLoading}
+          disabled={true}
+        >
+          Get Discord Cards
+        </Button>
+        {/* <Button
+          onClick={() =>
+            runScript({ scriptName: 'fixDiscordCards', scriptData: null })
+          }
+          isLoading={isLoading}
+          disabled={false}
+        ></Button> */}
+        <Importer
+          dataHandler={async (rows, { startIndex }) => {
+            rows.forEach((row) => {
+              console.log('row', row)
+            })
+          }}
+          onComplete={() => {
+            runScript({ scriptName: 'fixDiscordCards', scriptData: null })
+          }}
+          restartable={false}
+          defaultNoHeader={false}
+        >
+          <ImporterField name="_id" label="_id" />
+          <ImporterField name="old_image_url" label="old_image_url" />
+          <ImporterField name="new_image_url" label="new_image_url" />
+        </Importer>
+      </div>
     </>
   )
 }
