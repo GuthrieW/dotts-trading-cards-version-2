@@ -22,7 +22,7 @@ const Admin = () => {
   return (
     <>
       <NextSeo title="Admin" />
-      <div className="flex flex-col divide-x-2">
+      <div className="divide-x-2">
         <Button
           onClick={() =>
             runScript({ scriptName: 'updateCurrentRotation', scriptData: null })
