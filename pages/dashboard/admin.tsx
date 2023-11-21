@@ -29,6 +29,7 @@ const Admin = () => {
           }
           isLoading={isLoading}
           disabled={true}
+          classname="my-1"
         >
           Run updateCurrentRotation
         </Button>
@@ -38,6 +39,7 @@ const Admin = () => {
           }
           isLoading={isLoading}
           disabled={true}
+          classname="my-1"
         >
           Run issueCharityCards
         </Button>
@@ -47,25 +49,28 @@ const Admin = () => {
           }
           isLoading={isLoading}
           disabled={true}
+          classname="my-1"
         >
           Get Discord Cards
         </Button>
-        <Importer
-          dataHandler={async (rows, { startIndex }) => {
-            rows.forEach((row) => {
-              console.log('row', row)
-            })
-          }}
-          onComplete={() => {
-            runScript({ scriptName: 'fixDiscordCards', scriptData: null })
-          }}
-          restartable={false}
-          defaultNoHeader={false}
-        >
-          <ImporterField name="_id" label="_id" />
-          <ImporterField name="old_image_url" label="old_image_url" />
-          <ImporterField name="new_image_url" label="new_image_url" />
-        </Importer>
+        <div className="my-1">
+          <Importer
+            dataHandler={async (rows, { startIndex }) => {
+              rows.forEach((row) => {
+                console.log('row', row)
+              })
+            }}
+            onComplete={() => {
+              runScript({ scriptName: 'fixDiscordCards', scriptData: null })
+            }}
+            restartable={false}
+            defaultNoHeader={false}
+          >
+            <ImporterField name="_id" label="_id" />
+            <ImporterField name="old_image_url" label="old_image_url" />
+            <ImporterField name="new_image_url" label="new_image_url" />
+          </Importer>
+        </div>
       </div>
     </>
   )

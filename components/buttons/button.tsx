@@ -6,6 +6,7 @@ type ButtonProps = {
   isLoading: boolean
   buttonType?: 'confirm' | 'warning' | 'default'
   disabled?: boolean
+  classname?: string
 }
 
 const Button = ({
@@ -14,6 +15,7 @@ const Button = ({
   isLoading,
   buttonType = 'default',
   disabled = false,
+  classname = '',
 }: ButtonProps) => {
   const color =
     buttonType === 'default'
@@ -33,7 +35,7 @@ const Button = ({
       }}
       type="button"
       disabled={disabled || isLoading}
-      className={`${color} text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2 disabled:bg-blue-800 disabled:text-gray-500`}
+      className={`${color} text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2 disabled:bg-blue-800 disabled:text-gray-500 ${classname}`}
     >
       {children}
     </button>
