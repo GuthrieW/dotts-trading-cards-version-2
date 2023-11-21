@@ -45,7 +45,7 @@ const useRunScript = (): UseRunScript => {
     }
   )
 
-  if (data) {
+  if (data.data) {
     console.log('data', data.data)
 
     const csvWithoutHeaders: string[] = data.data.map((card) => {

@@ -1,4 +1,4 @@
-import { Db } from 'mongodb'
+import { Db, ObjectId } from 'mongodb'
 import { TableNames } from '../common'
 
 export const fixDiscordCards = async (
@@ -6,10 +6,23 @@ export const fixDiscordCards = async (
   scriptData: string
 ): Promise<any[]> => {
   const cardsData = JSON.parse(scriptData)
-  Object.entries(cardsData).map(([key, value]) => {
-    console.log('key', key)
-    console.log('value', value)
-  })
+  return Object.values(cardsData).map(async (cardData) => {
+    const { _id, new_image_url, old_image_url } = cardData as {
+      _id
+      new_image_url
+      old_image_url
+    }
 
-  return null
+    const card = await database
+      .collection(TableNames.DOTTS_CARDS)
+      .findOneAndUpdate(
+        { _id: new ObjectId(_id) },
+        { $set: { image_url: new_image_url } }
+      )
+
+    return {
+      ...card,
+      imageUrl: new_image_url,
+    }
+  })
 }

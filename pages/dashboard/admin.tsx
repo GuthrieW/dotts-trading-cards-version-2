@@ -62,9 +62,7 @@ const Admin = () => {
                 scriptName: 'fixDiscordCards',
                 scriptData: data,
               })
-            }}
-            onComplete={() => {
-              toast.success('Discord Cards Fixed')
+              toast.info(`${data.length} cards sent to be fixed`)
             }}
             restartable={false}
             defaultNoHeader={false}
