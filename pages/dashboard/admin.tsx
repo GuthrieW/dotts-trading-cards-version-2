@@ -6,6 +6,7 @@ import useRunScript from '../api/v2/_mutations/use-run-script'
 import useGetCurrentUser from '../api/v2/_queries/use-get-current-user'
 import 'react-csv-importer/dist/index.css'
 import { Importer, ImporterField } from 'react-csv-importer'
+import { toast } from 'react-toastify'
 
 const Admin = () => {
   const { currentUser, isFetching } = useGetCurrentUser({})
@@ -56,19 +57,14 @@ const Admin = () => {
         <div className="my-1">
           <Importer
             dataHandler={async (rows, { startIndex }) => {
-              console.log('dataHandler')
-              rows.forEach((row) => {
-                console.log('row', row)
+              const data = JSON.stringify(rows, null, 2)
+              runScript({
+                scriptName: 'fixDiscordCards',
+                scriptData: data,
               })
             }}
-            onComplete={({ file, preview, fields, columnFields }) => {
-              console.log('file', file)
-              console.log('preview', preview)
-              console.log('fields', fields)
-              console.log('columnFields', columnFields)
-
-              console.log('onComplete')
-              runScript({ scriptName: 'fixDiscordCards', scriptData: null })
+            onComplete={() => {
+              toast.success('Discord Cards Fixed')
             }}
             restartable={false}
             defaultNoHeader={false}

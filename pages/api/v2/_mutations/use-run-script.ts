@@ -19,6 +19,9 @@ type UseRunScript = {
 const useRunScript = (): UseRunScript => {
   const { mutate, isSuccess, isLoading, reset, data } = useMutation(
     ({ scriptName, scriptData }: UseRunScriptRequest) => {
+      if (scriptData) {
+        console.log('scriptData', JSON.parse(scriptData))
+      }
       return axios({
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem(DOTTS_ACCESS_TOKEN),
@@ -41,6 +44,7 @@ const useRunScript = (): UseRunScript => {
       },
     }
   )
+
   if (data) {
     console.log('data', data.data)
 
