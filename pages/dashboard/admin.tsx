@@ -6,7 +6,6 @@ import useRunScript from '../api/v2/_mutations/use-run-script'
 import useGetCurrentUser from '../api/v2/_queries/use-get-current-user'
 import 'react-csv-importer/dist/index.css'
 import { Importer, ImporterField } from 'react-csv-importer'
-import { toast } from 'react-toastify'
 
 const Admin = () => {
   const { currentUser, isFetching } = useGetCurrentUser({})
