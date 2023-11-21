@@ -48,7 +48,7 @@ const Admin = () => {
             runScript({ scriptName: 'getDiscordCards', scriptData: null })
           }
           isLoading={isLoading}
-          disabled={true}
+          disabled={false}
           classname="my-1"
         >
           Get Discord Cards
