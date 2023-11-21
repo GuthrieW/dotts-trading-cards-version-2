@@ -50,13 +50,6 @@ const Admin = () => {
         >
           Get Discord Cards
         </Button>
-        {/* <Button
-          onClick={() =>
-            runScript({ scriptName: 'fixDiscordCards', scriptData: null })
-          }
-          isLoading={isLoading}
-          disabled={false}
-        ></Button> */}
         <Importer
           dataHandler={async (rows, { startIndex }) => {
             rows.forEach((row) => {
