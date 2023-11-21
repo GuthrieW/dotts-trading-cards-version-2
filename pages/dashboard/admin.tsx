@@ -62,7 +62,6 @@ const Admin = () => {
                 scriptName: 'fixDiscordCards',
                 scriptData: data,
               })
-              toast.info(`${data.length} cards sent to be fixed`)
             }}
             restartable={false}
             defaultNoHeader={false}
