@@ -61,7 +61,12 @@ const Admin = () => {
                 console.log('row', row)
               })
             }}
-            onComplete={() => {
+            onComplete={({ file, preview, fields, columnFields }) => {
+              console.log('file', file)
+              console.log('preview', preview)
+              console.log('fields', fields)
+              console.log('columnFields', columnFields)
+
               console.log('onComplete')
               runScript({ scriptName: 'fixDiscordCards', scriptData: null })
             }}
