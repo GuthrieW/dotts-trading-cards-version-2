@@ -56,11 +56,13 @@ const Admin = () => {
         <div className="my-1">
           <Importer
             dataHandler={async (rows, { startIndex }) => {
+              console.log('dataHandler')
               rows.forEach((row) => {
                 console.log('row', row)
               })
             }}
             onComplete={() => {
+              console.log('onComplete')
               runScript({ scriptName: 'fixDiscordCards', scriptData: null })
             }}
             restartable={false}
