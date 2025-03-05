@@ -37,7 +37,7 @@ type DottsAccount = {
   password: string
   ownedRegularPacks: number
   ownedUltimusPacks: number
-  isSubscribe?: boolean
+  isSubscribed?: boolean
   isAdmin?: boolean
   isProcessor?: boolean
   isPackIssuer?: boolean

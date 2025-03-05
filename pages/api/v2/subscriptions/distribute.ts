@@ -14,7 +14,7 @@ export const handler = async (
     const { database, client } = await connect()
 
     try {
-      if (body.errors) {
+      if (body.errors && Array.isArray(body.errors) && body.errors.length > 0) {
         await sendSubscriptionErrorEmail(body.errors, database)
       }
 
@@ -68,13 +68,19 @@ const sendSubscriptionErrorEmail = async (errors: string[], database: Db) => {
   })
 
   // @ts-ignore
-  const users = (await database.collection(TableNames.DOTTS_ACCOUNTS).find({
-    isflUsername: { $in: errors },
-  })) as DottsAccount[]
+  const users = (await database
+    .collection(TableNames.DOTTS_ACCOUNTS)
+    .find({
+      isflUsername: { $in: errors },
+    })
+    .toArray()) as DottsAccount[]
 
   await database
     .collection(TableNames.DOTTS_ACCOUNTS)
-    .updateMany({ isflUsername: { $in: errors } }, { isSubscribed: false })
+    .updateMany(
+      { isflUsername: { $in: errors } },
+      { $set: { isSubscribed: false } }
+    )
 
   await Promise.all(
     await users.map(async (user) => {
@@ -85,7 +91,7 @@ const sendSubscriptionErrorEmail = async (errors: string[], database: Db) => {
         html: `<img src="https://media.discordapp.net/attachments/719409500292907029/720056809951461416/Dotts-Logo-red-black.png" width="400" height="280" />
       <p>Hey ${user.isflUsername},</p>
       <p>While distributing your Dotts Trading Cards subscription packs a username error was found.</p>
-      <p>This can occur if you change your ISFL username to be different from your Dotts username.</p>
+      <p>This can occur if you change your ISFL username to be different from your Dotts username or if you have insufficient funds in your bank.</p>
       <p>In order to renew your subscription, please contact caltroit_red_flames.</p>
       <p>Thanks,</p>
       <p>from your friends at Dotts Trading Cards</p>

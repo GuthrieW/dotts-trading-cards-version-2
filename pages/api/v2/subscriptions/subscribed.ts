@@ -8,7 +8,7 @@ export const handler = async (
 ) => {
   const { method } = request
 
-  if (method === Methods.POST) {
+  if (method === Methods.GET) {
     const { database, client } = await connect()
 
     try {
@@ -17,11 +17,14 @@ export const handler = async (
         .collection(TableNames.DOTTS_ACCOUNTS)
         .find({
           isSubscribed: true,
-        })) as DottsAccount[]
+        })
+        .project<{ isflUsername: string }>({ isflUsername: 1 })
+        .toArray()) as DottsAccount[]
 
       const usernames: string[] = accounts.map(
         (account) => account.isflUsername
       )
+
       response.status(200).json({ usernames })
       return
     } catch (error) {
