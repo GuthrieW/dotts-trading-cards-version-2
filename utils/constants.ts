@@ -135,6 +135,11 @@ export const TEAMS: Team[] = [
     ABBREVIATION: 'BER',
   },
   {
+    CITY_NAME: 'Black Forest',
+    TEAM_NAME: 'Brood',
+    ABBREVIATION: 'BFB',
+  },
+  {
     CITY_NAME: 'Cape Town',
     TEAM_NAME: 'Crash',
     ABBREVIATION: 'CTC',
@@ -173,6 +178,11 @@ export const TEAMS: Team[] = [
     CITY_NAME: 'Philadelphia',
     TEAM_NAME: 'Liberty',
     ABBREVIATION: 'PHI',
+  },
+  {
+    CITY_NAME: 'Osaka',
+    TEAM_NAME: 'Kaiju',
+    ABBREVIATION: 'OSK',
   },
   {
     CITY_NAME: 'San Jose',
