@@ -11,10 +11,12 @@ export const index = async (
     const { database, client } = await connect()
 
     try {
+      console.log('finding all')
       const account = await database
         .collection(TableNames.DOTTS_ACCOUNTS)
         .find({})
         .toArray()
+      console.log('found all', account.length)
       const minifiedAccounts = account.map((account) => {
         return {
           _id: account._id,

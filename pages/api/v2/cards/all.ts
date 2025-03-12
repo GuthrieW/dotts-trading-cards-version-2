@@ -9,10 +9,13 @@ const index = async (request: NextApiRequest, response: NextApiResponse) => {
     const { database, client } = await connect()
 
     try {
+      console.log('finding all')
       const cards: any[] = await database
         .collection(TableNames.DOTTS_CARDS)
         .find({})
         .toArray()
+
+      console.log('found all', cards.length)
 
       response.status(200).json({ allCards: cards })
     } catch (error) {
