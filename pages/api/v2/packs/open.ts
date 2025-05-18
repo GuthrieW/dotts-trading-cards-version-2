@@ -259,10 +259,10 @@ const getRegularPackRarity = (chance): string => {
         REGULAR_CHANCES.AUTOGRAPH_ROOKIE +
         REGULAR_CHANCES.CHARITY +
         REGULAR_CHANCES.CAPTAIN +
-        REGULAR_CHANCES.LEAST_VALUABLE_PLAYER
+        REGULAR_CHANCES.INSERT
   ) {
     // TODO: Change back to LVP
-    return BASE
+    return INSERT
   } else {
     return BASE
   }
@@ -362,10 +362,10 @@ const getUltimusPackRarity = (chance): string => {
         ULTIMUS_CHANCES.AUTOGRAPH_ROOKIE +
         ULTIMUS_CHANCES.CHARITY +
         ULTIMUS_CHANCES.CAPTAIN +
-        ULTIMUS_CHANCES.LEAST_VALUABLE_PLAYER
+        ULTIMUS_CHANCES.INSERT
   ) {
     // TODO: Change back to LVP
-    return BASE
+    return INSERT
   } else {
     return BASE
   }
