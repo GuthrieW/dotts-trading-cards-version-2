@@ -17,6 +17,7 @@ export const ANNIVERSARY_FIRST_TEAM = 'Anniversary First Team'
 export const ANNIVERSARY_SECOND_TEAM = 'Anniversary Second Team'
 export const LEAST_VALUABLE_PLAYER = 'Least Valuable Player'
 export const BASE = 'Base'
+export const INSERT = 'Insert'
 
 export const DOTTS_USER_ID_STORAGE = 'dottsUserId'
 export const DOTTS_ACCESS_TOKEN = 'dottsAccessToken'
@@ -27,6 +28,10 @@ export type Rarity = {
 }
 
 export const RARITIES: Rarity[] = [
+    {
+    label: 'INSERT',
+    value: 'Insert',
+  },
   {
     label: 'BASE',
     value: 'Base',
@@ -204,9 +209,15 @@ export const TEAMS: Team[] = [
     TEAM_NAME: 'Logo',
     ABBREVIATION: 'TML',
   },
+  {
+    CITY_NAME: 'Development Simulation',
+    TEAM_NAME: 'Football League',
+    ABBREVIATION: 'DSFL'
+  },
 ]
 
 export const rarityToNumercialValue = {
+  [INSERT]: 19,
   [BASE]: 18,
   [HALL_OF_FAME]: 17,
   [UNIQUE]: 16,

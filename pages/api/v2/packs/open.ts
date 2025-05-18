@@ -18,6 +18,7 @@ import {
   CHARITY,
   LEAST_VALUABLE_PLAYER,
   BASE,
+  INSERT,
 } from '../../../../utils/constants'
 import { ObjectId } from 'mongodb'
 
@@ -27,18 +28,19 @@ const REGULAR_CHANCES = {
   // STAR: 1640,
   // ALL_PRO: 1113,
   // LEGEND: 180,
-  BASE: 8632, // normal value is 8802
-  AWARD: 153,
-  HALL_OF_FAME: 19,
-  ULTIMUS_CHAMPION: 133,
-  AUTOGRAPH_ROOKIE: 130,
-  CHARITY: 500, // normal value is 330
-  CAPTAIN: 280,
+  BASE: 8333, // normal value is 8802
+  AWARD: 187,
+  HALL_OF_FAME: 22,
+  ULTIMUS_CHAMPION: 108,
+  AUTOGRAPH_ROOKIE: 326,
+  CHARITY: 555, // normal value is 330
+  CAPTAIN: 261,
   // FANTASY_KINGS: 0,
   // HOLOGRAPH_EXPANSION: 0,
   // ANNIVERSARY_FIRST_TEAM: 0,
   // ANNIVERSARY_SECOND_TEAM: 0,
-  LEAST_VALUABLE_PLAYER: 153,
+  // LEAST_VALUABLE_PLAYER: 153,
+  INSERT: 208,
 }
 
 const ULTIMUS_CHANCES = {
@@ -47,18 +49,19 @@ const ULTIMUS_CHANCES = {
   // STAR: 1640,
   // ALL_PRO: 1113,
   // LEGEND: 180,
-  BASE: 8315, // normal value is 8485
-  AWARD: 153,
-  HALL_OF_FAME: 19,
-  ULTIMUS_CHAMPION: 450,
-  AUTOGRAPH_ROOKIE: 130,
-  CHARITY: 500, // normal value is 330
-  CAPTAIN: 280,
+  BASE: 7500, // normal value is 8485
+  AWARD: 416,
+  HALL_OF_FAME: 24,
+  ULTIMUS_CHAMPION: 333,
+  AUTOGRAPH_ROOKIE: 555,
+  CHARITY: 555, // normal value is 330
+  CAPTAIN: 340,
   // HOLOGRAPH_EXPANSION: 0,
   // FANTASY_KINGS: 0,
   // ANNIVERSARY_FIRST_TEAM: 0,
   // ANNIVERSARY_SECOND_TEAM: 0,
-  LEAST_VALUABLE_PLAYER: 153,
+  // LEAST_VALUABLE_PLAYER: 153,
+  INSERT: 277,
 }
 
 const index = async (request: NextApiRequest, response: NextApiResponse) => {
