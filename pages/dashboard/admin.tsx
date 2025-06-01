@@ -38,7 +38,7 @@ const Admin = () => {
             runScript({ scriptName: 'issueCharityCards', scriptData: null })
           }
           isLoading={isLoading}
-          disabled={true}
+          disabled={false}
           classname="my-1"
         >
           Run issueCharityCards
