@@ -1,24 +1,39 @@
 import { Db } from 'mongodb'
 import { TableNames } from '../common'
 
-// 6831115c879c79c39a374cdc - Zag
-// 68311150879c79c39a374cdb - ValorX77
-// 68311148879c79c39a374cda - Raven
-// 68311141879c79c39a374cd9 - OrbitingDeath
-// 68311139879c79c39a374cd8 - lemonoppy
-// 68311132879c79c39a374cd7 - Kyamprac
-// 68311128879c79c39a374cd6 - jeffie43
-// 68311120879c79c39a374cd5 - JDC4654
-// 683111112ac87c8bb803dc74 - Im2Klutch
-// 683111082ac87c8bb803dc73 - enigmatic
-// 683110fe06848f7209e6c45a - caltroit_red_flames
-// 683110f506848f7209e6c459 - Amidships
+// Griff - 68c5ee196eb2f70eddc1f171
+// Coachsj35 - 68c5ee426eb2f70eddc1f172
+// lemonoppy - 68c5ede46eb2f70eddc1f16f
+// DivogoJota - 68c5edfe6eb2f70eddc1f170
+// Mooty99 - 639a06b7238f3e8dc0e78718
+// Mooty99 - 65b0a7e0aee35baeb17345e5
+// Mooty99 - 63656042538674b45b5b8d92
 
 export const issueCharityCards = async (database: Db): Promise<void> => {
   const usersToAddCards: { name: string; cards: string[] }[] = [
     {
-      name: 'im2klutch',
-      cards: ['683111112ac87c8bb803dc74'],
+      name: 'Griff',
+      cards: ['68c5ee196eb2f70eddc1f171'],
+    },
+    {
+      name: 'Coachsj35',
+      cards: ['68c5ee426eb2f70eddc1f172'],
+    },
+    {
+      name: 'lemonoppy',
+      cards: ['68c5ede46eb2f70eddc1f16f'],
+    },
+    {
+      name: 'DivogoJota',
+      cards: ['68c5edfe6eb2f70eddc1f170'],
+    },
+    {
+      name: 'Mooty99',
+      cards: [
+        '639a06b7238f3e8dc0e78718',
+        '65b0a7e0aee35baeb17345e5',
+        '63656042538674b45b5b8d92',
+      ],
     },
   ]
 
